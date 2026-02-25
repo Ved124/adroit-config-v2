@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply bg-brand-light text-slate-900 antialiased;
+	}
+}
+
+@layer components {
+	.glass-card {
+		@apply bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300;
+	}
+
+	.btn-primary {
+		@apply px-6 py-3 bg-brand-blue text-white font-semibold rounded-2xl hover:bg-brand-dark transition-all shadow-lg active:scale-95;
+	}
+}
+
+/* Noise layer (optional) */
+/*
+html.dark body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.035;
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\' viewBox=\'0 0 120 120\'><filter id=\'n\'><feTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'2\' stitchTiles=\'stitch\'/></filter><rect width=\'100%\' height=\'100%\' filter=\'url(%23n)\' opacity=\'0.18\'/></svg>');
+	z-index: 0;
+}
+*/
+
+/* Scrollbar styling (accessible contrast) */
+*::-webkit-scrollbar {
+	width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+	*::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.25);
+	}
+
+	*::-webkit-scrollbar-thumb:hover {
+		background: rgba(255, 255, 255, 0.4);
+	}
+}
+
+/* Utility to opt-in thinner scrollbars on containers */
+.scrollbar-thin::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+	border-radius: 9999px;
+}
+
+.scrollbar-thin {
+	scrollbar-width: thin;
+}
+
+@media print {
+	@page {
+		size: A4;
+		margin: 0;
+	}
+
+	body {
+		-webkit-print-color-adjust: exact !important;
+		print-color-adjust: exact !important;
+	}
+
+	.break-inside-avoid {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+}
+
+.pdf-shadow {
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.page-break {
+	page-break-after: always;
+	break-after: always;
+}
+
+/* Typography matching Adroit Quote */
+.adroit-header-red {
+	background-color: #c00000;
+	/* Deep Red */
+}

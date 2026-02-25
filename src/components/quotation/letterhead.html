@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quotation - letterhead</title>
+    <style>
+        :root {
+            --accent: #0F4761;
+            /* teal used in doc */
+            --accent-2: #DC2626;
+            /* red */
+            --text: #111;
+            --muted: #555;
+            --paper-bg: #fff;
+            --max-width: 900px;
+            --gutter: 28px;
+        }
+
+        html,
+        body {
+            background: #f3f3f3;
+            margin: 0;
+            padding: 32px;
+            font-family: "Times New Roman", Times, serif;
+            color: var(--text);
+        }
+
+        .page {
+            background: var(--paper-bg);
+            max-width: var(--max-width);
+            margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            padding: 28px 36px;
+            box-sizing: border-box;
+        }
+
+        header.letterhead {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            border-bottom: 6px solid var(--accent);
+            padding-bottom: 12px;
+        }
+
+        .brand {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .brand img {
+            height: 62px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .company-info {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.2;
+        }
+
+        .company-info strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .ref-area {
+            text-align: right;
+            font-size: 12px;
+        }
+
+        .ref-area .ref {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .ref-area .date {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .title {
+            margin: 18px 0 8px;
+        }
+
+        .title h1 {
+            font-size: 20px;
+            margin: 0;
+            color: var(--accent);
+        }
+
+        .title .sub {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .meta {
+            display: flex;
+            gap: 24px;
+            margin: 14px 0;
+            flex-wrap: wrap;
+        }
+
+        .meta .block {
+            min-width: 220px;
+            font-size: 12px;
+        }
+
+        /* big table */
+        table.proposal {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        table.proposal thead th {
+            background: #f4f6f7;
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        table.proposal tbody td {
+            padding: 10px 12px;
+            border: 1px solid #e6e6e6;
+            vertical-align: top;
+        }
+
+        table.proposal tbody tr:nth-child(odd) {
+            background: #fff;
+        }
+
+        table.proposal tbody tr:nth-child(even) {
+            background: #fcfcfc;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* component block style for component pages */
+        .component-block {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            margin: 14px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .component-block .imgwrap {
+            flex: 0 0 220px;
+        }
+
+        .component-block .imgwrap img {
+            max-width: 100%;
+            display: block;
+            border: 1px solid #ddd;
+            background: #fff;
+            padding: 6px;
+        }
+
+        .component-block .spec {
+            flex: 1;
+        }
+
+        .component-block .spec h4 {
+            margin: 0 0 6px;
+            font-size: 15px;
+            color: var(--accent-2);
+        }
+
+        .component-block .spec p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .totals {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .totals .line {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-top: 1px dashed #e8e8e8;
+        }
+
+        .totals .line strong {
+            font-size: 14px;
+        }
+
+        .terms {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 18px;
+            line-height: 1.45;
+            white-space: pre-wrap;
+        }
+
+        .signature {
+            margin-top: 28px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .signature .block {
+            width: 220px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .signature .sigline {
+            margin-top: 36px;
+            border-top: 1px solid #000;
+            padding-top: 6px;
+        }
+
+        /* small print foot */
+        .foot {
+            border-top: 6px solid var(--accent);
+            margin-top: 18px;
+            padding-top: 10px;
+            font-size: 11px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background: #fff;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page" id="page-root">
+        <header class="letterhead">
+            <div class="brand">
+                <img src="/images/logo.jpg" alt="Adroit Extrusion logo" />
+                <div class="company-info">
+                    <div><strong>ADROIT EXTRUSION</strong></div>
+                    <div>Unit 1: Survey 822, Village Bhumapura, Ahmedabad – Mahemdavad Road, Dist. Kheda, Gujarat –
+                        387130</div>
+                    <div>Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Near Hathijan Circle, Vatva, GIDC Phase
+                        - 4, Ahmedabad – 382445</div>
+                    <div>Mobile: +91-9925143048 / +91-8758080944 &nbsp; Email: info@adroitextrusion.com &nbsp; Website:
+                        https://adroitextrusion.com</div>
+                </div>
+            </div>
+
+            <div class="ref-area">
+                <div class="ref">Ref. No: <span id="ref-no">AEP/DOM/XXXXX</span></div>
+                <div class="date">Date: <span id="ref-date">DD/MM/YYYY</span></div>
+            </div>
+        </header>
+
+        <div class="title">
+            <h1 id="proposal-title">PROPOSAL / QUOTATION</h1>
+            <div class="sub" id="proposal-sub">AE Innoflex THREE LAYER CO EXTRUSION BLOWN FILM LINE ...</div>
+        </div>
+
+        <!-- customer meta -->
+        <div class="meta">
+            <div class="block">
+                <strong>FOR</strong><br />
+                <div id="cust-name">M/s. Customer Name</div>
+                <div id="cust-address" style="margin-top:6px; color:var(--muted)">Customer address line 1<br />City,
+                    State</div>
+            </div>
+            <div class="block">
+                <strong>Scope</strong><br />
+                <div id="scope-text" style="color:var(--muted); margin-top:6px">Three layer blown film line - AE
+                    Innoflex</div>
+            </div>
+            <div class="block">
+                <strong>Quotation</strong><br />
+                <div style="margin-top:6px">
+                    BASIC PRICE EX-WORKS: <strong id="basic-price">INR 0/-</strong><br />
+                    FINAL PRICE AFTER DISCOUNT: <strong id="final-price">INR 0/-</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- big items table -->
+        <div class="section-title">Scope of Supply</div>
+        <table class="proposal" id="items-table" aria-describedby="items-desc">
+            <thead>
+                <tr>
+                    <th style="width:55px">Item #</th>
+                    <th>Description</th>
+                    <th style="width:120px">Remarks / Qty</th>
+                </tr>
+            </thead>
+            <tbody id="items-tbody">
+                <!-- rows injected here -->
+                <!-- Example row:
+        <tr>
+          <td>1</td>
+          <td>Three Nos. Extruders of 55/75/55 mm ...</td>
+          <td>As specified</td>
+        </tr>
+        -->
+            </tbody>
+        </table>
+
+        <!-- totals -->
+        <div class="totals" id="totals-block">
+            <div class="line"><span>Basic Price (EX-Works):</span><strong id="totals-basic">INR 0/-</strong></div>
+            <div class="line"><span>Final Price After Discount:</span><strong id="totals-final">INR 0/-</strong></div>
+            <div class="line"><span>In Words:</span><strong id="totals-words">Rupees ... only</strong></div>
+        </div>
+
+        <!-- component detail pages (images + short desc) -->
+        <div class="section-title">Component Details</div>
+        <div id="components-list">
+            <!-- repeat component-blocks here -->
+            <!--
+      <div class="component-block">
+        <div class="imgwrap"><img src="/images/parts/ext55.png" /></div>
+        <div class="spec">
+          <h4>Extruder 55mm</h4>
+          <p>Short single-line general description describing the component (max 2 lines).</p>
+          <p style="margin-top:6px; font-weight:600;">Qty: 1</p>
+        </div>
+      </div>
+      -->
+        </div>
+
+        <!-- Terms & warranty (exact text you gave will go here) -->
+        <div class="section-title">Terms &amp; Conditions</div>
+        <div class="terms" id="tnc-block">
+            <!-- Paste full T&C and warranty here exactly if you want -->
+            PRICES:
+            Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not
+            considered. These are applicable as per rule. Prices are valid for 30 days from the date of quotation.
+            PACKING & FORWARDING: Packing charges will be charged extra.
+            INSURANCE: Insurance to be organized by the customer.
+            TRANSPORTATION: Cost of the transport will be borne by the customer.
+            DELIVERY: 04 Months from the date receipt of technically and commercially clear purchase order with minimum
+            30% irrevocable security deposit.
+            PAYMENT TERMS: We require 20% as token advance, 30% after 45 days of given order and Balance payment along
+            with all incidental charges, Taxes & Duties are to be paid before delivery. The deposit is non-interest
+            bearing, and will be forfeited in the event of cancellation of the order.
+            PRE-DISPATCH TESTING & TRIALS:
+            We follow discrete testing methods. This method involves discrete testing of individual system elements like
+            Winders, Extruders etc. to our pre-designed standards to ensure faultless running of the complete line on
+            installation at Customer end.
+            ERECTION & COMMISSIONING:
+            Our service engineers will supervise erection, installation and commissioning of the machine. Customer will
+            provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange
+            Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls
+            our service engineer. The customer will pay To & Fro Fare, Lodging, Boarding, and Transportation during
+            period of the services provided.
+        </div>
+
+        <div class="signature">
+            <div class="block">
+                <div>For Adroit Extrusion</div>
+                <div class="sigline">Urveesh Jepaliya</div>
+                <div style="margin-top:6px; color:var(--muted);">Authorised Signatory</div>
+            </div>
+        </div>
+
+        <div class="foot">
+            Unit 1: Survey 822, Village Bhumapura, Ahmedabad – Mahemdavad Road, Dist. Kheda, Gujarat – 387130 | Unit 2:
+            75/A Akshar Industrial Park,... &nbsp; Mobile: +919925143048 / +918758665507 &nbsp; Email:
+            info@adroitextrusion.com
+        </div>
+    </div>
+
+    <!-- small script to demo injection (remove in production and inject from React) -->
+    <script>
+        /* Example: runtime injection from JS (you will replace this with server-side or React)
+           - Replace placeholders: #ref-no, #ref-date, #cust-name, #items-tbody, #components-list, #totals-basic, #totals-final, #totals-words
+         */
+        (function demoInject() {
+            // demo: fill ref/date
+            document.getElementById('ref-no').textContent = 'AEP/DOM/1950/001';
+            document.getElementById('ref-date').textContent = new Date().toLocaleDateString('en-GB');
+
+            // sample items from the doc (you will fill with your selected components)
+            const items = [
+                'Three Nos. Extruders of 55/75/55 mm screw diameter and L/D ratio of 32:1, Imported Bimetallic screw & barrel...',
+                'Complete extrusion controls on main panel with Cold start protection and with Touch Panel.',
+                'One Nickel plated Three Layer Spiral Mandrel Die with lip diameter of 400 mm.'
+            ];
+            const tbody = document.getElementById('items-tbody');
+            items.forEach((txt, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${i + 1}</td><td>${txt}</td><td>As specified</td>`;
+                tbody.appendChild(tr);
+            });
+
+            // sample components list
+            const comps = [
+                { name: 'Extruder 55mm', img: '/images/parts/ext55.png', short: 'Compact extruder ideal for mid-output lines', qty: 1 },
+                { name: 'Die Head 400mm', img: '/images/parts/die250.png', short: 'Spiral mandrel die for even melt distribution', qty: 1 }
+            ];
+            const cl = document.getElementById('components-list');
+            comps.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'component-block';
+                div.innerHTML = `<div class="imgwrap"><img src="${c.img}" /></div>
+                         <div class="spec"><h4>${c.name}</h4><p>${c.short}</p><p style="margin-top:8px; font-weight:600;">Qty: ${c.qty}</p></div>`;
+                cl.appendChild(div);
+            });
+
+            // totals
+            document.getElementById('totals-basic').textContent = 'INR 1,47,50,000/-';
+            document.getElementById('totals-final').textContent = 'INR 1,17,50,000/-';
+            document.getElementById('totals-words').textContent = 'INR ONE CRORE FORTY SEVEN LAC FIFTY THOUSAND ONLY';
+        })();
+    </script>
+</body>
+
+</html>

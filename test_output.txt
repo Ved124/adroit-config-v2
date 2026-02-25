@@ -1,0 +1,35 @@
+
+Running 1 test using 1 worker
+
+BROWSER: %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold
+BROWSER: [HMR] connected
+  ✘  1 tests\configurator.spec.js:3:1 › E2E Configurator Flow & PDF Generation (21.0s)
+
+
+  1) tests\configurator.spec.js:3:1 › E2E Configurator Flow & PDF Generation ───────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('h1')
+    Expected substring: [32m"Machine Configurator"[39m
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 20000ms[22m
+    [2m  - waiting for locator('h1')[22m
+
+
+      10 |     // --- Step 1: Visit & Fill Customer Data ---
+      11 |     await page.goto('/');
+    > 12 |     await expect(page.locator('h1')).toContainText('Machine Configurator', { timeout: 20000 });
+         |                                      ^
+      13 |
+      14 |     await page.locator('#cust-name').fill('Playwright Test User');
+      15 |     await page.locator('#cust-company').fill('Adroit Test Corp');
+        at C:\Users\vedmi\Downloads\ae-configurator-master\tests\configurator.spec.js:12:38
+
+    Error Context: test-results\tests-configurator-E2E-Configurator-Flow-PDF-Generation\error-context.md
+
+  1 failed
+    tests\configurator.spec.js:3:1 › E2E Configurator Flow & PDF Generation ────────────────────────

@@ -1,0 +1,1 @@
+Fixed details modal + full components. Run with npm install && npm run dev. Open /customer.

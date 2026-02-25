@@ -1,0 +1,245 @@
+[
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "SCREW DIAMETER (MM)",
+    "_1": "",
+    "_2": "35/45",
+    "_3": "45/55",
+    "_4": "55/55",
+    "_5": "55/65"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Layflat Width (mm)",
+    "_1": "",
+    "_2": "750",
+    "_3": "1000",
+    "_4": "1250",
+    "_5": "1750"
+  },
+  {
+    "": "FEATURE",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Thichness Range (micron)",
+    "_1": "",
+    "_2": "20-100",
+    "_3": "20-100",
+    "_4": "20-100",
+    "_5": "20-150"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Max. Output (kg/hr)",
+    "_1": "",
+    "_2": "60-80",
+    "_3": "100-120",
+    "_4": "120-140",
+    "_5": "170-190"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Screw L/D Ratio",
+    "_1": "",
+    "_2": "30:1",
+    "_3": "30:1",
+    "_4": "30:1",
+    "_5": "30:1"
+  },
+  {
+    "": "EXTRUDER",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Motor Power (KW)",
+    "_1": "",
+    "_2": "7.5/11.25",
+    "_3": "15/22.5",
+    "_4": "22.5/22.5",
+    "_5": "22.5/37"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Heater Power (KW)",
+    "_1": "",
+    "_2": "4.1/9.7",
+    "_3": "9.7/10.2",
+    "_4": "10.2/10.2",
+    "_5": "10.2/10.2"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Die Size (HM /LD)",
+    "_1": "",
+    "_2": "70/150",
+    "_3": "125/250",
+    "_4": "150/300",
+    "_5": "225/375"
+  },
+  {
+    "": "DIE",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Heater Power (KW)",
+    "_1": "",
+    "_2": "5.1/6.7",
+    "_3": "6.7/8.8",
+    "_4": "8.8/8.8",
+    "_5": "8.8/8.8"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Air ring Blower (KW)",
+    "_1": "",
+    "_2": "2.25",
+    "_3": "5",
+    "_4": "7.5",
+    "_5": "10"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Nip Roll Size (mm)",
+    "_1": "",
+    "_2": "800",
+    "_3": "1125",
+    "_4": "1370",
+    "_5": "1850"
+  },
+  {
+    "": "MAIN NIP",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Line Speed (M/Min)",
+    "_1": "",
+    "_2": "10-60",
+    "_3": "10-60",
+    "_4": "10-60",
+    "_5": "10-60"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Main Nip (KW)",
+    "_1": "",
+    "_2": "0.75",
+    "_3": "1.12",
+    "_4": "1.5",
+    "_5": "2.25"
+  },
+  {
+    "": "WINDER",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Type of Winder",
+    "_1": "",
+    "_2": "Compact",
+    "_3": "Separate",
+    "_4": "Separate",
+    "_5": "Separate"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Motor Power (KW)",
+    "_1": "",
+    "_2": "0.75",
+    "_3": "1.12",
+    "_4": "1.5",
+    "_5": "1.5"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Total Heating Load (KW)",
+    "_1": "",
+    "_2": "25.6",
+    "_3": "35.4",
+    "_4": "38",
+    "_5": "47"
+  },
+  {
+    "": "SUMMARY",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Total Connected Load (KW)",
+    "_1": "",
+    "_2": "48",
+    "_3": "85",
+    "_4": "90",
+    "_5": "98"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Specific Power Consumption",
+    "_1": "",
+    "_2": "",
+    "_3": "",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "KW/KG/HR",
+    "_1": "",
+    "_2": "0.35",
+    "_3": "0.37",
+    "_4": "0.35",
+    "_5": "0.35"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Space Reqd. Meter(L * W * H)",
+    "_1": "",
+    "_2": "3.5*3.5*5.1",
+    "_3": "4.0*3.5*5.1",
+    "_4": "6.1*6.1*7.2",
+    "_5": "6.5*6.5*8.2"
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "",
+    "_1": "OPTIONAL EQUIPMENTS & ACCESSORIES",
+    "_2": "",
+    "_3": "",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "Hopper Loader ��",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Corona Treater ��",
+    "_1": "Die Rotation ��",
+    "_2": "Water / Air Chiller ��",
+    "_3": "Heat Exchanger ��",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "Embossing Roll ��",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Air Shaft ��",
+    "_1": "Two Station Surface Winder ��",
+    "_2": "Bi-Metalic Screw & Barrel Set ��",
+    "_3": "",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "Hauloff ��",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Hopper Dryer ��",
+    "_1": "Granule Mixer with Dryer ��",
+    "_2": "Extra Die etc.",
+    "_3": "",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "",
+    "_1": "APPLICATIONS",
+    "_2": "",
+    "_3": "",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "Shopping bag ��",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Linear bag ��",
+    "_1": "Shrink film ��",
+    "_2": "General Purpose film ��",
+    "_3": "Surface Printing film ��",
+    "_4": "",
+    "_5": ""
+  },
+  {
+    "": "Courier bag (AB) ��",
+    "Duoflex ABA & AB MACHINE SPECIFICATION": "Mulch film (AB) ��",
+    "_1": "Lamination films (AB) ��",
+    "_2": "Garbage films etc. ��",
+    "_3": "",
+    "_4": "",
+    "_5": ""
+  }
+]

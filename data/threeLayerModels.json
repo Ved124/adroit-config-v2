@@ -1,0 +1,177 @@
+[
+  {
+    "EQUIPMENT": "EXTRUDER",
+    "AE- 1870": "50/65/50 & 55/65/55",
+    "AE- 2125": "65/65/65 OR 65/75/65",
+    "AE - 2370": "65/75/65",
+    "AE - 2625": "75/90/75"
+  },
+  {
+    "EQUIPMENT": "MOTORS (HP)",
+    "AE- 1870": "30/60/30 & 40/60/40",
+    "AE- 2125": "60/60/60 & 60/75/60",
+    "AE - 2370": "60/75/60",
+    "AE - 2625": "75/125/75"
+  },
+  {
+    "EQUIPMENT": "L/D RATIO",
+    "AE- 1870": "32:1",
+    "AE- 2125": "32:1",
+    "AE - 2370": "32:1",
+    "AE - 2625": "32:1"
+  },
+  {
+    "EQUIPMENT": "DIE",
+    "AE- 1870": "375",
+    "AE- 2125": "450",
+    "AE - 2370": "525",
+    "AE - 2625": "575"
+  },
+  {
+    "EQUIPMENT": "WIDTH",
+    "AE- 1870": "1750 MM",
+    "AE- 2125": "2000",
+    "AE - 2370": "2250",
+    "AE - 2625": "2500"
+  },
+  {
+    "EQUIPMENT": "AIR RING BLOWER",
+    "AE- 1870": "15 HP",
+    "AE- 2125": "20 HP",
+    "AE - 2370": "20 HP",
+    "AE - 2625": "25 HP"
+  },
+  {
+    "EQUIPMENT": "AIR RING DRIVE",
+    "AE- 1870": "AC DRIVE",
+    "AE- 2125": "AC DRIVE",
+    "AE - 2370": "AC DRIVE",
+    "AE - 2625": "AC DRIVE"
+  },
+  {
+    "EQUIPMENT": "BUBBLE CAGE",
+    "AE- 1870": "6 SEGMENT - MOTORIZED",
+    "AE- 2125": "9 SEGMENT - MOTORIZED",
+    "AE - 2370": "9 SEGMENT - MOTORIZED",
+    "AE - 2625": "9 SEGMENT - MOTORIZED"
+  },
+  {
+    "EQUIPMENT": "COLLAPSING FRAME",
+    "AE- 1870": "PBT ROLLERS",
+    "AE- 2125": "PBT ROLLERS",
+    "AE - 2370": "PBT ROLLERS",
+    "AE - 2625": "PBT ROLLERS"
+  },
+  {
+    "EQUIPMENT": "HAULOFF/ PLATFORM",
+    "AE- 1870": "HORIZONTAL",
+    "AE- 2125": "HORIZONTAL",
+    "AE - 2370": "HORIZONTAL",
+    "AE - 2625": "HORIZONTAL"
+  },
+  {
+    "EQUIPMENT": "ADDITIONAL NIP",
+    "AE- 1870": "CONNECTED TO WINDER",
+    "AE- 2125": "CONNECTED TO WINDER",
+    "AE - 2370": "CONNECTED TO WINDER",
+    "AE - 2625": "CONNECTED TO WINDER"
+  },
+  {
+    "EQUIPMENT": "SURFACE WINDER",
+    "AE- 1870": "SEMI AUTO / AUTO",
+    "AE- 2125": "SEMI AUTO / AUTO",
+    "AE - 2370": "SEMI AUTO / AUTO",
+    "AE - 2625": "SEMI AUTO / AUTO"
+  },
+  {
+    "EQUIPMENT": "THICKNESS",
+    "AE- 1870": "20 - 200",
+    "AE- 2125": "20 - 200",
+    "AE - 2370": "20 - 200",
+    "AE - 2625": "20 - 200"
+  },
+  {
+    "EQUIPMENT": "VARIATION",
+    "AE- 1870": "+/- 8% OR +/- 4 MICRON @ 90%",
+    "AE- 2125": "+/- 8% OR +/- 4 MICRON @ 90%",
+    "AE - 2370": "+/- 8% OR +/- 4 MICRON @ 90%",
+    "AE - 2625": "+/- 8% OR +/- 4 MICRON @ 90%"
+  },
+  {
+    "EQUIPMENT": "MAIN NIP DRIVE",
+    "AE- 1870": "3 HP",
+    "AE- 2125": "3 HP",
+    "AE - 2370": "5 HP",
+    "AE - 2625": "5 HP"
+  },
+  {
+    "EQUIPMENT": "LINE SPEED",
+    "AE- 1870": "8 - 80 MPM",
+    "AE- 2125": "8 - 80 MPM",
+    "AE - 2370": "8 - 80 MPM",
+    "AE - 2625": "8 - 80 MPM"
+  },
+  {
+    "EQUIPMENT": "TRIM BLOWER",
+    "AE- 1870": "INCLUDED",
+    "AE- 2125": "INCLUDED",
+    "AE - 2370": "INCLUDED",
+    "AE - 2625": "INCLUDED"
+  },
+  {
+    "EQUIPMENT": "WINDER DRIVE",
+    "AE- 1870": "2 HP",
+    "AE- 2125": "3 HP",
+    "AE - 2370": "3 HP",
+    "AE - 2625": "3 HP"
+  },
+  {
+    "EQUIPMENT": "ROLL CAPACITY",
+    "AE- 1870": "600 KG / 1000 MM DIA",
+    "AE- 2125": "600 KG / 1000 MM DIA",
+    "AE - 2370": "600 KG / 1000 MM DIA",
+    "AE - 2625": "600 KG / 1000 MM DIA"
+  },
+  {
+    "EQUIPMENT": "CONTROL PANEL",
+    "AE- 1870": "PID TEMP. CONTROLLER",
+    "AE- 2125": "PID TEMP. CONTROLLER",
+    "AE - 2370": "PID TEMP. CONTROLLER",
+    "AE - 2625": "PID TEMP. CONTROLLER"
+  },
+  {
+    "EQUIPMENT": "TOTAL CONNECTED LOAD",
+    "AE- 1870": "227 KW",
+    "AE- 2125": "225 - 260 KW",
+    "AE - 2370": "262 KW",
+    "AE - 2625": "300 KW"
+  },
+  {
+    "EQUIPMENT": "OVERALL DIMENSIONS",
+    "AE- 1870": "15 M L * 8 M W* 12 M H",
+    "AE- 2125": "15 M L * 8 M W* 13 M H",
+    "AE - 2370": "15 M L * 8 M W* 13 M H",
+    "AE - 2625": "15 M L * 8 M W* 14 M H"
+  },
+  {
+    "EQUIPMENT": "OUTPUT",
+    "AE- 1870": "180-200 & 200-240 KG/HR",
+    "AE- 2125": "250 - 350 KG/HR",
+    "AE - 2370": "270-350 KG/HR",
+    "AE - 2625": "500-600 KG/HR"
+  },
+  {
+    "EQUIPMENT": "TENSION CONTROL",
+    "AE- 1870": "TORQUE/DANCER/LOADCELL",
+    "AE- 2125": "TORQUE/DANCER/LOADCELL",
+    "AE - 2370": "TORQUE/DANCER/LOADCELL",
+    "AE - 2625": "TORQUE/DANCER/LOADCELL"
+  },
+  {
+    "EQUIPMENT": "POWER CONSUMPTION",
+    "AE- 1870": "0.38 kW/KG/HR",
+    "AE- 2125": "0.38 kW/KG/HR",
+    "AE - 2370": "0.38 kW/KG/HR",
+    "AE - 2625": "0.38 kW/KG/HR"
+  }
+]

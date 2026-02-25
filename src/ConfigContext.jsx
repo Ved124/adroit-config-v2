@@ -1613,8 +1613,8 @@ export function ConfigProvider({ children }) {
       const pdfBlob = await html2pdf().from(element).set({
         margin: 0,
         filename: 'flyer.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        image: { type: 'jpeg', quality: 0.90 },
+        html2canvas: { scale: 1.5, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }).outputPdf('blob');
 

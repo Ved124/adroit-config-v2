@@ -52,13 +52,11 @@ export const ConfigContext = createContext(null);
 
 export const COMPANY = {
   name: "Adroit Extrusion Tech Pvt. Ltd.",
-  addressLine1: "Unit 1: Survey 822, Village Bhumapura, Ahmedabad",
-  addressLine2:
-    "Unit 2: 75/A, Akshar Industrial Park, B/H. Amba Estate, Near Hathijan Circle, Vatva, GIDC, Phase-4, Ahmedabad-382445, India",
+  addressLine1: "Unit 1: Survey 822, Village Bhumapura, Ahmedabad - Mahemdavad Road, Gujarat",
+  addressLine2: "Unit 2: 75/A, Akshar Industrial Park, Vatva, GIDC Phase-4, Ahmedabad",
   phone1: "+91 8758665507",
-  phone2: "+91 9925143048",
-  email: "info@adroiteextrusion.com",
-  website: "adroiteextrusion.com",
+  email: "info@adroitextrusion.com",
+  website: "adroitextrusion.com",
 };
 
 const STORAGE_KEY = "adroit_configurator_v4";
@@ -107,7 +105,9 @@ export const ADDONS_DATA = {
 export function ConfigProvider({ children }) {
   const toast = useToast();
 
-  const [customer, setCustomer] = useState({});
+  const [customer, setCustomer] = useState({
+    quotationRef: "Loading..." // Temporary initial state
+  });
   const [machineType, setMachineTypeState] = useState("mono"); // "mono" | "aba" | "3layer" | "5layer"
   const [selected, setSelected] = useState([]);               // base components
   const [selectedAddons, setSelectedAddons] = useState([]);   // optional add-ons
@@ -165,65 +165,68 @@ export function ConfigProvider({ children }) {
   // ---------------- LOAD / SAVE TO LOCAL STORAGE ----------------
 
   useEffect(() => {
+    let savedData = null;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        if (data.customer) setCustomer(data.customer);
-        if (typeof data.machineType === "string") setMachineTypeState(data.machineType);
-        else setMachineTypeState("mono");
-        if (Array.isArray(data.selected)) setSelected(data.selected);
-        if (Array.isArray(data.selectedAddons)) setSelectedAddons(data.selectedAddons);
-        if (typeof data.discount === "number") setDiscount(data.discount);
-        if (typeof data.markup === "number") setMarkup(data.markup);
-        if (typeof data.machineModelIndex === "number") {
-          setMachineModelIndex(data.machineModelIndex);
-        }
-        if (typeof data.selectedMachineModelLabel === "string") {
-          setSelectedMachineModelLabel(data.selectedMachineModelLabel);
-        }
-        if (typeof data.customMode === "boolean") {
-          setCustomMode(data.customMode);
-        }
-      }
-
-      // AUTO GENERATE REF IF MISSING
-      setCustomer((prev) => {
-        if (!prev.quotationRef) {
-          const newRef = generateNextQuotationRef();
-          return { ...prev, quotationRef: newRef, ref: newRef };
-        }
-        return prev;
-      });
-
+      if (raw) savedData = JSON.parse(raw);
     } catch (e) {
-      console.warn("Failed to read storage:", e);
-    } finally {
-      setIsLoaded(true);
+      console.warn("Storage Load Error", e);
     }
+
+    if (savedData && savedData.customer && savedData.customer.quotationRef) {
+      // 1. Existing data found? Use it.
+      setCustomer(savedData.customer);
+      if (typeof savedData.machineType === "string") setMachineTypeState(savedData.machineType);
+      else setMachineTypeState("mono");
+      if (Array.isArray(savedData.selected)) setSelected(savedData.selected);
+      if (Array.isArray(savedData.selectedAddons)) setSelectedAddons(savedData.selectedAddons);
+      if (typeof savedData.discount === "number") setDiscount(savedData.discount);
+      if (typeof savedData.markup === "number") setMarkup(savedData.markup);
+      if (typeof savedData.machineModelIndex === "number") {
+        setMachineModelIndex(savedData.machineModelIndex);
+      }
+      if (typeof savedData.selectedMachineModelLabel === "string") {
+        setSelectedMachineModelLabel(savedData.selectedMachineModelLabel);
+      }
+      if (typeof savedData.customMode === "boolean") {
+        setCustomMode(savedData.customMode);
+      }
+    } else {
+      // 2. New Session? GENERATE A NEW NUMBER
+      const newRef = generateNextQuotationRef();
+      console.log("INITIAL ID GENERATED:", newRef);
+      setCustomer((prev) => ({
+        ...prev,
+        ...savedData?.customer, // keep partial details if any
+        quotationRef: newRef,
+        ref: newRef
+      }));
+    }
+    setIsLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (!isLoaded) return; // Don't save until we've tried to load
-
-    try {
-      const payload = {
-        customer,
-        machineType,
-        selected,
-        selectedAddons,
-        discount,
-        markup,
-        machineModelIndex,
-        selectedMachineModelLabel,
-        customMode,
-        savedAt: new Date().toISOString(),
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    } catch (e) {
-      console.warn("Failed to save storage:", e);
+    // Only save if we actually have data (avoid overwriting on first render)
+    if (customer.quotationRef !== "Loading...") {
+      try {
+        const payload = {
+          customer,
+          machineType,
+          selected,
+          selectedAddons,
+          discount,
+          markup,
+          machineModelIndex,
+          selectedMachineModelLabel,
+          customMode,
+          savedAt: new Date().toISOString(),
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (e) {
+        console.warn("Failed to save storage:", e);
+      }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, isLoaded]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode]);
 
 
   // ---------------- MACHINE TYPE ----------------
@@ -2065,28 +2068,42 @@ export function ConfigProvider({ children }) {
 
 
   function resetAll() {
+    // 1. Clear saved state
     localStorage.removeItem(STORAGE_KEY);
 
-    // Generate a NEW unique number
-    const newRef = generateNextQuotationRef();
+    // 2. Generate NEXT Reference Number
+    const nextRef = generateNextQuotationRef();
+    console.log("RESETTING - NEW REF:", nextRef); // Debug log
 
+    // 3. Set Fresh State (With Ref pre-filled)
     setCustomer({
-      quotationRef: newRef,
-      ref: newRef,
+      name: "",
+      company: "",
+      phone: "",
+      email: "",
+      address: "",
+      city: "",
+      state: "",
+      gst: "",
+      quotationRef: nextRef, // IMPORTANT
+      ref: nextRef,          // Backup key for legacy
       unlocked: false
     });
-    setMachineTypeState("mono");
+
+    // 4. Reset Config
+    setSelected([]);
+    setSelectedAddons([]);
+    setMachineTypeState(null);
     setMachineModelIndex(null);
     setSelectedMachineModelLabel("");
     setCustomMode(false);
-    setSelected([]);
-    setSelectedAddons([]);
     setDiscount(0);
     setMarkup(0);
+
     toast.push({
       title: "New Quotation Started",
-      description: `Ref Generated: ${newRef}`,
-      variant: "info",
+      description: `Ref Generated: ${nextRef}`,
+      variant: "success",
     });
   }
 

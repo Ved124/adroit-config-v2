@@ -12,10 +12,26 @@ export default function CustomerPage() {
   const router = useRouter();
   const { push } = useToast();
 
+  // Handle manual input changes
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    // Map id to customer state keys
+    const keyMap = {
+      'cust-name': 'name',
+      'cust-company': 'company',
+      'cust-phone': 'phone',
+      'cust-email': 'email',
+      'cust-address': 'address',
+      'cust-city': 'city',
+      'cust-state': 'state',
+      'cust-gst': 'gst'
+    };
+    const key = keyMap[id] || id;
+    setCustomer((prev) => ({ ...prev, [key]: value }));
+  };
+
   function handleReset() {
-    resetAll();
-    setCustomer({ name: '', company: '', phone: '', gst: '', email: '', city: '', address: '', state: '' });
-    push({ title: 'Configuration reset', variant: 'info' });
+    resetAll(); // Context's resetAll already clears state and generates a NEW ref
   }
 
   function handleNext() {
@@ -38,45 +54,40 @@ export default function CustomerPage() {
           <form className="grid grid-cols-1 md:grid-cols-2 gap-5" onSubmit={e => { e.preventDefault(); handleNext(); }}>
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-name" className="text-sm font-medium text-slate-700">Name <span className="text-red-600">*</span></label>
-              <input id="cust-name" value={customer.name || ''} onChange={e => setCustomer({ ...customer, name: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder=" " required />
+              <input id="cust-name" value={customer.name || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="Enter client name" required />
             </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-500">Quotation Ref No.</label>
-              <div className="flex gap-2">
-                <input
-                  value={customer.quotationRef || ""}
-                  disabled // Auto-generated
-                  className="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2 font-mono text-sm font-bold text-gray-700"
-                />
-              </div>
+            <div className="flex flex-col gap-1 mb-4">
+              <label className="text-sm font-medium text-gray-500">Quotation Ref No. (Auto)</label>
+              <input
+                type="text"
+                value={customer.quotationRef || customer.ref || ""}
+                readOnly // User cannot type here, it is automatic
+                className="w-full bg-gray-100 border border-gray-300 text-gray-700 rounded-xl px-3 py-2 text-sm font-mono font-bold tracking-wider cursor-not-allowed"
+              />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-company" className="text-sm font-medium text-slate-700">Company <span className="text-red-600">*</span></label>
-              <input id="cust-company" value={customer.company || ''} onChange={e => setCustomer({ ...customer, company: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="" required />
+              <input id="cust-company" value={customer.company || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="Client company" required />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-phone" className="text-sm font-medium text-slate-700">Phone <span className="text-red-600">*</span></label>
-              <input id="cust-phone" value={customer.phone || ''} onChange={e => setCustomer({ ...customer, phone: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="" required />
+              <input id="cust-phone" value={customer.phone || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="Contact number" required />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-email" className="text-sm font-medium text-slate-700">Email</label>
-              <input id="cust-email" type="email" value={customer.email || ''} onChange={e => setCustomer({ ...customer, email: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="name@example.com" />
+              <input id="cust-email" type="email" value={customer.email || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="name@example.com" />
             </div>
             <div className="md:col-span-2 flex flex-col gap-1">
               <label htmlFor="cust-address" className="text-sm font-medium text-slate-700">Address</label>
-              <textarea id="cust-address" value={customer.address || ''} onChange={e => setCustomer({ ...customer, address: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm h-24 focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900 resize-none" placeholder="Full mailing address" />
+              <textarea id="cust-address" value={customer.address || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm h-24 focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900 resize-none" placeholder="Full mailing address" />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-city" className="text-sm font-medium text-slate-700">City</label>
-              <input id="cust-city" value={customer.city || ''} onChange={e => setCustomer({ ...customer, city: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="" />
+              <input id="cust-city" value={customer.city || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="City" />
             </div>
-            {/* <div className="flex flex-col gap-1">
-              <label htmlFor="cust-gst" className="text-sm font-medium">GST</label>
-              <input id="cust-gst" value={customer.gst || ''} onChange={e=>setCustomer({...customer,gst:e.target.value})} className="rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400" />
-            </div> */}
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-state" className="text-sm font-medium text-slate-700">State / Country</label>
-              <input id="cust-state" value={customer.state || ''} onChange={e => setCustomer({ ...customer, state: e.target.value })} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" />
+              <input id="cust-state" value={customer.state || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="State / Country" />
             </div>
           </form>
           <div className="mt-8 flex flex-wrap gap-3">

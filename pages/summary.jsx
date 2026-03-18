@@ -521,15 +521,64 @@ export default function SummaryPage() {
             <button
               onClick={async () => {
                 const el = quotationRef.current;
-                if (!el) { alert("Ref error"); return; }
-                const html2pdf = (await import("html2pdf.js")).default;
-                await html2pdf().set({
-                  margin: 0,
-                  filename: `Quotation_${customer?.quotationRef || "Draft"}.pdf`,
-                  image: { type: "jpeg", quality: 0.98 },
-                  html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 },
-                  jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-                }).from(el).save();
+                if (!el) { alert("Ref error - ref is null"); return; }
+
+                // Wait for all images to fully load (letterhead is base64 so instant,
+                // but component images from /images/ need time)
+                const allImgs = Array.from(el.querySelectorAll("img"));
+                await Promise.all(allImgs.map(img =>
+                  img.complete ? Promise.resolve() :
+                    new Promise(res => { img.onload = res; img.onerror = res; })
+                ));
+
+                // Small settle delay for layout
+                await new Promise(r => setTimeout(r, 200));
+
+                const html2canvas = (await import("html2canvas")).default;
+                const { jsPDF } = await import("jspdf");
+
+                // Each page div is 794x1123px
+                const PAGE_W_PX = 794;
+                const PAGE_H_PX = 1123;
+                const A4_W_MM = 210;
+                const A4_H_MM = 297;
+                const SCALE = 2;
+
+                // Get all page divs (they have pageBreakAfter style)
+                const pageDivs = Array.from(el.children[0]?.children || []).filter(
+                  c => c.style && (c.style.pageBreakAfter || c.style.breakAfter)
+                );
+                // Fallback: treat the whole root as one page
+                const pageList = pageDivs.length > 0 ? pageDivs : [el];
+
+                const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+
+                for (let i = 0; i < pageList.length; i++) {
+                  const pageEl = pageList[i];
+
+                  // Get element's position relative to viewport
+                  const rect = pageEl.getBoundingClientRect();
+
+                  const canvas = await html2canvas(pageEl, {
+                    scale: SCALE,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: "#ffffff",
+                    logging: false,
+                    width: PAGE_W_PX,
+                    height: PAGE_H_PX,
+                    windowWidth: PAGE_W_PX,
+                    windowHeight: PAGE_H_PX,
+                    x: 0,
+                    y: 0,
+                  });
+
+                  const imgData = canvas.toDataURL("image/jpeg", 0.95);
+                  if (i > 0) pdf.addPage();
+                  pdf.addImage(imgData, "JPEG", 0, 0, A4_W_MM, A4_H_MM);
+                }
+
+                pdf.save(`Quotation_${customer?.quotationRef || "Draft"}.pdf`);
                 setShowPdfPreview(false);
                 if (window.confirm("Save the data?")) exportJsonOnly();
               }}

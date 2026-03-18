@@ -115,6 +115,7 @@ export function ConfigProvider({ children }) {
   const [markup, setMarkup] = useState(0);
   const [showMarkupField, setShowMarkupField] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
+  const [customOutput, setCustomOutput] = useState("");
 
 
   const [components] = useState(COMPONENTS_DATA);
@@ -191,6 +192,9 @@ export function ConfigProvider({ children }) {
       if (typeof savedData.customMode === "boolean") {
         setCustomMode(savedData.customMode);
       }
+      if (typeof savedData.customOutput === "string") {
+        setCustomOutput(savedData.customOutput);
+      }
     } else {
       // 2. New Session? GENERATE A NEW NUMBER
       const newRef = generateNextQuotationRef();
@@ -219,6 +223,7 @@ export function ConfigProvider({ children }) {
           machineModelIndex,
           selectedMachineModelLabel,
           customMode,
+          customOutput,
           savedAt: new Date().toISOString(),
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -226,7 +231,7 @@ export function ConfigProvider({ children }) {
         console.warn("Failed to save storage:", e);
       }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput]);
 
 
   // ---------------- MACHINE TYPE ----------------
@@ -538,32 +543,37 @@ export function ConfigProvider({ children }) {
 
 
   function computePriceSummary() {
+    // 1. Calculate Standard Components Total
     const basicTotal = selected.reduce(
-      (sum, item) => sum + (Number(item.price) || 0) * (Number(item.qty) || 1),
+      (sum, item) => sum + (item.price || 0) * (item.qty || 1),
       0
     );
+
+    // 2. Calculate Optional Addons Total
     const addonsTotal = selectedAddons.reduce(
-      (sum, item) => sum + (Number(item.price) || 0) * (Number(item.qty) || 1),
+      (sum, item) => sum + (item.price || 0) * (item.qty || 1),
       0
     );
-    const beforeMargin = basicTotal + addonsTotal;
+
+    // 3. Margin & Discount Logic (Apply ONLY to Basic Scope as requested)
+    const beforeMargin = basicTotal;
 
     const withMarkup =
       markup && markup > 0
-        ? beforeMargin * (1 + Number(markup) / 100)
+        ? beforeMargin * (1 + markup / 100)
         : beforeMargin;
 
     const afterDiscount =
       discount && discount > 0
-        ? withMarkup * (1 - Number(discount) / 100)
+        ? withMarkup * (1 - discount / 100)
         : withMarkup;
 
     return {
       basicTotal,
-      addonsTotal,
+      addonsTotal, // Kept separate
       beforeMargin,
       withMarkup,
-      afterDiscount,
+      afterDiscount, // This is now your Final Price (Main Scope Only)
     };
   }
 
@@ -759,7 +769,7 @@ export function ConfigProvider({ children }) {
           "High Quality Monolayer / ABA / Three Layer Film",
         max_pumping_capacity:
           machineDetails.outputKgHr || safeCustomer.maxPump || "",
-        max_output: safeCustomer.maxOutput || "",
+        max_output: customOutput || safeCustomer.maxOutput || "As per screw design",
       },
 
       prepared_by: "Urveesh Jepaliya",
@@ -1550,34 +1560,25 @@ export function ConfigProvider({ children }) {
 
 
 
-  // -------------------------------------------------------------
-  // KIOSK FUNCTION: Silent Save (JSON+PDF) -> Generate QR
-  // -------------------------------------------------------------
   async function generateKioskQR(setQrUrlState) {
     const loadingToast = toast.push({ title: "Processing...", variant: "loading", persist: true });
 
     try {
-      // 1. Prepare Full Data Payload
-      // This grabs your current React State: Customer, Machine, Items selected
-      const contextData = buildWordContext();
+      const data = buildWordContext();
 
-      // Ensure specific "KioskFlyer" structure works with mapping
-      // Map basic state directly if buildWordContext misses anything
-      const payloadData = {
-        ...contextData,
-        raw_state: {
-          customer, // Directly from your useState variables
-          machineType,
-          selected,
-          selectedAddons,
-          pricing: computePriceSummary()
+      // CRITICAL FIX: Explicitly ensure customer data is attached from current State
+      // because sometimes 'buildWordContext' might use stale data or map keys differently.
+      const robustData = {
+        ...data,
+        customer: {
+          ...data.customer,
+          company: customer.company || data.customer.company_name || "",
+          city: customer.city || ""
         }
       };
 
-      // 2. Load PDF Lib dynamically
       const html2pdf = (await import("html2pdf.js")).default;
 
-      // 3. Render invisible KioskFlyer to DOM
       const container = document.createElement("div");
       container.style.position = "fixed";
       container.style.left = "-10000px";
@@ -1586,17 +1587,15 @@ export function ConfigProvider({ children }) {
 
       const root = createRoot(container);
 
-      // Promise Wrapper to ensure Render + Images complete
       await new Promise(resolve => {
         root.render(
           <KioskFlyer
-            data={contextData}
+            data={robustData} // Use the robust data
             ref={(el) => {
               if (!el) return;
-              // Wait for images
               const imgs = el.querySelectorAll('img');
-              let loaded = 0;
               if (imgs.length === 0) resolve();
+              let loaded = 0;
               const check = () => { if (++loaded >= imgs.length) resolve(); };
               imgs.forEach(i => {
                 if (i.complete) check();
@@ -1608,57 +1607,40 @@ export function ConfigProvider({ children }) {
       });
 
       const element = container.querySelector("#kiosk-flyer-root");
-
-      // 4. Generate PDF Blob
       const pdfBlob = await html2pdf().from(element).set({
         margin: 0,
         filename: 'flyer.pdf',
-        image: { type: 'jpeg', quality: 0.90 },
-        html2canvas: { scale: 1.5, useCORS: true },
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }).outputPdf('blob');
 
-      // 5. Read Blob & Upload to Server (PDF + JSON)
       const reader = new FileReader();
       reader.readAsDataURL(pdfBlob);
-
       reader.onloadend = async () => {
         const base64data = reader.result;
-
         try {
-          // --- SEND TO API ---
           const res = await fetch('/api/save-kiosk', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              pdfBase64: base64data,
-              fullContextData: payloadData // <--- Sending full config to save as JSON
-            })
+            body: JSON.stringify({ pdfBase64: base64data, fullContextData: robustData })
           });
-
-          const response = await res.json();
-
-          if (response.success && response.url) {
-            // SUCCESS: Open the Modal
+          const json = await res.json();
+          if (json.url) {
             toast.dismiss(loadingToast);
-            if (setQrUrlState) setQrUrlState(response.url);
-          } else {
-            throw new Error("Server response missing URL");
+            if (setQrUrlState) setQrUrlState(json.url);
           }
-
-        } catch (e) {
-          console.error(e);
-          toast.dismiss(loadingToast);
-          toast.push({ title: "Failed", description: "Server save failed", variant: "error" });
-        } finally {
-          // Cleanup DOM
-          root.unmount();
-          if (document.body.contains(container)) document.body.removeChild(container);
+        } catch (e) { console.error(e); }
+        finally {
+          setTimeout(() => {
+            root.unmount();
+            if (document.body.contains(container)) document.body.removeChild(container);
+          }, 100);
         }
       };
 
     } catch (err) {
-      console.error("Kiosk Generation Error", err);
+      console.error("Error", err);
       toast.dismiss(loadingToast);
     }
   }
@@ -2099,6 +2081,7 @@ export function ConfigProvider({ children }) {
     setCustomMode(false);
     setDiscount(0);
     setMarkup(0);
+    setCustomOutput("");
 
     toast.push({
       title: "New Quotation Started",
@@ -2126,6 +2109,8 @@ export function ConfigProvider({ children }) {
     setDiscount,
     markup,
     setMarkup,
+    customOutput,
+    setCustomOutput,
     computePriceSummary,
 
     // machine selection

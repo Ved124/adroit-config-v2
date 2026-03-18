@@ -1,14 +1,39 @@
 import fs from 'fs';
 import path from 'path';
 import { put } from '@vercel/blob';
-import ip from 'ip';
+import os from 'os'; // Use OS to check network interfaces
 
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '50mb', // Handle large PDFs locally
+      sizeLimit: '25mb',
     },
   },
+};
+
+// HELPER: Smartly find the WiFi IP, ignoring WSL/Docker IPs
+const getNetworkIP = () => {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // Skip internal (localhost) and IPv6
+      if (iface.family === 'IPv4' && !iface.internal) {
+        // Prioritize standard Wi-Fi router ranges (192.168...)
+        if (iface.address.startsWith('192.168')) {
+          return iface.address;
+        }
+      }
+    }
+  }
+  // Fallback: If no 192.168 found, just grab the first non-internal one
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
 };
 
 export default async function handler(req, res) {
@@ -16,52 +41,48 @@ export default async function handler(req, res) {
 
   try {
     const { pdfBase64, fullContextData } = req.body;
-    
-    // --- 1. CONFIGURATION ---
-    // Check if we are on Vercel using the Environment Variable they provide
-    const IS_VERCEL_ENV = process.env.VERCEL === '1'; 
-    const HAS_BLOB_TOKEN = !!process.env.BLOB_READ_WRITE_TOKEN;
-    
-    // Determine filenames
-    const company = fullContextData?.customer?.company || 'Visitor';
+
+    // Naming Logic
+    const company = fullContextData?.customer?.company || fullContextData?.raw_state?.customer?.company || 'Visitor';
     const safeName = company.replace(/[^a-z0-9]/gi, '_').toLowerCase().slice(0, 30);
     const timestamp = Date.now();
     const pdfName = `adroit_${safeName}_${timestamp}.pdf`;
+    const jsonName = `adroit_${safeName}_${timestamp}.json`;
 
+    // 1. BUFFER PREP
     const pdfBuffer = Buffer.from(pdfBase64.replace(/^data:application\/pdf;base64,/, ""), 'base64');
+    const jsonBuffer = Buffer.from(JSON.stringify(fullContextData, null, 2), 'utf-8');
 
-    // --- 2. CLOUD MODE (Priority on Vercel) ---
-    if (IS_VERCEL_ENV) {
-      if (!HAS_BLOB_TOKEN) {
-        throw new Error("Vercel Blob Storage not connected. Go to Vercel > Storage > Connect Blob.");
-      }
+    // 2. CHECK MODE
+    const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+    const VERCEL_ENV = process.env.VERCEL;
 
-      console.log("Uploading to Vercel Blob...");
-      const blob = await put(`downloads/${pdfName}`, pdfBuffer, {
-        access: 'public',
-        contentType: 'application/pdf',
-      });
-      
-      return res.status(200).json({ success: true, url: blob.url });
+    if (BLOB_TOKEN && VERCEL_ENV) {
+      // === CLOUD MODE ===
+      const blob = await put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' });
+      await put(`data/${jsonName}`, jsonBuffer, { access: 'public', contentType: 'application/json' });
+      return res.status(200).json({ url: blob.url, mode: 'cloud' });
+    } else {
+      // === LOCAL OFFLINE MODE ===
+      const downloadDir = path.join(process.cwd(), 'public', 'downloads');
+      if (!fs.existsSync(downloadDir)) fs.mkdirSync(downloadDir, { recursive: true });
+
+      fs.writeFileSync(path.join(downloadDir, pdfName), pdfBuffer);
+      fs.writeFileSync(path.join(downloadDir, jsonName), jsonBuffer);
+
+      // GET SMART IP
+      const networkIp = getNetworkIP();
+      const protocol = req.headers['x-forwarded-proto'] || 'http';
+      const port = req.headers.host.split(':')[1] || '3000';
+
+      const fileUrl = `${protocol}://${networkIp}:${port}/downloads/${pdfName}`;
+
+      console.log("Local PDF generated:", fileUrl); // Check terminal to verify
+      return res.status(200).json({ url: fileUrl, mode: 'local' });
     }
 
-    // --- 3. LOCAL MODE (Offline / Laptop) ---
-    console.log("Saving Locally...");
-    const downloadDir = path.join(process.cwd(), 'public', 'downloads');
-    if (!fs.existsSync(downloadDir)) fs.mkdirSync(downloadDir, { recursive: true });
-
-    fs.writeFileSync(path.join(downloadDir, pdfName), pdfBuffer);
-
-    // Get Local IP
-    const networkIp = ip.address();
-    const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const port = req.headers.host.split(':')[1] || '3000';
-    
-    const fileUrl = `${protocol}://${networkIp}:${port}/downloads/${pdfName}`;
-    return res.status(200).json({ success: true, url: fileUrl });
-
   } catch (err) {
-    console.error("Save API Error:", err);
-    res.status(500).json({ error: err.message || 'Server processing failed' });
+    console.error("Save Error:", err);
+    res.status(500).json({ error: 'Processing failed' });
   }
 }

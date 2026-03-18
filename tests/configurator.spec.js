@@ -9,7 +9,7 @@ test('E2E Configurator Flow & PDF Generation', async ({ page }) => {
 
     // --- Step 1: Visit & Fill Customer Data ---
     await page.goto('/');
-    await expect(page.locator('h1')).toContainText('Machine Configurator', { timeout: 20000 });
+    await expect(page.locator('span:has-text("Machine Configurator")').first()).toBeVisible({ timeout: 20000 });
 
     await page.locator('#cust-name').fill('Playwright Test User');
     await page.locator('#cust-company').fill('Adroit Test Corp');
@@ -49,7 +49,7 @@ test('E2E Configurator Flow & PDF Generation', async ({ page }) => {
     await expect(page).toHaveURL(/.*\/summary/);
 
     console.log("Triggering PDF Generation...");
-    const pdfBtn = page.locator('button:has-text("Download Pro PDF")');
+    const pdfBtn = page.locator('button:has-text("Download Official PDF")');
     await expect(pdfBtn).toBeVisible();
 
     // Use force:true to click even if toast/overlays are covering it slightly

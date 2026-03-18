@@ -1,235 +1,159 @@
 import React, { forwardRef } from "react";
 
-// --- CONFIG ---
+// COLORS
 const C = {
-    RED: "#d71921",
-    DARK: "#0F172A",      // Darker Navy for high contrast text
-    GRAY_HEADER: "#1e293b",
-    BG_GRAY: "#f1f5f9",
-    BORDER: "#cbd5e1",
+    RED: "#D71921",
+    DARK: "#111827",
+    BG_GRAY: "#F8FAFC",
+    BORDER: "#CBD5E1"
 };
 
-const formatCurrency = (amount) => {
-    if (!amount) return "₹ 0/-";
-    return "₹ " + Number(amount).toLocaleString('en-IN', {
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0
-    }) + "/-";
-};
+const formatCurrency = (val) => "₹ " + Number(val || 0).toLocaleString('en-IN') + "/-";
 
-// Safe Image to prevent crashes
-const SafeImage = ({ src, className, style }) => (
+const SafeImage = ({ src, style }) => (
     <img
         src={src || "/images/machines/three_layer.png"}
-        className={className}
-        style={style}
-        alt="machine"
-        crossOrigin="anonymous"
-        onError={(e) => { e.target.style.opacity = 0; }}
+        style={{ ...style, display: "block" }}
+        alt="" crossOrigin="anonymous" onError={(e) => { e.target.style.opacity = 0; }}
     />
 );
 
-// --- PAGINATION LOGIC (Fits 18 items cleanly on Page 1) ---
-const splitItemsForLayout = (items) => {
-    const PAGE_1_MAX = 18;
-    const PAGE_N_MAX = 25;
-
-    if (items.length <= PAGE_1_MAX) return [items];
-
-    const pages = [];
-    pages.push(items.slice(0, PAGE_1_MAX));
-
-    let remaining = items.slice(PAGE_1_MAX);
-    while (remaining.length > 0) {
-        pages.push(remaining.slice(0, PAGE_N_MAX));
-        remaining = remaining.slice(PAGE_N_MAX);
-    }
-    return pages;
-};
-
 export const KioskFlyer = forwardRef(({ data }, ref) => {
-    const { customer = {}, machine = {}, pricing = {}, quotation = {} } = data;
-    const machineDetails = data.machine_details || data.machineDetails || {};
+    const { customer = {}, machine = {}, pricing = {}, quotation = {} } = data || {};
+    const machineDetails = data?.machine_details || data?.machineDetails || {};
 
-    const d = new Date();
-    const dateStr = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
-    const refNo = quotation.ref_no || `K/QT-${d.getTime().toString().slice(-6)}`;
+    const refNo = quotation.ref_no || "KIOSK-DRAFT";
+    const dateStr = new Date().toLocaleDateString("en-IN");
 
-    const allItems = [...(data.components || []), ...(data.optional_items || [])];
-    const pages = splitItemsForLayout(allItems);
+    // Data Logic
+    const components = Array.isArray(data?.components) ? data.components : [];
+    const optionals = Array.isArray(data?.optional_items) ? data.optional_items : [];
 
-    const companyName = customer.company || customer.company_name || "VALUED VISITOR";
-    const machineImg = machineDetails.machineImagePath || machineDetails.image || "/images/machines/three_layer.png";
+    const topItems = components.slice(0, 14);
+    const extraCount = Math.max(0, components.length - 14);
 
-    // Font Styles - "Helvetica" is the gold standard for crisp PDF rendering
-    const BASE_STYLE = {
-        fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-        lineHeight: "1.4",
-        color: "#222"
-    };
+    // LOGIC FIX: Check both 'company' and 'company_name' to ensure it's not empty
+    let companyDisplay = "VISITOR";
+    if (customer.company && customer.company.length > 1) companyDisplay = customer.company;
+    else if (customer.company_name && customer.company_name.length > 1) companyDisplay = customer.company_name;
 
     return (
-        <div ref={ref} id="kiosk-flyer-root">
-            {pages.map((chunk, pageIndex) => {
-                const isFirst = pageIndex === 0;
-                const isLast = pageIndex === pages.length - 1;
-                const isMultiPage = pages.length > 1;
+        <div ref={ref} id="kiosk-flyer-root" style={{
+            width: "210mm", height: "297mm",
+            background: "white", color: "#333", fontFamily: "Arial, sans-serif",
+            position: "relative", overflow: "hidden", margin: 0, padding: 0
+        }}>
 
-                return (
-                    <div key={pageIndex} className="bg-white print-page" style={{
-                        width: "210mm",
-                        height: "296.5mm",
-                        position: "relative",
-                        background: "white",
-                        overflow: "hidden",
-                        display: "flex",
-                        flexDirection: "column",
-                        pageBreakAfter: "always",
-                        boxSizing: "border-box",
-                        ...BASE_STYLE
-                    }}>
+            {/* HEADER */}
+            <div style={{ height: "90px", borderBottom: `4px solid ${C.RED}`, padding: "0 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ width: "200px" }}>
+                    <SafeImage src="/images/logo.jpg" style={{ height: "50px", objectFit: "contain" }} />
+                </div>
+                <div style={{ textAlign: "right" }}>
+                    <h2 style={{ fontSize: "16px", fontWeight: "900", color: C.RED, margin: 0, textTransform: "uppercase" }}>Budgetary Offer</h2>
+                    <p style={{ fontSize: "11px", fontWeight: "bold", color: "#888", margin: "5px 0 0 0" }}>{refNo} &nbsp;|&nbsp; {dateStr}</p>
+                </div>
+            </div>
 
-                        {/* --- HEADER --- */}
-                        <div style={{ height: "70px", padding: "0 35px", borderBottom: `4px solid ${C.RED}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                            <div style={{ width: "180px" }}>
-                                <SafeImage src="/images/logo.jpg" style={{ height: "40px", objectFit: "contain" }} />
-                            </div>
-                            <div style={{ textAlign: "right" }}>
-                                <div style={{ fontSize: "14px", fontWeight: "800", color: C.RED, textTransform: "uppercase", letterSpacing: "1px" }}>Budgetary Offer</div>
-                                <div style={{ fontSize: "10px", color: "#64748b", fontWeight: "600", fontFamily: "Arial" }}>{refNo} | {dateStr}</div>
-                            </div>
-                        </div>
+            {/* HERO SECTION */}
+            <div style={{ background: C.BG_GRAY, padding: "20px 40px", borderBottom: `1px solid ${C.BORDER}`, display: "flex", height: "220px" }}>
 
-                        {/* --- HERO SECTION (Only Page 1) --- */}
-                        {isFirst ? (
-                            <div style={{
-                                height: "150px",
-                                padding: "20px 35px",
-                                background: C.BG_GRAY,
-                                borderBottom: `1px solid ${C.BORDER}`,
-                                display: "flex",
-                                alignItems: "flex-start",
-                                gap: "20px"
-                            }}>
-                                {/* Client */}
-                                <div style={{ width: "55%", paddingTop: "5px" }}>
-                                    <p style={{ fontSize: "9px", color: "#94a3b8", fontWeight: "700", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "5px" }}>PREPARED FOR</p>
-                                    <div style={{ borderLeft: `4px solid ${C.RED}`, paddingLeft: "15px" }}>
-                                        <h1 style={{ fontSize: "22px", fontWeight: "900", textTransform: "uppercase", margin: 0, lineHeight: "1.1", color: C.DARK }}>
-                                            {companyName}
-                                        </h1>
-                                        {customer.city && <p style={{ fontSize: "10px", fontWeight: "700", color: "#475569", margin: "4px 0 0 0", textTransform: "uppercase" }}>{customer.city}, INDIA</p>}
-                                    </div>
-                                </div>
+                <div style={{ width: "60%" }}>
+                    <p style={{ fontSize: "9px", fontWeight: "bold", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", margin: "0 0 6px 0" }}>PREPARED FOR</p>
 
-                                {/* Machine Details & Image */}
-                                <div style={{ width: "45%", display: "flex", justifyContent: "flex-end", gap: "15px", height: "100%", alignItems: "center" }}>
-                                    <div style={{ textAlign: "right" }}>
-                                        <div style={{ fontSize: "9px", fontWeight: "700", textTransform: "uppercase", color: "#94a3b8" }}>Model</div>
-                                        <div style={{ fontSize: "14px", fontWeight: "800", color: C.DARK }}>{machine.modelCode || "AE-SERIES"}</div>
-                                        <div style={{ fontSize: "11px", fontWeight: "700", color: C.RED, textTransform: "uppercase" }}>{machine.family}</div>
-                                    </div>
-                                    <div style={{ height: "110px", width: "130px", background: "white", padding: "4px", borderRadius: "4px", border: `1px solid ${C.BORDER}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                        <SafeImage src={machineImg} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }} />
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div style={{ height: "30px", background: C.BG_GRAY, borderBottom: `1px solid ${C.BORDER}` }}></div>
+                    <div style={{ borderLeft: `5px solid ${C.RED}`, paddingLeft: "15px", marginBottom: "20px" }}>
+                        {/* FONT FIX: Reduced size from 26px to 18px */}
+                        <h1 style={{ fontSize: "14px", fontWeight: "900", color: "#000", margin: 0, lineHeight: 1.2, textTransform: "uppercase" }}>
+                            {companyDisplay}
+                        </h1>
+                        {customer.name && (
+                            <p style={{ fontSize: "11px", fontWeight: "600", color: "#555", margin: "4px 0 0 0", textTransform: "uppercase" }}>
+                                Attn: {customer.name}
+                            </p>
                         )}
-
-                        {/* --- SCOPE TABLE --- */}
-                        <div style={{ flex: 1, padding: "20px 35px", display: "flex", flexDirection: "column" }}>
-
-                            <div style={{
-                                background: C.GRAY_HEADER,
-                                color: "white",
-                                padding: "6px 12px",
-                                display: "flex",
-                                justifyContent: "space-between",
-                                fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px",
-                                borderTopLeftRadius: "3px", borderTopRightRadius: "3px"
-                            }}>
-                                <span>Equipment Configuration</span>
-                                {isMultiPage && <span style={{ opacity: 0.7 }}>Page {pageIndex + 1}</span>}
-                            </div>
-
-                            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "10px", borderLeft: `1px solid ${C.BORDER}`, borderRight: `1px solid ${C.BORDER}` }}>
-                                <thead>
-                                    <tr style={{ background: "#f8f9fa", borderBottom: `1px solid ${C.BORDER}`, color: "#475569" }}>
-                                        <th style={{ textAlign: "center", padding: "8px", width: "30px", fontWeight: "800", borderRight: `1px solid ${C.BORDER}` }}>#</th>
-                                        <th style={{ textAlign: "left", padding: "8px 12px", fontWeight: "800" }}>DESCRIPTION</th>
-                                        <th style={{ textAlign: "center", padding: "8px", width: "60px", fontWeight: "800", borderLeft: `1px solid ${C.BORDER}` }}>QTY</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {chunk.map((item, idx) => (
-                                        <tr key={idx} style={{ borderBottom: `1px dashed ${C.BORDER}`, background: "white" }}>
-                                            <td style={{ textAlign: "center", padding: "8px 6px", fontWeight: "600", color: "#94a3b8", borderRight: `1px solid ${C.BORDER}`, fontSize: "9px" }}>
-                                                {(isFirst ? 0 : 18) + (pageIndex > 1 ? (pageIndex - 1) * 24 : 0) + idx + 1}
-                                            </td>
-                                            <td style={{ padding: "8px 12px", fontWeight: "600", color: C.DARK }}>
-                                                {item.name}
-                                            </td>
-                                            <td style={{ textAlign: "center", padding: "8px 6px", fontWeight: "700", color: "#333", borderLeft: `1px solid ${C.BORDER}` }}>
-                                                {item.qty}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-
-                            <div style={{ height: "2px", background: C.GRAY_HEADER, opacity: 0.2 }}></div>
-
-                            {/* Bottom Space Filler for visual balance */}
-                            <div style={{ flex: 1, minHeight: "20px" }}></div>
-                        </div>
-
-                        {/* --- FOOTER (Prices on Last Page Only) --- */}
-                        {isLast ? (
-                            <div style={{ height: "130px", padding: "0 35px" }}>
-
-                                <div style={{ borderTop: `2px solid ${C.RED}`, paddingTop: "15px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-                                    {/* Terms */}
-                                    <div style={{ width: "60%" }}>
-                                        <p style={{ fontSize: "9px", fontWeight: "700", textTransform: "uppercase", color: "#64748b", marginBottom: "4px", letterSpacing: "1px" }}>Standard Terms</p>
-                                        <div style={{ fontSize: "9px", color: "#334155", lineHeight: "1.5" }}>
-                                            1. <strong>Pricing:</strong> Ex-Works Ahmedabad (GST, P&F, Transport Extra).<br />
-                                            2. <strong>Delivery:</strong> 10-14 Weeks from clear order. <br />
-                                            3. <strong>Valid For:</strong> 30 Days.
-                                        </div>
-                                    </div>
-
-                                    {/* Price */}
-                                    <div style={{ textAlign: "right" }}>
-                                        <p style={{ fontSize: "10px", fontWeight: "700", textTransform: "uppercase", color: "#64748b", marginBottom: "2px" }}>Ex-Works Total</p>
-                                        <div style={{ fontSize: "32px", fontWeight: "800", color: C.RED, fontFamily: "Arial, sans-serif", letterSpacing: "-0.5px" }}>
-                                            {pricing.final_price_text || formatCurrency(pricing.afterDiscount)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div style={{ height: "30px", padding: "0 35px", borderTop: `1px dashed ${C.BORDER}` }}></div>
+                        {customer.city && (
+                            <p style={{ fontSize: "11px", fontWeight: "bold", color: "#888", margin: "2px 0 0 0", textTransform: "uppercase" }}>
+                                {customer.city}, INDIA
+                            </p>
                         )}
-
-                        {/* --- BOTTOM BAR --- */}
-                        <div style={{
-                            height: "30px",
-                            background: "#f8f9fa",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "0 35px",
-                            borderTop: "1px solid #e2e8f0"
-                        }}>
-                            <span style={{ fontSize: "8px", fontWeight: "700", color: "#64748b", textTransform: "uppercase" }}>Adroit Extrusion</span>
-                            <span style={{ fontSize: "8px", fontWeight: "700", color: C.RED }}>www.adroitextrusion.com</span>
-                        </div>
-
                     </div>
-                );
-            })}
+
+                    <div style={{ display: "flex", gap: "30px" }}>
+                        <div>
+                            <span style={{ display: "block", fontSize: "9px", fontWeight: "bold", color: "#aaa" }}>MODEL</span>
+                            <strong style={{ fontSize: "16px", color: C.DARK }}>{machine.modelCode || "AE-SERIES"}</strong>
+                        </div>
+                        <div>
+                            <span style={{ display: "block", fontSize: "9px", fontWeight: "bold", color: "#aaa" }}>FAMILY</span>
+                            <strong style={{ fontSize: "16px", color: C.RED }}>{machine.family || "Extrusion System"}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{ width: "40%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ background: "white", padding: "5px", border: `1px solid ${C.BORDER}`, borderRadius: "5px", height: "180px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <SafeImage src={machineDetails.machineImagePath} style={{ maxWidth: "90%", maxHeight: "90%", objectFit: "contain" }} />
+                    </div>
+                </div>
+            </div>
+
+            {/* BODY CONTENT */}
+            <div style={{ padding: "30px 40px", flex: 1 }}>
+
+                {/* STANDARD SCOPE */}
+                <div style={{ marginBottom: "25px" }}>
+                    <h3 style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", borderBottom: `2px solid #333`, paddingBottom: "5px", marginBottom: "8px", color: C.DARK }}>
+                        Standard Scope (Basic Machine)
+                    </h3>
+                    <table style={{ width: "100%", fontSize: "11px", borderCollapse: "collapse" }}>
+                        <tbody>
+                            {topItems.map((item, i) => (
+                                <tr key={i} style={{ borderBottom: `1px dashed ${C.BORDER}` }}>
+                                    <td style={{ padding: "6px 0", width: "25px", color: "#999", fontWeight: "bold" }}>{i + 1}</td>
+                                    <td style={{ padding: "6px 5px", fontWeight: "600" }}>{item.name}</td>
+                                    <td style={{ padding: "6px 0", textAlign: "right", fontWeight: "bold" }}>{item.qty}</td>
+                                </tr>
+                            ))}
+                            {extraCount > 0 && <tr><td colSpan={3} style={{ textAlign: "center", padding: "8px", fontSize: "10px", color: "#b45309" }}>... + {extraCount} more items ...</td></tr>}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* OPTIONAL ITEMS (Separate Price) */}
+                {optionals.length > 0 && (
+                    <div style={{ marginBottom: "10px" }}>
+                        <h3 style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", borderBottom: `2px solid ${C.RED}`, paddingBottom: "5px", marginBottom: "8px", color: C.RED }}>
+                            Optional Equipment (Not included in Basic Price)
+                        </h3>
+                        <table style={{ width: "100%", fontSize: "11px", borderCollapse: "collapse" }}>
+                            <tbody>
+                                {optionals.slice(0, 6).map((item, i) => (
+                                    <tr key={i} style={{ borderBottom: `1px dashed #fee2e2` }}>
+                                        <td style={{ padding: "6px 0", width: "25px", color: C.RED, fontWeight: "bold" }}>+</td>
+                                        <td style={{ padding: "6px 5px", fontWeight: "600", color: "#333" }}>{item.name}</td>
+                                        <td style={{ padding: "6px 0", textAlign: "right", fontWeight: "bold", fontFamily: "monospace" }}>{formatCurrency(item.price)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
+
+            {/* FOOTER - ONLY MAIN PRICE */}
+            <div style={{ position: "absolute", bottom: 0, width: "100%", borderTop: `2px solid ${C.BORDER}`, padding: "20px 40px 30px 40px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+                <div style={{ width: "55%", fontSize: "10px", color: "#64748b", lineHeight: "1.4" }}>
+                    <strong>TERMS:</strong> Ex-Works Ahmedabad. Prices exclude GST & Transport. <br />
+                    <strong>VALIDITY:</strong> 30 Days. <em>*Prices for optional items are extra.</em>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                    <span style={{ fontSize: "10px", fontWeight: "bold", color: "#aaa", textTransform: "uppercase", display: "block" }}>Basic Machine Price</span>
+                    {/* PRICING FIX: Shows 'afterDiscount' which now logic equals Basic Scope Only */}
+                    <span style={{ fontSize: "36px", fontWeight: "900", color: C.RED, lineHeight: "1" }}>{pricing.final_price_text || formatCurrency(pricing.afterDiscount)}</span>
+                    <span style={{ display: "block", fontSize: "9px", fontWeight: "600", color: "#94a3b8", marginTop: "4px" }}>+ Taxes (18%)</span>
+                </div>
+            </div>
+
         </div>
     );
 });

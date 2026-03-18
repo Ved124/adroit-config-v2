@@ -96,10 +96,13 @@ export default function SummaryPage() {
     machineType,
     currentMachineModel,
     generateKioskQR,
+    customOutput,
+    setCustomOutput,
   } = useContext(ConfigContext);
   const [showMarkupField, setShowMarkupField] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
   const [qrUrl, setQrUrl] = useState(null);
+  const [showPdfPreview, setShowPdfPreview] = useState(false);
 
 
   const handleQuotationRefChange = (e) => {
@@ -299,6 +302,21 @@ export default function SummaryPage() {
                 Date: {new Date().toLocaleDateString("en-IN")}
               </span>
             </div>
+
+            {/* NEW: Output Input */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+              <div className="flex-1">
+                <label className="text-xs text-slate-400">Target Output (Kg/hr)</label>
+                <input
+                  type="text"
+                  value={customOutput || ""}
+                  onChange={(e) => setCustomOutput(e.target.value)}
+                  placeholder="e.g. 350 Kg/Hr"
+                  className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                />
+              </div>
+            </div>
+
             <p className="text-sm text-slate-600 mt-2">
               {machineHeading || "Configured machine"}
             </p>
@@ -316,24 +334,7 @@ export default function SummaryPage() {
             {/* <button onClick={() => downloadDocxFromServer({ customer, selected, selectedAddons, markup, discount })} className="btn-primary bg-slate-800 hover:bg-black">
               Generate Word (.docx)
             </button> */}
-            <button onClick={async () => {
-              if (!quotationRef.current) return;
-              const element = quotationRef.current;
-              const opt = {
-                margin: 0,
-                filename: `Quotation_${customer.quotationRef || "Draft"}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-              };
-              const html2pdf = (await import('html2pdf.js')).default;
-              await html2pdf().set(opt).from(element).save();
-
-              // Prompt to save data
-              if (window.confirm("Do you want to save the data?")) {
-                exportJsonOnly();
-              }
-            }} className="btn-primary">
+            <button onClick={() => setShowPdfPreview(true)} className="btn-primary">
               Download Official PDF
             </button>
           </div>
@@ -363,11 +364,8 @@ export default function SummaryPage() {
             <table className="w-full text-xs">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-3 py-2 text-left font-semibold w-1/3 text-slate-700">
-                    Component
-                  </th>
                   <th className="px-3 py-2 text-left font-semibold text-slate-700">
-                    Description
+                    Component
                   </th>
                   <th className="px-3 py-2 text-right font-semibold w-16 text-slate-700">
                     Quantity
@@ -378,7 +376,7 @@ export default function SummaryPage() {
                 {selected.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={3}
+                      colSpan={2}
                       className="px-3 py-3 text-center text-slate-400"
                     >
                       No basic components selected.
@@ -392,9 +390,6 @@ export default function SummaryPage() {
                     >
                       <td className="px-3 py-2 align-top text-slate-900">
                         {item.name}
-                      </td>
-                      <td className="px-3 py-2 text-sm text-slate-600">
-                        {item.cardDesc}
                       </td>
                       <td className="px-3 py-2 align-top text-right text-slate-900">
                         {item.qty || 1}
@@ -417,17 +412,11 @@ export default function SummaryPage() {
             <table className="w-full text-xs">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-3 py-2 text-left font-semibold w-1/3 text-slate-700">
-                    Component
-                  </th>
                   <th className="px-3 py-2 text-left font-semibold text-slate-700">
-                    Description
+                    Component
                   </th>
                   <th className="px-3 py-2 text-right font-semibold w-16 text-slate-700">
                     Quantity
-                  </th>
-                  <th className="px-3 py-2 text-right font-semibold w-32 text-slate-700">
-                    Price (per unit)
                   </th>
                 </tr>
               </thead>
@@ -435,7 +424,7 @@ export default function SummaryPage() {
                 {selectedAddons.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={4}
+                      colSpan={2}
                       className="px-3 py-3 text-center text-slate-400"
                     >
                       No optional equipments selected.
@@ -450,14 +439,8 @@ export default function SummaryPage() {
                       <td className="px-3 py-2 align-top text-slate-900">
                         {addon.name}
                       </td>
-                      <td className="px-3 py-2 text-sm text-slate-600">
-                        {addon.cardDesc}
-                      </td>
                       <td className="px-3 py-2 align-top text-right text-slate-900">
                         {addon.qty || 1}
-                      </td>
-                      <td className="px-3 py-2 align-top text-right text-slate-900">
-                        ₹{(addon.price || 0).toLocaleString("en-IN")}
                       </td>
                     </tr>
                   ))
@@ -511,29 +494,82 @@ export default function SummaryPage() {
         </section>
       </main>
 
-      {/* Hidden Quotation Template for PDF Generation */}
-      <div style={{ position: "absolute", top: "-10000px", left: "-10000px" }}>
-        <AdroitQuotation
-          ref={quotationRef}
-          data={{
-            customer,
-            machine: {
-              ...currentMachineModel,
-              code: currentMachineModel?.code || "DEFAULT",
-              image: currentMachineModel?.image,
-              model: currentMachineModel?.label,
-              family: machineType === 'mono' ? 'Unoflex Monolayer' : 'Innoflex'
-            },
-            components: selected,
-            optional_items: selectedAddons,
-            pricing: {
-              basic_price_text: "₹ " + (computePriceSummary().withMarkup || 0).toLocaleString('en-IN'),
-              basic_price_words: numberToWords(Math.round(computePriceSummary().withMarkup || 0)) + " Only",
-              final_price_text: "₹ " + (computePriceSummary().afterDiscount || 0).toLocaleString('en-IN'),
-              final_price_words: numberToWords(Math.round(computePriceSummary().afterDiscount || 0)) + " Only"
-            }
-          }}
-        />
+      {/* AdroitQuotation — ALWAYS mounted so quotationRef.current is never null */}
+      {/* visibility:hidden hides it; switching to visible when preview is open  */}
+      <div
+        style={{
+          position: "fixed", top: 0, left: 0,
+          width: "100vw", height: "100vh",
+          zIndex: showPdfPreview ? 9999 : -1,
+          visibility: showPdfPreview ? "visible" : "hidden",
+          backgroundColor: showPdfPreview ? "rgba(0,0,0,0.55)" : "transparent",
+          overflowY: showPdfPreview ? "auto" : "hidden",
+          display: "flex", flexDirection: "column", alignItems: "center",
+          pointerEvents: showPdfPreview ? "auto" : "none",
+        }}
+      >
+        {showPdfPreview && (
+          <div style={{
+            position: "sticky", top: 0, zIndex: 10000,
+            backgroundColor: "#1e293b", width: "100%",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            gap: "16px", padding: "12px 24px", flexShrink: 0,
+          }}>
+            <span style={{ color: "#fff", fontSize: "14px", fontWeight: 600 }}>
+              Preview — confirm then download
+            </span>
+            <button
+              onClick={async () => {
+                const el = quotationRef.current;
+                if (!el) { alert("Ref error"); return; }
+                const html2pdf = (await import("html2pdf.js")).default;
+                await html2pdf().set({
+                  margin: 0,
+                  filename: `Quotation_${customer?.quotationRef || "Draft"}.pdf`,
+                  image: { type: "jpeg", quality: 0.98 },
+                  html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 },
+                  jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+                }).from(el).save();
+                setShowPdfPreview(false);
+                if (window.confirm("Save the data?")) exportJsonOnly();
+              }}
+              style={{ backgroundColor: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 20px", fontWeight: 700, cursor: "pointer", fontSize: "14px" }}
+            >⬇ Download PDF</button>
+            <button onClick={() => setShowPdfPreview(false)}
+              style={{ backgroundColor: "#475569", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 16px", cursor: "pointer", fontSize: "14px" }}
+            >✕ Close</button>
+          </div>
+        )}
+        <div style={{ marginTop: "16px", marginBottom: "40px" }}>
+          <AdroitQuotation
+            ref={quotationRef}
+            data={{
+              customer,
+              machine: {
+                type: machineType,
+                code: currentMachineModel?.code || "",
+                model: currentMachineModel?.label || currentMachineModel?.code || "",
+              },
+              quotation: {
+                refNo: customer?.quotationRef || customer?.ref || "",
+                date: new Date().toISOString().slice(0, 10),
+              },
+              components: selected,
+              optional_items: selectedAddons,
+              indicative_performance: {
+                product: (
+                  machineType === "mono" ? "High Quality Monolayer Film"
+                    : machineType === "aba" ? "High Quality ABA Co-Extrusion Film"
+                      : machineType === "5layer" ? "High Quality 5 Layer Co-Extrusion Film"
+                        : "High Quality Innoflex 3 Layer Film"
+                ),
+                max_output: customOutput || currentMachineModel?.["Max. Output (kg/hr)"] || "",
+                layflat_width: currentMachineModel?.["Lay Flat Width"] || currentMachineModel?.layflat || "",
+                die_size: currentMachineModel?.["Die Size"] || "",
+              },
+            }}
+          />
+        </div>
       </div>
     </div>
   );

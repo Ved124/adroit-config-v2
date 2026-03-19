@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { numberToWords } from "../utils/numberToWords";
@@ -8,8 +8,17 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SEO from "../components/SEO";
 import { AdroitQuotation } from "../src/components/quotation/AdroitQuotation";
 import { useRef } from "react";
-import { QRCodeSVG } from 'qrcode.react';
 import { Modal } from '../components/ui/Modal';
+import dynamic from "next/dynamic";
+
+const PDFDownloadLink = dynamic(
+  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+  {
+    ssr: false,
+    loading: () => <button className="bg-gray-400 text-white px-6 py-3 rounded-xl font-bold">Loading PDF Engine...</button>
+  }
+);
+import { MasterQuotationPDF } from '../src/components/quotation/ProfessionalPDF/MasterQuotationPDF';
 
 
 function getSmallDesc(item) {
@@ -98,7 +107,47 @@ export default function SummaryPage() {
     generateKioskQR,
     customOutput,
     setCustomOutput,
+    buildWordContext,
   } = useContext(ConfigContext);
+
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const pdfData = useMemo(() => {
+    if (!isClient) return null;
+
+    // We manually build the exact structure the PDF component expects
+    return {
+      customer: customer || {},
+      machine: {
+        type: machineType,
+        code: currentMachineModel?.code || "",
+        model: currentMachineModel?.label || currentMachineModel?.code || "",
+      },
+      quotation: {
+        refNo: customer?.quotationRef || customer?.ref || "DRAFT",
+        date: new Date().toISOString().slice(0, 10),
+      },
+      // Filter out items without names to prevent PDF mapping crashes
+      components: (selected || []).filter(item => item && item.name),
+      optional_items: (selectedAddons || []).filter(item => item && item.name),
+      indicative_performance: {
+        product: machineType === "mono" ? "High Quality Monolayer Film"
+          : machineType === "aba" ? "High Quality ABA Co-Extrusion Film"
+            : machineType === "5layer" ? "High Quality 5 Layer Co-Extrusion Film"
+              : "High Quality Innoflex 3 Layer Film",
+        max_output: customOutput || currentMachineModel?.["Max. Output (kg/hr)"] || "",
+        layflat_width: currentMachineModel?.["Lay Flat Width"] || currentMachineModel?.layflat || "",
+        die_size: currentMachineModel?.["Die Size"] || "",
+      },
+    };
+  }, [
+    isClient, customer, machineType, currentMachineModel,
+    selected, selectedAddons, customOutput
+  ]);
+
   const [showMarkupField, setShowMarkupField] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
   const [qrUrl, setQrUrl] = useState(null);
@@ -335,8 +384,32 @@ export default function SummaryPage() {
               Generate Word (.docx)
             </button> */}
             <button onClick={() => setShowPdfPreview(true)} className="btn-primary">
-              Download Official PDF
+              Preview / Old PDF
             </button>
+
+            {isClient && pdfData && (
+              <PDFDownloadLink
+                // Using a simpler key prevents infinite re-rendering loops
+                key={pdfData.quotation.refNo + selected.length}
+                document={<MasterQuotationPDF data={pdfData} />}
+                fileName={`Quotation_${customer?.company || 'Draft'}.pdf`}
+                className="bg-red-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2 hover:bg-red-700 transition-colors"
+              >
+                {({ blob, url, loading, error }) => {
+                  if (error) {
+                    console.error('PDF Engine Error:', error);
+                    return 'Error Building PDF';
+                  }
+                  return loading ? 'Rendering PDF Engine...' : 'Download Official PDF';
+                }}
+              </PDFDownloadLink>
+            )}
+
+            {!isClient && (
+              <button className="bg-gray-400 text-white px-6 py-3 rounded-xl font-bold opacity-50 cursor-not-allowed">
+                Initializing PDF...
+              </button>
+            )}
           </div>
         </section>
 
@@ -580,7 +653,7 @@ export default function SummaryPage() {
 
                 pdf.save(`Quotation_${customer?.quotationRef || "Draft"}.pdf`);
                 setShowPdfPreview(false);
-                if (window.confirm("Save the data?")) exportJsonOnly();
+
               }}
               style={{ backgroundColor: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 20px", fontWeight: 700, cursor: "pointer", fontSize: "14px" }}
             >⬇ Download PDF</button>

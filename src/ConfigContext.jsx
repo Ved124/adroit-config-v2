@@ -542,7 +542,7 @@ export function ConfigProvider({ children }) {
   // ---------------- WORD / PDF / JSON CONTEXT ----------------
 
 
-  function computePriceSummary() {
+  const computePriceSummary = React.useCallback(() => {
     // 1. Calculate Standard Components Total
     const basicTotal = selected.reduce(
       (sum, item) => sum + (item.price || 0) * (item.qty || 1),
@@ -575,7 +575,7 @@ export function ConfigProvider({ children }) {
       withMarkup,
       afterDiscount, // This is now your Final Price (Main Scope Only)
     };
-  }
+  }, [selected, selectedAddons, markup, discount]);
 
   function getMachineDetailsForWord(machineType, safeCustomer) {
     if (!machineType) return null;
@@ -646,7 +646,7 @@ export function ConfigProvider({ children }) {
   }
 
 
-  function buildWordContext() {
+  const buildWordContext = React.useCallback(() => {
     const safeCustomer = customer || {};
 
     // --- QUOTATION META (REF + DATE) ---
@@ -676,6 +676,7 @@ export function ConfigProvider({ children }) {
 
     // --- MACHINE DETAILS (for front page + spec table) ---
     const machineDetails = getMachineDetails(safeCustomer, machineType) || {};
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
     return {
       company: COMPANY,
@@ -723,7 +724,7 @@ export function ConfigProvider({ children }) {
       machine_details: machineDetails,
 
       // single big machine image on front page
-      machine_image: machineDetails.machineImagePath || null,
+      machine_image: machineDetails.machineImagePath ? `${baseUrl}/${machineDetails.machineImagePath.replace(/^\//, "")}` : null,
 
       // Scope of supply – base components
       components: (selected || []).map((item, idx) => ({
@@ -731,7 +732,7 @@ export function ConfigProvider({ children }) {
         name: item.name,
         category: item.category || "",
         tech_desc: item.techDesc || item.desc || "",
-        image: item.image || null,
+        image: item.image ? `${baseUrl}/${item.image.replace(/^\//, "")}` : null,
         qty: item.qty || 1,
         unit_price: item.price || 0,
       })),
@@ -742,7 +743,7 @@ export function ConfigProvider({ children }) {
         name: a.name,
         category: a.category || "",
         tech_desc: a.techDesc || a.desc || "",
-        image: a.image || null,
+        image: a.image ? `${baseUrl}/${a.image.replace(/^\//, "")}` : null,
         qty: a.qty || 1,
         unit_price: a.price || 0,
       })),
@@ -774,7 +775,7 @@ export function ConfigProvider({ children }) {
 
       prepared_by: "Urveesh Jepaliya",
     };
-  }
+  }, [customer, selected, selectedAddons, markup, discount, machineType, customOutput]);
 
   // ---------------- EXPORT: JSON (template-style, for re-import) ----------------
 
@@ -2159,6 +2160,7 @@ export function ConfigProvider({ children }) {
     importJsonFile,
     resetAll,
     generateKioskQR,
+    buildWordContext,
   };
 
 

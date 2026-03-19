@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
     "@fortawesome/free-solid-svg-icons": "^7.0.1",
     "@fortawesome/react-fontawesome": "^3.0.2",
+    "@react-pdf/renderer": "^4.3.2",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",
     "@vercel/blob": "^2.3.0",

@@ -214,7 +214,7 @@ function CoverPage({ machine, customer }) {
 
     // coverImage: passed as "/images/machines/3layer.png" etc. from buildProposalData()
     // The img tag has onError so broken paths just disappear — placeholder shows instead.
-    const coverImg = machine?.coverImage || `/images/machines/${type}.png`;
+    const coverImg = machine?.coverImage || `/images/machines/3layer.png`;
 
     return (
         <Page>

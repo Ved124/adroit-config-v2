@@ -235,7 +235,7 @@ function CoverPage({ machine, customer }) {
                     crossOrigin="anonymous"
                     style={{
                         width: "100%",
-                        height: "100%",
+                        height: "600px",
                         objectFit: "contain",
                         display: "block",
                     }}
@@ -465,22 +465,20 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                             ({basicInWords})
                         </div>
                     )}
-                    {/* Discounted price — only shown when discount > 0 */}
-                    {discountedPrice && discountedPrice !== price && (
-                        <div style={{ marginTop: "12px" }}>
-                            <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
-                                <span style={{ fontSize: "12pt", color: BLUE }}>❖</span>
-                                <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: INK }}>
-                                    BEST DISCOUNTED PRICE, EX WORKS: {discountedPrice}
-                                </span>
-                            </div>
-                            {discountedWords && (
-                                <div style={{ fontSize: "9pt", fontFamily: F, color: INK, paddingLeft: "28px" }}>
-                                    ({discountedWords})
-                                </div>
-                            )}
+                    {/* Final price — always shown */}
+                    <div style={{ marginTop: "12px" }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
+                            <span style={{ fontSize: "12pt", color: BLUE }}>❖</span>
+                            <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: INK }}>
+                                FINAL PRICE, EX WORKS: {discountedPrice || price}
+                            </span>
                         </div>
-                    )}
+                        {(discountedWords || basicInWords) && (
+                            <div style={{ fontSize: "9pt", fontFamily: F, color: INK, paddingLeft: "28px" }}>
+                                ({discountedWords || basicInWords})
+                            </div>
+                        )}
+                    </div>
                 </div>
             ) : (
                 <div style={{ marginBottom: "24px", fontSize: "9.5pt", fontFamily: F, color: DIM, fontStyle: "italic" }}>

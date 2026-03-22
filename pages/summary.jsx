@@ -9,6 +9,7 @@ import SEO from "../components/SEO";
 import { AdroitQuotation } from "../src/components/quotation/AdroitQuotation";
 import { useRef } from "react";
 import { Modal } from '../components/ui/Modal';
+import { QRCodeSVG } from 'qrcode.react';
 import dynamic from "next/dynamic";
 
 const PDFDownloadLink = dynamic(

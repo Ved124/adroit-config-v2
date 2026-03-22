@@ -71,14 +71,23 @@ export default async function handler(req, res) {
       fs.writeFileSync(path.join(downloadDir, jsonName), jsonBuffer);
 
       // GET SMART IP
-      const networkIp = getNetworkIP();
-      const protocol = req.headers['x-forwarded-proto'] || 'http';
-      const port = req.headers.host.split(':')[1] || '3000';
+      // Use the host header from the request (how the user is actually accessing it)
+      // but fall back to network scanning if it's 'localhost'
+      const hostHeader = req.headers.host || "";
+      const isLocal = hostHeader.includes("localhost") || hostHeader.includes("127.0.0.1");
+      
+      let networkIp = getNetworkIP();
+      if (hostHeader && !isLocal) {
+        networkIp = hostHeader.split(":")[0];
+      }
+      
+      const protocol = req.headers["x-forwarded-proto"] || "http";
+      const port = hostHeader.split(":")[1] || "3000";
 
       const fileUrl = `${protocol}://${networkIp}:${port}/downloads/${pdfName}`;
 
       console.log("Local PDF generated:", fileUrl); // Check terminal to verify
-      return res.status(200).json({ url: fileUrl, mode: 'local' });
+      return res.status(200).json({ url: fileUrl, mode: "local" });
     }
 
   } catch (err) {

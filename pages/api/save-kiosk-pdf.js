@@ -31,17 +31,27 @@ export default function handler(req, res) {
         fs.writeFileSync(filePath, base64Data, 'base64');
 
         // Determine Local IP for the QR Code link
-        // This allows a phone on the same Wi-Fi to access the file
-        const protocol = req.headers['x-forwarded-proto'] || 'http';
-        const host = req.headers.host;
+        // Use the host header from the request (how the user is actually accessing it)
+        // but fall back to network scanning if it's 'localhost'
+        const hostHeader = req.headers.host || "";
+        const isLocal = hostHeader.includes("localhost") || hostHeader.includes("127.0.0.1");
 
-        // Logic: In dev/kiosk mode, 'host' might be 'localhost'. 
-        // We need the Network IP (e.g., 192.168.1.5) so the phone can reach it.
-        const networkIp = ip.address();
-        const port = host.split(':')[1] || ''; // keep port if exists
+        let networkIp = ip.address();
+        let port = "";
+
+        if (hostHeader && !isLocal) {
+            const parts = hostHeader.split(":");
+            networkIp = parts[0];
+            port = parts[1] ? ":" + parts[1] : "";
+        } else {
+            const parts = hostHeader.split(":");
+            port = parts[1] ? ":" + parts[1] : "";
+        }
+
+        const protocol = req.headers["x-forwarded-proto"] || "http";
 
         // Construct robust URL
-        const fileUrl = `${protocol}://${networkIp}${port ? ':' + port : ''}/downloads/${filename}`;
+        const fileUrl = `${protocol}://${networkIp}${port}/downloads/${filename}`;
 
         res.status(200).json({ url: fileUrl });
     } catch (err) {

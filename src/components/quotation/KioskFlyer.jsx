@@ -12,7 +12,7 @@ const formatCurrency = (val) => "₹ " + Number(val || 0).toLocaleString('en-IN'
 
 const SafeImage = ({ src, style }) => (
     <img
-        src={src || "/images/machines/three_layer.png"}
+        src={src || "/images/machines/3layer.png"}
         style={{ ...style, display: "block" }}
         alt="" crossOrigin="anonymous" onError={(e) => { e.target.style.opacity = 0; }}
     />
@@ -39,7 +39,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
 
     return (
         <div ref={ref} id="kiosk-flyer-root" style={{
-            width: "210mm", height: "297mm",
+            width: "210mm", height: "296mm",
             background: "white", color: "#333", fontFamily: "Arial, sans-serif",
             position: "relative", overflow: "hidden", margin: 0, padding: 0
         }}>

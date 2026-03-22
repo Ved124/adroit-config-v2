@@ -116,7 +116,7 @@ export function ConfigProvider({ children }) {
   const [showMarkupField, setShowMarkupField] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
   const [customOutput, setCustomOutput] = useState("");
-
+  const [customLayflat, setCustomLayflat] = useState("");
 
   const [components] = useState(COMPONENTS_DATA);
   const [addons] = useState(ADDONS_DATA);
@@ -195,6 +195,9 @@ export function ConfigProvider({ children }) {
       if (typeof savedData.customOutput === "string") {
         setCustomOutput(savedData.customOutput);
       }
+      if (typeof savedData.customLayflat === "string") {
+        setCustomLayflat(savedData.customLayflat);
+      }
     } else {
       // 2. New Session? GENERATE A NEW NUMBER
       const newRef = generateNextQuotationRef();
@@ -224,6 +227,7 @@ export function ConfigProvider({ children }) {
           selectedMachineModelLabel,
           customMode,
           customOutput,
+          customLayflat,
           savedAt: new Date().toISOString(),
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -231,7 +235,7 @@ export function ConfigProvider({ children }) {
         console.warn("Failed to save storage:", e);
       }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat]);
 
 
   // ---------------- MACHINE TYPE ----------------
@@ -2083,6 +2087,7 @@ export function ConfigProvider({ children }) {
     setDiscount(0);
     setMarkup(0);
     setCustomOutput("");
+    setCustomLayflat("");
 
     toast.push({
       title: "New Quotation Started",
@@ -2112,6 +2117,8 @@ export function ConfigProvider({ children }) {
     setMarkup,
     customOutput,
     setCustomOutput,
+    customLayflat,
+    setCustomLayflat,
     computePriceSummary,
 
     // machine selection

@@ -214,7 +214,7 @@ export default function SelectionPage() {
                                     ? removeComponent(item.id)
                                     : addComponent(category, item)
                                 }
-                                className={`px-3 py-1 rounded-lg text-[11px] ${isSelected
+                                className={`px-3 py-1 rounded-lg text-white text-[11px] ${isSelected
                                   ? "bg-red-500 hover:bg-red-600"
                                   : "bg-blue-600 hover:bg-blue-500"
                                   }`}

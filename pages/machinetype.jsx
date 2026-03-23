@@ -200,28 +200,28 @@ export default function MachineTypePage() {
             <div className="bg-white rounded-2xl p-6 flex items-center justify-center h-72 shadow-soft border border-slate-100">
               {activeFamily === "mono" && (
                 <img
-                  src="/images/machines/mono.png"
+                  src="/images/machines/3layer.png"
                   alt="Unoflex Monolayer"
                   className="max-h-60 w-auto object-contain"
                 />
               )}
               {activeFamily === "aba" && (
                 <img
-                  src="/images/machines/aba.png"
+                  src="/images/machines/3layer.png"
                   alt="Duoflex ABA/AB"
                   className="max-h-60 w-auto object-contain"
                 />
               )}
               {activeFamily === "3layer" && (
                 <img
-                  src="/images/machines/three_layer.png"
+                  src="/images/machines/3layer.png"
                   alt="Innoflex 3 Layer"
                   className="max-h-60 w-auto object-contain"
                 />
               )}
               {activeFamily === "5layer" && (
                 <img
-                  src="/images/machines/three_layer.png"
+                  src="/images/machines/3layer.png"
                   alt="Innoflex 5 Layer"
                   className="max-h-60 w-auto object-contain opacity-50"
                 />
@@ -316,7 +316,7 @@ export default function MachineTypePage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-slate-950 rounded-2xl border border-slate-700 max-w-3xl w-full max-h-[80vh] flex flex-col shadow-2xl"
+            className="bg-black rounded-2xl border border-slate-700 max-w-3xl w-full max-h-[80vh] flex flex-col shadow-2xl"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
               <div className="font-semibold text-sm text-white">
@@ -360,7 +360,7 @@ export default function MachineTypePage() {
                 </tbody>
               </table>
             </div>
-            <div className="px-6 py-4 border-t border-slate-800 flex justify-end bg-slate-900/50 rounded-b-2xl">
+            <div className="px-6 py-4 border-t border-slate-800 flex justify-end bg-black/50 rounded-b-2xl">
               <button
                 onClick={() => setModalModel(null)}
                 className="px-5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-medium transition-colors border border-slate-700"

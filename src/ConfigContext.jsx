@@ -2203,10 +2203,10 @@ export function ConfigProvider({ children }) {
             title={item.name || "Details"}
             widthClass="max-w-4xl"
           >
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col md:flex-row gap-4 bg-black">
               {/* LEFT: big image */}
               <div className="md:w-2/5 w-full">
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-center">
+                <div className="bg-black rounded-xl p-3 flex items-center justify-center">
                   {item.image ? (
                     <img
                       src={item.image}

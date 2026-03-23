@@ -36,7 +36,7 @@ const TH = {
     backgroundColor: BLUE_LIGHT,
     color: BLUE,
     fontWeight: "bold",
-    fontSize: "10pt",
+    fontSize: "11pt",
     fontFamily: F,
     padding: "5px 8px",
     border: `1px solid ${BDR}`,
@@ -44,7 +44,7 @@ const TH = {
 };
 
 const TD = {
-    fontSize: "10pt",
+    fontSize: "11pt",
     fontFamily: F,
     padding: "4px 8px",
     border: `1px solid ${LIGHT_BDR}`,
@@ -88,11 +88,11 @@ function SpecRow({ label, value, noBorder, shaded }) {
             padding: "3px 0",
             backgroundColor: shaded ? GRAY_BG : "transparent",
         }}>
-            <div style={{ width: "190px", minWidth: "190px", flexShrink: 0, fontFamily: F, fontSize: "10pt", color: INK, paddingLeft: "4px", fontWeight: "bold" }}>
+            <div style={{ width: "190px", minWidth: "190px", flexShrink: 0, fontFamily: F, fontSize: "11pt", color: INK, paddingLeft: "4px", fontWeight: "bold" }}>
                 {label}
             </div>
-            <div style={{ width: "14px", minWidth: "14px", flexShrink: 0, fontFamily: F, fontSize: "10pt", color: INK }}>:</div>
-            <div style={{ flex: 1, fontFamily: F, fontSize: "10pt", color: INK, lineHeight: "1.5", paddingRight: "4px" }}>
+            <div style={{ width: "14px", minWidth: "14px", flexShrink: 0, fontFamily: F, fontSize: "11pt", color: INK }}>:</div>
+            <div style={{ flex: 1, fontFamily: F, fontSize: "11pt", color: INK, lineHeight: "1.5", paddingRight: "4px" }}>
                 {value}
             </div>
         </div>
@@ -221,7 +221,7 @@ function CoverPage({ machine, customer }) {
             {/* ── Machine photo box ──────────────────────────────────────── */}
             <div style={{
                 width: "100%",
-                height: "670px",
+                height: "600px",
                 boxSizing: "border-box",
                 display: "flex",
                 alignItems: "center",
@@ -254,7 +254,7 @@ function CoverPage({ machine, customer }) {
                     alignItems: "center",
                     justifyContent: "center",
                     color: "#aaa",
-                    fontSize: "9pt",
+                    fontSize: "10pt",
                     fontStyle: "italic",
                     fontFamily: F,
                 }}>
@@ -276,7 +276,7 @@ function CoverPage({ machine, customer }) {
                         color: "#fff",
                         padding: "5px 32px",
                         fontWeight: "bold",
-                        fontSize: "10pt",
+                        fontSize: "11pt",
                         fontFamily: F,
                         letterSpacing: "2px",
                     }}>
@@ -361,7 +361,7 @@ function ScopePage({ components, refNo, date }) {
                 paddingBottom: "6px",
                 borderBottom: `1.5px solid ${BLUE}`,
             }}>
-                <div style={{ fontSize: "9pt", fontFamily: F, textAlign: "right", lineHeight: "1.8" }}>
+                <div style={{ fontSize: "10pt", fontFamily: F, textAlign: "right", lineHeight: "1.8" }}>
                     {refNo && (
                         <div>
                             <span style={{ fontWeight: "bold" }}>Ref. No.: </span>
@@ -461,7 +461,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                         </span>
                     </div>
                     {basicInWords && (
-                        <div style={{ fontSize: "9pt", fontFamily: F, color: INK, paddingLeft: "28px", letterSpacing: "0.3px" }}>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, paddingLeft: "28px", letterSpacing: "0.3px" }}>
                             ({basicInWords})
                         </div>
                     )}
@@ -474,7 +474,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                             </span>
                         </div>
                         {(discountedWords || basicInWords) && (
-                            <div style={{ fontSize: "9pt", fontFamily: F, color: INK, paddingLeft: "28px" }}>
+                            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, paddingLeft: "28px" }}>
                                 ({discountedWords || basicInWords})
                             </div>
                         )}
@@ -493,7 +493,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
             <div style={{
                 textAlign: "center",
                 fontWeight: "bold",
-                fontSize: "10pt",
+                fontSize: "11pt",
                 fontFamily: F,
                 color: INK,
                 textDecoration: "underline",
@@ -580,7 +580,7 @@ function PerformancePage({ perf }) {
 
             <SectionTitle>LIMITATIONS</SectionTitle>
 
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt", marginBottom: "6px" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "11pt", marginBottom: "6px" }}>
                 Although we design our equipment to the highest possible standard, many factors beyond equipment
                 design can affect film quality. These are not covered by our performance guarantee and include:
             </p>
@@ -595,7 +595,7 @@ function PerformancePage({ perf }) {
                 ["Curling", "Asymmetrical film structures will naturally curl; machine design has no role."],
                 ["Film Characteristics", "Impact strength, tear strength and other properties are affected by processing conditions and resins."],
             ].map(([b, rest], i) => (
-                <div key={i} style={{ display: "flex", gap: "4px", marginBottom: "3px", fontSize: "8.5pt", fontFamily: F, lineHeight: "1.5" }}>
+                <div key={i} style={{ display: "flex", gap: "4px", marginBottom: "3px", fontSize: "11pt", fontFamily: F, lineHeight: "1.5" }}>
                     <span style={{ color: BLUE, flexShrink: 0 }}>•</span>
                     <span><strong style={{ color: BLUE }}>{b}</strong> — {rest}</span>
                 </div>
@@ -618,7 +618,7 @@ function ComponentPage({ item }) {
                 fontSize: "11pt",
                 fontFamily: F,
                 color: BLUE,
-                borderTop: `1.5px solid ${BLUE}`,
+                // borderTop: `1.5px solid ${BLUE}`,
                 borderBottom: `1.5px solid ${BLUE}`,
                 padding: "5px 0",
                 marginBottom: "10px",
@@ -641,7 +641,7 @@ function ComponentPage({ item }) {
             }}>
                 {item.image
                     ? <Img src={item.image} style={{ maxWidth: "100%", maxHeight: "272px" }} />
-                    : <span style={{ color: "#ccc", fontSize: "8.5pt", fontStyle: "italic", fontFamily: F }}>[No image]</span>
+                    : <span style={{ color: "#ccc", fontSize: "11pt", fontStyle: "italic", fontFamily: F }}>[No image]</span>
                 }
             </div>
 
@@ -675,17 +675,17 @@ function ElectricalsPage({ electricals }) {
                 <SpecRow label="Switch Gear" value="Schneider or equivalent make." />
                 <SpecRow label="Temperature Controllers" value="Fuji or equivalent make with +/- 1 deg. accuracy." shaded />
                 <SpecRow label="Drives" value="Delta or equivalent variable frequency drives." />
-                <SpecRow label="Haul-Off" value="PLC based operation." />
+                <SpecRow label="Haul-Off" value="PLC based operation." shaded />
                 <SpecRow label="Total connected Load" value="108 KW." />
-                <SpecRow label="Power Supply" value="415 V, 50 Hz, with N" />
-                <SpecRow label="Voltage Fluctuation" value="+ /- 5%" />
-            </div>
+                <SpecRow label="Power Supply" value="415 V, 50 Hz, with N" shaded />
+                <SpecRow label="Voltage Fluctuation" value="+ /- 5%" noBorder />
+            </div><br />
 
             <SectionTitle>TOWER STRUCTURE</SectionTitle>
             <p style={{ ...BODY_TEXT, marginBottom: "10px" }}>
                 Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
                 haul-off, secondary nip, etc. Lifting beams provided at bubble cage level for die handling.
-            </p>
+            </p><br />
 
             <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
             {[
@@ -699,10 +699,10 @@ function ElectricalsPage({ electricals }) {
                     "All interconnecting piping for water & compressed air."],
             ].map(([title, body], i) => (
                 <div key={i} style={{ marginBottom: "8px" }}>
-                    <span style={{ fontWeight: "bold", fontSize: "9pt", fontFamily: F, color: BLUE }}>
+                    <span style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>
                         {title}:
                     </span>
-                    <span style={{ fontSize: "9pt", fontFamily: F, lineHeight: "1.6", color: INK }}>
+                    <span style={{ fontSize: "10pt", fontFamily: F, lineHeight: "1.6", color: INK }}>
                         {" "}{body}
                     </span>
                 </div>
@@ -755,34 +755,34 @@ function OptionalAndUtilitiesPage({ optionalItems }) {
                 Electrical
             </div>
             <div style={{ marginBottom: "10px" }}>
-                <SpecRow label="Network Structure" value="TN-S neutral conductor capable of carrying full load, Separate earthing for power circuit and control circuit earthing voltage should be less than 1V" />
+                <SpecRow label="Network Structure" value="TN-S neutral conductor capable of carrying full load, Separate earthing for power circuit and control circuit earthing voltage should be less than 1V" shaded />
                 <SpecRow label="Service Voltage for drive motors" value="3 x 415 V, 50 Hz, with N" />
-                <SpecRow label="Service Voltage for heaters " value="3 x 415 V, 50 Hz, with N" />
+                <SpecRow label="Service Voltage for heaters " value="3 x 415 V, 50 Hz, with N" shaded />
                 <SpecRow label="Control Voltage" value="230 V/AC, 50 Hz." />
-                <SpecRow label="Permissible Voltage Fluctuation" value="+ /- 5%" />
-                <SpecRow label="Permissible Frequency Fluctuation" value="+ /- 3%" />
+                <SpecRow label="Permissible Voltage Fluctuation" value="+ /- 5%" shaded />
+                <SpecRow label="Permissible Frequency Fluctuation" value="+ /- 3%" noBorder />
             </div>
 
             <SectionTitle>
                 Water — Treated / Soft Water
             </SectionTitle>
             <div style={{ marginBottom: "10px" }}>
-                <SpecRow label="Classification" value="Boiler feed water" />
+                <SpecRow label="Classification" value="Boiler feed water" shaded />
                 <SpecRow label="pH Value" value="7.5 – 8.0" />
                 <SpecRow label="Operating Pressure" value="3 – 4 Bar" shaded />
                 <SpecRow label="Permissible Fluctuation" value="+/- 0.25 Bar" />
-                <SpecRow label="Max. Hardness" value="5 Degrees dH" />
+                <SpecRow label="Max. Hardness" value="5 Degrees dH" shaded />
                 <SpecRow label="Max. non-carbonate hardness" value="2 Degrees dH" />
                 <SpecRow label="Filter (max.)" value="40 microns" shaded />
                 <SpecRow label="General Criteria" value="Free from corrosion substances and foreign particles." noBorder />
-                <SpecRow label="Water requirement" value="30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade." noBorder />
+                <SpecRow label="Water requirement" value="30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade." noBorder shaded />
             </div>
 
             <SectionTitle>
                 Compressed Air
             </SectionTitle>
             <div>
-                <SpecRow label="Operating Pressure" value="5 – 7 Bar" />
+                <SpecRow label="Operating Pressure" value="5 – 7 Bar" shaded />
                 <SpecRow label="Permissible Fluctuations" value="+/- 0.25 Bar" />
                 <SpecRow label="Dew Point" value="−25 °C" shaded />
                 <SpecRow label="Dust / Oil / Water" value="None" noBorder />
@@ -868,20 +868,20 @@ function TermsPage() {
     ];
     return (
         <Page>
-            <SectionTitle style={{ marginTop: "4px" }}>TERMS &amp; CONDITIONS</SectionTitle>
+            <SectionTitle style={{ marginTop: "2px" }}>TERMS &amp; CONDITIONS</SectionTitle>
             {clauses.map(([title, body], i) => (
                 <div key={i} style={{ marginBottom: "7px" }}>
                     <span style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>{title}: </span>
                     <span style={{ fontSize: "10pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
                 </div>
             ))}
-            <div style={{ marginTop: "24px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
+            <div style={{ marginTop: "18px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
                 <div>Thanking you,</div>
                 <div>Yours truly,</div>
             </div>
             <div style={{ marginTop: "40px", fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE }}>
                 FOR ADROIT EXTRUSION
-            </div><br /><br />
+            </div>
             <div style={{ fontSize: "10pt", fontFamily: F, color: DIM }}>Urveesh Jepaliya</div>
         </Page>
     );
@@ -893,7 +893,7 @@ function WarrantyPage() {
         <Page>
             <SectionTitle style={{ marginTop: "4px" }}>STANDARD WARRANTY TERMS</SectionTitle>
 
-            <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE, marginBottom: "3px" }}>
+            <div style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE, marginBottom: "3px" }}>
                 WARRANTY PERIOD
             </div>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
@@ -904,9 +904,9 @@ function WarrantyPage() {
             </p>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 In case of payment terms agreed upon in the contract are not been obeyed, the warranty expires consequentially.
-            </p>
+            </p><br />
 
-            <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE, margin: "8px 0 3px 0" }}>
+            <div style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE, margin: "8px 0 3px 0" }}>
                 WARRANTY EXCLUDES FOLLOWING
             </div>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
@@ -917,14 +917,14 @@ function WarrantyPage() {
             </p>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order.
-            </p>
+            </p><br />
             <SectionTitle>CANCELLATION</SectionTitle>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 It is understood that order once placed cannot be cancelled for any reason whatso ever. In case of cancellation of the order, the entire amount of the advance will be forfeited.
             </p>
 
-            <SectionTitle>GENERAL CONDITIONS</SectionTitle>
-            <p style={{ ...BODY_TEXT, fontSize: "10pt", marginBottom: "6px" }}>
+            {/* <SectionTitle>GENERAL CONDITIONS</SectionTitle>
+            <p style={{ ...BODY_TEXT, fontSize: "11pt", marginBottom: "6px" }}>
                 The following general conditions apply to all orders, contracts, agreements, deliveries and services
                 offered by Adroit Extrusion, irrespective of buyer's purchase order conditions.
             </p>
@@ -938,11 +938,11 @@ function WarrantyPage() {
                 "Seller is not responsible for force majeure circumstances during an existing default situation.",
                 "Seller shall not be liable for any consequential or indirect damage or loss resulting from non-performance of the plant.",
             ].map((clause, i) => (
-                <div key={i} style={{ display: "flex", gap: "5px", marginBottom: "4px", fontSize: "10pt", fontFamily: F, lineHeight: "1.5" }}>
+                <div key={i} style={{ display: "flex", gap: "5px", marginBottom: "4px", fontSize: "11pt", fontFamily: F, lineHeight: "1.5" }}>
                     <span style={{ color: BLUE, fontWeight: "bold", flexShrink: 0 }}>{i + 1}.</span>
                     <span>{clause}</span>
                 </div>
-            ))}
+            ))} */}
         </Page>
     );
 }

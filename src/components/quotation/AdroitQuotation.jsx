@@ -22,7 +22,7 @@ const BODY_TEXT = {
 const SECTION_TITLE_STYLE = {
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: "10pt",
+    fontSize: "11pt",
     fontFamily: F,
     letterSpacing: "0.8px",
     color: "#ffffff",
@@ -36,7 +36,7 @@ const TH = {
     backgroundColor: BLUE_LIGHT,
     color: BLUE,
     fontWeight: "bold",
-    fontSize: "8.5pt",
+    fontSize: "10pt",
     fontFamily: F,
     padding: "5px 8px",
     border: `1px solid ${BDR}`,
@@ -44,7 +44,7 @@ const TH = {
 };
 
 const TD = {
-    fontSize: "8.5pt",
+    fontSize: "10pt",
     fontFamily: F,
     padding: "4px 8px",
     border: `1px solid ${LIGHT_BDR}`,
@@ -88,11 +88,11 @@ function SpecRow({ label, value, noBorder, shaded }) {
             padding: "3px 0",
             backgroundColor: shaded ? GRAY_BG : "transparent",
         }}>
-            <div style={{ width: "190px", minWidth: "190px", flexShrink: 0, fontFamily: F, fontSize: "8.5pt", color: INK, paddingLeft: "4px", fontWeight: "bold" }}>
+            <div style={{ width: "190px", minWidth: "190px", flexShrink: 0, fontFamily: F, fontSize: "10pt", color: INK, paddingLeft: "4px", fontWeight: "bold" }}>
                 {label}
             </div>
-            <div style={{ width: "14px", minWidth: "14px", flexShrink: 0, fontFamily: F, fontSize: "8.5pt", color: INK }}>:</div>
-            <div style={{ flex: 1, fontFamily: F, fontSize: "8.5pt", color: INK, lineHeight: "1.5", paddingRight: "4px" }}>
+            <div style={{ width: "14px", minWidth: "14px", flexShrink: 0, fontFamily: F, fontSize: "10pt", color: INK }}>:</div>
+            <div style={{ flex: 1, fontFamily: F, fontSize: "10pt", color: INK, lineHeight: "1.5", paddingRight: "4px" }}>
                 {value}
             </div>
         </div>
@@ -110,7 +110,7 @@ function PriceLine({ label, price }) {
         }}>
             <div style={{
                 display: "flex", alignItems: "baseline",
-                fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE,
+                fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE,
             }}>
                 <span>{label}</span>
                 <span style={{ flex: 1, borderBottom: "1px dotted #666", margin: "0 8px 3px 8px" }} />
@@ -871,18 +871,18 @@ function TermsPage() {
             <SectionTitle style={{ marginTop: "4px" }}>TERMS &amp; CONDITIONS</SectionTitle>
             {clauses.map(([title, body], i) => (
                 <div key={i} style={{ marginBottom: "7px" }}>
-                    <span style={{ fontWeight: "bold", fontSize: "8.5pt", fontFamily: F, color: BLUE }}>{title}: </span>
-                    <span style={{ fontSize: "8.5pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
+                    <span style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>{title}: </span>
+                    <span style={{ fontSize: "10pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
                 </div>
             ))}
-            <div style={{ marginTop: "24px", fontSize: "9pt", fontFamily: F, lineHeight: "2", color: INK }}>
+            <div style={{ marginTop: "24px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
                 <div>Thanking you,</div>
                 <div>Yours truly,</div>
             </div>
-            <div style={{ marginTop: "40px", fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>
+            <div style={{ marginTop: "40px", fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE }}>
                 FOR ADROIT EXTRUSION
             </div><br /><br />
-            <div style={{ fontSize: "8.5pt", fontFamily: F, color: DIM }}>Urveesh Jepaliya</div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: DIM }}>Urveesh Jepaliya</div>
         </Page>
     );
 }
@@ -893,38 +893,38 @@ function WarrantyPage() {
         <Page>
             <SectionTitle style={{ marginTop: "4px" }}>STANDARD WARRANTY TERMS</SectionTitle>
 
-            <div style={{ fontWeight: "bold", fontSize: "9pt", fontFamily: F, color: BLUE, marginBottom: "3px" }}>
+            <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE, marginBottom: "3px" }}>
                 WARRANTY PERIOD
             </div>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 All Mechanical components warranty for 1 year, All Pneumatic Parts Warranty for 1 year (Dry Air Compulsory with Air Compressor. If not Dry Air, then Warranty will not Apply), Drives Warranty for 1 year (Voltage stabilizer compulsory, If not then Warranty will not Apply) All Electrical & Electronics parts like Switch, Contactor, MCB, etc. warranty for 06 months from date of commissioning against faulty material or bad workmanship and undertake  to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. The cost of the new materials or repairing of the defective ones will be borne by the Seller. However, the cost of transportation and destination clearance charges etc. will be borne by the buyer.
             </p>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 •⁠ ⁠The buyer is required to return the defective parts or equipment to seller or to the manufacturer and the cost for the same will be bear by the buyer.
             </p>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 In case of payment terms agreed upon in the contract are not been obeyed, the warranty expires consequentially.
             </p>
 
-            <div style={{ fontWeight: "bold", fontSize: "9pt", fontFamily: F, color: BLUE, margin: "8px 0 3px 0" }}>
+            <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE, margin: "8px 0 3px 0" }}>
                 WARRANTY EXCLUDES FOLLOWING
             </div>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCB’s etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
             </p>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements.
             </p>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order.
             </p>
             <SectionTitle>CANCELLATION</SectionTitle>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 It is understood that order once placed cannot be cancelled for any reason whatso ever. In case of cancellation of the order, the entire amount of the advance will be forfeited.
             </p>
 
             <SectionTitle>GENERAL CONDITIONS</SectionTitle>
-            <p style={{ ...BODY_TEXT, fontSize: "8.5pt", marginBottom: "6px" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "10pt", marginBottom: "6px" }}>
                 The following general conditions apply to all orders, contracts, agreements, deliveries and services
                 offered by Adroit Extrusion, irrespective of buyer's purchase order conditions.
             </p>
@@ -938,7 +938,7 @@ function WarrantyPage() {
                 "Seller is not responsible for force majeure circumstances during an existing default situation.",
                 "Seller shall not be liable for any consequential or indirect damage or loss resulting from non-performance of the plant.",
             ].map((clause, i) => (
-                <div key={i} style={{ display: "flex", gap: "5px", marginBottom: "4px", fontSize: "8.5pt", fontFamily: F, lineHeight: "1.5" }}>
+                <div key={i} style={{ display: "flex", gap: "5px", marginBottom: "4px", fontSize: "10pt", fontFamily: F, lineHeight: "1.5" }}>
                     <span style={{ color: BLUE, fontWeight: "bold", flexShrink: 0 }}>{i + 1}.</span>
                     <span>{clause}</span>
                 </div>

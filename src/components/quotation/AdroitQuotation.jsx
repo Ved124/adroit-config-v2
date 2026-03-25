@@ -906,14 +906,14 @@ function TermsPage() {
                     <span style={{ fontSize: "9.5pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
                 </div>
             ))}
-            <div style={{ marginTop: "18px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
+            <div style={{ marginTop: "8px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
                 <div>Thanking you,</div>
                 <div>Yours truly,</div>
+                <div style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE }}>
+                    FOR ADROIT EXTRUSION
+                </div>
             </div>
-            <div style={{ marginTop: "40px", fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE }}>
-                FOR ADROIT EXTRUSION
-            </div>
-            <div style={{ fontSize: "10pt", fontFamily: F, color: DIM }}>Urveesh Jepaliya</div>
+            <div style={{ marginTop: "42px", fontSize: "10pt", fontFamily: F, color: BLUE, fontWeight: "bold" }}>Urveesh Jepaliya</div>
         </Page>
     );
 }

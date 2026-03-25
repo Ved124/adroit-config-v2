@@ -265,6 +265,61 @@ function buildProposalData({
       final_price_inr: Math.round(discount > 0 ? afterDiscount : withMarkup) || null,
       final_price_words: finalPriceWords ? finalPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
     },
+
+    // Power loads — derived from selected + selectedAddons
+    power_loads: (() => {
+      const POWER_MAP = [
+        { pattern: /35\s*mm/i, category: "Extruder", heating: 9.0, motive: 7.5 },
+        { pattern: /40\s*mm/i, category: "Extruder", heating: 10.0, motive: 11.0 },
+        { pattern: /45\s*mm/i, category: "Extruder", heating: 12.0, motive: 15.0 },
+        { pattern: /50\s*mm/i, category: "Extruder", heating: 14.0, motive: 22.5 },
+        { pattern: /55\s*mm/i, category: "Extruder", heating: 15.0, motive: 30.0 },
+        { pattern: /60\s*mm/i, category: "Extruder", heating: 15.0, motive: 30.0 },
+        { pattern: /65\s*mm/i, category: "Extruder", heating: 18.4, motive: 45.0 },
+        { pattern: /75\s*mm/i, category: "Extruder", heating: 22.4, motive: 75.0 },
+        { pattern: /90\s*mm/i, category: "Extruder", heating: 24.2, motive: 93.0 },
+        { pattern: /100\s*mm/i, category: "Extruder", heating: 31.5, motive: 45.0 },
+        { pattern: /haul.?off/i, heating: "", motive: 0 },
+        { pattern: /winder/i, heating: "", motive: 11 },
+      ];
+
+      function processItem(item, loads) {
+        const name = (item.name || "").trim();
+        const cat = (item.category || "").trim();
+        const qty = item.qty || 1;
+
+        // Extruders (by category or name)
+        if (cat === "Extruder" || /extruder/i.test(name)) {
+          const match = POWER_MAP.find(p => p.category === "Extruder" && p.pattern.test(name));
+          loads.push({ name: name.toUpperCase(), qty, heating: match ? match.heating : "", motive: match ? match.motive : "" });
+          return;
+        }
+
+        // Air Ring (by category OR name) — extract HP dynamically (1 HP = 0.746 kW)
+        if (cat === "Air Ring" || /air\s*ring/i.test(name)) {
+          const hpMatch = name.match(/(\d+)\s*hp/i);
+          const motiveKw = hpMatch ? (parseFloat(hpMatch[1]) * 0.746).toFixed(1) : "";
+          loads.push({ name: name.toUpperCase(), qty, heating: "", motive: motiveKw });
+          return;
+        }
+
+        // Die Head (by category OR name) — also add Screen Changer row
+        if (cat === "Die Head" || /\bdie\b/i.test(name)) {
+          loads.push({ name: name.toUpperCase(), qty, heating: 38.30, motive: "" });
+          loads.push({ name: "SCREEN CHANGER", qty, heating: 8.60, motive: "" });
+          return;
+        }
+
+        // Other components via pattern map
+        const rule = POWER_MAP.find(p => !p.category && p.pattern.test(name));
+        if (rule) loads.push({ name: name.toUpperCase(), qty, heating: rule.heating, motive: rule.motive });
+      }
+
+      const loads = [];
+      (selected || []).forEach(item => processItem(item, loads));
+      (selectedAddons || []).forEach(item => processItem(item, loads));
+      return loads;
+    })(),
   };
 }
 
@@ -711,7 +766,7 @@ export default function SummaryPage() {
                   if (i > 0) pdf.addPage();
                   pdf.addImage(imgData, "JPEG", 0, 0, A4_W_MM, A4_H_MM);
                 }
-                pdf.save(`Quotation_${customer?.quotationRef || "Draft"}.pdf`);
+                pdf.save(`Proposal for ${customer.company}_${customer?.quotationRef || "Draft"}.pdf`);
                 setShowPdfPreview(false);
               }}
               style={{ backgroundColor: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 20px", fontWeight: 700, cursor: "pointer", fontSize: "14px" }}

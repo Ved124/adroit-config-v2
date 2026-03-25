@@ -263,7 +263,7 @@ function CoverPage({ machine, customer }) {
             </div>
 
             {/* ── Blue rule ──────────────────────────────────────────────── */}
-            <div style={{ height: "2px", backgroundColor: BLUE, margin: "12px 0 16px 0" }} />
+            <div style={{ height: "2px", backgroundColor: BLUE, margin: "12px 0 16px 0" }} /> <br />
 
             {/* ── Proposal text block ────────────────────────────────────── */}
             <div style={{ textAlign: "center" }}>
@@ -276,7 +276,7 @@ function CoverPage({ machine, customer }) {
                         color: "#fff",
                         padding: "5px 32px",
                         fontWeight: "bold",
-                        fontSize: "11pt",
+                        fontSize: "12pt",
                         fontFamily: F,
                         letterSpacing: "2px",
                     }}>
@@ -286,7 +286,7 @@ function CoverPage({ machine, customer }) {
 
                 {/* Machine line — bold blue */}
                 <div style={{
-                    fontSize: "12pt",
+                    fontSize: "13pt",
                     fontWeight: "bold",
                     fontFamily: F,
                     color: BLUE,
@@ -300,7 +300,7 @@ function CoverPage({ machine, customer }) {
                 {/* MODEL code — layflat_width is baked in, e.g. "2370_50*65*75*65*50" */}
                 {modelCode && (
                     <div style={{
-                        fontSize: "10.5pt",
+                        fontSize: "12pt",
                         fontWeight: "bold",
                         fontFamily: F,
                         color: INK,
@@ -313,7 +313,7 @@ function CoverPage({ machine, customer }) {
 
                 {/* FOR */}
                 <div style={{
-                    fontSize: "10.5pt",
+                    fontSize: "12pt",
                     fontWeight: "bold",
                     fontFamily: F,
                     color: BLUE,
@@ -326,7 +326,7 @@ function CoverPage({ machine, customer }) {
                 {/* Customer */}
                 {company && (
                     <div style={{
-                        fontSize: "11pt",
+                        fontSize: "13pt",
                         fontWeight: "bold",
                         fontStyle: "italic",
                         fontFamily: F,
@@ -348,7 +348,7 @@ function CoverPage({ machine, customer }) {
 //   Price line (basic ex-works)
 //   Discounted price line (if present)
 // Basic components only — optionalItems go on CommercialScopePage (page 3)
-function ScopePage({ components, refNo, date }) {
+function ScopePage({ components, refNo, date, price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal }) {
     const allItems = (components || []).filter(c => c && c.name);
 
     return (
@@ -416,26 +416,11 @@ function ScopePage({ components, refNo, date }) {
                         );
                     })}
                 </tbody>
-            </table>
+            </table><br /><br />
 
-        </Page>
-    );
-}
 
-// ─── PAGE 3: COMMERCIAL SCOPE ────────────────────────────────────────────────
-// Layout matches real Adroit proposal (image 3):
-//   "COMMERCIAL SCOPE" heading (underlined, centred)
-//   ❖  BASIC PRICE, EX WORKS, UNPACKED: Rs. X,XX,XX,XXX/-
-//      (RUPEES ... ONLY)
-//   [blank space]
-//   "OPTIONAL EQUIPMENTS" heading (underlined)
-//   Table: SR. NO | DESCRIPTION | PRICE
-//   TOTAL Rs. row at bottom
-function CommercialScopePage({ price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal }) {
-    const opts = (optionalItems || []).filter(o => o && o.name);
-
-    return (
-        <Page>
+            {/* ── Horizontal rule ────────────────────────────────────── */}
+            <div style={{ borderTop: `1px solid ${LIGHT_BDR}`, marginBottom: "16px" }} />
             {/* ── COMMERCIAL SCOPE heading ─────────────────────────── */}
             <div style={{
                 textAlign: "center",
@@ -449,7 +434,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                 marginTop: "8px",
             }}>
                 COMMERCIAL SCOPE
-            </div>
+            </div><br />
 
             {/* ── Basic price block ──────────────────────────────────── */}
             {price ? (
@@ -468,13 +453,13 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                     {/* Final price — always shown */}
                     <div style={{ marginTop: "12px" }}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
-                            <span style={{ fontSize: "12pt", color: BLUE }}>❖</span>
-                            <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: INK }}>
+                            <span style={{ fontSize: "12pt", color: "red" }}>❖</span>
+                            <span style={{ fontWeight: "bold", fontSize: "12pt", fontFamily: F, color: "red" }}>
                                 FINAL PRICE, EX WORKS: {discountedPrice || price}
                             </span>
                         </div>
                         {(discountedWords || basicInWords) && (
-                            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, paddingLeft: "28px" }}>
+                            <div style={{ fontSize: "12pt", fontFamily: F, color: "red", paddingLeft: "28px" }}>
                                 ({discountedWords || basicInWords})
                             </div>
                         )}
@@ -485,23 +470,29 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                     Pricing to be advised separately.
                 </div>
             )}
+        </Page>
+    );
+}
 
-            {/* ── Horizontal rule ────────────────────────────────────── */}
-            <div style={{ borderTop: `1px solid ${LIGHT_BDR}`, marginBottom: "16px" }} />
+// ─── PAGE 3: COMMERCIAL SCOPE ────────────────────────────────────────────────
+// Layout matches real Adroit proposal (image 3):
+//   "COMMERCIAL SCOPE" heading (underlined, centred)
+//   ❖  BASIC PRICE, EX WORKS, UNPACKED: Rs. X,XX,XX,XXX/-
+//      (RUPEES ... ONLY)
+//   [blank space]
+//   "OPTIONAL EQUIPMENTS" heading (underlined)
+//   Table: SR. NO | DESCRIPTION | PRICE
+//   TOTAL Rs. row at bottom
+function CommercialScopePage({ optionalItems, addonsTotal }) {
+    const opts = (optionalItems || []).filter(o => o && o.name);
+
+    return (
+        <Page>
 
             {/* ── Optional equipments heading ────────────────────────── */}
-            <div style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                fontSize: "11pt",
-                fontFamily: F,
-                color: INK,
-                textDecoration: "underline",
-                letterSpacing: "0.5px",
-                marginBottom: "12px",
-            }}>
+            <SectionTitle>
                 OPTIONAL EQUIPMENTS
-            </div>
+            </SectionTitle>
 
             {/* ── Optional items table — SR NO | DESCRIPTION | PRICE ─── */}
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -552,7 +543,33 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table><br />
+            <SectionTitle>TOWER STRUCTURE</SectionTitle>
+            <p style={{ ...BODY_TEXT, marginBottom: "10px" }}>
+                Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
+                haul-off, secondary nip, etc. Lifting beams provided at bubble cage level for die handling.
+            </p><br />
+
+            <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
+            {[
+                ["Electrical Accessories",
+                    "1. Main source of electrical power or generator with stabilizer or UPS if needed by you. \n2. Cables from Main supply to distribution panel and to machine panels.\n 3.Earthing to all equipments to be provided by you. (Recommended 3 pits)"],
+                ["Finished Roll Handling",
+                    "Unloading of finished rolls from winders and internal plant transportation."],
+                ["Installation of equipment",
+                    "Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers."],
+                ["Interconnecting Piping",
+                    "All interconnecting piping for water & compressed air."],
+            ].map(([title, body], i) => (
+                <div key={i} style={{ marginBottom: "8px" }}>
+                    <span style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>
+                        {title}:
+                    </span>
+                    <span style={{ fontSize: "10pt", fontFamily: F, lineHeight: "1.6", color: INK }}>
+                        {" "}{body}
+                    </span>
+                </div>
+            ))}
         </Page>
     );
 }
@@ -565,35 +582,37 @@ function PerformancePage({ perf }) {
             <SectionTitle style={{ marginTop: "4px" }}>INDICATIVE PERFORMANCE</SectionTitle>
 
             <div style={{ marginBottom: "10px" }}>
-                <SpecRow label="Product" value={p.product || "High Quality Blown Film"} />
-                <SpecRow label={`Max Output in kg/hr (${p.die_size || "die"})`} value={p.max_output || "—"} shaded />
+                <SpecRow label="Product to be made" value={p.product || "High Quality Blown Film"} />
+                <SpecRow label={`Max Output in kg/hr (${p.diameterMm || "die"})
+                                75% LL + 25% LD`} value={p.max_output || "—"} shaded />
                 <SpecRow label="Lay-flat Width(mm)" value={p.layflat_width || "—"} />
                 <SpecRow label="Film Thickness Range" value={p.thickness_range || "20 – 150 micron"} shaded />
                 <SpecRow label="Thickness Variation" value={p.thickness_variation || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery."} />
                 <SpecRow label="Raw Materials" value={p.raw_materials || "LDPE, LLDPE, HDPE, mLLDPE, etc."} shaded noBorder />
-            </div>
+            </div><br />
 
-            <p style={{ ...BODY_TEXT, fontSize: "8pt", color: DIM, fontStyle: "italic" }}>
+            <p style={{ ...BODY_TEXT, fontSize: "9pt", color: DIM, fontStyle: "italic" }}>
                 Provided that the temperature of air at the air ring will not exceed 10–12 °C and 2.5 BUR+
                 widths only. Ambient temperature and relative humidity within normal range.
             </p>
-
+            <br />
             <SectionTitle>LIMITATIONS</SectionTitle>
 
             <p style={{ ...BODY_TEXT, fontSize: "11pt", marginBottom: "6px" }}>
-                Although we design our equipment to the highest possible standard, many factors beyond equipment
-                design can affect film quality. These are not covered by our performance guarantee and include:
-            </p>
+                Although we can design our equipment to as high a standard as possible, there are many factors other than
+                equipment that can significantly affect the quality of the film. As these factors are out of our control,
+                they are not covered by our performance guarantee. These factors include but are not limited to:
+            </p><br />
 
             {[
-                ["Resin", "Bad batches, off-spec resins, change in additives or use of resins other than specified."],
-                ["Interfacial Instability", "Mismatched viscosity in adjacent layers — reduce by matching resins or adjusting layer ratios."],
-                ["Blocking", "Weather, resins, additives and processing conditions can induce blocking."],
-                ["Gels", "Defective resins, dirty screws or unsuitable processing conditions can cause gels."],
-                ["Gloss and Haze", "Affected by resin, temperature profiles or inappropriate purge resins."],
+                ["Resin", " Bad Batches, Off-spec. Resins, Changes in additives or the use of resins other than Specified can produce poor film."],
+                ["Interfacial Instability", "Mismatched viscosity in adjacent layers, can be reduced by matching resins or increasing thickness of thin layers."],
+                ["Blocking", "Weather effects, resins, additives and processing conditions can induce blocking, even with a tower of recommended height running the guarantee structures."],
+                ["Gels", " Defective resins, dirty screws or processing conditions can cause gels."],
+                ["Gloss and Haze", " Can be affected by resin, temperature profiles or inappropriate purge resins."],
                 ["Melt Fracture", "Due to narrow die gap and material properties. Processing aid may be required."],
                 ["Curling", "Asymmetrical film structures will naturally curl; machine design has no role."],
-                ["Film Characteristics", "Impact strength, tear strength and other properties are affected by processing conditions and resins."],
+                ["Film Characteristics", "Impact strength, tear strength and other properties are affected by processing conditions, resins and additives"],
             ].map(([b, rest], i) => (
                 <div key={i} style={{ display: "flex", gap: "4px", marginBottom: "3px", fontSize: "11pt", fontFamily: F, lineHeight: "1.5" }}>
                     <span style={{ color: BLUE, flexShrink: 0 }}>•</span>
@@ -680,40 +699,44 @@ function ElectricalsPage({ electricals }) {
                 <SpecRow label="Power Supply" value="415 V, 50 Hz, with N" shaded />
                 <SpecRow label="Voltage Fluctuation" value="+ /- 5%" noBorder />
             </div><br />
+            <SectionTitle>
+                Water — Treated / Soft Water
+            </SectionTitle>
+            <div style={{ marginBottom: "10px" }}>
+                <SpecRow label="Classification" value="Boiler feed water" shaded />
+                <SpecRow label="pH Value" value="7.5 – 8.0" />
+                <SpecRow label="Operating Pressure" value="3 – 4 Bar" shaded />
+                <SpecRow label="Permissible Fluctuation" value="+/- 0.25 Bar" />
+                <SpecRow label="Max. Hardness" value="5 Degrees dH" shaded />
+                <SpecRow label="Max. non-carbonate hardness" value="2 Degrees dH" />
+                <SpecRow label="Filter (max.)" value="40 microns" shaded />
+                <SpecRow label="General Criteria" value="Free from corrosion substances and foreign particles." noBorder />
+                <SpecRow label="Water requirement" value="30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade." noBorder shaded />
+            </div><br />
 
-            <SectionTitle>TOWER STRUCTURE</SectionTitle>
-            <p style={{ ...BODY_TEXT, marginBottom: "10px" }}>
-                Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
-                haul-off, secondary nip, etc. Lifting beams provided at bubble cage level for die handling.
-            </p><br />
+            <SectionTitle>
+                Compressed Air
+            </SectionTitle>
+            <div>
+                <SpecRow label="Operating Pressure" value="5 – 7 Bar" shaded />
+                <SpecRow label="Permissible Fluctuations" value="+/- 0.25 Bar" />
+                <SpecRow label="Dew Point" value="−25 °C" shaded />
+                <SpecRow label="Dust / Oil / Water" value="None" noBorder />
+            </div>
 
-            <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
-            {[
-                ["Electrical Accessories",
-                    "1. Main source of electrical power or generator with stabilizer or UPS if needed by you. \n2. Cables from Main supply to distribution panel and to machine panels.\n 3.Earthing to all equipments to be provided by you. (Recommended 3 pits)"],
-                ["Finished Roll Handling",
-                    "Unloading of finished rolls from winders and internal plant transportation."],
-                ["Installation of equipment",
-                    "Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers."],
-                ["Interconnecting Piping",
-                    "All interconnecting piping for water & compressed air."],
-            ].map(([title, body], i) => (
-                <div key={i} style={{ marginBottom: "8px" }}>
-                    <span style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>
-                        {title}:
-                    </span>
-                    <span style={{ fontSize: "10pt", fontFamily: F, lineHeight: "1.6", color: INK }}>
-                        {" "}{body}
-                    </span>
-                </div>
-            ))}
         </Page>
     );
 }
 
 // ─── OPTIONAL EQUIPMENT + UTILITIES ──────────────────────────────────────────
-function OptionalAndUtilitiesPage({ optionalItems }) {
+function OptionalAndUtilitiesPage({ optionalItems, powerLoads }) {
     const opts = optionalItems || [];
+    const loads = powerLoads || [];
+    let totalH = 0, totalM = 0;
+    loads.forEach(l => {
+        totalH += (Number(l.heating) || 0) * (Number(l.qty) || 1);
+        totalM += (Number(l.motive) || 0) * (Number(l.qty) || 1);
+    });
     return (
         <Page>
             {/* <SectionTitle style={{ marginTop: "4px" }}>OPTIONAL EQUIPMENTS</SectionTitle>
@@ -749,6 +772,44 @@ function OptionalAndUtilitiesPage({ optionalItems }) {
                 </p>
             )} */}
 
+            {/* ── Compressed Air Equipment Table ─────────────────────── */}
+
+
+            <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", fontSize: "8pt", fontFamily: F }}>
+                <thead>
+                    <tr>
+                        <th style={{ ...TH, width: "30px" }}>SR.<br />NO.</th>
+                        <th style={{ ...TH, textAlign: "left" }}>EQUIPMENTS</th>
+                        <th style={{ ...TH, width: "46px" }}>QTY.</th>
+                        <th style={{ ...TH, width: "90px" }}>PRESSURE<br />(BAR)</th>
+                        <th style={{ ...TH, width: "110px" }}>TOTAL AMT. OF<br />AIR M3/HR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {[
+                        { name: "AT DIE DURING STARTUP & OPERATION", qty: 1, pressure: "5-7 BAR", air: "8.5" },
+                        { name: "OSC. HAULOFF", qty: 1, pressure: "5-7 BAR", air: "1.7" },
+                        { name: "SURFACE WINDER WITH ADD. NIP", qty: 1, pressure: "5-7 BAR", air: "5.1" },
+                    ].map((row, i) => (
+                        <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : GRAY_BG }}>
+                            <td style={{ ...TD, textAlign: "center" }}>{i + 1}</td>
+                            <td style={{ ...TD }}>{row.name}</td>
+                            <td style={{ ...TD, textAlign: "center" }}>{row.qty}</td>
+                            <td style={{ ...TD, textAlign: "center" }}>{row.pressure}</td>
+                            <td style={{ ...TD, textAlign: "center" }}>{row.air}</td>
+                        </tr>
+                    ))}
+                    <tr style={{ backgroundColor: BLUE_LIGHT }}>
+                        <td colSpan={4} style={{ ...TD, textAlign: "right", fontWeight: "bold", color: INK, border: `1px solid ${BDR}` }}>
+                            TOTAL
+                        </td>
+                        <td style={{ ...TD, textAlign: "center", fontWeight: "bold", color: INK, border: `1px solid ${BDR}` }}>
+                            15.3
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br />
+
             <SectionTitle>UTILITIES REQUIRED</SectionTitle>
 
             <div className="text-lg font-bold text-blue-500 mb-2">
@@ -761,88 +822,58 @@ function OptionalAndUtilitiesPage({ optionalItems }) {
                 <SpecRow label="Control Voltage" value="230 V/AC, 50 Hz." />
                 <SpecRow label="Permissible Voltage Fluctuation" value="+ /- 5%" shaded />
                 <SpecRow label="Permissible Frequency Fluctuation" value="+ /- 3%" noBorder />
-            </div>
+            </div><br />
 
-            <SectionTitle>
-                Water — Treated / Soft Water
-            </SectionTitle>
-            <div style={{ marginBottom: "10px" }}>
-                <SpecRow label="Classification" value="Boiler feed water" shaded />
-                <SpecRow label="pH Value" value="7.5 – 8.0" />
-                <SpecRow label="Operating Pressure" value="3 – 4 Bar" shaded />
-                <SpecRow label="Permissible Fluctuation" value="+/- 0.25 Bar" />
-                <SpecRow label="Max. Hardness" value="5 Degrees dH" shaded />
-                <SpecRow label="Max. non-carbonate hardness" value="2 Degrees dH" />
-                <SpecRow label="Filter (max.)" value="40 microns" shaded />
-                <SpecRow label="General Criteria" value="Free from corrosion substances and foreign particles." noBorder />
-                <SpecRow label="Water requirement" value="30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade." noBorder shaded />
-            </div>
+            {/* ── Equipment Power Loads Table ────────────────────────── */}
+            {loads.length > 0 && (
+                <>
+                    {/* <div style={{ fontWeight: "bold", fontSize: "9pt", fontFamily: F, color: "#fff", backgroundColor: BLUE, padding: "2px 6px", marginBottom: "4px", letterSpacing: "0.5px" }}>
+                        EQUIPMENT POWER LOADS
+                    </div> */}
+                    <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", fontSize: "8.5pt", fontFamily: F }}>
+                        <thead>
+                            <tr>
+                                <th style={{ ...TH, width: "36px", fontSize: "8pt", padding: "2px 3px" }}>SR.<br />NO.</th>
+                                <th style={{ ...TH, textAlign: "left", fontSize: "8pt", padding: "2px 4px" }}>EQUIPMENTS</th>
+                                <th style={{ ...TH, width: "36px", fontSize: "8pt", padding: "2px 3px" }}>QTY.</th>
+                                <th style={{ ...TH, width: "100px", fontSize: "8pt", padding: "2px 3px" }}>APP. HEATING<br />LOAD KW</th>
+                                <th style={{ ...TH, width: "100px", fontSize: "8pt", padding: "2px 3px" }}>APP. MOTIVE<br />LOAD KW</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loads.map((item, i) => (
+                                <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : GRAY_BG }}>
+                                    <td style={{ ...TD, textAlign: "center", padding: "2px 3px", fontSize: "8.5pt" }}>{i + 1}</td>
+                                    <td style={{ ...TD, padding: "2px 4px", fontSize: "8.5pt" }}>{item.name}</td>
+                                    <td style={{ ...TD, textAlign: "center", padding: "2px 3px", fontSize: "8.5pt" }}>{item.qty || 1}</td>
+                                    <td style={{ ...TD, textAlign: "center", padding: "2px 3px", fontSize: "8.5pt" }}>
+                                        {item.heating != null && item.heating !== "" ? item.heating : ""}
+                                    </td>
+                                    <td style={{ ...TD, textAlign: "center", padding: "2px 3px", fontSize: "8.5pt" }}>
+                                        {item.motive != null && item.motive !== "" ? item.motive : ""}
+                                    </td>
+                                </tr>
+                            ))}
+                            <tr style={{ backgroundColor: BLUE_LIGHT }}>
+                                <td colSpan={3} style={{ ...TD, textAlign: "right", fontWeight: "bold", fontSize: "8.5pt", padding: "2px 4px", color: INK, border: `1px solid ${BDR}` }}>
+                                    TOTAL KW
+                                </td>
+                                <td style={{ ...TD, textAlign: "center", fontWeight: "bold", fontSize: "8.5pt", padding: "2px 3px", color: INK, border: `1px solid ${BDR}` }}>
+                                    {totalH > 0 ? totalH.toFixed(2) : ""}
+                                </td>
+                                <td style={{ ...TD, textAlign: "center", fontWeight: "bold", fontSize: "8.5pt", padding: "2px 3px", color: INK, border: `1px solid ${BDR}` }}>
+                                    {totalM > 0 ? totalM.toFixed(2) : ""}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </>
+            )}
 
-            <SectionTitle>
-                Compressed Air
-            </SectionTitle>
-            <div>
-                <SpecRow label="Operating Pressure" value="5 – 7 Bar" shaded />
-                <SpecRow label="Permissible Fluctuations" value="+/- 0.25 Bar" />
-                <SpecRow label="Dew Point" value="−25 °C" shaded />
-                <SpecRow label="Dust / Oil / Water" value="None" noBorder />
-            </div>
         </Page>
     );
 }
 
-// ─── POWER LOADS ──────────────────────────────────────────────────────────────
-function PowerLoadsPage({ powerLoads }) {
-    const loads = powerLoads || [];
-    if (!loads.length) return null;
-    let totalH = 0, totalM = 0;
-    loads.forEach(l => {
-        totalH += (Number(l.heating) || 0) * (Number(l.qty) || 1);
-        totalM += (Number(l.motive) || 0) * (Number(l.qty) || 1);
-    });
-    return (
-        <Page>
-            <SectionTitle style={{ marginTop: "4px" }}>EQUIPMENT POWER LOADS</SectionTitle>
-            <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "14px" }}>
-                <thead>
-                    <tr>
-                        <th style={{ ...TH, width: "36px" }}>SR.</th>
-                        <th style={{ ...TH, textAlign: "left" }}>EQUIPMENT</th>
-                        <th style={{ ...TH, width: "46px" }}>QTY.</th>
-                        <th style={{ ...TH, width: "110px" }}>HEATING LOAD (kW)</th>
-                        <th style={{ ...TH, width: "110px" }}>MOTIVE LOAD (kW)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {loads.map((item, i) => (
-                        <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : GRAY_BG }}>
-                            <td style={{ ...TD, textAlign: "center" }}>{i + 1}</td>
-                            <td style={TD}>{item.name}</td>
-                            <td style={{ ...TD, textAlign: "center" }}>{item.qty || 1}</td>
-                            <td style={{ ...TD, textAlign: "center" }}>
-                                {item.heating != null && item.heating !== "" ? item.heating : "—"}
-                            </td>
-                            <td style={{ ...TD, textAlign: "center" }}>
-                                {item.motive != null && item.motive !== "" ? item.motive : "—"}
-                            </td>
-                        </tr>
-                    ))}
-                    <tr style={{ backgroundColor: BLUE_LIGHT }}>
-                        <td colSpan={3} style={{ ...TD, textAlign: "right", fontWeight: "bold", color: BLUE, border: `1px solid ${BDR}` }}>
-                            TOTAL (kW)
-                        </td>
-                        <td style={{ ...TD, textAlign: "center", fontWeight: "bold", color: BLUE, border: `1px solid ${BDR}` }}>
-                            {totalH > 0 ? totalH.toFixed(2) : "—"}
-                        </td>
-                        <td style={{ ...TD, textAlign: "center", fontWeight: "bold", color: BLUE, border: `1px solid ${BDR}` }}>
-                            {totalM > 0 ? totalM.toFixed(2) : "—"}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </Page>
-    );
-}
 
 // ─── TERMS & CONDITIONS ───────────────────────────────────────────────────────
 function TermsPage() {
@@ -872,7 +903,7 @@ function TermsPage() {
             {clauses.map(([title, body], i) => (
                 <div key={i} style={{ marginBottom: "7px" }}>
                     <span style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>{title}: </span>
-                    <span style={{ fontSize: "10pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
+                    <span style={{ fontSize: "9.5pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
                 </div>
             ))}
             <div style={{ marginTop: "18px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
@@ -982,6 +1013,10 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                 components={allComponents}
                 refNo={quot.refNo}
                 date={quot.date}
+                price={pricing.basicPrice || ""}
+                basicInWords={pricing.basicPriceWords || ""}
+                discountedPrice={pricing.discountedPrice || ""}
+                discountedWords={pricing.discountedWords || ""}
             />
 
             {/* Page 3 — Commercial Scope: pricing block + optional addons table with total */}
@@ -1006,12 +1041,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
             <ElectricalsPage electricals={electricals} />
 
             {/* Optional Equipment + Utilities */}
-            <OptionalAndUtilitiesPage optionalItems={optionalItems} />
-
-            {/* Power Loads (only if data provided) */}
-            {(data.power_loads || []).length > 0 && (
-                <PowerLoadsPage powerLoads={data.power_loads} />
-            )}
+            <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} />
 
             {/* Terms & Conditions */}
             <TermsPage />

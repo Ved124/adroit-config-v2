@@ -110,7 +110,7 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Dual lip spiral-cooled ring for 3-layer mid-size lines.",
     price: 0,
     techDesc: {
-      "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling. ",
+      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The air ring has circular casing with many entry ports for efficient cooling. ",
       "Blower no.": "One no. with inlet air filter.",
       "Blower": "10 HP AC variable frequency drive.",
       "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor. 4”diameter flexible hoses to connect the air ring.",
@@ -129,7 +129,7 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Dual lip spiral-cooled ring for 3-layer mid-size lines.",
     price: 0,
     techDesc: {
-      "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling. ",
+      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The air ring has circular casing with many entry ports for efficient cooling. ",
       "Blower no.": "One no. with inlet air filter.",
       "Blower": "15 HP AC variable frequency drive.",
       "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor. 4”diameter flexible hoses to connect the air ring.",
@@ -148,7 +148,7 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Large dual lip air ring for wide industrial films.",
     price: 0,
     techDesc: {
-      "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling. ",
+      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The air ring has circular casing with many entry ports for efficient cooling. ",
       "Blower no.": "One no. with inlet air filter.",
       "Blower": "20 HP AC variable frequency drive.",
       "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor. 4”diameter flexible hoses to connect the air ring.",
@@ -167,7 +167,7 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "High-output air ring for extra wide machine AE-2625.",
     price: 0,
     techDesc: {
-      "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling. ",
+      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The air ring has circular casing with many entry ports for efficient cooling. ",
       "Blower no.": "One no. with inlet air filter.",
       "Blower": "25 HP AC variable frequency drive.",
       "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor. 4”diameter flexible hoses to connect the air ring.",
@@ -186,7 +186,7 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "High-output air ring.",
     price: 0,
     techDesc: {
-      "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling. ",
+      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The air ring has circular casing with many entry ports for efficient cooling. ",
       "Blower no.": "One no. with inlet air filter.",
       "Blower": "30 HP AC variable frequency drive.",
       "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor. 4”diameter flexible hoses to connect the air ring.",

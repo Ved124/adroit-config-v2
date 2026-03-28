@@ -944,7 +944,7 @@ function WarrantyPage() {
                 Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCB’s etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
             </p>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
-                WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements.
+                WARRANTY IS LIMITED to the extent of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements.
             </p>
             <p style={{ ...BODY_TEXT, fontSize: "10pt" }}>
                 Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order.

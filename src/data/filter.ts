@@ -1,0 +1,429 @@
+// data/filter.ts
+// Beta component data ONLY for filter.
+// You can adjust prices, images and wording as needed.
+
+export type MachineType = "mono" | "aba" | "3layer" | "5layer";
+
+export interface TechSpecMap {
+    [label: string]: string;
+}
+
+export interface Filter {
+    id: string;
+    name: string;
+    sizeMm: number;
+    variant: "short" | "long";
+    machineTypes: MachineType[];   // where this filter can be used
+    usedInModels?: string[];       // optional: machine codes like "DUOFLEX-750"
+    image: string;
+    cardDesc: string;              // short tfilter for the card
+    price: number;                 // placeholder – change as per your costing
+    techDesc: TechSpecMap;
+    shortDesc?: string;             // detailed spec for modal / Word / PDF
+}
+
+// 💡 NOTE:
+// - “short” = typical monolayer blown film filter
+// - “long”  = higher-output screw for ABA / 3-Layer
+
+export const FILTER_COMPONENTS: Filter[] = [
+    // ---------------- MONOLAYER SHORT filter ----------------
+    {
+        id: "filter-35-mono-short",
+        name: "filter 35 mm (Monolayer)",
+        sizeMm: 35,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-450"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "35 mm monolayer filter. Motor 7.5 kW, L/D 30:1.",
+        price: 0, // TODO: fill price
+        techDesc: {
+            "Screw Diameter":
+                "35 mm single screw filter mounted on a sturdy fabricated frame.",
+            "L/D ratio": "30 : 1 (short barrel for monolayer output range 25–30 kg/hr).",
+            "Type": "Barrier type screw with grooved feed section.",
+            "Barrel":
+                "Nitride hardened alloy steel barrel, water-cooled grooved feed section.",
+            "Material": "Bimetallic screw and barrel, suitable for PE / LD / LLD blends.",
+            "Screw Speed": "Approx. 115 RPM (variable with AC drive).",
+            "Heating System":
+                "Ceramic band heaters with individual temperature control zones.",
+            "No. of Heating Zones": "4 zones on barrel + die adapter zone.",
+            "Main Drive":
+                "7.5 kW AC motor with vector type variable frequency drive.",
+            "Transmission System": "Helical gear reducer with thrust bearing housing.",
+            "Hopper":
+                "MS fabricated hopper with sight glass and magnetic grill for metal trapping.",
+            "Screen Changer": "Manual candle type screen changer.",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-45-mono-short",
+        name: "filter 45 mm (Monolayer – Short)",
+        sizeMm: 45,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-750_900"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "45 mm monolayer filter. Motor 15 kW, L/D 30:1.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter":
+                "45 mm single screw filter for Unoflex monolayer range.",
+            "L/D ratio": "30 : 1 short barrel for medium output 50–60 kg/hr.",
+            "Type": "Barrier screw profile optimised for thin gauge film.",
+            "Barrel":
+                "Water-cooled grooved feed section with bimetallic wear-resistant liner.",
+            "Screw Speed": "Up to 115 RPM with closed-loop speed control.",
+            "Heating System":
+                "9.7 kW ceramic band heater load with PID temperature controllers.",
+            "No. of Heating Zones": "4 barrel zones + adapter.",
+            "Main Drive": "15 kW AC motor with VFD.",
+            "Transmission System": "Helical gear box with thrust bearing housing.",
+            "Hopper":
+                "Fabricated hopper with glass window for visual inspection and magnetic grill.",
+            "Screen Changer": "Manual candle type (optional hydraulic on request).",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-55-mono-short",
+        name: "filter 55 mm (Monolayer – Short)",
+        sizeMm: 55,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-1000_1250"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "55 mm monolayer filter. Motor 22.5 kW, L/D 30:1.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "55 mm single screw filter for higher layflat widths.",
+            "L/D ratio": "30 : 1 short barrel.",
+            "Type": "Barrier screw, suitable for LD / LLD and blends with CaCO₃.",
+            "Barrel": "Water-cooled grooved feed with bimetallic liner.",
+            "Screw Speed": "Approx. 115 RPM.",
+            "Heating System":
+                "10.2 kW ceramic band heaters with digital temperature control.",
+            "No. of Heating Zones": "4–5 barrel zones + adapter.",
+            "Main Drive": "22.5 kW AC motor with VFD.",
+            "Transmission System": "Helical gearbox with in-built thrust bearing.",
+            "Hopper": "MS hopper with sight glass and magnetic grill.",
+            "Screen Changer": "Manual candle type screen changer.",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-60-mono-short",
+        name: "filter 60 mm (Monolayer – Short)",
+        sizeMm: 60,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-1250_1500"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "60 mm monolayer filter. Motor 30 kW, L/D 30:1.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "60 mm single screw filter.",
+            "L/D ratio": "30 : 1 short barrel.",
+            "Main Drive": "30 kW AC motor with vector drive.",
+            "Heating System": "Approx. 15 kW total heater load on barrel.",
+            "Type": "Barrier screw, medium duty.",
+            "Hopper": "MS hopper with magnetic grill and level window.",
+            "Screen Changer": "Manual candle type.",
+            "Application":
+                "For general purpose blown film, shopping bags and liners.",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-75-mono-short",
+        name: "filter 75 mm (Monolayer – Short)",
+        sizeMm: 75,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-2000"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "75 mm monolayer filter. Motor 45 kW, L/D 30:1.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "75 mm single screw filter for high output monolayer line.",
+            "L/D ratio": "30 : 1 short barrel.",
+            "Main Drive": "45 kW AC motor with VFD.",
+            "Heating System": "Approx. 22.4 kW heater load.",
+            "Type": "Barrier type screw, bimetallic barrel.",
+            "Applications":
+                "Heavy duty liner film, shrink film and high width shopping bags.",
+            "Screen Changer": "Optional hydraulic screen changer.",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-90-mono-short",
+        name: "filter 90 mm (Monolayer – Short)",
+        sizeMm: 90,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-2500"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "90 mm monolayer filter. Motor 50 kW, L/D 30:1.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "90 mm single screw filter.",
+            "L/D ratio": "30 : 1.",
+            "Main Drive": "50 kW AC motor with inverter.",
+            "Heating System": "29.5 kW total barrel heater load.",
+            "Applications": "Wide width film for construction and agricultural use.",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-100-mono-short",
+        name: "filter 100 mm (Monolayer – Short)",
+        sizeMm: 100,
+        variant: "short",
+        machineTypes: ["mono"],
+        usedInModels: ["UNOFLEX-3000"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "100 mm monolayer filter. Motor 60 kW, L/D 30:1.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "100 mm single screw filter.",
+            "L/D ratio": "30 : 1.",
+            "Main Drive": "60 kW AC motor with VFD.",
+            "Heating System": "31.5 kW heater load.",
+            "Applications": "Very wide width liner and greenhouse film.",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    // ---------------- ABA / COEX LONG filter ----------------
+
+    {
+        id: "filter-35-aba-long",
+        name: "filter 35 mm (ABA / Co-ex – Long)",
+        sizeMm: 35,
+        variant: "long",
+        machineTypes: ["aba"],
+        usedInModels: ["DUOFLEX-750"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "35 mm long screw co-filter for skin layer (ABA).",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "35 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "30 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Hearsun)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-40-coex-long",
+        name: "filter 40 mm",
+        sizeMm: 40,
+        variant: "long",
+        machineTypes: ["3layer", "5layer"],
+        usedInModels: ["AE-1125"],
+        image: "/images/filter/filter ABA.JPG",
+        cardDesc: "40 mm long co-filter for 3-layer machines.",
+        price: 0,
+        techDesc: {
+            "Screw Diameter": "40 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "30 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Hearsun)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "15 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-45-coex-long",
+        name: "filter 45 mm (ABA / 3-Layer – Long)",
+        sizeMm: 45,
+        variant: "long",
+        machineTypes: ["aba", "3layer", "5layer"],
+        usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "AE-1350A"],
+        image: "/images/filter/filter.png",
+        cardDesc: "45 mm long co-filter for ABA / 3-layer machines.",
+        price: 100000,
+        techDesc: {
+            "Screw Diameter": "45 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "30 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Hearsun)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-50-coex-long",
+        name: "filter 50 mm",
+        sizeMm: 50,
+        variant: "long",
+        machineTypes: ["3layer", "5layer"],
+        usedInModels: ["AE-1350B", "AE-1625", "AE-1870"],
+        image: "/images/filter/filter.png",
+        cardDesc: "50 mm single screw filter mounted on a sturdy frame.",
+        price: 115000,
+        techDesc: {
+            "Screw Diameter": "50 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "32 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-55-coex-long",
+        name: "filter 55 mm (ABA / 3-Layer – Long)",
+        sizeMm: 55,
+        variant: "long",
+        machineTypes: ["aba", "3layer", "5layer"],
+        usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750", "AE-1350A", "AE-1870"],
+        image: "/images/filter/filter.png",
+        cardDesc: "55 mm long screw co-filter for core or skin layer.",
+        price: 120000,
+        techDesc: {
+            "Screw Diameter": "55 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "30 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Hearsun)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "40 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-65-coex-long",
+        name: "filter 65 mm (Co-ex – Long)",
+        sizeMm: 65,
+        variant: "long",
+        machineTypes: ["aba", "3layer", "5layer"],
+        usedInModels: ["DUOFLEX-1750", "AE-1625", "AE-1870", "AE-2125", "AE-2370"],
+        image: "/images/filter/filter.png",
+        cardDesc: "65 mm long co-filter for high output ABA / 3-layer lines.",
+        price: 130000,
+        techDesc: {
+            "Screw Diameter": "65 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "32 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "60 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-75-coex-long",
+        name: "filter 75 mm (Co-ex – Long)",
+        sizeMm: 75,
+        variant: "long",
+        machineTypes: ["3layer", "5layer"],
+        usedInModels: ["AE-2125", "AE-2370", "AE-2625"],
+        image: "/images/filter/filter.png",
+        cardDesc: "75 mm long screw filter for large 3-layer machines.",
+        price: 150000,
+        techDesc: {
+            "Screw Diameter": "75 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "32 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "105 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+
+    {
+        id: "filter-90-coex-long",
+        name: "filter 90 mm (Co-ex – Long)",
+        sizeMm: 90,
+        variant: "long",
+        machineTypes: ["3layer", "5layer"],
+        usedInModels: ["AE-2625"],
+        image: "/images/filter/filter.png",
+        cardDesc: "90 mm long screw filter for very high output core layer.",
+        price: 185000,
+        techDesc: {
+            "Screw Diameter": "90 mm single screw filter mounted on a sturdy frame.",
+            "L/D ratio": "32 : 1",
+            "Type": "Barrier",
+            "Screw Speed": "90 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Hearsun)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type",
+        },
+        shortDesc: "filter unit with precision screw/barrel design for stable melt flow and consistent output.",
+    },
+];

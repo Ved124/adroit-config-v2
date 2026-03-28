@@ -14,6 +14,7 @@ import { MONO_MODELS } from "../data/monoModels";
 import { ABA_MODELS } from "../data/abaModels";
 import { THREE_LAYER_MODELS } from "../data/threeLayerModels";
 import { EXTRUDER_COMPONENTS } from "../src/data/extruders";
+import { FILTER_COMPONENTS } from "../src/data/filter";
 import { DIE_COMPONENTS } from "../src/data/dies";
 import { BUBBLE_CAGE_COMPONENTS } from "../src/data/bubbleCages";
 import { HAULOFF_COMPONENTS } from "../src/data/hauloffs";
@@ -73,6 +74,7 @@ const MACHINE_MODELS = {
 
 export const COMPONENTS_DATA = {
   Extruder: EXTRUDER_COMPONENTS,
+  Filter: FILTER_COMPONENTS,
   "Die Head": DIE_COMPONENTS,
   "Air Ring": AIR_RING_COMPONENTS,
   IBC: IBC_COMPONENTS,
@@ -81,6 +83,7 @@ export const COMPONENTS_DATA = {
   "Bubble Cage": BUBBLE_CAGE_COMPONENTS,
   "Tower / Platform": TOWER_COMPONENTS,
   Winder: WINDER_COMPONENTS,
+  "Electrical & Control Panel": ELECTRICAL_ADDONS,
 };
 
 export const ADDONS_DATA = {
@@ -92,8 +95,7 @@ export const ADDONS_DATA = {
   "Web Guide": WEB_GUIDE_ADDONS,
   "Cooling System": CHILLER_ADDONS,
   "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
-  "MDO Unit": MDO_ADDONS,
-  "Electrical & Control Panel": ELECTRICAL_ADDONS,
+  // "MDO Unit": MDO_ADDONS,
 
 };
 

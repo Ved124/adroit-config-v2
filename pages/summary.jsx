@@ -323,6 +323,26 @@ function buildProposalData({
   };
 }
 
+// ─── downloadJson ─────────────────────────────────────────────────────────────
+/**
+ * Serialise the full proposalData object and trigger a browser file download.
+ * Import this JSON on the customer page to restore every detail of the proposal.
+ */
+function downloadJson(data) {
+  if (!data) { alert("No proposal data yet — fill in customer details first."); return; }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const company = data?.customer?.company || "Draft";
+  const ref = data?.quotation?.refNo || "NoRef";
+  a.href = url;
+  a.download = `Proposal_${company}_${ref}.json`.replace(/[/\\?%*:|"<>]/g, "-");
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 // ─── PAGE COMPONENT ───────────────────────────────────────────────────────────
 export default function SummaryPage() {
   const router = useRouter();
@@ -573,6 +593,13 @@ export default function SummaryPage() {
 
           {/* Export buttons */}
           <div className="flex flex-wrap gap-4 justify-end">
+            <button
+              onClick={() => downloadJson(proposalData)}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2"
+            >
+              <span>Download Json file</span>
+            </button>
+
             <button
               onClick={() => generateKioskQR(setQrUrl)}
               className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2"

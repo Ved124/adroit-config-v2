@@ -271,7 +271,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "AE-1350A"],
     image: "/images/Extruder/Extruder.png",
     cardDesc: "45 mm long co-extruder for ABA / 3-layer machines.",
-    price: 0,
+    price: 700000,
     techDesc: {
       "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
       "L/D ratio": "30 : 1",
@@ -299,7 +299,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     usedInModels: ["AE-1350B", "AE-1625", "AE-1870"],
     image: "/images/Extruder/Extruder.png",
     cardDesc: "50 mm single screw extruder mounted on a sturdy frame.",
-    price: 0,
+    price: 1000000,
     techDesc: {
       "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
       "L/D ratio": "32 : 1",
@@ -326,7 +326,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750", "AE-1350A", "AE-1870"],
     image: "/images/Extruder/Extruder.png",
     cardDesc: "55 mm long screw co-extruder for core or skin layer.",
-    price: 0,
+    price: 1350000,
     techDesc: {
       "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
       "L/D ratio": "30 : 1",
@@ -354,7 +354,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     usedInModels: ["DUOFLEX-1750", "AE-1625", "AE-1870", "AE-2125", "AE-2370"],
     image: "/images/Extruder/Extruder.png",
     cardDesc: "65 mm long co-extruder for high output ABA / 3-layer lines.",
-    price: 0,
+    price: 1600000,
     techDesc: {
       "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
       "L/D ratio": "32 : 1",
@@ -381,7 +381,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     usedInModels: ["AE-2125", "AE-2370", "AE-2625"],
     image: "/images/Extruder/Extruder.png",
     cardDesc: "75 mm long screw extruder for large 3-layer machines.",
-    price: 0,
+    price: 2400000,
     techDesc: {
       "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
       "L/D ratio": "32 : 1",
@@ -408,7 +408,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     usedInModels: ["AE-2625"],
     image: "/images/Extruder/Extruder.png",
     cardDesc: "90 mm long screw extruder for very high output core layer.",
-    price: 0,
+    price: 3000000,
     techDesc: {
       "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
       "L/D ratio": "32 : 1",

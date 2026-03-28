@@ -22,7 +22,7 @@ export const IBC_COMPONENTS: IBCSystem[] = [
     usedInModels: ["AE-1625", "AE-1870"],
     image: "/images/components/ibc/ibc-single.png",
     cardDesc: "Internal bubble cooling system with complete control.",
-    price: 0,
+    price: 3000000,
     techDesc: {
       "IBC System": "Complete controls including sensors, control software.",
       "Blower": "Inlet and Outlet Blowers Provided.",

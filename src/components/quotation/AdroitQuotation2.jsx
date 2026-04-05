@@ -1152,14 +1152,15 @@ export const AdroitQuotation2 = memo(
     const quot        = data.quotation || {};
     const perf        = data.indicative_performance || {};
     const components  = data.components || [];
+    const annexureComponents = data.annexure_components || components;
     const optItems    = data.optional_items || [];
     const pricing     = data.pricing || {};
     const electricals = data.electricals || {};
 
     // Page count: Cover(1) + Specs(1) + Scope(1) + Pricing(1) + Components(N) + T&C 1+2+Warranty(3)
-    const total      = 7 + components.length;
+    const total      = 7 + annexureComponents.length;
     const annex4Page = 5;
-    const annex5Page = annex4Page + components.length;
+    const annex5Page = annex4Page + annexureComponents.length;
 
     const annexIndex = [
       { num: 1, label: "General Specifications, Machine Output & Gauge Variation", page: 2 },
@@ -1202,7 +1203,7 @@ export const AdroitQuotation2 = memo(
           pageNum={4}
           total={total}
         />
-        {components.map((item, i) => (
+        {annexureComponents.map((item, i) => (
           <ComponentPage2
             key={item.id || i}
             item={item}

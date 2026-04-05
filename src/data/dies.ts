@@ -208,7 +208,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
       "Application": "Duoflex ABA / AB machine, layflat up to 750 mm.",
       "Die Size": "70 / 150 (HM / LD).",
       "Construction": "Co-extrusion spiral die for 2 or 3 layer structures.",
-      "Layer Structure": "A/B or A/B/A depending on feedblock selection.",
+      "Layer Structure": "A/B or A/B/A configurable structure.",
       "Surface Finish": "Highly polished, nickel plated flow channels.",
       "Heating System": "Band heaters with individual zones.",
       "Heating Zones": "3–4 zones.",

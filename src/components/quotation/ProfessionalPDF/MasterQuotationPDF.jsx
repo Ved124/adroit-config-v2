@@ -423,7 +423,9 @@ const ComponentPage = ({ item, index, showAnnexureHeader, letterheadB64 }) => {
             <Text style={S.annexTxt}>Annexure: Technical Specifications</Text>
           </View>
         )}
-        <Text style={S.compTitle}>{index + 1}. {item.name}</Text>
+        <Text style={S.compTitle}>
+          {index + 1}. {item.name} {item.qty > 1 ? `(Qty: ${item.qty})` : ''}
+        </Text>
         {imgSrc && (
           <View style={S.compImgBox}>
             <SafeImage src={imgSrc} style={S.compImg} />
@@ -1160,9 +1162,10 @@ export const MasterQuotationPDF = ({ data }) => {
   const quot = data.quotation || {};
   const scope = data.scope || [];
   const pricing = data.pricing || {};
-  const components = data.components || [];
-  const optionalItems = data.optional_items || data.optionalItems || [];
-  const allItems = [...components, ...optionalItems].filter(item => 
+  const components = data.annexure_components || data.components || [];
+  // User wants only main components (no addons) in the image annexure.
+  // annexure_components from summary.jsx already filters for isMain: true.
+  const allItems = components.filter(item => 
     item && item.name && (item.image || Object.keys(item.techDesc || item.tech_desc || {}).length > 0)
   );
   const performance = data.performance;

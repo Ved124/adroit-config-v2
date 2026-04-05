@@ -267,7 +267,7 @@ function buildProposalData({
       if (isControl) return null;
 
       // Hide internal components whose text is merged into parent items
-      if (c.includes("feedblock") || c.includes("collapsing frame") || c.includes("filter")) {
+      if (c.includes("collapsing frame") || c.includes("filter")) {
         return null;
       }
 
@@ -296,14 +296,45 @@ function buildProposalData({
 
     return {
       id: item.id || "",
-      name: item.customName || item.name || "",
+      name: item.name || "",
       qty: item.qty || 1,
-      image: item.image || "", shortDesc: finalDesc,
-      scopeDesc: autoScopeDesc({ ...item, name: item.customName || item.name, shortDesc: finalDesc }),
+      image: item.image || "",
+      shortDesc: finalDesc,
       techDesc: item.techDesc || {},
       _autoDesc: autoDesc
     };
   });
+
+  const annexureComponents = (selected || [])
+    .filter(item => item && item.name)
+    .map(item => {
+      const c = (item.category || "").toLowerCase();
+      // Only exclude inner-utility items 
+      if (c.includes("collapsing frame") || c.includes("filter")) {
+        return null;
+      }
+      
+      // EXCLUDE ADDONS: Addons are typically items with a price > 0 in the configurator,
+      // but some main components (like large extruders) also have prices.
+      // We explicitly preserve core machine components in the technical annexure.
+      const isCore = c.includes("extruder") || c.includes("die") || c.includes("ring") || 
+                     c.includes("haul") || c.includes("winder") || c.includes("tower") ||
+                     (item.name || "").toLowerCase().includes("extruder");
+      
+      const isAddon = (item.price > 0 || c.includes("addon") || c.includes("optional")) && !isCore;
+      if (isAddon) return null;
+
+      return {
+        id: item.id || "",
+        name: item.name || "",
+        qty: item.qty || 1,
+        image: item.image || "",
+        shortDesc: item.shortDesc || item.cardDesc || "",
+        techDesc: item.techDesc || {},
+      };
+    })
+    .concat(winderTowerScopeItems)
+    .filter(Boolean);
 
   const hasSelectedTower = [...selectedScopeItems, ...winderTowerAddonsRaw].some(item => {
     const n = (item.name || "").toLowerCase();
@@ -412,6 +443,7 @@ function buildProposalData({
     },
 
     components: finalScope,
+    annexure_components: annexureComponents,
     optional_items: optItems,
     scope: finalScope,
 

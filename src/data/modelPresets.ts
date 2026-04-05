@@ -29,8 +29,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       // 3-layer extruder package – 40/40/40
       { category: "Extruder", id: "ext-40-coex-long", qty: 3 },
 
-      // 3-layer feedblock
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
+      // 225 mm three-layer die (Die Rotation included)
 
       // 225 mm three-layer die (Die Rotation included)
       { category: "Die Head", id: "die-3layer-225", qty: 1 },
@@ -59,7 +58,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     basePrice: 6750000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-275", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -79,11 +77,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     basePrice: 7875000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-275-stationary", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       { category: "Haul-Off", id: "haul-oscillating", qty: 1 },
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      { category: "Winder", id: "winder-surface-manual", qty: 1 },
+    ],
+
+    addons: [
+      {
+        category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
+      },
+    ],
+  },
+  "AE-1350-170": {
+    machineType: "3layer",
+    basePrice: 8551000,
+    components: [
+      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
+      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
+      { category: "Die Head", id: "die-3layer-275", qty: 1 },
+      { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-surface-manual", qty: 1 },
     ],
@@ -99,7 +116,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     basePrice: 8850000,
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 3 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -120,7 +136,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -141,7 +156,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-325", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -161,7 +175,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     basePrice: 10651000,
     components: [
       { category: "Extruder", id: "ext-55-coex-long", qty: 3 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-375", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -182,7 +195,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-55-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-400", qty: 1 },
       { category: "Bubble Cage", id: "bc-6seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -202,7 +214,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     basePrice: 13750000,
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 3 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-450", qty: 1 },
       { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -223,7 +234,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-525", qty: 1 },
       { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -244,7 +254,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_3l", qty: 1 },
       { category: "Die Head", id: "die-3layer-550", qty: 1 },
       { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -265,7 +274,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   components: [
   //     { category: "Extruder", id: "ext-35-aba-long", qty: 1 },
   //     { category: "Extruder", id: "ext-45-coex-long", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
   //     { category: "Die Head", id: "die-aba-70-150", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -285,7 +293,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   components: [
   //     { category: "Extruder", id: "ext-55-aba-long", qty: 1 },
   //     { category: "Extruder", id: "ext-45-coex-long", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
   //     { category: "Die Head", id: "die-aba-125-250", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -304,7 +311,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-55-aba-long", qty: 2 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
   //     { category: "Die Head", id: "die-aba-150-300", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -324,7 +330,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   components: [
   //     { category: "Extruder", id: "ext-55-aba-long", qty: 1 },
   //     { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
   //     { category: "Die Head", id: "die-aba-225-375", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -344,7 +349,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-35-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-50-100", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -363,7 +367,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-90-175", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -382,7 +385,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-55-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-150-275", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -401,7 +403,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-60-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-200-325", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -420,7 +421,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-75-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-300-475", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -439,7 +439,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-90-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-400-600", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -458,7 +457,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //   machineType: "aba",
   //   components: [
   //     { category: "Extruder", id: "ext-100-mono-short", qty: 1 },
-  //     { category: "Feedblock / Co-extrusion", id: "fb_mono", qty: 1 },
   //     { category: "Die Head", id: "die-mono-450-700", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
   //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -480,7 +478,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-35-aba-basic", qty: 1 },
       { category: "Extruder", id: "ext-40-aba-basic", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
       { category: "Die Head", id: "die-aba-100", qty: 1 },
       { category: "Air Ring", id: "airring-irish", qty: 1 },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
@@ -502,7 +499,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-35-aba-basic", qty: 1 },
       { category: "Extruder", id: "ext-45-aba-basic", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
       { category: "Die Head", id: "die-aba-150", qty: 1 },
       { category: "Air Ring", id: "airring-irish", qty: 1 },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
@@ -524,7 +520,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-40-aba-basic", qty: 1 },
       { category: "Extruder", id: "ext-45-aba-basic-20hp", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
       { category: "Die Head", id: "die-aba-200", qty: 1 },
       { category: "Air Ring", id: "airring-5hp-mono", qty: 1 },
       { category: "Bubble Cage", id: "bc-4seg-4row-manual", qty: 1 },
@@ -547,7 +542,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-aba-basic-20hp", qty: 1 },
       { category: "Extruder", id: "ext-55-aba-basic-30hp", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
       { category: "Die Head", id: "die-aba-300", qty: 1 },
       { category: "Air Ring", id: "airring-7.5hp-mono", qty: 1 },
       { category: "Bubble Cage", id: "bc-4seg-4row-manual", qty: 1 },
@@ -570,7 +564,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-55-aba-basic-30hp", qty: 1 },
       { category: "Extruder", id: "ext-65-aba-basic-40hp", qty: 1 },
-      { category: "Feedblock / Co-extrusion", id: "fb_2l", qty: 1 },
       { category: "Die Head", id: "die-aba-600", qty: 1 },
       { category: "Air Ring", id: "airring-10hp-mono", qty: 1 },
       { category: "Bubble Cage", id: "bc-4seg-4row-manual", qty: 1 },
@@ -587,7 +580,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONOLAYER - 20\"": {
+  "MONO-20": {
     machineType: "mono",
     basePrice: 674000,
     components: [
@@ -607,7 +600,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONOLAYER - 32\"": {
+  "MONO-32": {
     machineType: "mono",
     basePrice: 1065000,
     components: [
@@ -628,7 +621,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONOLAYER - 40\"": {
+  "MONO-40": {
     machineType: "mono",
     basePrice: 1225000,
     components: [
@@ -649,7 +642,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONOLAYER - 50\"": {
+  "MONO-50": {
     machineType: "mono",
     basePrice: 1650000,
     components: [
@@ -670,7 +663,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONOLAYER - 72\"": {
+  "MONO-72": {
     machineType: "mono",
     basePrice: 4800000,
     components: [
@@ -691,7 +684,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONOLAYER - 110\"": {
+  "MONO-110": {
     machineType: "mono",
     basePrice: 6500000,
     components: [

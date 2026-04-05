@@ -1035,6 +1035,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
     const perf = data.indicative_performance || {};
     const electricals = data.electricals || {};
     const allComponents = data.components || [];
+    const annexureComponents = data.annexure_components || allComponents;
     const optionalItems = data.optional_items || [];
     // All pricing comes from data.pricing (built by buildProposalData in summary.jsx)
     const pricing = data.pricing || {};
@@ -1073,8 +1074,8 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
             <PerformancePage perf={perf} />
 
             {/* Pages 4+ — One page per selected component */}
-            {allComponents.map((item, i) => (
-                <ComponentPage key={item.name || i} item={item} />
+            {annexureComponents.map((item, i) => (
+                <ComponentPage key={item.id || item.name || i} item={item} />
             ))}
 
             {/* Electricals / Tower / Exclusions */}

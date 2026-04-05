@@ -1,13 +1,14 @@
 "use client";
 
-import { useContext, useMemo, useState, useEffect } from "react";
+import { useContext, useMemo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { numberToWords } from "../utils/numberToWords";
+import { generateScopeDesc } from "../src/utils/generateScopeDesc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SEO from "../components/SEO";
 import { AdroitQuotation } from "../src/components/quotation/AdroitQuotation";
-import { useRef } from "react";
+import { AdroitQuotation2 } from "../src/components/quotation/AdroitQuotation2";
 import { Modal } from '../components/ui/Modal';
 import { QRCodeSVG } from 'qrcode.react';
 import dynamic from "next/dynamic";
@@ -27,7 +28,7 @@ import { MasterQuotationPDF } from '../src/components/quotation/ProfessionalPDF/
 
 // ─── FORMAT HELPERS ───────────────────────────────────────────────────────────
 
-/** Format a number as ₹ 1,80,00,000/- */
+/** Format a number as Rs. 1,80,00,000/- */
 function fmtRupees(n) {
   if (n == null || isNaN(n)) return "";
   return "Rs. " + Math.round(n).toLocaleString("en-IN") + "/-";
@@ -36,7 +37,7 @@ function fmtRupees(n) {
 /** Number in words with Rupees prefix */
 function fmtWords(n) {
   if (n == null || isNaN(n)) return "";
-  if (n === 0) return "(RUPEES ZERO ONLY)"; // Or based on wording library if it handles 0
+  if (n === 0) return "(RUPEES ZERO ONLY)";
   try {
     const w = numberToWords(Math.round(n));
     return w ? `(${w} Only)`.toUpperCase() : "";
@@ -46,26 +47,12 @@ function fmtWords(n) {
 }
 
 // ─── buildMachineCode ─────────────────────────────────────────────────────────
-/**
- * Build the model code string shown on the cover + scope page.
- *
- * For preset models: use the raw CSV/model label (e.g. "AE-2370_50*65*75*65*50")
- *   → selectedMachineModelLabel is already the exact label (e.g. "AE-2370")
- *   → currentMachineModel may have screw info in fields like SCREWS / screwSizes /
- *     or we extract it from the extruders in selected[]
- *
- * Final format:  "AE-2370  (50/65/75/65/50 mm Screws,  Layflat: 2000 mm)"
- * Or for custom: "Custom 3-Layer  (Screws: 65/75/65 mm,  Layflat: 2100 mm)"
- */
-function buildMachineCode({ machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat }) {
+function buildMachineCode({ machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat, customRollerWidth }) {
   const SERIES = { mono: "AE-Unoflex", aba: "AE-Duoflex", "3layer": "AE-Innoflex", "5layer": "AE-Innoflex" };
 
-  // 1. Base label from preset or family
   const presetLabel = selectedMachineModelLabel || "";
-  const baseCode = presetLabel || SERIES[machineType] || "AE";
+  const seriesBase = SERIES[machineType] || "AE";
 
-  // 2. Screw sizes — extract from selected extruders
-  //    Each extruder item has sizeMm field (number) OR we parse from name
   const extruders = (selected || []).filter(item =>
     item.category === "Extruder" ||
     (item.name || "").toLowerCase().includes("extruder") ||
@@ -74,11 +61,9 @@ function buildMachineCode({ machineType, currentMachineModel, selectedMachineMod
 
   let screwStr = "";
   if (extruders.length > 0) {
-    // Build list of sizes, repeating by qty
     const sizes = [];
     extruders.forEach(ext => {
       const qty = ext.qty || 1;
-      // sizeMm field first, then parse from name
       let sz = ext.sizeMm;
       if (!sz) {
         const m = (ext.name || "").match(/\b(\d{2,3})\s*mm/i);
@@ -88,46 +73,68 @@ function buildMachineCode({ machineType, currentMachineModel, selectedMachineMod
         for (let i = 0; i < qty; i++) sizes.push(sz);
       }
     });
-    if (sizes.length > 0) {
-      screwStr = sizes.join("*");
+
+    let ordered = [...sizes];
+    if (ordered.length >= 3 && ordered.length % 2 !== 0) {
+      const sorted = [...sizes].sort((a, b) => b - a);
+      let temp = [];
+      let placeLeft = false;
+      for (let i = 0; i < sorted.length; i++) {
+        if (i === 0) temp.push(sorted[i]);
+        else {
+          if (placeLeft) temp.unshift(sorted[i]);
+          else temp.push(sorted[i]);
+          placeLeft = !placeLeft;
+        }
+      }
+      ordered = temp;
     }
+
+    if (ordered.length > 0) screwStr = ordered.join("*");
   }
 
-  // 3. Layflat width — from customLayflat input or machine model
-  const m = currentMachineModel || {};
-  const layflat = customLayflat?.trim() ||
-    m["Layflat Width (mm)"] || m["Lay Flat Width"] || m["WIDTH"] || m["Width"] || "";
-
-  // 4. Compose final code
-  // Format: "2370_50*65*75*65*50" when layflat is set (matching image 1)
-  // Falls back to "AE-Innoflex_50*65*75*65*50" when no layflat entered
-  let code;
-  if (layflat) {
-    // Use raw layflat number as prefix (strip non-numeric suffix for clean look)
-    const layflatNum = layflat.replace(/[^\d]/g, '') || layflat;
-    code = layflatNum;
-    if (screwStr) code += `_${screwStr}`;
-  } else {
-    code = baseCode;
-    if (screwStr) code += `_${screwStr}`;
-  }
+  const roller = (customRollerWidth || "").replace(/[^\d]/g, '');
+  let code = roller || presetLabel || seriesBase;
+  if (screwStr) code += `_${screwStr}`;
 
   return code;
 }
 
 // ─── getMachineHeading ────────────────────────────────────────────────────────
 function getMachineHeading(machineType, customer, currentMachineModel) {
-  const labels = { mono: "Unoflex Monolayer", aba: "Duoflex ABA / AB", "3layer": "Innoflex 3 Layer", "5layer": "Innoflex 5 Layer" };
-  const familyLabel = labels[machineType] || "Machine";
   const modelLabel = customer?.machineModel || "";
+  let familyLabel = "";
+
+  // 1. Detect family from model label prefix if possible
+  if (modelLabel.toUpperCase().startsWith("UNOFLEX")) {
+    familyLabel = "Unoflex Monolayer";
+  } else if (modelLabel.toUpperCase().startsWith("DUOFLEX")) {
+    familyLabel = "Duoflex ABA / AB";
+  } else if (modelLabel.toUpperCase().startsWith("INNOFLEX")) {
+    familyLabel = "Innoflex";
+  } else {
+    // 2. Fallback to machineType
+    const labels = {
+      mono: "Unoflex Monolayer",
+      aba: "Duoflex ABA / AB",
+      "3layer": "Innoflex 3 Layer",
+      "5layer": "Innoflex 5 Layer"
+    };
+    familyLabel = labels[machineType] || "Machine";
+  }
+
   let outputText = "";
   if (currentMachineModel && typeof currentMachineModel === "object") {
     for (const key of ["OUTPUT", "Output", "Max. Output (kg/hr)", "Max Output (kg/hr)"]) {
       if (currentMachineModel[key]) { outputText = String(currentMachineModel[key]); break; }
     }
   }
+
   let text = familyLabel;
-  if (modelLabel) text += ` – ${modelLabel}`;
+  // Only append modelLabel if it's not identical to familyLabel
+  if (modelLabel && !familyLabel.includes(modelLabel)) {
+    text += ` — ${modelLabel}`;
+  }
   if (outputText) text += ` (Output: ${outputText})`;
   return text;
 }
@@ -139,8 +146,12 @@ function getMachineHeading(machineType, customer, currentMachineModel) {
  */
 function buildProposalData({
   customer, machineType, currentMachineModel, selectedMachineModelLabel,
-  selected, selectedAddons, customOutput, customLayflat,
-  withMarkup, afterDiscount, addonsTotal, discount,
+  selected, selectedAddons, customOutput, customLayflat, customRollerWidth,
+  withMarkup, afterDiscount, addonsTotal, discount, markup,
+  machineModelIndex, customMode, scopeOverrides,
+  // Add UI persistence flags
+  quoteTemplate, showPricingFields,
+  presetBasePrice,
 }) {
   const SERIES = { mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex" };
   const TYPE_NAMES = {
@@ -157,13 +168,31 @@ function buildProposalData({
   };
 
   const m = currentMachineModel || {};
+  let displaySeries = SERIES[machineType] || "AE Machine";
+  let displayType = TYPE_NAMES[machineType] || "";
+  let displayProduct = PRODUCTS[machineType] || "High Quality Blown Film";
 
-  // Machine code with screw sizes
+  // Auto-correct branding if model label implies a different series
+  const modelCap = (selectedMachineModelLabel || "").toUpperCase();
+  if (modelCap.includes("UNOFLEX")) {
+    displaySeries = "Unoflex";
+    displayType = TYPE_NAMES.mono;
+  } else if (modelCap.includes("DUOFLEX")) {
+    displaySeries = "Duoflex";
+    displayType = TYPE_NAMES.aba;
+  } else if (modelCap.includes("INNOFLEX")) {
+    displaySeries = "Innoflex";
+    displayType = TYPE_NAMES["3layer"];
+    displayProduct = PRODUCTS["3layer"];
+  }
+
+  // Also sync displayProduct if brand was changed
+  if (modelCap.includes("UNOFLEX")) displayProduct = PRODUCTS.mono;
+  if (modelCap.includes("DUOFLEX")) displayProduct = PRODUCTS.aba;
   const machineCode = buildMachineCode({
-    machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat,
+    machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat, customRollerWidth,
   });
 
-  // Performance fields
   const maxOutput = customOutput?.trim() ||
     m["Max. Output (kg/hr)"] || m["OUTPUT"] || m["Output"] || m["Max Output (kg/hr)"] || "";
   const layflatWidth = customLayflat?.trim() ||
@@ -171,35 +200,45 @@ function buildProposalData({
   const dieSize = m["Die Size"] || m["DIE"] || m["Die"] || "";
   const thicknessRange = m["Thichness Range (micron)"] || m["Thickness Range (micron)"] || m["THICKNESS"] || "20 – 150 micron";
 
-  // Auto scope desc — "Two nos. [name] — [shortDesc]"
   function autoScopeDesc(item) {
-    const qty = item.qty || 1;
-    const qtyWord = qty === 1 ? "One no." : `${qty} nos.`;
     const desc = item.shortDesc || item.cardDesc || "";
-    return desc ? `${qtyWord} ${item.name} — ${desc}` : `${qtyWord} ${item.name}`;
+    // User requested to remove quantity prefix as it's often redundant or unwanted in this view
+    return desc || item.name || "";
   }
 
-  // Price strings — basic scope only (no addons)
   const basicPriceStr = fmtRupees(withMarkup);
   const basicPriceWords = fmtWords(withMarkup);
-  // Discounted price only if discount > 0
   const discPriceStr = (discount > 0) ? fmtRupees(afterDiscount) : "";
   const discPriceWords = (discount > 0) ? fmtWords(afterDiscount) : "";
-  // Final price — same as basic when no discount; discounted value when discount > 0
   const finalPriceStr = (discount > 0) ? fmtRupees(afterDiscount) : basicPriceStr;
   const finalPriceWords = (discount > 0) ? fmtWords(afterDiscount) : basicPriceWords;
 
-  // Optional items with per-item price + total
-  const optItems = (selectedAddons || [])
-    .filter(item => item && item.name)
+  const selectedAddonsSafe = selectedAddons || [];
+  const winderTowerAddonsRaw = selectedAddonsSafe.filter(item => {
+    if (!item || !item.name) return false;
+    const n = item.name.toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    const isTrim = n.includes("trim");
+    const isControl = n.includes("panel") || c.includes("panel") || n.includes("control") || c.includes("control");
+    return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !isTrim && !isControl;
+  });
+  const realAddonsRaw = selectedAddonsSafe.filter(item => {
+    if (!item || !item.name) return false;
+    const n = item.name.toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
+    const isTrim = n.includes("trim");
+    return !isWinderTower || isTrim;
+  });
+
+  const optItems = realAddonsRaw
     .map(item => ({
       id: item.id || "",
-      name: item.name || "",
+      name: item.customName || item.name || "",
       qty: item.qty || 1,
       image: item.image || "",
       shortDesc: item.shortDesc || item.cardDesc || "",
       techDesc: item.techDesc || {},
-      // Individual line price shown in table: price × qty as formatted string
       price: item.price != null
         ? fmtRupees(item.price * (item.qty || 1))
         : "",
@@ -207,6 +246,140 @@ function buildProposalData({
     }));
 
   const addonsTotalStr = addonsTotal != null ? fmtRupees(addonsTotal) : "";
+
+  // Build dynamic component scope items with overrides
+  const overrides = scopeOverrides || {};
+  let hasExtruder = false;
+
+  const selectedScopeItems = (selected || [])
+    .filter(item => item && item.name)
+    .map(item => {
+      const c = (item.category || "").toLowerCase();
+      // Deduplicate extruders — generateScopeDesc groups them all into one line
+      const isExtruder = c.includes("extruder") || (item.name || "").toLowerCase().includes("extruder") || (item.id || "").includes("ext-");
+      if (isExtruder) {
+        if (hasExtruder) return null;
+        hasExtruder = true;
+      }
+
+      // Deduplicate Control Panels as they are now injected statically
+      const isControl = c.includes("panel") || (item.name || "").toLowerCase().includes("panel") || c.includes("control") || (item.name || "").toLowerCase().includes("control");
+      if (isControl) return null;
+
+      // Hide internal components whose text is merged into parent items
+      if (c.includes("feedblock") || c.includes("collapsing frame") || c.includes("filter")) {
+        return null;
+      }
+
+      const key = item.id || item.name;
+      const customDesc = overrides[key];
+      const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
+      const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
+
+      return {
+        id: item.id || "",
+        name: isExtruder ? "Extruders" : (item.name || ""),
+        qty: isExtruder ? 1 : (item.qty || 1),
+        image: item.image || "", shortDesc: finalDesc,
+        scopeDesc: autoScopeDesc({ ...item, name: isExtruder ? "Extruders" : item.name, shortDesc: finalDesc }),
+        techDesc: item.techDesc || {},
+        _autoDesc: autoDesc
+      };
+    })
+    .filter(Boolean);
+
+  const winderTowerScopeItems = winderTowerAddonsRaw.map(item => {
+    const key = item.id || item.name;
+    const customDesc = overrides[key];
+    const autoDesc = generateScopeDesc(item, selected, currentMachineModel) || item.shortDesc || item.cardDesc;
+    const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
+
+    return {
+      id: item.id || "",
+      name: item.customName || item.name || "",
+      qty: item.qty || 1,
+      image: item.image || "", shortDesc: finalDesc,
+      scopeDesc: autoScopeDesc({ ...item, name: item.customName || item.name, shortDesc: finalDesc }),
+      techDesc: item.techDesc || {},
+      _autoDesc: autoDesc
+    };
+  });
+
+  const hasSelectedTower = [...selectedScopeItems, ...winderTowerAddonsRaw].some(item => {
+    const n = (item.name || "").toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    return n.includes("tower") || c.includes("tower");
+  });
+
+  // ── Static items  ───────────────────────────────────────────────────────────
+  const staticItems = [
+    {
+      id: "auto_idler", name: "Idler Rollers", qty: 1, image: "",
+      shortDesc: "Aluminum Idler rollers as per layout drawing.",
+      scopeDesc: autoScopeDesc({ name: "Idler Rollers", shortDesc: "Aluminum Idler rollers as per layout drawing." }),
+      techDesc: {},
+      _autoDesc: "Aluminum Idler rollers as per layout drawing."
+    },
+    {
+      id: "auto_secnip", name: "Secondary Nip", qty: 1, image: "",
+      shortDesc: "One Secondary nip with edge slitting assembly and edge trimming assembly.",
+      scopeDesc: autoScopeDesc({ name: "Secondary Nip", shortDesc: "One Secondary nip with edge slitting assembly and edge trimming assembly." }),
+      techDesc: {},
+      _autoDesc: "One Secondary nip with edge slitting assembly and edge trimming assembly."
+    },
+    !hasSelectedTower && {
+      id: "auto_tower", name: "Tower Structure", qty: 1, image: "",
+      shortDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.",
+      scopeDesc: autoScopeDesc({ name: "Tower Structure", shortDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc." }),
+      techDesc: {},
+      _autoDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc."
+    },
+    {
+      id: "auto_control", name: "Control Panel", qty: 1, image: "",
+      shortDesc: "Complete extrusion controls on main panel with Cold start protection and with Touch Panel.",
+      scopeDesc: autoScopeDesc({ name: "Control Panel", shortDesc: "Complete extrusion controls on main panel with Cold start protection and with Touch Panel." }),
+      techDesc: {},
+      _autoDesc: "Complete extrusion controls on main panel with Cold start protection and with Touch Panel."
+    }
+  ].filter(Boolean);
+
+  // Extra free-form rows from the editable blank rows in the scope editor
+  const MIN_SCOPE_ROWS = 11;
+  const numExtra = Math.max(0, MIN_SCOPE_ROWS - (selectedScopeItems.length + winderTowerScopeItems.length + staticItems.length));
+  const extraScopeItems = Array.from({ length: numExtra }, (_, i) => {
+    const desc = (overrides[`_extra_${i}`] || "").trim();
+    return {
+      id: `_extra_${i}`, name: "", qty: desc ? 1 : "",
+      image: "", shortDesc: desc, scopeDesc: desc, techDesc: {}, _isExtra: true,
+    };
+  }).filter(item => item.shortDesc !== "");
+
+  const finalScope = getSortedScope([...selectedScopeItems, ...winderTowerScopeItems, ...staticItems])
+    .concat(extraScopeItems)
+    .map((item, i) => ({
+      ...item,
+      sr: i + 1,
+      description: item.scopeDesc || item.shortDesc || item.name || '',
+    }));
+
+  // Refine SORT_ORDER index logic to put panel/control at the absolute bottom
+  function getSortedScope(items) {
+    const SORT_ORDER = [
+      "extruder", "die", "air ring", "basket", "cage", "haul", "idler", "nip",
+      "winder", "tower", "panel", "control"
+    ];
+    return [...items].sort((a, b) => {
+      function getIdx(item) {
+        const n = String(item.name || "").toLowerCase();
+        const d = String(item.shortDesc || "").toLowerCase();
+        for (let i = 0; i < SORT_ORDER.length; i++) {
+          if (n.includes(SORT_ORDER[i]) || d.includes(SORT_ORDER[i])) return i;
+        }
+        return 99;
+      }
+      return getIdx(a) - getIdx(b);
+    });
+  }
 
   return {
     customer: {
@@ -221,14 +394,15 @@ function buildProposalData({
     },
     machine: {
       type: machineType || "3layer",
-      series: SERIES[machineType] || "",
-      fullName: TYPE_NAMES[machineType] || "",
+      series: displaySeries,
+      fullName: displayType,
       code: machineCode,
+      title_line: `${displayType} ${machineCode}`,
       layflat_width: layflatWidth || "",
       coverImage: `/images/machines/${machineType || "3layer"}.png`,
     },
     indicative_performance: {
-      product: PRODUCTS[machineType] || "High Quality Blown Film",
+      product: displayProduct,
       max_output: maxOutput,
       layflat_width: layflatWidth,
       die_size: dieSize,
@@ -236,29 +410,19 @@ function buildProposalData({
       thickness_variation: "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.",
       raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
     },
-    // Basic scope — components only, each with auto scopeDesc
-    components: (selected || [])
-      .filter(item => item && item.name)
-      .map(item => ({
-        id: item.id || "", name: item.name || "", qty: item.qty || 1,
-        image: item.image || "", shortDesc: item.shortDesc || item.cardDesc || "",
-        scopeDesc: autoScopeDesc(item), techDesc: item.techDesc || {},
-      })),
-    // Optional addons with price per line
-    optional_items: optItems,
 
-    // Pricing block — formatted strings for AdroitQuotation + numeric for MasterQuotationPDF
+    components: finalScope,
+    optional_items: optItems,
+    scope: finalScope,
+
     pricing: {
-      // Formatted strings (AdroitQuotation / legacy preview)
       basicPrice: basicPriceStr,
       basicPriceWords: basicPriceWords,
       discountedPrice: discPriceStr,
       discountedWords: discPriceWords,
-      // Final price — always present, mirrors UI "Final Price" display
       finalPrice: finalPriceStr,
       finalPriceWords: finalPriceWords,
       addonsTotal: addonsTotalStr,
-      // Numeric fields for MasterQuotationPDF (basic_price_inr, final_price_inr)
       show_price: !!(withMarkup > 0),
       basic_price_inr: withMarkup > 0 ? Math.round(withMarkup) : null,
       basic_price_words: basicPriceWords ? basicPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
@@ -266,7 +430,6 @@ function buildProposalData({
       final_price_words: finalPriceWords ? finalPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
     },
 
-    // Power loads — derived from selected + selectedAddons
     power_loads: (() => {
       const POWER_MAP = [
         { pattern: /35\s*mm/i, category: "Extruder", heating: 9.0, motive: 7.5 },
@@ -288,29 +451,22 @@ function buildProposalData({
         const cat = (item.category || "").trim();
         const qty = item.qty || 1;
 
-        // Extruders (by category or name)
         if (cat === "Extruder" || /extruder/i.test(name)) {
           const match = POWER_MAP.find(p => p.category === "Extruder" && p.pattern.test(name));
           loads.push({ name: name.toUpperCase(), qty, heating: match ? match.heating : "", motive: match ? match.motive : "" });
           return;
         }
-
-        // Air Ring (by category OR name) — extract HP dynamically (1 HP = 0.746 kW)
         if (cat === "Air Ring" || /air\s*ring/i.test(name)) {
           const hpMatch = name.match(/(\d+)\s*hp/i);
           const motiveKw = hpMatch ? (parseFloat(hpMatch[1]) * 0.746).toFixed(1) : "";
           loads.push({ name: name.toUpperCase(), qty, heating: "", motive: motiveKw });
           return;
         }
-
-        // Die Head (by category OR name) — also add Screen Changer row
         if (cat === "Die Head" || /\bdie\b/i.test(name)) {
           loads.push({ name: name.toUpperCase(), qty, heating: 38.30, motive: "" });
           loads.push({ name: "SCREEN CHANGER", qty, heating: 8.60, motive: "" });
           return;
         }
-
-        // Other components via pattern map
         const rule = POWER_MAP.find(p => !p.category && p.pattern.test(name));
         if (rule) loads.push({ name: name.toUpperCase(), qty, heating: rule.heating, motive: rule.motive });
       }
@@ -320,14 +476,31 @@ function buildProposalData({
       (selectedAddons || []).forEach(item => processItem(item, loads));
       return loads;
     })(),
+
+    _restore: {
+      schema: "adroit_v2",
+      customer,
+      machineType,
+      selected,
+      selectedAddons,
+      markup_percent: markup,
+      discount_percent: discount,
+      machineModelIndex,
+      selectedMachineModelLabel,
+      customMode,
+      customOutput,
+      customLayflat,
+      scopeOverrides,
+      quotationRef: customer?.quotationRef || customer?.ref,
+      // UI flags for perfect restoration
+      quoteTemplate, showPricingFields,
+      customRollerWidth,
+      presetBasePrice,
+    }
   };
 }
 
 // ─── downloadJson ─────────────────────────────────────────────────────────────
-/**
- * Serialise the full proposalData object and trigger a browser file download.
- * Import this JSON on the customer page to restore every detail of the proposal.
- */
 function downloadJson(data) {
   if (!data) { alert("No proposal data yet — fill in customer details first."); return; }
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -356,9 +529,11 @@ export default function SummaryPage() {
     showPrices, setShowPrices,
     computePriceSummary,
     machineType, currentMachineModel, selectedMachineModelLabel,
+    machineModelIndex, customMode,
     generateKioskQR,
     customOutput, setCustomOutput,
     customLayflat, setCustomLayflat,
+    customRollerWidth, setCustomRollerWidth,
     buildWordContext,
   } = useContext(ConfigContext);
 
@@ -366,16 +541,18 @@ export default function SummaryPage() {
   useEffect(() => { setIsClient(true); }, []);
   const [qrUrl, setQrUrl] = useState(null);
   const [showPdfPreview, setShowPdfPreview] = useState(false);
-  const [showPricingFields, setShowPricingFields] = useState(false);
+
+  // Handled by Context for perfect JSON restoration
+  const { quoteTemplate, setQuoteTemplate, showPricingFields, setShowPricingFields } = useContext(ConfigContext);
+
+  const { scopeOverrides, setScopeOverrides } = useContext(ConfigContext);
 
   const handleQuotationRefChange = (e) => {
     const value = e.target.value;
     setCustomer(prev => ({ ...prev, quotationRef: value, ref: value }));
   };
 
-  // Compute prices — used both in UI and in buildProposalData
-  const { withMarkup, afterDiscount, addonsTotal } = computePriceSummary();
-
+  const { withMarkup, afterDiscount, addonsTotal, isPackagePrice } = computePriceSummary();
   const machineHeading = getMachineHeading(machineType, customer, currentMachineModel);
 
   // Single source of truth — both preview and PDF download use this
@@ -383,20 +560,26 @@ export default function SummaryPage() {
     if (!isClient) return null;
     return buildProposalData({
       customer, machineType, currentMachineModel, selectedMachineModelLabel,
-      selected, selectedAddons, customOutput, customLayflat,
-      withMarkup, afterDiscount, addonsTotal, discount,
+      selected, selectedAddons, customOutput, customLayflat, customRollerWidth,
+      withMarkup, afterDiscount, addonsTotal, discount, markup,
+      machineModelIndex, customMode, scopeOverrides,
+      // Pass UI states
+      quoteTemplate, showPricingFields,
+      presetBasePrice: computePriceSummary().isPackagePrice ? computePriceSummary().basicTotal : 0, // Fallback if context not direct
     });
   }, [
     isClient, customer, machineType, currentMachineModel, selectedMachineModelLabel,
-    selected, selectedAddons, customOutput, customLayflat,
-    withMarkup, afterDiscount, addonsTotal, discount,
+    selected, selectedAddons, customOutput, customLayflat, customRollerWidth,
+    withMarkup, afterDiscount, addonsTotal, discount, markup,
+    machineModelIndex, customMode, scopeOverrides,
+    quoteTemplate, showPricingFields,
   ]);
 
   return (
-    <div className="min-h-screen bg-brand-light pt-28">
+    <div className="min-h-screen bg-brand-light pt-24 sm:pt-28">
       <SEO title="Final Quotation" />
 
-      <main className="max-w-5xl mx-auto py-12 px-6">
+      <main className="max-w-5xl mx-auto py-6 sm:py-12 px-4 sm:px-6">
 
         {/* ── CUSTOMER DETAILS ─────────────────────────────────────────── */}
         <section className="glass-card p-6 mb-8">
@@ -414,25 +597,24 @@ export default function SummaryPage() {
 
         {/* ── QUOTATION SUMMARY ─────────────────────────────────────────── */}
         <section className="glass-card p-8 mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-brand-blue">Quotation Summary</h1>
-            {/* Sales-only toggle — discreet, 50% transparent */}
+          <div className="flex items-center justify-between mb-5 gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-brand-blue">Quotation Summary</h1>
             <button
               onClick={() => setShowPricingFields(v => !v)}
               title={showPricingFields ? "Hide pricing controls" : "Show pricing controls"}
               style={{ opacity: 0.5 }}
               className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
             >
-              {showPricingFields
-                ? <FaEye size={16} />
-                : <FaEyeSlash size={16} />}
+              {showPricingFields ? <FaEye size={16} /> : <FaEyeSlash size={16} />}
             </button>
           </div>
 
           {/* Pricing display */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <div className="text-xs text-slate-400 uppercase tracking-wide">Basic Price (Components Only)</div>
+              <div className="text-xs text-slate-400 uppercase tracking-wide">
+                {isPackagePrice ? "Fixed Package Base Price" : "Basic Price (Components Only)"}
+              </div>
               <div className="text-xl font-semibold text-emerald-500">
                 {fmtRupees(withMarkup) || "₹ 0"}
               </div>
@@ -449,7 +631,7 @@ export default function SummaryPage() {
             )}
           </div>
 
-          {/* Markup & Discount inputs — sales-team only, hidden by default */}
+          {/* Markup & Discount inputs — hidden by default */}
           <div
             style={{
               opacity: showPricingFields ? 1 : 0,
@@ -461,14 +643,9 @@ export default function SummaryPage() {
           >
             <div className="flex flex-col sm:flex-row gap-4 mb-4">
               <div className="flex-1">
-                <label className="block text-xs font-medium text-slate-500 mb-1">
-                  Markup (%)
-                </label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Markup (%)</label>
                 <input
-                  type="number"
-                  min="0"
-                  max="200"
-                  step="0.1"
+                  type="number" min="0" max="200" step="0.1"
                   value={markup ?? ""}
                   onChange={e => setMarkup(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                   placeholder="e.g. 20"
@@ -477,14 +654,9 @@ export default function SummaryPage() {
                 <p className="text-xs text-slate-400 mt-1">Applied on top of component base cost</p>
               </div>
               <div className="flex-1">
-                <label className="block text-xs font-medium text-slate-500 mb-1">
-                  Discount (%)
-                </label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Discount (%)</label>
                 <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.1"
+                  type="number" min="0" max="100" step="0.1"
                   value={discount ?? ""}
                   onChange={e => setDiscount(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                   placeholder="e.g. 5"
@@ -495,7 +667,7 @@ export default function SummaryPage() {
             </div>
           </div>
 
-          {/* Final Price — always visible, same level as Basic Price */}
+          {/* Final Price */}
           <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 mb-4">
             <div className="text-xs text-emerald-600 uppercase tracking-wide font-semibold mb-1">
               {discount > 0 ? "Final Price (After Discount)" : "Final Price"}
@@ -510,27 +682,31 @@ export default function SummaryPage() {
 
           {/* Input fields */}
           <div className="space-y-4 mb-6">
-            {/* Ref + date */}
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <span className="text-slate-600 whitespace-nowrap">Quotation Ref No.:</span>
               <input
                 type="text"
-                value={customer?.quotationRef || customer?.ref || ""}
+                value={
+                  // If user has already typed a custom ref, or we have a saved non-default one, use it.
+                  // Otherwise, show the dynamic AE/[REG]/[ROLLER]/01 format.
+                  (customer?.quotationRef && !customer.quotationRef.startsWith("AET/") && customer.quotationRef !== "Loading...")
+                    ? customer.quotationRef 
+                    : (customer?.ref && !customer.ref.startsWith("AET/"))
+                      ? customer.ref
+                      : `AE/${customer?.region || 'DOM'}/${(customRollerWidth || '').replace(/[^\d]/g, '') || '0000'}/01`
+                }
                 onChange={handleQuotationRefChange}
-                className="h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                placeholder="e.g. AET/DOM/25/1123/001"
+                className="h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue font-mono font-bold"
+                placeholder="e.g. AE/DOM/1350/01"
               />
               <span className="text-slate-500">
                 Date: {new Date().toLocaleDateString("en-IN")}
               </span>
             </div>
 
-            {/* Output + Layflat */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="flex-1">
-                <label className="block text-xs font-medium text-slate-500 mb-1">
-                  Target Output (kg/hr)
-                </label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Target Output (kg/hr)</label>
                 <input
                   type="text"
                   value={customOutput || ""}
@@ -542,48 +718,57 @@ export default function SummaryPage() {
                   }
                   className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
                 />
-                {!customOutput && (currentMachineModel?.["Max. Output (kg/hr)"] || currentMachineModel?.["OUTPUT"]) && (
-                  <p className="text-xs text-slate-400 mt-1">
-                    From model: {currentMachineModel?.["Max. Output (kg/hr)"] || currentMachineModel?.["OUTPUT"]} — type to override
-                  </p>
-                )}
               </div>
               <div className="flex-1">
                 <label className="block text-xs font-medium text-slate-500 mb-1">
-                  Max. Layflat Width (mm)
+                  Max. Roller Width ({machineType === 'mono' || machineType === 'aba' ? 'inch' : 'mm'})
                 </label>
+                <input
+                  type="text"
+                  value={customRollerWidth || ""}
+                  onChange={e => {
+                    const val = e.target.value;
+                    setCustomRollerWidth(val);
+                    const num = parseInt(val.replace(/[^\d]/g, ''), 10);
+                    if (!isNaN(num)) {
+                      if (machineType === 'mono' || machineType === 'aba') {
+                         setCustomLayflat(`${num * 25} mm`);
+                      } else {
+                         setCustomLayflat(`${num - 125} mm`);
+                      }
+                      // Also sync the Ref if it follows the AE/REG/ROLLER/ pattern
+                      setCustomer(prev => {
+                        const currentRef = prev.quotationRef || prev.ref || "";
+                        if (!currentRef || currentRef.startsWith("AE/") || currentRef.startsWith("AET/")) {
+                           const region = prev.region || "DOM";
+                           let prefix = "";
+                           if (machineType === "mono") prefix = "U";
+                           else if (machineType === "aba") prefix = "D";
+                           const newRef = `AE/${region}/${prefix}${num}/01`;
+                           return { ...prev, quotationRef: newRef, ref: newRef };
+                        }
+                        return prev;
+                      });
+                    }
+                  }}
+                  placeholder="e.g. 1350 mm"
+                  className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-xs font-medium text-slate-500 mb-1">Max. Layflat Width (mm)</label>
                 <input
                   type="text"
                   value={customLayflat || ""}
                   onChange={e => setCustomLayflat(e.target.value)}
-                  placeholder={
-                    currentMachineModel?.["Layflat Width (mm)"] ||
-                    currentMachineModel?.["Lay Flat Width"] ||
-                    currentMachineModel?.["WIDTH"] ||
-                    "e.g. 2100 mm"
-                  }
+                  placeholder="e.g. 1225 mm"
                   className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
                 />
-                {!customLayflat && (
-                  currentMachineModel?.["Layflat Width (mm)"] ||
-                  currentMachineModel?.["Lay Flat Width"] ||
-                  currentMachineModel?.["WIDTH"]
-                ) && (
-                    <p className="text-xs text-slate-400 mt-1">
-                      From model: {
-                        currentMachineModel?.["Layflat Width (mm)"] ||
-                        currentMachineModel?.["Lay Flat Width"] ||
-                        currentMachineModel?.["WIDTH"]
-                      } — type to override
-                    </p>
-                  )}
               </div>
             </div>
 
-            {/* Machine heading */}
             <p className="text-sm text-slate-600">{machineHeading || "Configured machine"}</p>
 
-            {/* Live preview of model code that will appear on proposal */}
             {proposalData?.machine?.code && (
               <p className="text-xs text-slate-400 font-mono">
                 Proposal model code: <strong className="text-slate-600">{proposalData.machine.code}</strong>
@@ -591,45 +776,119 @@ export default function SummaryPage() {
             )}
           </div>
 
+          {/* ── SCOPE OF SUPPLY EDITOR ─────────────────────────────────── */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-brand-blue">Scope of Supply</h3>
+              <span className="text-xs text-slate-400">Auto-generated • edit to override</span>
+            </div>
+            <div className="rounded-xl border border-slate-200 overflow-hidden">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-brand-blue text-white">
+                    <th className="w-12 py-2 px-3 text-center font-semibold text-xs tracking-wide">ITEM #</th>
+                    <th className="py-2 px-3 text-left font-semibold text-xs tracking-wide">ITEM DESCRIPTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(proposalData?.scope || []).map((item, i) => {
+                    const key = item.id || item.name;
+
+                    if (item.id === "auto_idler" || item.id === "auto_secnip") {
+                      return (
+                        <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                          <td className="py-2 px-3 text-center font-bold text-slate-400 align-top">
+                            {i + 1}
+                          </td>
+                          <td className="py-2 px-3 text-xs text-slate-600 align-top italic">
+                            {item._autoDesc}
+                            <span className="ml-2 text-slate-300 not-italic">(static)</span>
+                          </td>
+                        </tr>
+                      );
+                    }
+
+                    if (item._isExtra) {
+                      const val = scopeOverrides[key] !== undefined ? scopeOverrides[key] : "";
+                      return (
+                        <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                          <td className="py-2 px-3 text-center font-bold text-slate-300 align-top">
+                            {i + 1}
+                          </td>
+                          <td className="py-1 px-2 align-top">
+                            <textarea
+                              rows={3}
+                              value={val}
+                              onChange={e => setScopeOverrides(prev => ({ ...prev, [key]: e.target.value }))}
+                              placeholder="Type additional scope item description..."
+                              className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-y leading-relaxed placeholder-slate-300"
+                              style={{ minHeight: "52px" }}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    }
+
+                    const currentVal = scopeOverrides[key] !== undefined
+                      ? scopeOverrides[key]
+                      : (item._autoDesc || "");
+                    const hasOverride = scopeOverrides[key] !== undefined;
+
+                    return (
+                      <tr key={key || i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                        <td className="py-2 px-3 text-center font-bold text-brand-blue align-top">
+                          {i + 1}
+                        </td>
+                        <td className="py-1 px-2 align-top">
+                          <div className="text-xs font-semibold text-slate-500 mb-0.5">{item.name}</div>
+                          <textarea
+                            rows={3}
+                            value={currentVal}
+                            onChange={e => setScopeOverrides(prev => ({ ...prev, [key]: e.target.value }))}
+                            placeholder={item._autoDesc || "Type description for proposal..."}
+                            className="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue resize-y leading-relaxed"
+                            style={{ minHeight: "52px" }}
+                          />
+                          {hasOverride && (
+                            <button
+                              onClick={() => setScopeOverrides(prev => {
+                                const next = { ...prev };
+                                delete next[key];
+                                return next;
+                              })}
+                              className="text-xs text-slate-400 hover:text-red-400 mt-0.5 transition-colors"
+                            >
+                              ↩ Reset to default
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           {/* Export buttons */}
-          <div className="flex flex-wrap gap-4 justify-end">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:justify-end mt-2">
             <button
               onClick={() => downloadJson(proposalData)}
-              className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2"
+              className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"
             >
               <span>Download Json file</span>
             </button>
 
             <button
               onClick={() => generateKioskQR(setQrUrl)}
-              className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2"
+              className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"
             >
               <span>📱 Budgetary Quotation (QR)</span>
             </button>
 
-            <button onClick={() => setShowPdfPreview(true)} className="btn-primary">
+            <button onClick={() => setShowPdfPreview(true)} className="w-full sm:w-auto btn-primary">
               Download Proposal
             </button>
-
-            {/* {isClient && proposalData && (
-              <PDFDownloadLink
-                key={proposalData.quotation.refNo + selected.length}
-                document={<MasterQuotationPDF data={proposalData} />}
-                fileName={`Quotation_${customer?.company || "Draft"}.pdf`}
-                className="bg-red-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2 hover:bg-red-700 transition-colors"
-              >
-                {({ loading, error }) => {
-                  if (error) { console.error("PDF Error:", error); return "Error Building PDF"; }
-                  return loading ? "Rendering PDF…" : "Download Official PDF";
-                }}
-              </PDFDownloadLink>
-            )}
-
-            {!isClient && (
-              <button className="bg-gray-400 text-white px-6 py-3 rounded-xl font-bold opacity-50 cursor-not-allowed">
-                Initializing PDF…
-              </button>
-            )} */}
           </div>
         </section>
 
@@ -693,7 +952,9 @@ export default function SummaryPage() {
                   <>
                     {selectedAddons.map((addon, idx) => (
                       <tr key={addon.id || idx} className="border-t border-slate-100">
-                        <td className="px-3 py-2 align-top text-slate-900">{addon.name}</td>
+                        <td className="px-3 py-2 align-top text-slate-900">
+                          {addon.customName || addon.name}
+                        </td>
                         <td className="px-3 py-2 align-top text-right text-slate-900">{addon.qty || 1}</td>
                         <td className="px-3 py-2 align-top text-right text-slate-500">
                           {addon.price != null
@@ -733,7 +994,9 @@ export default function SummaryPage() {
                   }
                 </div>
                 <div className="px-3 py-2 text-center text-xs">
-                  <div className="font-semibold text-slate-900">{item.name}</div>
+                  <div className="font-semibold text-slate-900">
+                    {item.customName || item.name}
+                  </div>
                   <div className="text-slate-500">Qty: {item.qty || 1}</div>
                 </div>
               </div>
@@ -757,11 +1020,19 @@ export default function SummaryPage() {
             position: "sticky", top: 0, zIndex: 10000,
             backgroundColor: "#1e293b", width: "100%",
             display: "flex", alignItems: "center", justifyContent: "center",
-            gap: "16px", padding: "12px 24px", flexShrink: 0,
+            gap: "16px", padding: "12px 24px", flexShrink: 0, flexWrap: "wrap",
           }}>
             <span style={{ color: "#fff", fontSize: "14px", fontWeight: 600 }}>
               Preview — confirm then download
             </span>
+            {/* Template toggle */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", backgroundColor: "#334155", borderRadius: "8px", padding: "3px" }}>
+              {[{ k: "classic", label: "📄 Adroit Classic" }, { k: "v2", label: "✨ New Style" }].map(({ k, label }) => (
+                <button key={k} onClick={() => setQuoteTemplate(k)}
+                  style={{ backgroundColor: quoteTemplate === k ? "#2563eb" : "transparent", color: "#fff", border: "none", borderRadius: "6px", padding: "5px 12px", fontWeight: quoteTemplate === k ? 700 : 400, cursor: "pointer", fontSize: "12px", transition: "background 0.2s" }}
+                >{label}</button>
+              ))}
+            </div>
             <button
               onClick={async () => {
                 const el = quotationRef.current;
@@ -804,7 +1075,10 @@ export default function SummaryPage() {
           </div>
         )}
         <div style={{ marginTop: "16px", marginBottom: "40px" }}>
-          <AdroitQuotation ref={quotationRef} data={proposalData} />
+          {quoteTemplate === "classic"
+            ? <AdroitQuotation ref={quotationRef} data={proposalData} />
+            : <AdroitQuotation2 ref={quotationRef} data={proposalData} />
+          }
         </div>
       </div>
     </div>

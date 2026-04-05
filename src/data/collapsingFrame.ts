@@ -99,4 +99,19 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     },
     shortDesc: "Robust collapsing frame for very wide blown film applications.",
   },
+  {
+    id: "cf-wooden",
+    name: "Collapsing Frame – Wooden Boards",
+    style: "wooden",
+    machineTypes: ["aba", "mono"],
+    usedInModels: ["ABA-26"],
+    image: "/images/Acessories/Gusset Board Assembly.jpeg",
+    cardDesc: "Traditional wooden board collapsing frame.",
+    price: 0,
+    techDesc: {
+      "Material": "Seasoned teak wood boards / smooth finish fibre boards.",
+      "Design": "Manual adjustable width for basic web forming.",
+    },
+    shortDesc: "Basic wooden board frame for narrow web machines.",
+  },
 ];

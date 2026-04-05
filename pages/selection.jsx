@@ -39,7 +39,7 @@ export default function SelectionPage() {
     selected?.find((x) => x.id === id) || null;
 
   return (
-    <div className="min-h-screen bg-brand-light pt-28">
+    <div className="min-h-screen bg-brand-light pt-24 sm:pt-28">
       {/* Navbar is global */}
 
       <main className="max-w-6xl mx-auto px-4 py-6">
@@ -234,16 +234,16 @@ export default function SelectionPage() {
         )}
 
         {/* Bottom nav */}
-        <div className="mt-8 flex justify-between gap-4">
+        <div className="mt-8 flex flex-col sm:flex-row justify-between gap-3">
           <button
             onClick={() => router.push("/machinetype")}
-            className="flex-1 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 py-2 text-sm"
+            className="flex-1 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 py-3 text-sm font-medium"
           >
             ← Back to Machine Type
           </button>
           <button
             onClick={() => router.push("/addons")}
-            className="flex-1 rounded-xl bg-brand-blue hover:bg-brand-dark text-white py-2 text-sm"
+            className="flex-1 rounded-xl bg-brand-blue hover:bg-brand-dark text-white py-3 text-sm font-medium"
           >
             Go to Optional Add-ons →
           </button>

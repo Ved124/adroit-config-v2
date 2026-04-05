@@ -44,27 +44,57 @@ export default function CustomerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-light pt-28">
+    <div className="min-h-screen bg-brand-light pt-24 sm:pt-28">
       {/* Navbar is global */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* <StepProgress /> */}
 
-        <main className="mt-8 glass-card p-6 sm:p-8">
-          <h2 className="text-lg sm:text-xl font-semibold mb-6 text-brand-blue">Customer Details</h2>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-5" onSubmit={e => { e.preventDefault(); handleNext(); }}>
+        <main className="mt-4 sm:mt-8 glass-card p-4 sm:p-6 md:p-8">
+          <h2 className="text-lg sm:text-xl font-semibold mb-5 text-brand-blue">Customer Details</h2>
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5" onSubmit={e => { e.preventDefault(); handleNext(); }}>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium text-slate-700">Region <span className="text-red-600">*</span></label>
+              <div className="flex gap-4 mt-1">
+                <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                  <input
+                    type="radio"
+                    name="region"
+                    value="DOM"
+                    checked={customer.region === "DOM"}
+                    onChange={(e) => setCustomer(prev => ({ ...prev, region: e.target.value }))}
+                    className="w-4 h-4 text-brand-blue border-slate-300 focus:ring-brand-blue"
+                  />
+                  <span className="text-sm font-medium text-slate-700">Domestic (DOM)</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                  <input
+                    type="radio"
+                    name="region"
+                    value="EXP"
+                    checked={customer.region === "EXP"}
+                    onChange={(e) => setCustomer(prev => ({ ...prev, region: e.target.value }))}
+                    className="w-4 h-4 text-brand-blue border-slate-300 focus:ring-brand-blue"
+                  />
+                  <span className="text-sm font-medium text-slate-700">Export (EXP)</span>
+                </label>
+              </div>
+            </div>
+
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-name" className="text-sm font-medium text-slate-700">Name <span className="text-red-600">*</span></label>
               <input id="cust-name" value={customer.name || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="Enter client name" required />
             </div>
-            <div className="flex flex-col gap-1 mb-4">
-              <label className="text-sm font-medium text-gray-500">Quotation Ref No. (Auto)</label>
-              <input
-                type="text"
-                value={customer.quotationRef || customer.ref || ""}
-                readOnly // User cannot type here, it is automatic
-                className="w-full bg-gray-100 border border-gray-300 text-gray-700 rounded-xl px-3 py-2 text-sm font-mono font-bold tracking-wider cursor-not-allowed"
-              />
-            </div>
+            {customer.isImported && (
+              <div className="flex flex-col gap-1 mb-2 sm:mb-4">
+                <label className="text-sm font-medium text-gray-500">Quotation Ref No. (Auto)</label>
+                <input
+                  type="text"
+                  value={customer.quotationRef || customer.ref || ""}
+                  readOnly // User cannot type here, it is automatic
+                  className="w-full bg-gray-100 border border-gray-300 text-gray-700 rounded-xl px-3 py-2.5 text-sm font-mono font-bold tracking-wider cursor-not-allowed"
+                />
+              </div>
+            )}
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-company" className="text-sm font-medium text-slate-700">Company <span className="text-red-600">*</span></label>
               <input id="cust-company" value={customer.company || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="Client company" required />
@@ -90,13 +120,13 @@ export default function CustomerPage() {
               <input id="cust-state" value={customer.state || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="State / Country" />
             </div>
           </form>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button onClick={handleNext} variant="primary" size="md">Choose Machine Type</Button>
-            <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-200 text-slate-800 text-sm font-medium shadow-sm hover:bg-slate-300 transition">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
+            <Button onClick={handleNext} variant="primary" size="md" className="w-full sm:w-auto justify-center">Choose Machine Type</Button>
+            <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-200 text-slate-800 text-sm font-medium shadow-sm hover:bg-slate-300 transition w-full sm:w-auto">
               Import JSON
               <input ref={fileRef} type="file" accept="application/json" onChange={importJsonFile} className="hidden" />
             </label>
-            <Button onClick={handleReset} variant="secondary" size="md">Reset</Button>
+            <Button onClick={handleReset} variant="secondary" size="md" className="w-full sm:w-auto justify-center">Reset</Button>
           </div>
         </main>
 

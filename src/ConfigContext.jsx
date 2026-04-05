@@ -108,7 +108,9 @@ export function ConfigProvider({ children }) {
   const toast = useToast();
 
   const [customer, setCustomer] = useState({
-    quotationRef: "Loading..." // Temporary initial state
+    quotationRef: "Loading...", // Temporary initial state
+    region: "DOM", // "DOM" or "EXP"
+    isImported: false,
   });
   const [machineType, setMachineTypeState] = useState("mono"); // "mono" | "aba" | "3layer" | "5layer"
   const [selected, setSelected] = useState([]);               // base components
@@ -119,6 +121,11 @@ export function ConfigProvider({ children }) {
   const [showDiscountField, setShowDiscountField] = useState(false);
   const [customOutput, setCustomOutput] = useState("");
   const [customLayflat, setCustomLayflat] = useState("");
+  const [customRollerWidth, setCustomRollerWidth] = useState("");
+  const [scopeOverrides, setScopeOverrides] = useState({});
+  const [quoteTemplate, setQuoteTemplate] = useState("v2");
+  const [showPricingFields, setShowPricingFields] = useState(false);
+  const [presetBasePrice, setPresetBasePrice] = useState(0); // ← NEW: stores fixed price from modelPreset
 
   const [components] = useState(COMPONENTS_DATA);
   const [addons] = useState(ADDONS_DATA);
@@ -177,8 +184,27 @@ export function ConfigProvider({ children }) {
     }
 
     if (savedData && savedData.customer && savedData.customer.quotationRef) {
-      // 1. Existing data found? Use it.
-      setCustomer(savedData.customer);
+      // 1. Existing data found?
+      let cust = { ...savedData.customer };
+      
+      // Upgrade legacy formats (AET/ -> AE/)
+      if (cust.quotationRef.startsWith("AET/")) {
+        const parts = cust.quotationRef.split('/');
+        const reg = cust.region || parts[1] || "DOM";
+        const seq = parts.pop() || "01";
+        const twoDigitSeq = seq.length > 2 ? seq.slice(-2) : seq.padStart(2, '0');
+        const roller = savedData.customRollerWidth ? savedData.customRollerWidth.match(/\d+/)?.[0] : "MW";
+        const newRef = `AE/${reg}/${roller || "MW"}/${twoDigitSeq}`;
+        cust.quotationRef = newRef;
+        cust.ref = newRef;
+      } else if (cust.quotationRef === "Loading...") {
+        // Fallback for edge case
+        const nextRef = generateNextQuotationRef(cust.region || "DOM");
+        cust.quotationRef = nextRef;
+        cust.ref = nextRef;
+      }
+
+      setCustomer(cust);
       if (typeof savedData.machineType === "string") setMachineTypeState(savedData.machineType);
       else setMachineTypeState("mono");
       if (Array.isArray(savedData.selected)) setSelected(savedData.selected);
@@ -187,6 +213,9 @@ export function ConfigProvider({ children }) {
       if (typeof savedData.markup === "number") setMarkup(savedData.markup);
       if (typeof savedData.machineModelIndex === "number") {
         setMachineModelIndex(savedData.machineModelIndex);
+      }
+      if (typeof savedData.customRollerWidth === "string") {
+        setCustomRollerWidth(savedData.customRollerWidth);
       }
       if (typeof savedData.selectedMachineModelLabel === "string") {
         setSelectedMachineModelLabel(savedData.selectedMachineModelLabel);
@@ -200,13 +229,15 @@ export function ConfigProvider({ children }) {
       if (typeof savedData.customLayflat === "string") {
         setCustomLayflat(savedData.customLayflat);
       }
+      if (typeof savedData.presetBasePrice === "number") {
+        setPresetBasePrice(savedData.presetBasePrice);
+      }
     } else {
       // 2. New Session? GENERATE A NEW NUMBER
-      const newRef = generateNextQuotationRef();
-      console.log("INITIAL ID GENERATED:", newRef);
+      const newRef = generateNextQuotationRef("DOM");
       setCustomer((prev) => ({
         ...prev,
-        ...savedData?.customer, // keep partial details if any
+        ...savedData?.customer,
         quotationRef: newRef,
         ref: newRef
       }));
@@ -230,6 +261,8 @@ export function ConfigProvider({ children }) {
           customMode,
           customOutput,
           customLayflat,
+          customRollerWidth,
+          presetBasePrice,
           savedAt: new Date().toISOString(),
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -237,7 +270,41 @@ export function ConfigProvider({ children }) {
         console.warn("Failed to save storage:", e);
       }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice]);
+  
+  // Real-time synchronization for Quotation Reference
+  useEffect(() => {
+    if (customer.isImported) return; // Don't overwrite if imported
+    
+    setCustomer(prev => {
+      const reg = prev.region || "DOM";
+      // Extract roller width number or use "MW" placeholder
+      const rollerMatched = String(customRollerWidth).match(/\d+/);
+      const roller = rollerMatched ? rollerMatched[0] : "MW";
+      
+      // Auto-sync for AE/ standard, legacy AET/ or initial state
+      const isInitial = prev.quotationRef === "Loading..." || prev.quotationRef?.startsWith("AET/");
+      const isStandard = prev.quotationRef?.startsWith("AE/");
+      
+      if (isInitial || isStandard) {
+        // Upgrade legacy format and normalize sequence (ensure 2 digits)
+        const parts = (prev.quotationRef || "").split('/');
+        let seq = parts.pop() || "01";
+        if (seq.length > 2) seq = seq.slice(-2);
+        else seq = seq.padStart(2, '0');
+        
+        let prefix = "";
+        if (machineType === "mono") prefix = "U";
+        else if (machineType === "aba") prefix = "D";
+
+        const newRef = `AE/${reg}/${prefix}${roller}/${seq}`;
+        if (newRef !== prev.quotationRef) {
+          return { ...prev, quotationRef: newRef, ref: newRef };
+        }
+      }
+      return prev;
+    });
+  }, [customer.region, customRollerWidth, machineType]);
 
 
   // ---------------- MACHINE TYPE ----------------
@@ -248,6 +315,7 @@ export function ConfigProvider({ children }) {
     setSelectedAddons([]);
     setSelectedMachineModelLabel(""); // reset model
     setCustomMode(false);             // default = not custom
+    setPresetBasePrice(0);
   }
 
   // ---------------- MODEL PRESET (auto-select components by model code) ----------------
@@ -270,6 +338,9 @@ export function ConfigProvider({ children }) {
 
     const nextSelected = [];
     const nextAddons = [];
+
+    // 1.5) Set fixed base price if preset defines one
+    setPresetBasePrice(preset.basePrice || 0);
 
     // 2) Build selected base components
     preset.components.forEach(({ category, id, qty }) => {
@@ -298,6 +369,58 @@ export function ConfigProvider({ children }) {
     setSelectedAddons(nextAddons);
     setCustomMode(false);
     setSelectedMachineModelLabel(modelLabel);
+
+    // 5) Sync specifications (Roller Width, Layflat & Output) from the source model data
+    let models = [];
+    if (preset.machineType === "mono") models = MONO_MODELS || [];
+    else if (preset.machineType === "aba") models = ABA_MODELS || [];
+    else if (preset.machineType === "3layer") models = THREE_LAYER_MODELS || [];
+
+    const modelObj = models.find(m => m.code === modelLabel);
+    const isMonoOrAba = preset.machineType === "mono" || preset.machineType === "aba";
+    
+    // Extract Roller Width from label (e.g., "32" from "MONOLAYER - 32\"")
+    const rollerMatch = String(modelLabel).match(/\d+/);
+    const rollerNum = rollerMatch ? parseInt(rollerMatch[0], 10) : 0;
+
+    if (rollerNum > 0) {
+      if (isMonoOrAba) {
+        setCustomRollerWidth(`${rollerNum} inch`);
+        // Use layflat from record for Mono/ABA
+        const layflat = modelObj?.layflatWidthMm || modelObj?.widthMm || (rollerNum * 25);
+        setCustomLayflat(`${layflat} mm`);
+      } else {
+        setCustomRollerWidth(`${rollerNum} mm`);
+        // Update Layflat: Roller Width - 125 (Standard offset for 3Layer)
+        setCustomLayflat(`${rollerNum - 125} mm`);
+      }
+      
+      // Update Quotation Ref to follow new format automatically
+      setCustomer(prev => {
+        const region = prev.region || "DOM";
+        
+        let prefix = "";
+        if (preset.machineType === "mono") prefix = "U";
+        else if (preset.machineType === "aba") prefix = "D";
+
+        // Ensure 2-digit sequence as per latest request
+        const newRef = `AE/${region}/${prefix}${rollerNum}/01`;
+        return { ...prev, quotationRef: newRef, ref: newRef };
+      });
+    } else if (modelObj) {
+      // Fallback if no digits in label
+      const layflat = modelObj.layflatWidthMm || modelObj.widthMm;
+      if (layflat) setCustomLayflat(`${layflat} mm`);
+    }
+
+    if (modelObj) {
+      const output = modelObj.maxOutputKgHr || modelObj.outputKgHr;
+      if (output) setCustomOutput(output);
+
+      // Ensure machineModelIndex is synchronized so currentMachineModel works
+      const idx = models.findIndex(m => m.code === modelLabel);
+      if (idx !== -1) setMachineModelIndex(idx);
+    }
 
     // also store some basic info on customer (nice for summary/Word)
     setCustomer((prev) => ({
@@ -356,6 +479,7 @@ export function ConfigProvider({ children }) {
         variant: "success",
         durationMs: 700,
       });
+      setPresetBasePrice(0); // Revert to sum of parts if modified
       return [...prev, { ...item, category, qty: 1 }];
     });
   }
@@ -370,21 +494,25 @@ export function ConfigProvider({ children }) {
           variant: "error",
         });
       }
+      setPresetBasePrice(0); // Revert to sum of parts if modified
       return prev.filter((p) => p.id !== id);
     });
   }
 
   function setQty(id, qty) {
     if (qty < 1) return;
+    setPresetBasePrice(0); // Revert to sum of parts if modified
     setSelected((prev) => prev.map((p) => (p.id === id ? { ...p, qty } : p)));
   }
 
   // ---------------- ADD-ON CRUD ----------------
 
-  function addAddon(category, item) {
+  function addAddon(category, item, metadata = null) {
     setSelectedAddons((prev) => {
-      const found = prev.find((p) => p.id === item.id);
-      if (found) {
+      const foundIndex = prev.findIndex((p) => p.id === item.id);
+      
+      // For non-dynamic items, handle as duplicate
+      if (foundIndex !== -1 && !item.isDynamic) {
         const now = Date.now();
         const last = duplicateToastRef.current[item.id] || 0;
         if (now - last > 800) {
@@ -398,13 +526,24 @@ export function ConfigProvider({ children }) {
         }
         return prev;
       }
+
+      // For dynamic items or new items, notify and add/replace
       toast.push({
-        title: "Added",
-        description: item.name,
+        title: foundIndex !== -1 ? "Updated" : "Added",
+        description: metadata?.customName || item.name,
         variant: "success",
         durationMs: 700,
       });
-      return [...prev, { ...item, category, qty: 1 }];
+
+      const newItem = { ...item, category, qty: 1, ...metadata };
+      
+      if (foundIndex !== -1) {
+        const newArr = [...prev];
+        newArr[foundIndex] = newItem;
+        return newArr;
+      }
+      
+      return [...prev, newItem];
     });
   }
 
@@ -550,10 +689,15 @@ export function ConfigProvider({ children }) {
 
   const computePriceSummary = React.useCallback(() => {
     // 1. Calculate Standard Components Total
-    const basicTotal = selected.reduce(
+    let basicTotal = selected.reduce(
       (sum, item) => sum + (item.price || 0) * (item.qty || 1),
       0
     );
+
+    // If a preset base price is active, use it instead of sum of parts
+    if (presetBasePrice > 0) {
+       basicTotal = presetBasePrice;
+    }
 
     // 2. Calculate Optional Addons Total
     const addonsTotal = selectedAddons.reduce(
@@ -580,8 +724,9 @@ export function ConfigProvider({ children }) {
       beforeMargin,
       withMarkup,
       afterDiscount, // This is now your Final Price (Main Scope Only)
+      isPackagePrice: presetBasePrice > 0,
     };
-  }, [selected, selectedAddons, markup, discount]);
+  }, [selected, selectedAddons, markup, discount, presetBasePrice]);
 
   function getMachineDetailsForWord(machineType, safeCustomer) {
     if (!machineType) return null;
@@ -1774,6 +1919,95 @@ export function ConfigProvider({ children }) {
       };
 
       // ------------------------------------------------------------------
+      // RESTORE FORMAT — _restore block present (from downloadJson button)
+      // This is a perfect round-trip: contains all raw state.
+      // ------------------------------------------------------------------
+      if (data && data._restore && data._restore.schema === "adroit_v2") {
+        const r = data._restore;
+        const c = data.customer || {};
+        const q = data.quotation || {};
+
+        // 1) Rebuild customer — SPREAD all fields to avoid data loss
+        const rebuiltCustomer = {
+          ...c,
+          // Handle both old and new quotation Ref naming
+          quotationRef: r.quotationRef || q.refNo || c.quotationRef || c.ref || "",
+          ref: r.quotationRef || q.refNo || c.quotationRef || c.ref || "",
+          unlocked: true,
+          isImported: true,
+        };
+
+        // 2) Machine type
+        if (r.machineType) {
+          setMachineTypeState(r.machineType);
+        }
+
+        // 3) Rebuild selected components — try to merge with master data for full techDesc/images
+        const newSelected = (r.selected || []).map((row) => {
+          const resolved = resolveBaseComponent(row.category, row.id) ||
+                           resolveBaseComponent(row.category, row.name);
+          if (resolved) {
+            return { ...resolved.base, category: resolved.category, qty: row.qty || 1 };
+          }
+          // Fallback: use whatever is in the JSON snapshot
+          return {
+            id: row.id || `${row.category}_${row.name}`,
+            name: row.name || "",
+            category: row.category || "",
+            qty: row.qty || 1,
+            price: row.price ?? 0,
+            shortDesc: row.shortDesc || "",
+            image: row.image || null,
+          };
+        });
+
+        // 4) Rebuild selectedAddons
+        const newAddons = (r.selectedAddons || []).map((row) => {
+          const resolved = resolveBaseAddon(row.category, row.id) ||
+                           resolveBaseAddon(row.category, row.name);
+          if (resolved) {
+            return { ...resolved.base, category: resolved.category, qty: row.qty || 1 };
+          }
+          return {
+            id: row.id || `${row.category}_${row.name}`,
+            name: row.name || "",
+            category: row.category || "",
+            qty: row.qty || 1,
+            price: row.price ?? 0,
+            shortDesc: row.shortDesc || "",
+            image: row.image || null,
+          };
+        });
+
+        // 5) Apply all state
+        setCustomer(rebuiltCustomer);
+        setSelected(newSelected);
+        setSelectedAddons(newAddons);
+
+        if (typeof r.markup_percent === "number") setMarkup(r.markup_percent);
+        if (typeof r.discount_percent === "number") setDiscount(r.discount_percent);
+        if (typeof r.machineModelIndex === "number") setMachineModelIndex(r.machineModelIndex);
+        if (r.selectedMachineModelLabel) setSelectedMachineModelLabel(r.selectedMachineModelLabel);
+        if (typeof r.customMode === "boolean") setCustomMode(r.customMode);
+        if (typeof r.customOutput === "string") setCustomOutput(r.customOutput);
+        if (typeof r.customLayflat === "string") setCustomLayflat(r.customLayflat);
+        if (r.scopeOverrides && typeof r.scopeOverrides === "object") {
+          setScopeOverrides(r.scopeOverrides);
+        }
+        if (r.quoteTemplate) setQuoteTemplate(r.quoteTemplate);
+        if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
+        if (typeof r.customRollerWidth === "string") setCustomRollerWidth(r.customRollerWidth);
+        if (typeof r.presetBasePrice === "number") setPresetBasePrice(r.presetBasePrice);
+
+        toast.push({
+          title: "Configuration imported ✓",
+          description: `${file.name} — all fields restored`,
+          variant: "success",
+        });
+        return;
+      }
+
+      // ------------------------------------------------------------------
       // NEW FORMAT (from buildWordContext / template JSON)
       // ------------------------------------------------------------------
       if (data && data.customer && data.machine && data.pricing) {
@@ -1812,6 +2046,7 @@ export function ConfigProvider({ children }) {
 
           quotationRef: q.ref_no || c.quotationRef || c.ref || "",
           ref: q.ref_no || c.quotationRef || c.ref || "",
+          isImported: true,
         };
 
         // 2) Machine type (mono / aba / 3layer / 5layer)
@@ -2132,7 +2367,8 @@ export function ConfigProvider({ children }) {
       gst: "",
       quotationRef: nextRef, // IMPORTANT
       ref: nextRef,          // Backup key for legacy
-      unlocked: false
+      unlocked: false,
+      isImported: false
     });
 
     // 4. Reset Config
@@ -2144,6 +2380,8 @@ export function ConfigProvider({ children }) {
     setCustomMode(false);
     setDiscount(0);
     setMarkup(0);
+    setQuoteTemplate("v2");
+    setShowPricingFields(false);
     setCustomOutput("");
     setCustomLayflat("");
 
@@ -2177,6 +2415,8 @@ export function ConfigProvider({ children }) {
     setCustomOutput,
     customLayflat,
     setCustomLayflat,
+    customRollerWidth,
+    setCustomRollerWidth,
     computePriceSummary,
 
     // machine selection
@@ -2198,6 +2438,12 @@ export function ConfigProvider({ children }) {
     setSelected,
     selectedAddons,
     setSelectedAddons,
+    scopeOverrides,
+    setScopeOverrides,
+    quoteTemplate,
+    setQuoteTemplate,
+    showPricingFields,
+    setShowPricingFields,
 
     // component CRUD
     addComponent,

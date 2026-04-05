@@ -149,7 +149,7 @@ export default function MachineTypePage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-light text-slate-900 pt-28">
+    <div className="min-h-screen bg-brand-light text-slate-900 pt-24 sm:pt-28">
       {/* Navbar is global */}
 
       <motion.main
@@ -160,7 +160,7 @@ export default function MachineTypePage() {
       >
         {/* Quotation ref row */}
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
             <label className="text-sm font-medium text-slate-600 whitespace-nowrap">
               Quotation Ref No.
             </label>
@@ -168,7 +168,7 @@ export default function MachineTypePage() {
               type="text"
               value={customer?.quotationRef || customer?.ref || ""}
               onChange={handleQuotationRefChange}
-              className="h-9 w-64 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue shadow-sm"
+              className="h-9 w-full sm:w-64 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue shadow-sm"
               placeholder="e.g. AET/DOM/25/1123/001"
             />
           </div>

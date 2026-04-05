@@ -52,6 +52,19 @@ const TD = {
     verticalAlign: "top",
 };
 
+// Compact scope-table cell styles — smaller font keeps 11-13 rows within one A4 page
+const TH_SCOPE_CL = {
+    ...TH,
+    fontSize: "9.5pt",
+    padding: "4px 7px",
+};
+const TD_SCOPE_CL = {
+    ...TD,
+    fontSize: "9.5pt",
+    padding: "3px 7px",
+    lineHeight: "1.4",
+};
+
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 const fmt = (raw) => {
     if (!raw) return new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -206,15 +219,16 @@ function CoverPage({ machine, customer }) {
         mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex",
     };
 
-    const fullName = nameMap[type] || "THREE LAYER CO-EXTRUSION BLOWN FILM LINE";
-    const seriesName = seriesMap[type] || "Innoflex";
+    const fullName = machine?.fullName || nameMap[type] || "THREE LAYER CO-EXTRUSION BLOWN FILM LINE";
+    const seriesName = machine?.series || seriesMap[type] || "Innoflex";
     const modelCode = machine?.code || "";
     const company = (customer?.company || "").toUpperCase();
     const city = (customer?.city || "").toUpperCase();
 
     // coverImage: passed as "/images/machines/3layer.png" etc. from buildProposalData()
     // The img tag has onError so broken paths just disappear — placeholder shows instead.
-    const coverImg = machine?.coverImage || `/images/machines/3layer.png`;
+    // const coverImg = machine?.coverImage || `/images/machines/3layer.png`;
+    const coverImg = `/images/machines/3layer.png`;
 
     return (
         <Page>
@@ -349,7 +363,7 @@ function CoverPage({ machine, customer }) {
 //   Discounted price line (if present)
 // Basic components only — optionalItems go on CommercialScopePage (page 3)
 function ScopePage({ components, refNo, date, price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal }) {
-    const allItems = (components || []).filter(c => c && c.name);
+    const allItems = (components || []).filter(c => c && (c.name || c._isExtra));
 
     return (
         <Page>
@@ -379,48 +393,45 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
                 ADROIT EXTRUSION SCOPE OF SUPPLY
             </SectionTitle>
 
-            {/* ── Scope table: 3 columns ──────────────────────────────── */}
-            <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "10px" }}>
+            {/* ── Scope table: 2 columns ──────────────────────────────── */}
+            <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", tableLayout: "fixed" }}>
+                <colgroup>
+                    <col style={{ width: "48px" }} />
+                    <col />
+                </colgroup>
                 <thead>
                     <tr>
-                        <th style={{ ...TH, width: "48px" }}>SR NO.</th>
-                        <th style={{ ...TH, textAlign: "left" }}>ITEM NAME &amp; DESCRIPTION</th>
-                        <th style={{ ...TH, width: "46px" }}>QTY</th>
+                        <th style={{ ...TH_SCOPE_CL, width: "48px" }}>SR NO.</th>
+                        <th style={{ ...TH_SCOPE_CL, textAlign: "left" }}>ITEM DESCRIPTION</th>
                     </tr>
                 </thead>
                 <tbody>
                     {allItems.length === 0 && (
                         <tr>
-                            <td colSpan={3} style={{ ...TD, textAlign: "center", color: DIM, fontStyle: "italic" }}>
+                            <td colSpan={2} style={{ ...TD, textAlign: "center", color: DIM, fontStyle: "italic" }}>
                                 No components selected.
                             </td>
                         </tr>
                     )}
                     {allItems.map((item, i) => {
-                        const shortDesc = item.shortDesc || item.cardDesc || "";
-                        const rowText = shortDesc
-                            ? `${item.name} — ${shortDesc}`
-                            : item.name;
+                        const rowText = item.description || item.shortDesc || item.name || "";
+                        const srNo = item.sr || (i + 1);
                         return (
                             <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#ffffff" : GRAY_BG }}>
-                                <td style={{ ...TD, textAlign: "center", fontWeight: "bold", color: BLUE }}>
-                                    {i + 1}
+                                <td style={{ ...TD_SCOPE_CL, textAlign: "center", fontWeight: "bold", color: BLUE }}>
+                                    {srNo}
                                 </td>
-                                <td style={{ ...TD }}>
+                                <td style={{ ...TD_SCOPE_CL, padding: item._isExtra && !rowText ? "10px" : TD_SCOPE_CL.padding }}>
                                     {rowText}
-                                </td>
-                                <td style={{ ...TD, textAlign: "center" }}>
-                                    {item.qty || 1}
                                 </td>
                             </tr>
                         );
                     })}
                 </tbody>
-            </table><br /><br />
-
+            </table><br />
 
             {/* ── Horizontal rule ────────────────────────────────────── */}
-            <div style={{ borderTop: `1px solid ${LIGHT_BDR}`, marginBottom: "16px" }} />
+            <div style={{ borderTop: `1px solid ${LIGHT_BDR}`, marginBottom: "8px" }} /> <br />
             {/* ── COMMERCIAL SCOPE heading ─────────────────────────── */}
             <div style={{
                 textAlign: "center",
@@ -430,11 +441,11 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
                 color: INK,
                 textDecoration: "underline",
                 letterSpacing: "1px",
-                marginBottom: "20px",
-                marginTop: "8px",
+                marginBottom: "10px",
+                marginTop: "4px",
             }}>
                 COMMERCIAL SCOPE
-            </div><br />
+            </div>
 
             {/* ── Basic price block ──────────────────────────────────── */}
             {price ? (
@@ -451,7 +462,7 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
                         </div>
                     )}
                     {/* Final price — always shown */}
-                    <div style={{ marginTop: "12px" }}>
+                    {/* <div style={{ marginTop: "12px" }}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
                             <span style={{ fontSize: "12pt", color: "red" }}>❖</span>
                             <span style={{ fontWeight: "bold", fontSize: "12pt", fontFamily: F, color: "red" }}>
@@ -462,15 +473,16 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
                             <div style={{ fontSize: "12pt", fontFamily: F, color: "red", paddingLeft: "28px" }}>
                                 ({discountedWords || basicInWords})
                             </div>
-                        )}
-                    </div>
+                        )} */}
+                    {/* </div> */}
                 </div>
             ) : (
                 <div style={{ marginBottom: "24px", fontSize: "9.5pt", fontFamily: F, color: DIM, fontStyle: "italic" }}>
                     Pricing to be advised separately.
                 </div>
-            )}
-        </Page>
+            )
+            }
+        </Page >
     );
 }
 
@@ -544,11 +556,7 @@ function CommercialScopePage({ optionalItems, addonsTotal }) {
                     </tr>
                 </tbody>
             </table><br />
-            <SectionTitle>TOWER STRUCTURE</SectionTitle>
-            <p style={{ ...BODY_TEXT, marginBottom: "10px" }}>
-                Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
-                haul-off, secondary nip, etc. Lifting beams provided at bubble cage level for die handling.
-            </p><br />
+            <br />
 
             <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
             {[
@@ -825,11 +833,11 @@ function OptionalAndUtilitiesPage({ optionalItems, powerLoads }) {
             </div><br />
 
             {/* ── Equipment Power Loads Table ────────────────────────── */}
-            {loads.length > 0 && (
+            {/* {loads.length > 0 && (
                 <>
-                    {/* <div style={{ fontWeight: "bold", fontSize: "9pt", fontFamily: F, color: "#fff", backgroundColor: BLUE, padding: "2px 6px", marginBottom: "4px", letterSpacing: "0.5px" }}>
+                    <div style={{ fontWeight: "bold", fontSize: "9pt", fontFamily: F, color: "#fff", backgroundColor: BLUE, padding: "2px 6px", marginBottom: "4px", letterSpacing: "0.5px" }}>
                         EQUIPMENT POWER LOADS
-                    </div> */}
+                    </div>
                     <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", fontSize: "8.5pt", fontFamily: F }}>
                         <thead>
                             <tr>
@@ -868,7 +876,7 @@ function OptionalAndUtilitiesPage({ optionalItems, powerLoads }) {
                         </tbody>
                     </table>
                 </>
-            )}
+            )} */}
 
         </Page>
     );
@@ -906,14 +914,46 @@ function TermsPage() {
                     <span style={{ fontSize: "9.5pt", fontFamily: F, lineHeight: "1.6", color: INK }}>{body}</span>
                 </div>
             ))}
-            <div style={{ marginTop: "8px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK }}>
+            <div style={{ marginTop: "-10px", fontSize: "10pt", fontFamily: F, lineHeight: "2", color: INK, position: "relative" }}>
                 <div>Thanking you,</div>
                 <div>Yours truly,</div>
-                <div style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE }}>
+                <div style={{ marginTop: "-4px", fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: BLUE, position: "relative", zIndex: 2 }}>
                     FOR ADROIT EXTRUSION
                 </div>
+
+                {/* Signature and Stamp Container */}
+                <div style={{ position: "relative", height: "60px", marginTop: "-10px" }}>
+                    {/* Signature - overlaps bottom of FOR ADROIT EXTRUSION slightly */}
+                    <img
+                        src="/images/Usign.png"
+                        alt="Signature"
+                        style={{
+                            position: "absolute",
+                            left: "20px",
+                            top: "-15px",
+                            height: "80px",
+                            zIndex: 1
+                        }}
+                    />
+
+                    {/* Stamp - to the right of the signature */}
+                    <img
+                        src="/images/adroit stamp.png"
+                        alt="Stamp"
+                        style={{
+                            position: "absolute",
+                            left: "130px",
+                            top: "-25px",
+                            height: "100px",
+                            zIndex: 1
+                        }}
+                    />
+                </div>
+
+                <div style={{ fontSize: "11pt", fontFamily: F, color: BLUE, fontWeight: "bold", position: "relative", zIndex: 2 }}>
+                    Urveesh Jepaliya
+                </div>
             </div>
-            <div style={{ marginTop: "42px", fontSize: "10pt", fontFamily: F, color: BLUE, fontWeight: "bold" }}>Urveesh Jepaliya</div>
         </Page>
     );
 }

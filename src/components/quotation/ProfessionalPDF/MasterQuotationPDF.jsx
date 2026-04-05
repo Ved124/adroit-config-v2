@@ -1162,7 +1162,9 @@ export const MasterQuotationPDF = ({ data }) => {
   const pricing = data.pricing || {};
   const components = data.components || [];
   const optionalItems = data.optional_items || data.optionalItems || [];
-  const allItems = [...components, ...optionalItems];
+  const allItems = [...components, ...optionalItems].filter(item => 
+    item && item.name && (item.image || Object.keys(item.techDesc || item.tech_desc || {}).length > 0)
+  );
   const performance = data.performance;
   const utilities = data.utilities;
   const siteServices = data.site_services;

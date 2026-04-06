@@ -28,6 +28,7 @@ import { MATERIAL_HANDLING_ADDONS } from "../src/data/materialHandling";
 import { GAUGE_ADDONS } from "./data/gauge";
 import { WEB_GUIDE_ADDONS } from "./data/webGuide";
 import { CHILLER_ADDONS } from "./data/chiller";
+import { HEAT_EXCHANGER_ADDONS } from "./data/heatExchanger";
 import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
@@ -94,6 +95,7 @@ export const ADDONS_DATA = {
   "Gauge / Thickness Control": GAUGE_ADDONS,
   "Web Guide": WEB_GUIDE_ADDONS,
   "Cooling System": CHILLER_ADDONS,
+  "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
   "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
   // "MDO Unit": MDO_ADDONS,
 

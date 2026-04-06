@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { CORONA_PRICES, CORONA_BRANDS } from "../src/data/corona";
 import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
 import { CHILLER_PRICES, CHILLER_BRANDS } from "../src/data/chiller";
+import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
 
 export default function AddonsPage() {
@@ -167,14 +168,15 @@ function AddonCard({
   const isWebGuide = item.id === "webguide-dynamic";
   const isChiller = item.id.includes("chiller") && item.isDynamic;
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
+  const isHeatExchanger = item.id === "heat-exchanger-dynamic";
 
-  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : [])));
-  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isChiller ? CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : {})));
+  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : []))));
+  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isChiller ? CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : {}))));
 
   // UI customization based on component type
-  const isOutputBased = isChiller || isMixerDryer;
+  const isOutputBased = isChiller || isMixerDryer || isHeatExchanger;
   const selectorLabel = isOutputBased ? "Output" : "Max Roller";
-  const unit = isOutputBased ? "kg/hr" : "mm";
+  const unit = isHeatExchanger ? "kg" : (isOutputBased ? "kg/hr" : "mm");
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "");
@@ -221,6 +223,9 @@ function AddonCard({
       } else if (isMixerDryer) {
         // Example: Vertical Granule Mixer with Dryer Adroit make - 300 kg/hr
         customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg/hr`;
+      } else if (isHeatExchanger) {
+        // Example: Heat Exchanger Adroit make - 150 kg
+        customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;
       }
 
       addAddon(category, item, {

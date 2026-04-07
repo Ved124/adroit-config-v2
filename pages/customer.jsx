@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { ConfigContext } from '../src/ConfigContext';
 import StepProgress from '../components/StepProgress';
 import { useRouter } from 'next/router';
@@ -7,7 +7,10 @@ import { useToast } from '../components/ui/Toast';
 import Button from '../components/ui/Button';
 
 export default function CustomerPage() {
-  const { customer, setCustomer, importJsonFile, resetAll } = useContext(ConfigContext);
+  const { 
+    customer, setCustomer, importJsonFile, resetAll,
+    conversionRate, setConversionRate
+  } = useContext(ConfigContext);
   const fileRef = useRef(null);
   const router = useRouter();
   const { push } = useToast();
@@ -79,6 +82,7 @@ export default function CustomerPage() {
                 </label>
               </div>
             </div>
+
 
             <div className="flex flex-col gap-1">
               <label htmlFor="cust-name" className="text-sm font-medium text-slate-700">Name <span className="text-red-600">*</span></label>

@@ -16,13 +16,13 @@ export type PresetConfig = {
 /**
  * MODEL_PRESETS:
  * Keys must match the label / code you set when selecting a model
- * (e.g. "AE-1125").
+ * (e.g. "INNOFLEX-1125").
  */
 export const MODEL_PRESETS: Record<string, PresetConfig> = {
   // ---------------------------------------------------------
-  // Innoflex 3 Layer – AE-1125
+  // Innoflex 3 Layer – INNOFLEX-1125
   // ---------------------------------------------------------
-  "AE-1125": {
+  "INNOFLEX-1125": {
     machineType: "3layer",
     basePrice: 6125000,
     components: [
@@ -53,7 +53,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1350 DR": {
+  "INNOFLEX-1350 DR": {
     machineType: "3layer",
     basePrice: 6750000,
     components: [
@@ -72,7 +72,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1350 HO": {
+  "INNOFLEX-1350 HO": {
     machineType: "3layer",
     basePrice: 7875000,
     components: [
@@ -91,7 +91,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1350-170": {
+  "INNOFLEX-1350-170": {
     machineType: "3layer",
     basePrice: 8551000,
     components: [
@@ -111,7 +111,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1350-180": {
+  "INNOFLEX-1350-180": {
     machineType: "3layer",
     basePrice: 8850000,
     components: [
@@ -130,7 +130,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1450": {
+  "INNOFLEX-1450": {
     machineType: "3layer",
     basePrice: 8971000,
     components: [
@@ -150,7 +150,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1625": {
+  "INNOFLEX-1625": {
     machineType: "3layer",
     basePrice: 9875000,
     components: [
@@ -170,7 +170,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1870": {
+  "INNOFLEX-1870": {
     machineType: "3layer",
     basePrice: 10651000,
     components: [
@@ -189,7 +189,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-1970": {
+  "INNOFLEX-1970": {
     machineType: "3layer",
     basePrice: 11875000,
     components: [
@@ -209,7 +209,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-2125": {
+  "INNOFLEX-2125": {
     machineType: "3layer",
     basePrice: 13750000,
     components: [
@@ -228,7 +228,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-2370": {
+  "INNOFLEX-2370": {
     machineType: "3layer",
     basePrice: 18750000,
     components: [
@@ -248,7 +248,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "AE-2650": {
+  "INNOFLEX-2650": {
     machineType: "3layer",
     basePrice: 21575000,
     components: [
@@ -580,7 +580,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONO-20": {
+  "UNOFLEX-20": {
     machineType: "mono",
     basePrice: 674000,
     components: [
@@ -600,7 +600,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONO-32": {
+  "UNOFLEX-32": {
     machineType: "mono",
     basePrice: 1065000,
     components: [
@@ -621,7 +621,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONO-40": {
+  "UNOFLEX-40": {
     machineType: "mono",
     basePrice: 1225000,
     components: [
@@ -642,7 +642,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONO-50": {
+  "UNOFLEX-50": {
     machineType: "mono",
     basePrice: 1650000,
     components: [
@@ -663,7 +663,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONO-72": {
+  "UNOFLEX-72": {
     machineType: "mono",
     basePrice: 4800000,
     components: [
@@ -684,7 +684,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "MONO-110": {
+  "UNOFLEX-110": {
     machineType: "mono",
     basePrice: 6500000,
     components: [

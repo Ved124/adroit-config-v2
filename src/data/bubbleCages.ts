@@ -31,7 +31,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     segments: 4,
     rows: 4,
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["AE-1125"],
+    usedInModels: ["Innoflex-1125"],
     image: "/images/Bubble Cage/Manual Cage.JPG",
     cardDesc:
       "Calibration bubble guide basket with 4 segments, 4 rows, manual adjustment.",
@@ -76,7 +76,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     segments: 6,
     rows: 4,
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["AE-1350A", "AE-1350B", "AE-1625", "AE-1870"],
+    usedInModels: ["Innoflex-1350A", "Innoflex-1350B", "Innoflex-1625", "Innoflex-1870"],
     image: "/images/Bubble Cage/Motorized Bubble Cage.png",
     cardDesc:
       "Motorized bubble cage with 6 segments for Innoflex / Duoflex mid-size lines.",
@@ -97,7 +97,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     variant: "motorized",
     segments: 9,
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["AE-2125", "AE-2370", "AE-2625"],
+    usedInModels: ["Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
     image: "/images/Bubble Cage/Bubble Cage Silver.JPG",
     cardDesc:
       "Heavy duty 9 segment motorized bubble cage for wide web 3-layer lines.",

@@ -25,7 +25,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     name: "Vertical Haul-Off (Compact)",
     variant: "vertical",
     machineTypes: ["mono", "3layer"],
-    usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "AE-1350A"],
+    usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "Innoflex-1350A"],
     image: "/images/components/hauloff/vertical-compact.png",
     cardDesc:
       "Compact vertical haul-off for small and medium monolayer lines.",
@@ -51,8 +51,8 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     name: "Horizontal Haul-Off",
     variant: "horizontal",
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["UNOFLEX-1000_1250", "AE-1350A", "AE-1350B", "AE-1625"],
-    image: "/images/components/hauloff/horizontal-standard.png",
+    usedInModels: ["UNOFLEX-1000_1250", "Innoflex-1350A", "Innoflex-1350B", "Innoflex-1625"],
+    image: "/images/components/hauloff/horizontal_standard.png",
     cardDesc:
       "Horizontal haul-off platform as per spec screenshot – 1950 mm nip, AC drive.",
     price: 0,
@@ -79,7 +79,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     name: "Horizontal Haul-Off – Heavy Duty",
     variant: "horizontal",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["AE-1870", "AE-2125", "AE-2370", "AE-2625"],
+    usedInModels: ["Innoflex-1870", "Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
     image: "/images/components/hauloff/horizontal-heavy.png",
     cardDesc:
       "Heavy duty horizontal haul-off for wide web 3-layer / future 5-layer lines.",
@@ -103,7 +103,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     name: "Oscillating Haul-Off Assembly",
     variant: "oscillating",
     machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["DUOFLEX-1750", "AE-1870", "AE-2125", "AE-2370"],
+    usedInModels: ["DUOFLEX-1750", "Innoflex-1870", "Innoflex-2125", "Innoflex-2370"],
     image: "/images/components/hauloff/oscillating.png",
     cardDesc:
       "Oscillating haul-off with 360° rotation for excellent roll geometry.",

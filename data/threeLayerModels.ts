@@ -2,9 +2,9 @@
 
 export const THREE_LAYER_MODELS = [
   {
-    code: "AE-1125",
+    code: "INNOFLEX-1125",
     family: "Innoflex 3 Layer",
-    label: "AE-1125",
+    label: "INNOFLEX-1125",
     machineType: "3layer",
 
     extruder: "40/40/40",
@@ -34,8 +34,8 @@ export const THREE_LAYER_MODELS = [
 
   },
   {
-    code: "AE-1350 DR",
-    label: "AE-1350 DR",
+    code: "INNOFLEX-1350 DR",
+    label: "INNOFLEX-1350 DR",
     machineType: "3layer",
     extruder: "45/45/45",
     motorsHp: "20/20/20",
@@ -63,8 +63,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.35 kW/KG/HR",
   },
   {
-    code: "AE-1350 HO",
-    label: "AE-1350 HO",
+    code: "INNOFLEX-1350 HO",
+    label: "INNOFLEX-1350 HO",
     machineType: "3layer",
     extruder: "45/45/45",
     motorsHp: "20/20/20",
@@ -91,8 +91,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.35 kW/KG/HR",
   },
   {
-    code: "AE-1350-170",
-    label: "AE-1350-170",
+    code: "INNOFLEX-1350-170",
+    label: "INNOFLEX-1350-170",
     machineType: "3layer",
     extruder: "45/55/45",
     motorsHp: "20/40/20",
@@ -120,8 +120,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.35 kW/KG/HR",
   },
   {
-    code: "AE-1350-180",
-    label: "AE-1350-180",
+    code: "INNOFLEX-1350-180",
+    label: "INNOFLEX-1350-180",
     machineType: "3layer",
     extruder: "50/50/50",
     motorsHp: "30/30/30",
@@ -149,8 +149,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.35 kW/KG/HR",
   },
   {
-    code: "AE-1450",
-    label: "AE-1450 (45/55/45)",
+    code: "INNOFLEX-1450",
+    label: "INNOFLEX-1450 (45/55/45)",
     machineType: "3layer",
     extruder: "45/55/45",
     motorsHp: "20/40/20",
@@ -178,8 +178,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.35 kW/KG/HR",
   },
   {
-    code: "AE-1625",
-    label: "AE-1625",
+    code: "INNOFLEX-1625",
+    label: "INNOFLEX-1625",
     machineType: "3layer",
     extruder: "50/65/50",
     motorsHp: "30/60/30",
@@ -207,8 +207,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.35 kW/KG/HR",
   },
   {
-    code: "AE-1870",
-    label: "AE-1870",
+    code: "INNOFLEX-1870",
+    label: "INNOFLEX-1870",
     machineType: "3layer",
     extruder: "55/55/55",
     motorsHp: "40/40/40",
@@ -236,8 +236,8 @@ export const THREE_LAYER_MODELS = [
     powerConsumption: "0.38 kW/KG/HR",
   },
   {
-    code: "AE-1970",
-    label: "AE-1970",
+    code: "INNOFLEX-1970",
+    label: "INNOFLEX-1970",
     machineType: "3layer",
     extruder: "55/65/55",
     motorsHp: "40/60/40",
@@ -266,8 +266,8 @@ export const THREE_LAYER_MODELS = [
   },
 
   {
-    code: "AE-2125",
-    label: "AE-2125",
+    code: "INNOFLEX-2125",
+    label: "INNOFLEX-2125",
     machineType: "3layer",
     extruder: "65/65/65",
     motorsHp: "60/60/60",
@@ -296,8 +296,8 @@ export const THREE_LAYER_MODELS = [
   },
 
   {
-    code: "AE-2370",
-    label: "AE-2370",
+    code: "INNOFLEX-2370",
+    label: "INNOFLEX-2370",
     machineType: "3layer",
     extruder: "65/75/65",
     motorsHp: "60/75/60",
@@ -326,8 +326,8 @@ export const THREE_LAYER_MODELS = [
   },
 
   {
-    code: "AE-2650",
-    label: "AE-2650",
+    code: "INNOFLEX-2650",
+    label: "INNOFLEX-2650",
     machineType: "3layer",
     extruder: "65/75/65",
     motorsHp: "60/75/60",

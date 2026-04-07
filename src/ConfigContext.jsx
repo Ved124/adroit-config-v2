@@ -45,6 +45,7 @@ import { createRoot } from "react-dom/client";
 import { AdroitQuotation } from "./components/quotation/AdroitQuotation";
 import { KioskFlyer } from "./components/quotation/KioskFlyer";
 import { generateNextQuotationRef } from './utils/quotationGenerator';
+import { generateScopeDesc } from "./utils/generateScopeDesc";
 
 export const ConfigContext = createContext(null);
 
@@ -128,6 +129,9 @@ export function ConfigProvider({ children }) {
   const [quoteTemplate, setQuoteTemplate] = useState("v2");
   const [showPricingFields, setShowPricingFields] = useState(false);
   const [presetBasePrice, setPresetBasePrice] = useState(0); // ← NEW: stores fixed price from modelPreset
+  
+  // --- Export Conversion States ---
+  const [conversionRate, setConversionRate] = useState(84);
 
   const [components] = useState(COMPONENTS_DATA);
   const [addons] = useState(ADDONS_DATA);
@@ -234,6 +238,9 @@ export function ConfigProvider({ children }) {
       if (typeof savedData.presetBasePrice === "number") {
         setPresetBasePrice(savedData.presetBasePrice);
       }
+      if (typeof savedData.conversionRate === "number") {
+        setConversionRate(savedData.conversionRate);
+      }
     } else {
       // 2. New Session? GENERATE A NEW NUMBER
       const newRef = generateNextQuotationRef("DOM");
@@ -265,6 +272,7 @@ export function ConfigProvider({ children }) {
           customLayflat,
           customRollerWidth,
           presetBasePrice,
+          conversionRate,
           savedAt: new Date().toISOString(),
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -272,7 +280,7 @@ export function ConfigProvider({ children }) {
         console.warn("Failed to save storage:", e);
       }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice, conversionRate]);
   
   // Real-time synchronization for Quotation Reference
   useEffect(() => {
@@ -720,15 +728,32 @@ export function ConfigProvider({ children }) {
         ? withMarkup * (1 - discount / 100)
         : withMarkup;
 
+    // --- Currency Conversion ---
+    const isExport = customer.region === 'EXP';
+    let currency = 'INR';
+    let rate = 1;
+
+    if (isExport) {
+      currency = 'USD';
+      rate = conversionRate || 84; // Fallback to 84 to avoid div zero
+    }
+
     return {
-      basicTotal,
-      addonsTotal, // Kept separate
-      beforeMargin,
-      withMarkup,
-      afterDiscount, // This is now your Final Price (Main Scope Only)
+      basicTotal: isExport ? Math.ceil(basicTotal / rate) : basicTotal,
+      addonsTotal: isExport ? Math.ceil(addonsTotal / rate) : addonsTotal,
+      beforeMargin: isExport ? Math.ceil(beforeMargin / rate) : beforeMargin,
+      withMarkup: isExport ? Math.ceil(withMarkup / rate) : withMarkup,
+      afterDiscount: isExport ? Math.ceil(afterDiscount / rate) : afterDiscount,
       isPackagePrice: presetBasePrice > 0,
+      currency,
+      rate,
+      raw: {
+        basicTotal,
+        addonsTotal,
+        afterDiscount
+      }
     };
-  }, [selected, selectedAddons, markup, discount, presetBasePrice]);
+  }, [selected, selectedAddons, markup, discount, presetBasePrice, customer.region, conversionRate]);
 
   function getMachineDetailsForWord(machineType, safeCustomer) {
     if (!machineType) return null;
@@ -800,6 +825,7 @@ export function ConfigProvider({ children }) {
 
 
   const buildWordContext = React.useCallback(() => {
+    const isExport = customer.region === 'EXP';
     const safeCustomer = customer || {};
 
     // --- QUOTATION META (REF + DATE) ---
@@ -808,113 +834,133 @@ export function ConfigProvider({ children }) {
     const quotationRef =
       safeCustomer.ref || safeCustomer.quotationRef || generateQuotationRef();
 
-    // --- PRICE CALC ---
-    const basicTotal =
-      (selected || []).reduce(
-        (sum, item) => sum + (item.price || 0) * (item.qty || 1),
-        0
-      ) +
-      (selectedAddons || []).reduce(
-        (sum, item) => sum + (item.price || 0) * (item.qty || 1),
-        0
-      );
+    // --- PRICE CALC (Refactored to use computePriceSummary) ---
+    const { withMarkup, afterDiscount, currency, rate, isPackagePrice } = computePriceSummary();
+    const finalRounded = Math.round(afterDiscount || 0);
 
-    const markupPercent = typeof markup === "number" ? markup : 0;
-    const discountPercent = typeof discount === "number" ? discount : 0;
+    // Number to words helper with currency
+    const fmtWordsFull = (n, curr) => {
+      if (!n) return curr === "USD" ? "Zero Dollars" : "Zero";
+      const w = numberToWords(Math.round(n));
+      return curr === "USD" ? `${w} Dollars Only` : `${w} Only`;
+    };
 
-    const priceWithMarkup = basicTotal + (basicTotal * markupPercent) / 100;
-    const finalTotal =
-      priceWithMarkup - (priceWithMarkup * discountPercent) / 100;
-    const finalRounded = Math.round(finalTotal || 0);
+    const fmtPriceFull = (n, curr) => {
+      if (curr === "USD") return `$ ${Number(n).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
+      return `Rs. ${Math.round(n).toLocaleString("en-IN")}/-`;
+    };
 
     // --- MACHINE DETAILS (for front page + spec table) ---
     const machineDetails = getMachineDetails(safeCustomer, machineType) || {};
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
-    return {
-      company: COMPANY,
+      // --- SCOPE OF SUPPLY (PROPOSAL STYLE) ---
+      const overrides = scopeOverrides || {};
+      let hasExtruder = false;
 
-      // Customer block (for header & address)
-      customer: {
-        company_name: safeCustomer.company || "-",
-        contact_name: safeCustomer.name || "-",
-        address: safeCustomer.address || "-",
-        city: safeCustomer.city || "-",
-        state: safeCustomer.state || "",
-        country: safeCustomer.country || "",
-        phone: safeCustomer.phone || "-",
-        email: safeCustomer.email || "-",
-        gst: safeCustomer.gst || "-",
-      },
+      const selectedScopeItems = (selected || [])
+        .filter(item => item && item.name)
+        .map(item => {
+          const c = (item.category || "").toLowerCase();
+          const isExtruder = c.includes("extruder") || (item.name || "").toLowerCase().includes("extruder") || (item.id || "").includes("ext-");
+          if (isExtruder) {
+            if (hasExtruder) return null;
+            hasExtruder = true;
+          }
+          const isControl = c.includes("panel") || (item.name || "").toLowerCase().includes("panel") || c.includes("control") || (item.name || "").toLowerCase().includes("control");
+          if (isControl) return null;
+          if (c.includes("collapsing frame") || c.includes("filter")) return null;
 
-      // Quotation meta – this maps directly to your proposal header
-      quotation: {
-        ref_no: quotationRef,
-        date: quotationDate,
-        subject:
-          safeCustomer.subject ||
-          "Proposal for Blown Film Extrusion Line",
-      },
+          const key = item.id || item.name;
+          const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
+          const finalDesc = overrides[key] !== undefined ? overrides[key] : autoDesc;
 
-      // Convenience aliases (easy to bind in Word template if needed)
-      quotation_ref: quotationRef,
-      quotation_date: quotationDate,
+          return {
+            name: isExtruder ? "Extruders" : item.name,
+            qty: isExtruder ? 1 : (item.qty || 1),
+            desc: finalDesc
+          };
+        })
+        .filter(Boolean);
 
-      // Short machine summary used on page 1
-      machine: {
-        model:
-          machineDetails.label ||
-          safeCustomer.machineModel ||
-          "BLOWN FILM LINE",
-        family: safeCustomer.machineFamily || machineType || "",
-        width_mm: machineDetails.widthMm || safeCustomer.machineWidth || "",
-        screw_sizes: machineDetails.extruder || safeCustomer.screwSizes || "",
-        output_capacity_kgph:
-          machineDetails.outputKgHr || safeCustomer.outputCapacity || "",
-      },
+      const winderTowerAddonsRaw = (selectedAddons || []).filter(item => {
+        if (!item || !item.name) return false;
+        const n = item.name.toLowerCase();
+        const c = (item.category || "").toLowerCase();
+        return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel");
+      });
 
-      // Full technical details from model arrays
-      machine_details: machineDetails,
+      const winderTowerScopeItems = winderTowerAddonsRaw.map(item => {
+        const autoDesc = generateScopeDesc(item, selected, currentMachineModel) || item.shortDesc || item.cardDesc;
+        const finalDesc = overrides[item.id || item.name] !== undefined ? overrides[item.id || item.name] : autoDesc;
+        return { name: item.name, qty: item.qty || 1, desc: finalDesc };
+      });
 
-      // single big machine image on front page
-      machine_image: machineDetails.machineImagePath ? `${baseUrl}/${machineDetails.machineImagePath.replace(/^\//, "")}` : null,
+      const hasSelectedTower = [...selectedScopeItems, ...winderTowerScopeItems].some(item => (item.name || "").toLowerCase().includes("tower"));
 
-      // Scope of supply – base components
-      components: (selected || []).map((item, idx) => ({
-        item_no: idx + 1,
-        name: item.name,
-        category: item.category || "",
-        tech_desc: item.techDesc || item.desc || "",
-        image: item.image ? `${baseUrl}/${item.image.replace(/^\//, "")}` : null,
-        qty: item.qty || 1,
-        unit_price: item.price || 0,
-      })),
+      const staticItems = [
+        { name: "Idler Rollers", qty: 1, desc: "Aluminum Idler rollers as per layout drawing." },
+        { name: "Secondary Nip", qty: 1, desc: "One Secondary nip with edge slitting assembly and edge trimming assembly." },
+        !hasSelectedTower && { name: "Tower Structure", qty: 1, desc: "Tower Structure to support bubble stabilizing basket, haul-off, etc." },
+        { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
+      ].filter(Boolean);
 
-      // Optional equipment
-      optional_items: (selectedAddons || []).map((a, idx) => ({
-        item_no: idx + 1,
-        name: a.name,
-        category: a.category || "",
-        tech_desc: a.techDesc || a.desc || "",
-        image: a.image ? `${baseUrl}/${a.image.replace(/^\//, "")}` : null,
-        qty: a.qty || 1,
-        unit_price: a.price || 0,
-      })),
+      const SORT_ORDER = ["extruder", "die", "air ring", "basket", "cage", "haul", "idler", "nip", "winder", "tower", "panel", "control"];
+      const getIdx = (name) => {
+        const n = name.toLowerCase();
+        for (let i = 0; i < SORT_ORDER.length; i++) if (n.includes(SORT_ORDER[i])) return i;
+        return 99;
+      };
+      const manualExtraDesc = (scopeOverrides["manual_extra"] || "").trim();
+      const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
+      
+      const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a.name) - getIdx(b.name));
+      const finalScope = [...sortedScope, ...manualExtra];
 
-      // Pricing block – directly matches what you show in Summary
-      pricing: {
-        basic_total_number: basicTotal,
-        markup_percent: markupPercent,
-        discount_percent: discountPercent,
-        basic_price_text: `INR ${Math.round(
-          priceWithMarkup || 0
-        ).toLocaleString("en-IN")}/-`,
-        final_price_number: finalRounded,
-        final_price_text: `INR ${finalRounded.toLocaleString("en-IN")}/-`,
-        final_price_in_words: finalRounded
-          ? `INR ${numberToWords(finalRounded)} only`
-          : "INR Zero",
-      },
+      return {
+        company: COMPANY,
+        customer: {
+          company_name: safeCustomer.company || "-",
+          contact_name: safeCustomer.name || "-",
+          address: safeCustomer.address || "-",
+          city: safeCustomer.city || "-",
+          state: safeCustomer.state || "",
+          country: safeCustomer.country || "",
+          phone: safeCustomer.phone || "-",
+          email: safeCustomer.email || "-",
+          gst: safeCustomer.gst || "-",
+        },
+        quotation: {
+          ref_no: quotationRef,
+          date: quotationDate,
+          subject: safeCustomer.subject || "Proposal for Blown Film Extrusion Line",
+        },
+        machine: {
+          model: machineDetails.label || safeCustomer.machineModel || "BLOWN FILM LINE",
+          family: safeCustomer.machineFamily || machineType || "",
+          modelCode: safeCustomer.machineModelCode || "",
+        },
+        machine_details: machineDetails,
+        scope: finalScope,
+        optional_items: (selectedAddons || []).map((a, idx) => {
+          const rawPrice = (a.price || 0) * (a.qty || 1);
+          const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
+          return {
+            item_no: idx + 1,
+            name: a.customName || a.name,
+            category: a.category || "",
+            qty: a.qty || 1,
+            price: convertedPrice,
+          };
+        }),
+        pricing: {
+          basic_price_text: fmtPriceFull(withMarkup, currency),
+          afterDiscount: afterDiscount,
+          final_price_text: fmtPriceFull(afterDiscount, currency),
+          final_price_in_words: fmtWordsFull(afterDiscount, currency),
+          currency: currency,
+          rate: rate,
+        },
 
       // Performance (you can tweak more later)
       indicative_performance: {
@@ -983,7 +1029,7 @@ export function ConfigProvider({ children }) {
         return loads;
       })(),
     };
-  }, [customer, selected, selectedAddons, markup, discount, machineType, customOutput]);
+  }, [customer, selected, selectedAddons, markup, discount, machineType, customOutput, conversionRate, currentMachineModel, scopeOverrides, customLayflat, customRollerWidth]);
 
   // ---------------- EXPORT: JSON (template-style, for re-import) ----------------
 
@@ -1004,11 +1050,30 @@ export function ConfigProvider({ children }) {
       // }
       const ctx = buildWordContext();
 
-      // Optional: add a small schema marker so we know this is "new style"
       const payload = {
         schema: "adroit_quotation_v1",
         generated_at: new Date().toISOString(),
         ...ctx,
+        _restore: {
+          schema: "adroit_v2",
+          machineType,
+          customer,
+          selected: selected.map(s => ({ id: s.id, name: s.name, category: s.category, qty: s.qty })),
+          selectedAddons: selectedAddons.map(a => ({ id: a.id, name: a.name, category: a.category, qty: a.qty })),
+          markup_percent: markup,
+          discount_percent: discount,
+          machineModelIndex,
+          selectedMachineModelLabel,
+          customMode,
+          customOutput,
+          customLayflat,
+          customRollerWidth,
+          scopeOverrides,
+          conversionRate,
+          quoteTemplate,
+          showPricingFields,
+          presetBasePrice,
+        }
       };
 
       const blob = new Blob([JSON.stringify(payload, null, 2)], {
@@ -1051,9 +1116,11 @@ export function ConfigProvider({ children }) {
       const safeName = (safeCustomer.name || "customer").replace(/\s+/g, "_");
       const safeCity = (safeCustomer.city || "city").replace(/\s+/g, "_");
 
+      const { withMarkup, afterDiscount, currency, rate, isPackagePrice } = computePriceSummary();
+
       function formatCurrency(n) {
         const num = Number(n || 0);
-        // Indian style, no decimals
+        if (currency === "USD") return `$${num.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
         return `₹${num.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
       }
 
@@ -1089,13 +1156,9 @@ export function ConfigProvider({ children }) {
         })
       );
 
-      // Price math (same logic used elsewhere)
-      const basicTotal = (selected || []).reduce((a, b) => a + (b.price || 0) * (b.qty || 1), 0);
-      const addonTotal = (selectedAddons || []).reduce((a, b) => a + (b.price || 0) * (b.qty || 1), 0);
-      const subtotal = basicTotal + addonTotal;
-      const priceWithMarkup = subtotal + (subtotal * (markup || 0)) / 100;
-      const disc = typeof discount === "number" ? discount : 0;
-      const finalTotal = priceWithMarkup - (priceWithMarkup * disc) / 100;
+      // Price math (Refactored to use computePriceSummary)
+      const finalTotal = afterDiscount;
+      const priceWithMarkup = withMarkup;
 
       // CSS tuned to match your sample (red headings, spaced totals, inner borders)
       const css = `
@@ -1301,9 +1364,9 @@ export function ConfigProvider({ children }) {
           </table>
 
           <div class="price-lines">
-            <div class="line">Basic Price (EX-Works): ${formatCurrency(priceWithMarkup)}</div>
+            <div class="line">${isPackagePrice ? "Fixed Package Base Price" : "Basic Price (EX-Works)"}: ${formatCurrency(priceWithMarkup)}</div>
             <div class="line">Final Price After Discount: ${formatCurrency(finalTotal)}</div>
-            <div class="inwords">In Words: ${numberToWords(Math.round(finalTotal))} only</div>
+            <div class="inwords">In Words: ${currency === "USD" ? numberToWords(Math.round(finalTotal)) + " Dollars Only" : numberToWords(Math.round(finalTotal)) + " Only"} </div>
           </div>
 
           <h2 class="section-heading">Component Details</h2>
@@ -1348,9 +1411,11 @@ export function ConfigProvider({ children }) {
       const safeCity = (safeCustomer.city || "city").replace(/\s+/g, "_");
 
       // ---------- helper: currency formatting ----------
+      const { withMarkup, afterDiscount, currency, rate, isPackagePrice } = computePriceSummary();
+
       function formatCurrency(n) {
         const num = Number(n || 0);
-        // ₹ + grouping (zero fractional digits shown)
+        if (currency === "USD") return `$${num.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
         return `₹${num.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
       }
 
@@ -1579,24 +1644,19 @@ export function ConfigProvider({ children }) {
         }
       }
 
-      // ---------- Totals ----------
-      ensureRoom(lineHeight * 4);
-      const baseTotal = (selected || []).reduce((acc, it) => acc + (it.price || 0) * (it.qty || 1), 0);
-      const addonTotal = (selectedAddons || []).reduce((acc, it) => acc + (it.price || 0) * (it.qty || 1), 0);
-      const subtotal = baseTotal + addonTotal;
-      const withMarkup = subtotal + (subtotal * (markup || 0)) / 100;
-      const disc = typeof discount === "number" ? discount : 0;
-      const finalTotal = withMarkup - (withMarkup * disc) / 100;
+      // ---------- Totals (Refactored) ----------
+      const finalTotal = afterDiscount;
 
       pdf.setFontSize(12);
       pdf.setTextColor(220, 38, 38);
-      pdf.text(`Basic Price (EX-Works): ${formatCurrency(withMarkup)}`, left, y);
+      pdf.text(`${isPackagePrice ? "Fixed Package Base Price" : "Basic Price (EX-Works)"}: ${formatCurrency(withMarkup)}`, left, y);
       y += lineHeight;
       pdf.text(`Final Price After Discount: ${formatCurrency(finalTotal)}`, left, y);
       y += lineHeight;
       pdf.setFontSize(10);
       pdf.setTextColor(0);
-      pdf.text(`In Words: ${numberToWords(Math.round(finalTotal))}`, left, y);
+      const finalWords = currency === "USD" ? `${numberToWords(Math.round(finalTotal))} Dollars Only` : `${numberToWords(Math.round(finalTotal))} Only`;
+      pdf.text(`In Words: ${finalWords}`, left, y);
       y += lineHeight + 8;
 
       // ---------- Component details page(s): images on left, desc on right ----------
@@ -1929,12 +1989,12 @@ export function ConfigProvider({ children }) {
         const c = data.customer || {};
         const q = data.quotation || {};
 
-        // 1) Rebuild customer — SPREAD all fields to avoid data loss
+        // 1) Rebuild customer — prioritized order: _restore.customer > top-level data.customer
         const rebuiltCustomer = {
-          ...c,
+          ...(data.customer || {}),
+          ...(r.customer || {}),
           // Handle both old and new quotation Ref naming
-          quotationRef: r.quotationRef || q.refNo || c.quotationRef || c.ref || "",
-          ref: r.quotationRef || q.refNo || c.quotationRef || c.ref || "",
+          quotationRef: r.quotationRef || q.refNo || r.customer?.quotationRef || data.customer?.quotationRef || "",
           unlocked: true,
           isImported: true,
         };
@@ -2000,6 +2060,9 @@ export function ConfigProvider({ children }) {
         if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
         if (typeof r.customRollerWidth === "string") setCustomRollerWidth(r.customRollerWidth);
         if (typeof r.presetBasePrice === "number") setPresetBasePrice(r.presetBasePrice);
+        
+        // Export Conversion Fields
+        if (typeof r.conversionRate === "number") setConversionRate(r.conversionRate);
 
         toast.push({
           title: "Configuration imported ✓",
@@ -2386,6 +2449,7 @@ export function ConfigProvider({ children }) {
     setShowPricingFields(false);
     setCustomOutput("");
     setCustomLayflat("");
+    setConversionRate(84);
 
     toast.push({
       title: "New Quotation Started",
@@ -2419,6 +2483,8 @@ export function ConfigProvider({ children }) {
     setCustomLayflat,
     customRollerWidth,
     setCustomRollerWidth,
+    conversionRate,
+    setConversionRate,
     computePriceSummary,
 
     // machine selection

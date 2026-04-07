@@ -13,6 +13,8 @@ const BLUE_LIGHT = "#d1d1d1ff";
 const GRAY_BG = "#f4f4f4";
 const BDR = "#bbbbbb";
 const LIGHT_BDR = "#d0d0d0";
+const RED = "#D71921";
+
 
 // ─── SHARED STYLES ────────────────────────────────────────────────────────────
 const BODY_TEXT = {
@@ -210,10 +212,10 @@ function CoverPage({ machine, customer }) {
     const type = machine?.type || "3layer";
 
     const nameMap = {
-        mono: "MONOLAYER BLOWN FILM LINE",
-        aba: "ABA / AB CO-EXTRUSION BLOWN FILM LINE",
-        "3layer": "THREE LAYER CO-EXTRUSION BLOWN FILM LINE",
-        "5layer": "FIVE LAYER CO-EXTRUSION BLOWN FILM LINE",
+        mono: "UNOFLEX SERIES - MONOLAYER BLOWN FILM LINE",
+        aba: "DUOFLEX SERIES - ABA / AB CO-EXTRUSION BLOWN FILM LINE",
+        "3layer": "INNOFLEX SERIES - THREE LAYER CO-EXTRUSION BLOWN FILM LINE",
+        "5layer": "INNOFLEX SERIES - FIVE LAYER CO-EXTRUSION BLOWN FILM LINE",
     };
     const seriesMap = {
         mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex",
@@ -321,7 +323,7 @@ function CoverPage({ machine, customer }) {
                         letterSpacing: "0.5px",
                         marginBottom: "12px",
                     }}>
-                        MODEL : {modelCode}
+                        MODEL : {seriesName}_{modelCode}
                     </div>
                 )}
 
@@ -362,7 +364,7 @@ function CoverPage({ machine, customer }) {
 //   Price line (basic ex-works)
 //   Discounted price line (if present)
 // Basic components only — optionalItems go on CommercialScopePage (page 3)
-function ScopePage({ components, refNo, date, price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal }) {
+function ScopePage({ components, refNo, date, price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal, currency = "INR" }) {
     const allItems = (components || []).filter(c => c && (c.name || c._isExtra));
 
     return (
@@ -448,40 +450,45 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
             </div>
 
             {/* ── Basic price block ──────────────────────────────────── */}
-            {price ? (
-                <div style={{ marginBottom: "24px" }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
-                        <span style={{ fontSize: "12pt", color: BLUE }}>❖</span>
-                        <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: INK }}>
-                            BASIC PRICE, EX WORKS, UNPACKED: {price}
-                        </span>
-                    </div>
-                    {basicInWords && (
-                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, paddingLeft: "28px", letterSpacing: "0.3px" }}>
-                            ({basicInWords})
-                        </div>
-                    )}
-                    {/* Final price — always shown */}
-                    {/* <div style={{ marginTop: "12px" }}>
+            <div style={{ marginBottom: "24px" }}>
+                {price && (
+                    <div style={{ marginBottom: discountedPrice ? "12px" : "0px" }}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
-                            <span style={{ fontSize: "12pt", color: "red" }}>❖</span>
-                            <span style={{ fontWeight: "bold", fontSize: "12pt", fontFamily: F, color: "red" }}>
-                                FINAL PRICE, EX WORKS: {discountedPrice || price}
+                            <span style={{ fontSize: "12pt", color: BLUE }}>❖</span>
+                            <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: INK }}>
+                                BASIC PRICE, EX WORKS, UNPACKED: {price}
                             </span>
                         </div>
-                        {(discountedWords || basicInWords) && (
-                            <div style={{ fontSize: "12pt", fontFamily: F, color: "red", paddingLeft: "28px" }}>
-                                ({discountedWords || basicInWords})
+                        {basicInWords && (
+                            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, paddingLeft: "28px", letterSpacing: "0.3px" }}>
+                                ({basicInWords})
                             </div>
-                        )} */}
-                    {/* </div> */}
-                </div>
-            ) : (
-                <div style={{ marginBottom: "24px", fontSize: "9.5pt", fontFamily: F, color: DIM, fontStyle: "italic" }}>
-                    Pricing to be advised separately.
-                </div>
-            )
-            }
+                        )}
+                    </div>
+                )}
+
+                {discountedPrice && discountedPrice !== price && (
+                    <div style={{ marginTop: "12px" }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
+                            <span style={{ fontSize: "12pt", color: RED }}>❖</span>
+                            <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: RED }}>
+                                FINAL PRICE AFTER DISCOUNT: {discountedPrice}
+                            </span>
+                        </div>
+                        {discountedWords && (
+                            <div style={{ fontSize: "10pt", fontFamily: F, color: RED, paddingLeft: "28px", letterSpacing: "0.3px" }}>
+                                ({discountedWords})
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {!price && (
+                    <div style={{ fontSize: "9.5pt", fontFamily: F, color: DIM, fontStyle: "italic" }}>
+                        Pricing to be advised separately.
+                    </div>
+                )}
+            </div>
         </Page >
     );
 }
@@ -495,11 +502,54 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
 //   "OPTIONAL EQUIPMENTS" heading (underlined)
 //   Table: SR. NO | DESCRIPTION | PRICE
 //   TOTAL Rs. row at bottom
-function CommercialScopePage({ optionalItems, addonsTotal }) {
+function CommercialScopePage({ price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal, currency = "INR" }) {
     const opts = (optionalItems || []).filter(o => o && o.name);
+
+    // Strips currency symbols and trailing /- for clean numeric display in tables
+    const cleanPrice = (val) => {
+        if (!val) return "";
+        return String(val)
+            .replace(/^(Rs\.|Rs|INR|\$)\s*/, "")
+            .replace(/\/-$/, "")
+            .trim();
+    };
 
     return (
         <Page>
+            {/* ── Price summary at the top of commercial page ──────────────── */}
+            <div style={{ marginBottom: "24px" }}>
+                {price && (
+                    <div style={{ marginBottom: discountedPrice ? "12px" : "0px" }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
+                            <span style={{ fontSize: "12pt", color: BLUE }}>❖</span>
+                            <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: INK }}>
+                                BASIC PRICE, EX WORKS, UNPACKED: {price}
+                            </span>
+                        </div>
+                        {basicInWords && (
+                            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, paddingLeft: "28px", letterSpacing: "0.3px" }}>
+                                ({basicInWords})
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {discountedPrice && discountedPrice !== price && (
+                    <div style={{ marginTop: "12px" }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
+                            <span style={{ fontSize: "12pt", color: RED }}>❖</span>
+                            <span style={{ fontWeight: "bold", fontSize: "10.5pt", fontFamily: F, color: RED }}>
+                                FINAL PRICE AFTER DISCOUNT: {discountedPrice}
+                            </span>
+                        </div>
+                        {discountedWords && (
+                            <div style={{ fontSize: "10pt", fontFamily: F, color: RED, paddingLeft: "28px", letterSpacing: "0.3px" }}>
+                                ({discountedWords})
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
 
             {/* ── Optional equipments heading ────────────────────────── */}
             <SectionTitle>
@@ -507,7 +557,7 @@ function CommercialScopePage({ optionalItems, addonsTotal }) {
             </SectionTitle>
 
             {/* ── Optional items table — SR NO | DESCRIPTION | PRICE ─── */}
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", border: `1px solid ${BDR}` }}>
                 <thead>
                     <tr>
                         <th style={{ ...TH, width: "54px" }}>SR. NO</th>
@@ -527,11 +577,8 @@ function CommercialScopePage({ optionalItems, addonsTotal }) {
                         <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : GRAY_BG }}>
                             <td style={{ ...TD, textAlign: "center" }}>{i + 1}</td>
                             <td style={{ ...TD }}>{item.name || ""}</td>
-                            <td style={{ ...TD, textAlign: "right" }}>
-                                {/* item.price from buildProposalData is already "Rs. X,XX,XXX/-" or "" */}
-                                {item.price
-                                    ? String(item.price).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim()
-                                    : ""}
+                            <td style={{ ...TD, textAlign: "right", fontWeight: "bold" }}>
+                                {cleanPrice(item.price)}
                             </td>
                         </tr>
                     ))}
@@ -542,16 +589,13 @@ function CommercialScopePage({ optionalItems, addonsTotal }) {
                             ...TD, textAlign: "right", fontWeight: "bold",
                             color: INK, border: `1px solid ${BDR}`,
                         }}>
-                            TOTAL Rs.
+                            TOTAL {currency === "USD" ? "$" : "Rs."}
                         </td>
                         <td style={{
                             ...TD, textAlign: "right", fontWeight: "bold",
                             color: INK, border: `1px solid ${BDR}`,
                         }}>
-                            {/* Strip "Rs. " and "/-" for clean number display like image 3 */}
-                            {addonsTotal
-                                ? String(addonsTotal).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim()
-                                : ""}
+                            {cleanPrice(addonsTotal)}
                         </td>
                     </tr>
                 </tbody>
@@ -1058,6 +1102,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                 basicInWords={pricing.basicPriceWords || ""}
                 discountedPrice={pricing.discountedPrice || ""}
                 discountedWords={pricing.discountedWords || ""}
+                currency={pricing.currency || "INR"}
             />
 
             {/* Page 3 — Commercial Scope: pricing block + optional addons table with total */}
@@ -1068,6 +1113,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                 discountedWords={pricing.discountedWords || ""}
                 optionalItems={optionalItems}
                 addonsTotal={pricing.addonsTotal || ""}
+                currency={pricing.currency || "INR"}
             />
 
             {/* Page 4 — Indicative Performance */}

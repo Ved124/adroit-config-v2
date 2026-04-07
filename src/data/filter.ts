@@ -27,7 +27,7 @@ export interface Filter {
 // - “long”  = higher-output screw for ABA / 3-Layer
 
 export const FILTER_COMPONENTS: Filter[] = [
-    // ---------------- MONOLAYER SHORT filter ----------------
+    // ---------------- UNOFLEX SHORT filter ----------------
     {
         id: "filter-35-mono-short",
         name: "filter 35 mm (Monolayer)",
@@ -240,7 +240,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 40,
         variant: "long",
         machineTypes: ["3layer", "5layer"],
-        usedInModels: ["AE-1125"],
+        usedInModels: ["Innoflex-1125"],
         image: "/images/filter/filter ABA.JPG",
         cardDesc: "40 mm long co-filter for 3-layer machines.",
         price: 0,
@@ -268,7 +268,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 45,
         variant: "long",
         machineTypes: ["aba", "3layer", "5layer"],
-        usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "AE-1350A"],
+        usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "Innoflex-1350A"],
         image: "/images/filter/filter.png",
         cardDesc: "45 mm long co-filter for ABA / 3-layer machines.",
         price: 100000,
@@ -296,7 +296,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 50,
         variant: "long",
         machineTypes: ["3layer", "5layer"],
-        usedInModels: ["AE-1350B", "AE-1625", "AE-1870"],
+        usedInModels: ["Innoflex-1350B", "Innoflex-1625", "Innoflex-1870"],
         image: "/images/filter/filter.png",
         cardDesc: "50 mm single screw filter mounted on a sturdy frame.",
         price: 115000,
@@ -323,7 +323,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 55,
         variant: "long",
         machineTypes: ["aba", "3layer", "5layer"],
-        usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750", "AE-1350A", "AE-1870"],
+        usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750", "Innoflex-1350A", "Innoflex-1870"],
         image: "/images/filter/filter.png",
         cardDesc: "55 mm long screw co-filter for core or skin layer.",
         price: 120000,
@@ -351,7 +351,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 65,
         variant: "long",
         machineTypes: ["aba", "3layer", "5layer"],
-        usedInModels: ["DUOFLEX-1750", "AE-1625", "AE-1870", "AE-2125", "AE-2370"],
+        usedInModels: ["DUOFLEX-1750", "Innoflex-1625", "Innoflex-1870", "Innoflex-2125", "Innoflex-2370"],
         image: "/images/filter/filter.png",
         cardDesc: "65 mm long co-filter for high output ABA / 3-layer lines.",
         price: 130000,
@@ -378,7 +378,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 75,
         variant: "long",
         machineTypes: ["3layer", "5layer"],
-        usedInModels: ["AE-2125", "AE-2370", "AE-2625"],
+        usedInModels: ["Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
         image: "/images/filter/filter.png",
         cardDesc: "75 mm long screw filter for large 3-layer machines.",
         price: 150000,
@@ -405,7 +405,7 @@ export const FILTER_COMPONENTS: Filter[] = [
         sizeMm: 90,
         variant: "long",
         machineTypes: ["3layer", "5layer"],
-        usedInModels: ["AE-2625"],
+        usedInModels: ["Innoflex-2625"],
         image: "/images/filter/filter.png",
         cardDesc: "90 mm long screw filter for very high output core layer.",
         price: 185000,

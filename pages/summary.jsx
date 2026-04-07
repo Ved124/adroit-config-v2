@@ -28,19 +28,27 @@ import { MasterQuotationPDF } from '../src/components/quotation/ProfessionalPDF/
 
 // ─── FORMAT HELPERS ───────────────────────────────────────────────────────────
 
-/** Format a number as Rs. 1,80,00,000/- */
-function fmtRupees(n) {
+/** Format a price based on currency (INR/USD) */
+function fmtPrice(n, currency = "INR") {
   if (n == null || isNaN(n)) return "";
+  if (currency === "USD") {
+    // Show USD as whole numbers (already rounded up in logic)
+    return "$ " + Math.round(n).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
   return "Rs. " + Math.round(n).toLocaleString("en-IN") + "/-";
 }
 
-/** Number in words with Rupees prefix */
-function fmtWords(n) {
+/** Number in words with Currency prefix */
+function fmtWords(n, currency = "INR") {
   if (n == null || isNaN(n)) return "";
-  if (n === 0) return "(RUPEES ZERO ONLY)";
+  if (n === 0) return currency === "USD" ? "(ZERO DOLLARS ONLY)" : "(RUPEES ZERO ONLY)";
   try {
     const w = numberToWords(Math.round(n));
-    return w ? `(${w} Only)`.toUpperCase() : "";
+    if (!w) return "";
+    if (currency === "USD") {
+      return `(${w} Dollars Only)`.toUpperCase();
+    }
+    return `(${w} Only)`.toUpperCase();
   } catch {
     return "";
   }
@@ -152,6 +160,8 @@ function buildProposalData({
   // Add UI persistence flags
   quoteTemplate, showPricingFields,
   presetBasePrice,
+  currency = "INR",
+  rate = 1,
 }) {
   const SERIES = { mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex" };
   const TYPE_NAMES = {
@@ -206,12 +216,12 @@ function buildProposalData({
     return desc || item.name || "";
   }
 
-  const basicPriceStr = fmtRupees(withMarkup);
-  const basicPriceWords = fmtWords(withMarkup);
-  const discPriceStr = (discount > 0) ? fmtRupees(afterDiscount) : "";
-  const discPriceWords = (discount > 0) ? fmtWords(afterDiscount) : "";
-  const finalPriceStr = (discount > 0) ? fmtRupees(afterDiscount) : basicPriceStr;
-  const finalPriceWords = (discount > 0) ? fmtWords(afterDiscount) : basicPriceWords;
+  const basicPriceStr = fmtPrice(withMarkup, currency);
+  const basicPriceWords = fmtWords(withMarkup, currency);
+  const discPriceStr = (discount > 0) ? fmtPrice(afterDiscount, currency) : "";
+  const discPriceWords = (discount > 0) ? fmtWords(afterDiscount, currency) : "";
+  const finalPriceStr = (discount > 0) ? fmtPrice(afterDiscount, currency) : basicPriceStr;
+  const finalPriceWords = (discount > 0) ? fmtWords(afterDiscount, currency) : basicPriceWords;
 
   const selectedAddonsSafe = selectedAddons || [];
   const winderTowerAddonsRaw = selectedAddonsSafe.filter(item => {
@@ -240,12 +250,12 @@ function buildProposalData({
       shortDesc: item.shortDesc || item.cardDesc || "",
       techDesc: item.techDesc || {},
       price: item.price != null
-        ? fmtRupees(item.price * (item.qty || 1))
+        ? fmtPrice((item.price * (item.qty || 1)) / (currency === 'USD' ? rate : 1), currency)
         : "",
       rawPrice: (item.price || 0) * (item.qty || 1),
     }));
 
-  const addonsTotalStr = addonsTotal != null ? fmtRupees(addonsTotal) : "";
+  const addonsTotalStr = addonsTotal != null ? fmtPrice(addonsTotal, currency) : "";
 
   // Build dynamic component scope items with overrides
   const overrides = scopeOverrides || {};
@@ -313,14 +323,14 @@ function buildProposalData({
       if (c.includes("collapsing frame") || c.includes("filter")) {
         return null;
       }
-      
+
       // EXCLUDE ADDONS: Addons are typically items with a price > 0 in the configurator,
       // but some main components (like large extruders) also have prices.
       // We explicitly preserve core machine components in the technical annexure.
-      const isCore = c.includes("extruder") || c.includes("die") || c.includes("ring") || 
-                     c.includes("haul") || c.includes("winder") || c.includes("tower") ||
-                     (item.name || "").toLowerCase().includes("extruder");
-      
+      const isCore = c.includes("extruder") || c.includes("die") || c.includes("ring") ||
+        c.includes("haul") || c.includes("winder") || c.includes("tower") ||
+        (item.name || "").toLowerCase().includes("extruder");
+
       const isAddon = (item.price > 0 || c.includes("addon") || c.includes("optional")) && !isCore;
       if (isAddon) return null;
 
@@ -384,9 +394,22 @@ function buildProposalData({
       image: "", shortDesc: desc, scopeDesc: desc, techDesc: {}, _isExtra: true,
     };
   }).filter(item => item.shortDesc !== "");
+  
+  // Add a dedicated manual extra row that is always available if needed
+  const manualExtra = {
+    id: "manual_extra",
+    name: "Additional Item",
+    qty: (overrides["manual_extra"] || "").trim() ? 1 : "",
+    image: "",
+    shortDesc: (overrides["manual_extra"] || "").trim(),
+    scopeDesc: (overrides["manual_extra"] || "").trim(),
+    techDesc: {},
+    _isExtra: true,
+  };
 
   const finalScope = getSortedScope([...selectedScopeItems, ...winderTowerScopeItems, ...staticItems])
     .concat(extraScopeItems)
+    .concat(manualExtra.shortDesc ? [manualExtra] : [])
     .map((item, i) => ({
       ...item,
       sr: i + 1,
@@ -460,6 +483,7 @@ function buildProposalData({
       basic_price_words: basicPriceWords ? basicPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
       final_price_inr: Math.round(discount > 0 ? afterDiscount : withMarkup) || null,
       final_price_words: finalPriceWords ? finalPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
+      currency: currency,
     },
 
     power_loads: (() => {
@@ -533,20 +557,6 @@ function buildProposalData({
 }
 
 // ─── downloadJson ─────────────────────────────────────────────────────────────
-function downloadJson(data) {
-  if (!data) { alert("No proposal data yet — fill in customer details first."); return; }
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  const company = data?.customer?.company || "Draft";
-  const ref = data?.quotation?.refNo || "NoRef";
-  a.href = url;
-  a.download = `Proposal_${company}_${ref}.json`.replace(/[/\\?%*:|"<>]/g, "-");
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
 
 // ─── PAGE COMPONENT ───────────────────────────────────────────────────────────
 export default function SummaryPage() {
@@ -567,6 +577,11 @@ export default function SummaryPage() {
     customLayflat, setCustomLayflat,
     customRollerWidth, setCustomRollerWidth,
     buildWordContext,
+    conversionRate, setConversionRate,
+    exportJsonOnly,
+    quoteTemplate, setQuoteTemplate,
+    showPricingFields, setShowPricingFields,
+    scopeOverrides, setScopeOverrides,
   } = useContext(ConfigContext);
 
   const [isClient, setIsClient] = useState(false);
@@ -574,17 +589,13 @@ export default function SummaryPage() {
   const [qrUrl, setQrUrl] = useState(null);
   const [showPdfPreview, setShowPdfPreview] = useState(false);
 
-  // Handled by Context for perfect JSON restoration
-  const { quoteTemplate, setQuoteTemplate, showPricingFields, setShowPricingFields } = useContext(ConfigContext);
-
-  const { scopeOverrides, setScopeOverrides } = useContext(ConfigContext);
 
   const handleQuotationRefChange = (e) => {
     const value = e.target.value;
     setCustomer(prev => ({ ...prev, quotationRef: value, ref: value }));
   };
 
-  const { withMarkup, afterDiscount, addonsTotal, isPackagePrice } = computePriceSummary();
+  const { withMarkup, afterDiscount, addonsTotal, isPackagePrice, currency, rate } = computePriceSummary();
   const machineHeading = getMachineHeading(machineType, customer, currentMachineModel);
 
   // Single source of truth — both preview and PDF download use this
@@ -598,6 +609,8 @@ export default function SummaryPage() {
       // Pass UI states
       quoteTemplate, showPricingFields,
       presetBasePrice: computePriceSummary().isPackagePrice ? computePriceSummary().basicTotal : 0, // Fallback if context not direct
+      currency,
+      rate,
     });
   }, [
     isClient, customer, machineType, currentMachineModel, selectedMachineModelLabel,
@@ -605,6 +618,7 @@ export default function SummaryPage() {
     withMarkup, afterDiscount, addonsTotal, discount, markup,
     machineModelIndex, customMode, scopeOverrides,
     quoteTemplate, showPricingFields,
+    currency, rate,
   ]);
 
   return (
@@ -648,17 +662,17 @@ export default function SummaryPage() {
                 {isPackagePrice ? "Fixed Package Base Price" : "Basic Price (Components Only)"}
               </div>
               <div className="text-xl font-semibold text-emerald-500">
-                {fmtRupees(withMarkup) || "₹ 0"}
+                {fmtPrice(withMarkup, currency) || "0"}
               </div>
-              <div className="text-xs text-slate-400 italic mt-1">{fmtWords(withMarkup)}</div>
+              <div className="text-xs text-slate-400 italic mt-1">{fmtWords(withMarkup, currency)}</div>
             </div>
             {addonsTotal > 0 && (
               <div>
                 <div className="text-xs text-slate-400 uppercase tracking-wide">Optional Add-ons Total</div>
                 <div className="text-xl font-semibold text-amber-500">
-                  {fmtRupees(addonsTotal)}
+                  {fmtPrice(addonsTotal, currency)}
                 </div>
-                <div className="text-xs text-slate-400 italic mt-1">{fmtWords(addonsTotal)}</div>
+                <div className="text-xs text-slate-400 italic mt-1">{fmtWords(addonsTotal, currency)}</div>
               </div>
             )}
           </div>
@@ -696,6 +710,19 @@ export default function SummaryPage() {
                 />
                 <p className="text-xs text-slate-400 mt-1">Deducted from the marked-up price</p>
               </div>
+              {customer.region === 'EXP' && (
+                <div className="flex-1">
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Exchange Rate (₹/$)</label>
+                  <input
+                    type="number" step="0.01"
+                    value={conversionRate ?? ""}
+                    onChange={e => setConversionRate(e.target.value === "" ? 90 : parseFloat(e.target.value) || 0)}
+                    placeholder="e.g. 84"
+                    className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">Base rate for USD conversion</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -705,10 +732,10 @@ export default function SummaryPage() {
               {discount > 0 ? "Final Price (After Discount)" : "Final Price"}
             </div>
             <div className="text-2xl font-bold text-emerald-600">
-              {fmtRupees(discount > 0 ? afterDiscount : withMarkup) || "Rs. 0/-"}
+              {fmtPrice(discount > 0 ? afterDiscount : withMarkup, currency) || "0"}
             </div>
             <div className="text-xs text-emerald-500 italic mt-1">
-              {fmtWords(discount > 0 ? afterDiscount : withMarkup)}
+              {fmtWords(discount > 0 ? afterDiscount : withMarkup, currency)}
             </div>
           </div>
 
@@ -722,7 +749,7 @@ export default function SummaryPage() {
                   // If user has already typed a custom ref, or we have a saved non-default one, use it.
                   // Otherwise, show the dynamic AE/[REG]/[ROLLER]/01 format.
                   (customer?.quotationRef && !customer.quotationRef.startsWith("AET/") && customer.quotationRef !== "Loading...")
-                    ? customer.quotationRef 
+                    ? customer.quotationRef
                     : (customer?.ref && !customer.ref.startsWith("AET/"))
                       ? customer.ref
                       : `AE/${customer?.region || 'DOM'}/${(customRollerWidth || '').replace(/[^\d]/g, '') || '0000'}/01`
@@ -764,20 +791,20 @@ export default function SummaryPage() {
                     const num = parseInt(val.replace(/[^\d]/g, ''), 10);
                     if (!isNaN(num)) {
                       if (machineType === 'mono' || machineType === 'aba') {
-                         setCustomLayflat(`${num * 25} mm`);
+                        setCustomLayflat(`${num * 25} mm`);
                       } else {
-                         setCustomLayflat(`${num - 125} mm`);
+                        setCustomLayflat(`${num - 125} mm`);
                       }
                       // Also sync the Ref if it follows the AE/REG/ROLLER/ pattern
                       setCustomer(prev => {
                         const currentRef = prev.quotationRef || prev.ref || "";
                         if (!currentRef || currentRef.startsWith("AE/") || currentRef.startsWith("AET/")) {
-                           const region = prev.region || "DOM";
-                           let prefix = "";
-                           if (machineType === "mono") prefix = "U";
-                           else if (machineType === "aba") prefix = "D";
-                           const newRef = `AE/${region}/${prefix}${num}/01`;
-                           return { ...prev, quotationRef: newRef, ref: newRef };
+                          const region = prev.region || "DOM";
+                          let prefix = "";
+                          if (machineType === "mono") prefix = "U";
+                          else if (machineType === "aba") prefix = "D";
+                          const newRef = `AE/${region}/${prefix}${num}/01`;
+                          return { ...prev, quotationRef: newRef, ref: newRef };
                         }
                         return prev;
                       });
@@ -897,6 +924,25 @@ export default function SummaryPage() {
                       </tr>
                     );
                   })}
+                  
+                  {/* Always append a manual extra row for the editor if it's not already in proposalData.scope */}
+                  {!proposalData?.scope?.some(x => x.id === "manual_extra") && (
+                    <tr key="manual_extra" className={proposalData?.scope?.length % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                      <td className="py-2 px-3 text-center font-bold text-slate-300 align-top">
+                        {(proposalData?.scope?.length || 0) + 1}
+                      </td>
+                      <td className="py-1 px-2 align-top">
+                        <textarea
+                          rows={3}
+                          value={scopeOverrides["manual_extra"] || ""}
+                          onChange={e => setScopeOverrides(prev => ({ ...prev, "manual_extra": e.target.value }))}
+                          placeholder="Type additional scope item description..."
+                          className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-y leading-relaxed placeholder-slate-300"
+                          style={{ minHeight: "52px" }}
+                        />
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -905,7 +951,7 @@ export default function SummaryPage() {
           {/* Export buttons */}
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:justify-end mt-2">
             <button
-              onClick={() => downloadJson(proposalData)}
+              onClick={() => exportJsonOnly()}
               className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"
             >
               <span>Download Json file</span>
@@ -988,18 +1034,20 @@ export default function SummaryPage() {
                           {addon.customName || addon.name}
                         </td>
                         <td className="px-3 py-2 align-top text-right text-slate-900">{addon.qty || 1}</td>
-                        <td className="px-3 py-2 align-top text-right text-slate-500">
+                        <td className="px-3 py-2 align-top text-right text-slate-500 font-mono">
                           {addon.price != null
-                            ? `₹${(addon.price * (addon.qty || 1)).toLocaleString("en-IN")}`
+                            ? fmtPrice((addon.price * (addon.qty || 1)) / (currency === 'USD' ? rate : 1), currency)
                             : "—"}
                         </td>
                       </tr>
                     ))}
                     {addonsTotal != null && (
                       <tr className="border-t-2 border-slate-300 bg-slate-50">
-                        <td colSpan={2} className="px-3 py-2 text-right font-semibold text-slate-700">Total Rs.</td>
-                        <td className="px-3 py-2 text-right font-semibold text-emerald-600">
-                          ₹{addonsTotal.toLocaleString("en-IN")}
+                        <td colSpan={2} className="px-3 py-2 text-right font-bold text-slate-700">
+                          Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
+                        </td>
+                        <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm">
+                          {fmtPrice(addonsTotal, currency)}
                         </td>
                       </tr>
                     )}

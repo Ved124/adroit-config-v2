@@ -28,7 +28,7 @@ export const TRIM_ADDONS: TrimAddon[] = [
     type: "trim-blower",
     machineTypes: ["mono", "aba"],
     usedInModels: ["UNOFLEX-750_900", "UNOFLEX-1000_1250", "DUOFLEX-750"],
-    image: "/images/addons/trim/trim-blower-standard.png",
+    image: "/images/addons/trim/trim_blower_standard.png",
     cardDesc:
       "Trim suction blower for conveying edge trims from secondary nip to trim winder / collection.",
     price: 0,
@@ -53,7 +53,7 @@ export const TRIM_ADDONS: TrimAddon[] = [
     name: "Trim Suction Blower – Heavy Duty",
     type: "trim-blower",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["AE-1625", "AE-1870", "AE-2125", "AE-2370", "AE-2625"],
+    usedInModels: ["Innoflex-1625", "Innoflex-1870", "Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
     image: "/images/addons/trim/trim-blower-heavy.png",
     cardDesc:
       "Heavy duty trim blower for wide 3-layer / 5-layer lines with higher trim load.",
@@ -77,7 +77,7 @@ export const TRIM_ADDONS: TrimAddon[] = [
     name: "Trim Winder – Standard",
     type: "trim-winder",
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["UNOFLEX-1000_1250", "DUOFLEX-1000", "AE-1125", "AE-1350"],
+    usedInModels: ["UNOFLEX-1000_1250", "DUOFLEX-1000", "Innoflex-1125", "Innoflex-1350"],
     image: "/images/addons/trim/trim-winder-standard.png",
     cardDesc:
       "Single station trim winder for narrow edge trims, driven by small AC motor.",
@@ -101,7 +101,7 @@ export const TRIM_ADDONS: TrimAddon[] = [
     name: "Trim Winder – Heavy Duty",
     type: "trim-winder",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["AE-1625", "AE-1870", "AE-2125", "AE-2370", "AE-2625"],
+    usedInModels: ["Innoflex-1625", "Innoflex-1870", "Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
     image: "/images/addons/trim/trim-winder-heavy.png",
     cardDesc:
       "Heavy duty trim winder for wide, high-speed lines with continuous trims.",

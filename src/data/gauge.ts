@@ -54,7 +54,7 @@ export const GAUGE_ADDONS: GaugeControlAddon[] = [
     name: "Automatic Thickness Control System",
     type: "auto-gauge",
     machineTypes: ["aba", "3layer"],
-    usedInModels: ["DUOFLEX-1000", "AE-1125", "AE-1350"],
+    usedInModels: ["DUOFLEX-1000", "Innoflex-1125", "Innoflex-1350"],
     image: "/images/addons/gauge/auto-gauge.png",
     cardDesc:
       "Closed-loop thickness control with automatic die & air ring correction.",
@@ -80,7 +80,7 @@ export const GAUGE_ADDONS: GaugeControlAddon[] = [
     name: "Imported Automatic Thickness Control System",
     type: "imported-auto",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["AE-1625", "AE-1870", "AE-2125", "AE-2370", "AE-2625"],
+    usedInModels: ["Innoflex-1625", "Innoflex-1870", "Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
     image: "/images/addons/gauge/imported-auto.png",
     cardDesc:
       "Imported auto gauge system for industrial multilayer films with high accuracy.",
@@ -106,7 +106,7 @@ export const GAUGE_ADDONS: GaugeControlAddon[] = [
     name: "Loadcell Based Tension Control",
     type: "tension-loadcell",
     machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["AE-1125", "AE-1625", "AE-2125"],
+    usedInModels: ["Innoflex-1125", "Innoflex-1625", "Innoflex-2125"],
     image: "/images/addons/gauge/loadcell-tension.png",
     cardDesc:
       "Closed loop tension control using loadcell feedback from winder section.",

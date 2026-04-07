@@ -10,7 +10,7 @@ export interface TowerComponent {
   id: string;
   name: string;
   machineTypes: MachineType[];
-  usedInModels?: string[];     // e.g. ["AE-1125", "AE-1625"]
+  usedInModels?: string[];     // e.g. ["Innoflex-1125", "Innoflex-1625"]
   image: string;
   cardDesc: string;
   price: number;
@@ -22,8 +22,8 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
     id: "tower_std",
     name: "Tower – Standard",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    usedInModels: [], // fill later per model (AE-1125, etc.)
-    image: "/images/parts/tower_std.png",
+    usedInModels: [], // fill later per model (Innoflex-1125, etc.)
+    image: "/images/parts/tower.png",
     cardDesc: "Standard tower with platform and access ladders.",
     price: 180000,
     techDesc: {

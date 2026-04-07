@@ -26,7 +26,7 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     name: "Secondary Nip Assembly",
     variant: "secondary-nip",
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["AE-1625", "AE-1870", "AE-2125"],
+    usedInModels: ["Innoflex-1625", "Innoflex-1870", "Innoflex-2125"],
     image: "/images/components/winders/secondary-nip.png",
     cardDesc:
       "Secondary nip with edge trimming as per proposal screenshot.",
@@ -52,7 +52,7 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     variant: "surface-manual",
     machineTypes: ["mono", "aba"],
     usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "DUOFLEX-750"],
-    image: "/images/components/winders/surface-manual.png",
+    image: "/images/components/winders/surface_manual.png",
     cardDesc:
       "Manual two-station surface winder for smaller lines.",
     price: 0,
@@ -76,8 +76,8 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     name: "Surface Winder – Semi Auto",
     variant: "surface-semi-auto",
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["UNOFLEX-1000_1250", "DUOFLEX-1000", "AE-1125", "AE-1350A", "AE-1350B"],
-    image: "/images/components/winders/surface-semi-auto.png",
+    usedInModels: ["UNOFLEX-1000_1250", "DUOFLEX-1000", "Innoflex-1125", "Innoflex-1350A", "Innoflex-1350B"],
+    image: "/images/components/winders/surface-semi_auto.png",
     cardDesc:
       "Semi automatic surface winder with pneumatic changeover.",
     price: 0,
@@ -101,7 +101,7 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     name: "Surface Winder – Automatic",
     variant: "surface-auto",
     machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["DUOFLEX-1750", "AE-1625", "AE-1870", "AE-2125"],
+    usedInModels: ["DUOFLEX-1750", "Innoflex-1625", "Innoflex-1870", "Innoflex-2125"],
     image: "/images/components/winders/surface-auto.png",
     cardDesc:
       "Fully automatic surface winder for high speed lines.",
@@ -127,7 +127,7 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     name: "Turret Winder – Automatic",
     variant: "turret-auto",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["AE-2125", "AE-2370", "AE-2625"],
+    usedInModels: ["Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
     image: "/images/components/winders/turret-auto.png",
     cardDesc:
       "High speed turret winder for large 3-layer / 5-layer lines.",

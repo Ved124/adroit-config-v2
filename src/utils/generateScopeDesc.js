@@ -75,7 +75,7 @@ function generateExtruder(firstItem, allSelected) {
     }
     const hp = allDrives[idx] || null;
     for (let i = 0; i < q; i++) {
-        combined.push({ sz: sz || "?", hp: hp || "?" });
+      combined.push({ sz: sz || "?", hp: hp || "?" });
     }
   });
 
@@ -86,13 +86,13 @@ function generateExtruder(firstItem, allSelected) {
     let temp = [];
     let placeLeft = false;
     for (let i = 0; i < sorted.length; i++) {
-        if (i === 0) {
-            temp.push(sorted[i]);
-        } else {
-            if (placeLeft) temp.unshift(sorted[i]);
-            else temp.push(sorted[i]);
-            placeLeft = !placeLeft;
-        }
+      if (i === 0) {
+        temp.push(sorted[i]);
+      } else {
+        if (placeLeft) temp.unshift(sorted[i]);
+        else temp.push(sorted[i]);
+        placeLeft = !placeLeft;
+      }
     }
     ordered = temp;
   }
@@ -216,10 +216,40 @@ function generateAirRing(item) {
 }
 
 function generateBubbleCage(item) {
-  const type = td(item.techDesc, "type") || "PBT roller cage";
-  const isMotorized = type.toLowerCase().includes("motorized");
-  const cageControl = isMotorized ? "Motorized Bubble Cage" : "Manual Bubble Cage";
-  return `One Bubble Stabilizing Basket with ${type}. ${cageControl} with Diameter adjustment.`;
+  const size = item.size || "";
+  const name = (item.name || "").toLowerCase();
+
+  // Specific statement for Up Down Bubble Cage (UD BC)
+  if (name.includes("up down")) {
+    return (
+      "One Bubble Stabilizing Basket with Silicon roller cage. " +
+      "Motorized Up Down and Open-Close with Liner Actuator. " +
+      (size ? `For bubble diameter up to ${size} mm.` : "")
+    );
+  }
+
+  // Specific statement for Manual Bubble Cage
+  if (name.includes("manual")) {
+    return (
+      "One Bubble Stabilizing Basket with PBT roller cage. " +
+      "Manual open-close operation. " +
+      (size ? `For bubble diameter up to ${size} mm.` : "")
+    );
+  }
+
+  // Specific statement for Open Close Bubble Cage (OC BC)
+  if (name.includes("open close")) {
+    return (
+      "One Bubble Stabilizing Basket with Silicon roller cage. " +
+      "Motorized Open-Close operation. " +
+      (size ? `For bubble diameter up to ${size} mm.` : "")
+    );
+  }
+
+  return (
+    "One Bubble Stabilizing Basket. " +
+    (size ? `For bubble diameter up to ${size} mm.` : "")
+  );
 }
 
 function generateCollapsingFrame(item) {
@@ -242,11 +272,12 @@ function generateHaulOff(item) {
 
   const isOscillating =
     name.includes("oscillat") ||
+    item.variant === "oscillating" ||
     (td(item.techDesc, "type") || "").toLowerCase().includes("oscillat");
 
   // Extract motor HP from techDesc if present
   const motorRaw =
-    td(item.techDesc, "main nip", "nip drive", "main drive") || "";
+    td(item.techDesc, "main nip", "nip drive", "main drive", "nip roller drive") || "";
   const hpMatch = motorRaw.match(/(\d+)\s*HP/i);
   const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "AC";
 
@@ -260,51 +291,83 @@ function generateHaulOff(item) {
 }
 
 
-function generateWinder(item) {
+/**
+ * WINDER
+ * @param {object} item 
+ * @param {object} machineModel 
+ * @param {object} [options]
+ * @param {boolean} [options.includeNipPrefix=true] 
+ */
+export function generateWinder(item, machineModel = null, { includeNipPrefix = true } = {}) {
   const qty = item.qty || 1;
   const variant = item.variant || "";
+  const nameLc = (item.name || "").toLowerCase();
 
-  // Type label
+  // Type label and specific template selection
   let typeLabel = "Surface Winder";
-  if (variant.includes("turret") || (item.name || "").toLowerCase().includes("turret")) {
+  const isBackToBack = nameLc.includes("back to back");
+  const isTwoSeparate = nameLc.includes("two separate") || nameLc.includes("separate surface");
+  const isAutomatic = nameLc.includes("automatic");
+  
+  if (variant.includes("turret") || nameLc.includes("turret")) {
     typeLabel = "Turret Winder";
-  } else if (variant.includes("semi")) {
-    typeLabel = "Semi-Automatic Surface Winder";
-  } else if (variant.includes("auto") && !variant.includes("semi")) {
+  } else if (isAutomatic && isTwoSeparate) {
+    typeLabel = "Two Separate Automatic Surface Winder";
+  } else if (isBackToBack) {
+    typeLabel = "Back to Back Surface Winder";
+  } else if (isTwoSeparate) {
+    typeLabel = "Two Separate Surface Winder";
+  } else if (isAutomatic) {
     typeLabel = "Automatic Surface Winder";
+  } else if (variant.includes("semi") || nameLc.includes("surface")) {
+    typeLabel = "Semi-Automatic Surface Winder";
   }
 
   const widthRaw =
     td(item.techDesc, "maximum web width", "web width", "film width") || "";
-  const widthStr = widthRaw.match(/\d+/)
+  let widthStr = widthRaw.match(/\d+/)
     ? widthRaw.match(/\d+/)[0] + " mm"
     : widthRaw || "";
+  
+  // If still no width, try item.size or item.currentSize
+  if (!widthStr && (item.size || item.currentSize)) {
+    widthStr = `${item.size || item.currentSize} mm`;
+  }
+
+  const prefix = includeNipPrefix 
+    ? `One Secondary nip with edge slitting assembly and edge trimming assembly. `
+    : "";
+
+  const qWord = (qty === 1 && (typeLabel.toLowerCase().startsWith("two") || typeLabel.toLowerCase().startsWith("back")))
+    ? ""
+    : `${numWord(qty)} `;
+
+  if (isBackToBack) {
+    return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
+           `Manual roll change over mechanism, digital length counter, 04 nos.- 3” Air shaft, ` +
+           `bow roller, 2 HP AC Motor and Drive. Post Extrusion Gear Motors will be Bonvario, Italy.`;
+  }
+
+  if (isTwoSeparate) {
+    const mechanism = isAutomatic ? "Automatic" : "Manual";
+    const airShaftLabel = isAutomatic ? "airshaft" : "Resource Air shaft";
+    const hpLabel = isAutomatic ? "3 HP" : "2 HP";
+    const gearMotorMake = "Bonvario";
+
+    return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
+           `${mechanism} roll change over mechanism, digital length counter, 04 nos.- 3” ${airShaftLabel}, ` +
+           `bow roller, ${hpLabel} AC Motor and Drive. Post Extrusion Gear motor will be ${gearMotorMake}, Italy.`;
+  }
 
   const changeover = variant.includes("auto")
     ? "Automatic roll change over mechanism"
     : "Manual roll change over mechanism";
 
-  const tension =
-    td(item.techDesc, "tension") || "Torque mode";
-
-  let desc =
-    `${numWord(qty)} ${typeLabel}` +
-    (widthStr ? ` of ${widthStr} film width` : "") +
-    `. ${changeover}, Manual length counter, 4 nos.- 3" Resource Air shaft, bow roller, 2 HP AC Motor and Drive.` +
-    ` Tension Control through ${tension}.`;
-
-  return desc;
+  return prefix + `${qWord}${typeLabel} of ${widthStr} film width with ${changeover}.`;
 }
 
-function generateSecondaryNip(item, machineModel) {
-  const speed =
-    (machineModel && (machineModel.lineSpeed || machineModel["Line Speed"])) ||
-    td(item.techDesc, "speed", "line speed") ||
-    "80 MPM";
-  return (
-    `One Secondary nip with edge slitting assembly and edge trimming assembly.` +
-    ` Max line speed ${speed}.`
-  );
+export function generateSecondaryNip(item, machineModel) {
+  return `One Secondary nip with edge slitting assembly and edge trimming assembly.`;
 }
 
 function generateElectricalPanel(item) {
@@ -315,8 +378,11 @@ function generateElectricalPanel(item) {
 }
 
 function generateTower(item) {
-  return `Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame,
-Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.`;
+  return `The tower is bottom supported heavy duty MS structure with service platform, cage & haul-off mounting arrangement, ladders and safety rails.`;
+}
+
+function generateIBC(item) {
+  return `Complete IBC package and Controls. IBC hardware, manifolds, Inlet and Outlet blower controls etc. will be provided.`;
 }
 
 // ─── Category → generator map ────────────────────────────────────────────────
@@ -332,6 +398,7 @@ const GENERATORS = {
   Winder: (item) => generateWinder(item),
   "Tower / Platform": (item) => generateTower(item),
   "Electrical & Control Panel": (item) => generateElectricalPanel(item),
+  IBC: (item) => generateIBC(item),
 };
 
 // ─── Public API ──────────────────────────────────────────────────────────────
@@ -354,52 +421,53 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null) {
 
   const category = item.category || "";
 
-  // ② Category-specific generator
-  const gen = GENERATORS[category];
-  if (gen) {
-    try {
+  try {
+    // ② Category-specific generator
+    const gen = GENERATORS[category];
+    if (gen) {
       // Extruder is special — needs allSelected for multi-extruder grouping
       if (category === "Extruder") {
         return generateExtruder(item, allSelected);
       }
-      // Secondary Nip gets machine model for line speed
       if (
         category === "Winder" &&
         (item.variant === "secondary-nip" ||
-          (item.name || "").toLowerCase().includes("secondary") ||
-          (item.name || "").toLowerCase().includes("nip"))
+          ((item.name || "").toLowerCase().includes("secondary") && !(item.name || "").toLowerCase().includes("winder")))
       ) {
         return generateSecondaryNip(item, machineModel);
       }
-      return gen(item);
-    } catch (e) {
-      console.warn("[generateScopeDesc] generator error for", category, e);
+      return gen(item, allSelected, machineModel);
     }
-  }
 
-  // ③ Name-based heuristics for items without a strict category match
-  const nameLc = (item.name || "").toLowerCase();
+    // ③ Name-based heuristics for items without a strict category match
+    const nameLc = (item.name || "").toLowerCase();
 
-  if (nameLc.includes("idler")) {
-    return "Aluminum Idler rollers as per layout drawing.";
-  }
-  if (nameLc.includes("secondary") || (nameLc.includes("nip") && !nameLc.includes("main"))) {
-    return generateSecondaryNip(item, machineModel);
-  }
-  if (nameLc.includes("tower") || nameLc.includes("platform")) {
-    return generateTower(item);
-  }
-  if (nameLc.includes("panel") || nameLc.includes("electrical")) {
-    return generateElectricalPanel(item);
-  }
-  if (nameLc.includes("die")) {
-    return generateDieHead(item);
-  }
-  if (nameLc.includes("air ring")) {
-    return generateAirRing(item);
-  }
-  if (nameLc.includes("winder")) {
-    return generateWinder(item);
+    if (nameLc.includes("idler")) {
+      return "Aluminum Idler rollers as per layout drawing.";
+    }
+    if (nameLc.includes("secondary") || (nameLc.includes("nip") && !nameLc.includes("main"))) {
+      return generateSecondaryNip(item, machineModel);
+    }
+    if (nameLc.includes("tower") || nameLc.includes("platform")) {
+      return generateTower(item);
+    }
+    if (nameLc.includes("panel") || nameLc.includes("electrical")) {
+      return generateElectricalPanel(item);
+    }
+    if (nameLc.includes("ibc")) {
+      return generateIBC(item);
+    }
+    if (nameLc.includes("die")) {
+      return generateDieHead(item);
+    }
+    if (nameLc.includes("air ring")) {
+      return generateAirRing(item);
+    }
+    if (nameLc.includes("winder")) {
+      return generateWinder(item);
+    }
+  } catch (e) {
+    console.warn("[generateScopeDesc] error during generation:", category, item.name, e);
   }
 
   // ④ Fallback to existing static fields

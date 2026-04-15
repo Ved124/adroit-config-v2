@@ -1,5 +1,5 @@
 // data/winders.ts
-// Beta component data for Secondary Nip & Surface Winders.
+// Beta component data for Secondary Nip & Dynamic Winders.
 
 export type MachineType = "mono" | "aba" | "3layer" | "5layer";
 
@@ -17,132 +17,131 @@ export interface WinderComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  isDynamic?: boolean;
 }
 
+// Prices extracted from spreadsheet image
+export const MANUAL_BACK_TO_BACK_PRICES: Record<string, number> = {
+  "1250": 700000,
+  "1350": 800000,
+  "1500": 1000000,
+  "1750": 1200000,
+  "1850": 1325000,
+  "2000": 1500000,
+  "2250": 2400000,
+  "2500": 2800000,
+  "2750": 3200000,
+  "3000": 4000000,
+};
+
+export const SURFACE_WINDER_PRICES: Record<string, number> = {
+  "1250": 850000,
+  "1350": 1000000,
+  "1500": 1125000,
+  "1750": 1350000,
+  "1850": 1450000,
+  "2000": 1650000,
+  "2250": 2575000,
+  "2500": 2950000,
+  "2750": 3350000,
+  "3000": 4150000,
+};
+
+export const AUTOMATIC_WINDER_PRICES: Record<string, number> = {
+  "1250": 1400000,
+  "1350": 1500000,
+  "1500": 1700000,
+  "1750": 2100000,
+  "1850": 2300000,
+  "2000": 2500000,
+  "2250": 3200000,
+  "2500": 3800000,
+  "2750": 4200000,
+  "3000": 5000000,
+};
+
+export const SECONDARY_NIP_TECH_DESC: TechSpecMap = {
+  "Additional Nip": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+  "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
+  "Nip roller width": "TBD", // Will be set dynamically
+  "Nip roller drive": "2 HP Gear motor (Bonvario, Italy) with variable frequency drive.",
+  "Tension control": "Through torque.",
+};
+
 export const WINDER_COMPONENTS: WinderComponent[] = [
-  // ---------- SECONDARY NIP & TRIM SECTION ----------
+  // ---------- DYNAMIC COMBINED WINDER & SECONDARY NIP SECTION ----------
   {
-    id: "sec-nip-standard",
-    name: "Secondary Nip Assembly",
-    variant: "secondary-nip",
-    machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["Innoflex-1625", "Innoflex-1870", "Innoflex-2125"],
-    image: "/images/components/winders/secondary-nip.png",
-    cardDesc:
-      "Secondary nip with edge trimming as per proposal screenshot.",
-    price: 0,
-    techDesc: {
-      "Additional Nip":
-        "2 Nos. nip rollers mounted in bearings – one chrome plated and one rubber roller, pneumatically movable.",
-      "Edge Slit Assembly":
-        "High efficiency design for trouble-free operation and reduced trim wastage.",
-      "Nip Roller Width": "Matches haul-off width (e.g. 1950 mm in spec).",
-      "Nip Roller Drive":
-        "2 HP gear motor with variable frequency drive (typical).",
-      "Tension Control": "Through loadcell-based closed loop control.",
-      "Trim Handling":
-        "Trim suction blower / trim winder can be integrated as optional.",
-    },
-  },
-
-  // ---------- SURFACE WINDERS – MANUAL / SEMI AUTO / AUTO ----------
-  {
-    id: "winder-surface-manual",
-    name: "Surface Winder – Manual",
+    id: "winder-manual-back-to-back-dynamic",
+    name: "Secondary Nip & manual Back to Back Winder",
     variant: "surface-manual",
-    machineTypes: ["mono", "aba"],
-    usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "DUOFLEX-750"],
-    image: "/images/components/winders/surface_manual.png",
-    cardDesc:
-      "Manual two-station surface winder for smaller lines.",
-    price: 0,
-    techDesc: {
-      "Type of Winder": "Two station surface winder with manual changeover.",
-      "Maximum Web Width":
-        "Up to 900–1125 mm depending on machine model.",
-      "Roll Diameter":
-        "Up to 700 mm diameter or 400 kg roll weight (whichever is first).",
-      "Winder Drive":
-        "1–1.5 HP AC motor with variable frequency drive.",
-      "Tension Control":
-        "Manual brake / torque control with simple mechanical adjustment.",
-      "Core Sizes":
-        "Typically 3\" or 6\" paper cores (as per order).",
-    },
-  },
-
-  {
-    id: "winder-surface-semi-auto",
-    name: "Surface Winder – Semi Auto",
-    variant: "surface-semi-auto",
     machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["UNOFLEX-1000_1250", "DUOFLEX-1000", "Innoflex-1125", "Innoflex-1350A", "Innoflex-1350B"],
-    image: "/images/components/winders/surface-semi_auto.png",
-    cardDesc:
-      "Semi automatic surface winder with pneumatic changeover.",
+    image: "/images/parts/wind_center4.png",
+    cardDesc: "Secondary Nip & manual Back to Back Surface Winder. Select size to add.",
     price: 0,
+    isDynamic: true,
     techDesc: {
-      "Type of Winder":
-        "Two station surface winder with semi automatic changeover.",
-      "Maximum Web Width":
-        "Up to 1850 mm web width with manual / pneumatic changeover.",
-      "Roll Diameter":
-        "700 mm diameter or 400 kg in single up (whichever reaches first).",
-      "Surface Winder Drive":
-        "2 HP gear motor with variable frequency drive.",
-      "Tension Control": "Through loadcell based automatic tension control.",
-      "Length Counter": "Electronic length counter provided.",
-      "Trim Suction Blower": "Provided where specified.",
+      ...SECONDARY_NIP_TECH_DESC,
+      "Surface Winders (01 No.)": "TBD", // Will be set dynamically (Size + Changeover)
+      "Roll diameter": "700 mm diameter or 400 kg weight in single up which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+      "Surface winder drive": "2 HP Gear motor (Bonvario, Italy) with variable frequency drive.",
+      "Tension control ": "Through torque.", // Note the space to distinguish from Nip tension
+      "Length counter meter": "Provided",
+      "Trim Suction Blower": "Provided",
+      // Legacy compatibility keys for generateScopeDesc
+      "Manual Roll Change Over": "Manual change over mechanism.",
+      "Air Shafts": "04 nos.- 3” Air shafts.",
+      "Post Extrusion Gear Motors": "Bonvario, Italy.",
     },
   },
 
   {
-    id: "winder-surface-auto",
-    name: "Surface Winder – Automatic",
+    id: "winder-surface-dynamic",
+    name: "Secondary Nip & Two Separate Surface Winder",
+    variant: "surface-semi-auto",
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    image: "/images/parts/wind_surface2.png",
+    cardDesc: "Secondary Nip & two separate surface winders. Select size to add.",
+    price: 0,
+    isDynamic: true,
+    techDesc: {
+      ...SECONDARY_NIP_TECH_DESC,
+      "Tension control": "Through Loadcell.",
+      "Surface Winders (01 No.)": "TBD",
+      "Roll diameter": "800 mm diameter or 600 kg weight in single up which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+      "Surface winder drive": "2 HP AC motor with variable frequency drive. Gear motor-Bonvario, Italy.",
+      "Tension control ": "Through Loadcell.",
+      "Length counter meter": "Provided",
+      "Trim Suction Blower": "Provided",
+      // Legacy/Sentence generators
+      "Manual Roll Change Over": "Manual change over mechanism.",
+      "Air Shafts": "04 nos.- 3” Resource Air shafts.",
+      "Post Extrusion Gear Motors": "Bonvario, Italy.",
+    },
+  },
+
+  {
+    id: "winder-automatic-dynamic",
+    name: "Secondary Nip & Two Separate Automatic Surface Winder",
     variant: "surface-auto",
     machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["DUOFLEX-1750", "Innoflex-1625", "Innoflex-1870", "Innoflex-2125"],
-    image: "/images/components/winders/surface-auto.png",
-    cardDesc:
-      "Fully automatic surface winder for high speed lines.",
+    image: "/images/parts/wind_turret.png",
+    cardDesc: "Secondary Nip & two separate surface winders with fully automatic changeover. Select size to add.",
     price: 0,
+    isDynamic: true,
     techDesc: {
-      "Type of Winder":
-        "Automatic turret type surface winder with automatic cut and transfer (depending on config).",
-      "Web Width":
-        "Up to 1850–2100 mm (machine dependent).",
-      "Roll Change":
-        "Automatic roll changeover at preset length / diameter.",
-      "Tension Control":
-        "Closed loop loadcell based tension control with recipe settings.",
-      "Drive":
-        "AC motor with vector VFD; dancer / torque mode control as required.",
-      "Options":
-        "Automatic roll unloading, core loader, label printer (optional).",
-    },
-  },
-
-  {
-    id: "winder-turret-auto",
-    name: "Turret Winder – Automatic",
-    variant: "turret-auto",
-    machineTypes: ["3layer", "5layer"],
-    usedInModels: ["Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
-    image: "/images/components/winders/turret-auto.png",
-    cardDesc:
-      "High speed turret winder for large 3-layer / 5-layer lines.",
-    price: 0,
-    techDesc: {
-      "Type of Winder":
-        "Centre / surface combination turret winder with automatic index.",
-      "Web Width": "Up to 2500 mm web width.",
-      "Roll Diameter": "Up to 1000 mm or 600 kg roll weight.",
-      "Drive":
-        "Independent AC drives for each winding station with torque control.",
-      "Tension Control":
-        "Loadcell feedback with dancer for very stable tension.",
-      "Applications":
-        "High speed stretch hood film, lamination film and industrial packaging rolls.",
+      ...SECONDARY_NIP_TECH_DESC,
+      "Nip roller drive": "3 HP AC motor with variable frequency drive.",
+      "Tension control": "Through Loadcell.",
+      "Surface Winders (02 Nos.)": "TBD",
+      "Roll diameter": "800 mm diameter or 600 kg weight in single up which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+      "Surface winder drive": "3 HP AC motor with variable frequency drive.",
+      "Tension control ": "Through Loadcell.",
+      "Length counter meter": "Provided",
+      "Trim Suction Blower": "Provided",
+      // Legacy/Sentence generators
+      "Automatic Roll Change Over": "Automatic change over mechanism.",
+      "Air Shafts": "04 nos.- 3” airshafts.",
+      "Post Extrusion Gear Motors": "Bonvario, Italy.",
     },
   },
 ];

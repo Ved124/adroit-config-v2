@@ -25,7 +25,7 @@ export const IBC_COMPONENTS: IBCSystem[] = [
     price: 3000000,
     techDesc: {
       "IBC System": "Complete controls including sensors, control software.",
-      "Blower": "Inlet and Outlet Blowers Provided.",
+      "Blowers": "Inlet and Outlet Blowers Provided.",
       "IBC Hardware": "IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided.",
     },
   },

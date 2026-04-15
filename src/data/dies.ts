@@ -46,7 +46,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
       "Construction":
         "Hardened alloy steel body with polished melt flow paths.",
       "Surface Treatment":
-        "Electroless nickel plated internal flow passages for corrosion resistance.",
+        "Electroless Chrome plated internal flow passages for corrosion resistance.",
       "Lip Gap": "Adjustable lips with typical gap 0.8–1.2 mm.",
       "Heating": "Band heaters with independent temperature zones.",
       "Heating Zones": "2–3 zones depending on configuration.",
@@ -71,7 +71,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
       "Die Size": "90 / 175 (HM / LD).",
       "Material of Construction": "Hardened high-strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plating, highly polished die lips.",
+        "Electroless Chrome plating, highly polished die lips.",
       "Lip Design": "Adjustable circular lips with fine-thread bolts.",
       "Heating System": "Ceramic band heaters with PID temperature control.",
       "Heating Zones": "3–4 zones around die body and lips.",
@@ -96,7 +96,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
       "Die Size": "150 / 275 (HM / LD).",
       "Material of Construction": "Hardened alloy steel with nitrided surfaces.",
       "Surface Treatment":
-        "Electroless nickel plated with mirror finished flow paths.",
+        "Electroless Chrome plated with mirror finished flow paths.",
       "Lip Gap": "Typical gap 1.0–1.5 mm, adjustable.",
       "Heating System": "Band heaters with separate zones for body and lips.",
       "Heating Zones": "4–5 zones.",
@@ -137,12 +137,12 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["UNOFLEX-2000"],
     image: "/images/Die/Die.JPG",
     cardDesc: "Monolayer die 300 / 475 for 2000 mm layflat film.",
-    price: 0,
+    price: 900000,
     techDesc: {
       "Application": "Heavy duty liner and shrink film.",
       "Die Size": "300 / 475 (HM / LD).",
       "Material of Construction": "High strength alloy steel.",
-      "Surface Treatment": "Nickel plated and highly polished.",
+      "Surface Treatment": "Chrome plated and highly polished.",
       "Distribution": "Spiral type distribution for uniform gauge.",
       "Heating System": "Ceramic band heaters with PID control.",
       "Heating Zones": "Multiple zones along body and lips.",
@@ -160,7 +160,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["UNOFLEX-2500"],
     image: "/images/Die/Die.JPG",
     cardDesc: "Large mono die 400 / 600 for 2500 mm layflat widths.",
-    price: 0,
+    price: 1400000,
     techDesc: {
       "Application": "Construction film, agricultural cover and wide width liners.",
       "Die Size": "400 / 600 (HM / LD).",
@@ -181,7 +181,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["UNOFLEX-3000"],
     image: "/images/Die/Die.JPG",
     cardDesc: "Largest mono die 450 / 700 for 3000 mm layflat.",
-    price: 0,
+    price: 1800000,
     techDesc: {
       "Application": "Very wide width film, greenhouse and silo covers.",
       "Die Size": "450 / 700 (HM / LD).",
@@ -209,7 +209,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
       "Die Size": "70 / 150 (HM / LD).",
       "Construction": "Co-extrusion spiral die for 2 or 3 layer structures.",
       "Layer Structure": "A/B or A/B/A configurable structure.",
-      "Surface Finish": "Highly polished, nickel plated flow channels.",
+      "Surface Finish": "Highly polished, Chrome plated flow channels.",
       "Heating System": "Band heaters with individual zones.",
       "Heating Zones": "3–4 zones.",
     },
@@ -279,6 +279,29 @@ export const DIE_COMPONENTS: DieComponent[] = [
 
   // ---------------- 3-LAYER DIES (INNOFLEX) ----------------
   {
+    id: "die-3layer-225",
+    name: "Three Layer Die 225 mm",
+    dieFamily: "3layer",
+    diameterMm: 225,
+    lipsDesc: "225 mm, 3-layer spiral die",
+    machineTypes: ["3layer"],
+    usedInModels: ["Innoflex-1125"],
+    image: "/images/Die/Die.JPG",
+    cardDesc: "3-layer spiral die 225 mm.",
+    price: 0,
+    techDesc: {
+      "Material of Construction": "Hardened high strength alloy steel.",
+      "Surface Treatment":
+        "Electroless Chrome plated and highly polished melt paths.",
+      "Die Size": "225 mm diameter with lips of 2.3 mm gap.",
+      "Die setting": "Die adjusting bolts will be provided.",
+      "Distribution": "Spiral distribution.",
+      "Heating Zones": "04 Nos.",
+      "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+    },
+    shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
+  },
+  {
     id: "die-3layer-275-stationary",
     name: "Three Layer Die 275 mm (Stationary)",
     dieFamily: "3layer",
@@ -292,9 +315,9 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
-      "Die Rotation": "Stationary die head for use with HO units.",
+      // "Die Rotation": "Stationary die head for use with HO units.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
       "Heating Zones": "04 Nos.",
@@ -312,14 +335,13 @@ export const DIE_COMPONENTS: DieComponent[] = [
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350 DR"],
     image: "/images/Die/Die.JPG",
-    cardDesc: "3-layer spiral die 275 mm with Die Rotation.",
+    cardDesc: "3-layer spiral die 275 mm.",
     price: 0,
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
-      "Die Rotation": "Oscillating die rotation included.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
       "Heating Zones": "04 Nos.",
@@ -328,30 +350,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
   },
 
-  {
-    id: "die-3layer-225",
-    name: "Three Layer Die 225 mm",
-    dieFamily: "3layer",
-    diameterMm: 225,
-    lipsDesc: "225 mm, 3-layer spiral die",
-    machineTypes: ["3layer"],
-    usedInModels: ["Innoflex-1125"],
-    image: "/images/Die/Die.JPG",
-    cardDesc: "3-layer spiral die 225 mm with Die Rotation.",
-    price: 0,
-    techDesc: {
-      "Material of Construction": "Hardened high strength alloy steel.",
-      "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
-      "Die Size": "225 mm diameter with lips of 2.3 mm gap.",
-      "Die Rotation": "Oscillating die rotation included.",
-      "Die setting": "Die adjusting bolts will be provided.",
-      "Distribution": "Spiral distribution.",
-      "Heating Zones": "04 Nos.",
-      "Heating System": "Ceramic band heaters (AUM or Heatsun).",
-    },
-    shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
-  },
+
 
   {
     id: "die-3layer-300",
@@ -367,7 +366,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -391,7 +390,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -415,7 +414,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -439,7 +438,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -463,7 +462,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -487,7 +486,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -511,7 +510,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -535,7 +534,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -559,7 +558,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "525 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -583,7 +582,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -607,7 +606,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -631,7 +630,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "650 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -654,7 +653,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     price: 3400000,
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
-      "Surface Treatment": "Electroless nickel plated and highly polished melt paths.",
+      "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "700 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -677,7 +676,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     price: 3600000,
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
-      "Surface Treatment": "Electroless nickel plated and highly polished melt paths.",
+      "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "750 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -701,7 +700,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -725,7 +724,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -749,7 +748,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -773,7 +772,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -797,7 +796,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution.",
@@ -821,7 +820,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -845,7 +844,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -869,7 +868,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -893,7 +892,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -917,7 +916,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     techDesc: {
       "Material of Construction": "Hardened high strength alloy steel.",
       "Surface Treatment":
-        "Electroless nickel plated and highly polished melt paths.",
+        "Electroless Chrome plated and highly polished melt paths.",
       "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
       "Die setting": "Die adjusting bolts will be provided.",
       "Distribution": "Spiral distribution for three layer structure.",
@@ -987,7 +986,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["ABA-50"],
     image: "/images/Die/Die.JPG",
     cardDesc: "300 mm ABA die for co-extrusion lines.",
-    price: 0,
+    price: 900000,
     techDesc: {
       "Material": "Hardened alloy steel.",
       "Heating Zones": "3 Nos.",
@@ -1004,7 +1003,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["ABA-60"],
     image: "/images/Die/Die.JPG",
     cardDesc: "600 mm ABA die for co-extrusion lines.",
-    price: 0,
+    price: 2500000,
     techDesc: {
       "Material": "Hardened alloy steel.",
       "Heating Zones": "4 Nos.",
@@ -1072,7 +1071,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["UNOFLEX-50"],
     image: "/images/Die/Die.JPG",
     cardDesc: "300 mm monolayer die head.",
-    price: 0,
+    price: 900000,
     techDesc: {
       "Material": "Hardened alloy steel.",
       "Heating Zones": "3 Nos.",
@@ -1089,7 +1088,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["UNOFLEX-72"],
     image: "/images/Die/Die.JPG",
     cardDesc: "400 mm monolayer die head.",
-    price: 0,
+    price: 1400000,
     techDesc: {
       "Material": "Hardened alloy steel.",
       "Heating Zones": "4 Nos.",
@@ -1106,7 +1105,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     usedInModels: ["UNOFLEX-110"],
     image: "/images/Die/Die.JPG",
     cardDesc: "600 mm monolayer die head.",
-    price: 0,
+    price: 2500000,
     techDesc: {
       "Material": "Hardened alloy steel.",
       "Heating Zones": "5 Nos.",

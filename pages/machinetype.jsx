@@ -17,38 +17,44 @@ function getModelLabel(model, index) {
 function getModelHighlights(model) {
   if (!model || typeof model !== "object") return [];
 
-  const candidates = [
-    "Layflat Width (mm)",
-    "WIDTH",
-    "Width",
-    "width",
-    "Width (mm)",
-    "Thichness Range (micron)",
-    "THICKNESS",
-    "Thickness",
-    "thickness",
-    "OUTPUT",
-    "Output",
-    "Max. Output (kg/hr)",
-  ];
-
   const lines = [];
 
-  for (const key of candidates) {
-    if (model[key] != null) {
-      lines.push(`${key}: ${model[key]}`);
-    }
-    if (lines.length >= 3) break;
+  // 1. Extruder size
+  if (model.extruder) {
+    lines.push(`Extruder: ${model.extruder} mm`);
+  } else if (model.screwDiameter) {
+    lines.push(`Extruder: ${model.screwDiameter}`);
   }
 
+  // 2. Die Size
+  if (model.die) {
+    lines.push(`Die Size: ${model.die}`);
+  } else if (model.dieSizeHmLd) {
+    lines.push(`Die Size: ${model.dieSizeHmLd}`);
+  }
+
+  // 3. L/D Ratio
+  if (model.ldRatio) {
+    lines.push(`L/D Ratio: ${model.ldRatio}`);
+  } else if (model.screwLdRatio) {
+    lines.push(`L/D Ratio: ${model.screwLdRatio}`);
+  }
+
+  // Fallback if no specific extruder info found (unlikely)
   if (lines.length === 0) {
-    Object.entries(model)
-      .slice(0, 3)
-      .forEach(([k, v]) => {
-        if (typeof v === "string" || typeof v === "number") {
-          lines.push(`${k}: ${v}`);
-        }
-      });
+    const candidates = [
+      "Max. Output (kg/hr)",
+      "Output",
+      "outputKgHr",
+      "widthMm",
+      "WIDTH",
+    ];
+    for (const key of candidates) {
+      if (model[key] != null) {
+        lines.push(`${key}: ${model[key]}`);
+      }
+      if (lines.length >= 3) break;
+    }
   }
 
   return lines;
@@ -69,6 +75,15 @@ export default function MachineTypePage() {
     selectedMachineModelLabel,
     setSelectedMachineModelLabel,
     applyModelPreset,
+    setSelected,
+    setSelectedAddons,
+    setPresetBasePrice,
+    setCustomOutput,
+    setCustomLayflat,
+    setCustomRollerWidth,
+    setMarkup,
+    setDiscount,
+    setScopeOverrides,
   } = useContext(ConfigContext);
 
   const [modalModel, setModalModel] = useState(null);
@@ -134,6 +149,20 @@ export default function MachineTypePage() {
 
   // Customise yourself: go to Selection with family only
   const handleCustomiseYourself = () => {
+    // 1. Reset selections and pricing
+    setSelected([]);
+    setSelectedAddons([]);
+    setPresetBasePrice(0);
+    setMarkup(0);
+    setDiscount(0);
+
+    // 2. Reset machine specs
+    setCustomOutput("");
+    setCustomLayflat("");
+    setCustomRollerWidth("");
+    setScopeOverrides({});
+
+    // 3. Set UI state
     setMachineModelIndex(null);
     setCustomMode(true);
     setSelectedMachineModelLabel("");
@@ -142,6 +171,9 @@ export default function MachineTypePage() {
       ...customer,
       machineFamily: activeFamily,
       machineModel: `Custom ${activeFamily.toUpperCase()} configuration`,
+      machineModelCode: "",
+      quotationRef: "", // Clear model-specific ref
+      ref: "",          // Clear model-specific ref
       customMachine: true,
     });
 

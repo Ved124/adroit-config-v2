@@ -14,11 +14,11 @@ import { MONO_MODELS } from "../data/monoModels";
 import { ABA_MODELS } from "../data/abaModels";
 import { THREE_LAYER_MODELS } from "../data/threeLayerModels";
 import { EXTRUDER_COMPONENTS } from "../src/data/extruders";
-import { FILTER_COMPONENTS } from "../src/data/filter";
 import { DIE_COMPONENTS } from "../src/data/dies";
-import { BUBBLE_CAGE_COMPONENTS } from "../src/data/bubbleCages";
-import { HAULOFF_COMPONENTS } from "../src/data/hauloffs";
-import { WINDER_COMPONENTS } from "../src/data/winders";
+import { BUBBLE_CAGE_COMPONENTS, MANUAL_BC_PRICES, OPEN_CLOSE_BC_PRICES, UP_DOWN_BC_PRICES } from "../src/data/bubbleCages";
+import { HAULOFF_COMPONENTS, HAULOFF_PRICES } from "../src/data/hauloffs";
+import { TOWER_COMPONENTS, TOWER_PRICES } from "../src/data/tower";
+import { WINDER_COMPONENTS, MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES } from "../src/data/winders";
 import { AIR_RING_COMPONENTS } from "../src/data/airRing";
 import { IBC_COMPONENTS } from "../src/data/ibc";
 import { COLLAPSING_FRAME_COMPONENTS } from "../src/data/collapsingFrame";
@@ -32,7 +32,6 @@ import { HEAT_EXCHANGER_ADDONS } from "./data/heatExchanger";
 import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
-import { TOWER_COMPONENTS } from "../src/data/tower";
 
 import { MODEL_PRESETS } from "./data/modelPresets";
 
@@ -45,7 +44,7 @@ import { createRoot } from "react-dom/client";
 import { AdroitQuotation } from "./components/quotation/AdroitQuotation";
 import { KioskFlyer } from "./components/quotation/KioskFlyer";
 import { generateNextQuotationRef } from './utils/quotationGenerator';
-import { generateScopeDesc } from "./utils/generateScopeDesc";
+import { generateScopeDesc, generateWinder, generateSecondaryNip } from "./utils/generateScopeDesc";
 
 export const ConfigContext = createContext(null);
 
@@ -76,7 +75,6 @@ const MACHINE_MODELS = {
 
 export const COMPONENTS_DATA = {
   Extruder: EXTRUDER_COMPONENTS,
-  Filter: FILTER_COMPONENTS,
   "Die Head": DIE_COMPONENTS,
   "Air Ring": AIR_RING_COMPONENTS,
   IBC: IBC_COMPONENTS,
@@ -119,6 +117,8 @@ export function ConfigProvider({ children }) {
   const [selected, setSelected] = useState([]);               // base components
   const [selectedAddons, setSelectedAddons] = useState([]);   // optional add-ons
   const [discount, setDiscount] = useState(0);
+  const [showPrices, setShowPrices] = useState(false);
+  const [showAddonPricing, setShowAddonPricing] = useState(false);
   const [markup, setMarkup] = useState(0);
   const [showMarkupField, setShowMarkupField] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
@@ -137,7 +137,6 @@ export function ConfigProvider({ children }) {
   const [addons] = useState(ADDONS_DATA);
 
   const [modalItem, setModalItem] = useState(null);
-  const [showPrices, setShowPrices] = useState(false);
 
   // which row in the CSV list is selected
   const [machineModelIndex, setMachineModelIndex] = useState(null);
@@ -241,6 +240,27 @@ export function ConfigProvider({ children }) {
       if (typeof savedData.conversionRate === "number") {
         setConversionRate(savedData.conversionRate);
       }
+      if (savedData.scopeOverrides && typeof savedData.scopeOverrides === "object") {
+        setScopeOverrides(savedData.scopeOverrides);
+      }
+      if (typeof savedData.quoteTemplate === "string") {
+        setQuoteTemplate(savedData.quoteTemplate);
+      }
+      if (typeof savedData.showMarkupField === "boolean") {
+        setShowMarkupField(savedData.showMarkupField);
+      }
+      if (typeof savedData.showDiscountField === "boolean") {
+        setShowDiscountField(savedData.showDiscountField);
+      }
+      if (typeof savedData.showAddonPricing === "boolean") {
+        setShowAddonPricing(savedData.showAddonPricing);
+      }
+      if (typeof savedData.showPricingFields === "boolean") {
+        setShowPricingFields(savedData.showPricingFields);
+      }
+      if (typeof savedData.showPrices === "boolean") {
+        setShowPrices(savedData.showPrices);
+      }
     } else {
       // 2. New Session? GENERATE A NEW NUMBER
       const newRef = generateNextQuotationRef("DOM");
@@ -273,6 +293,13 @@ export function ConfigProvider({ children }) {
           customRollerWidth,
           presetBasePrice,
           conversionRate,
+          scopeOverrides,
+          quoteTemplate,
+          showMarkupField,
+          showDiscountField,
+          showAddonPricing,
+          showPricingFields,
+          showPrices,
           savedAt: new Date().toISOString(),
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -280,7 +307,7 @@ export function ConfigProvider({ children }) {
         console.warn("Failed to save storage:", e);
       }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice, conversionRate]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice, conversionRate, scopeOverrides, quoteTemplate, showMarkupField, showDiscountField, showAddonPricing, showPricingFields, showPrices]);
   
   // Real-time synchronization for Quotation Reference
   useEffect(() => {
@@ -360,7 +387,8 @@ export function ConfigProvider({ children }) {
         console.warn("Component not found for preset:", category, id);
         return;
       }
-      nextSelected.push({ ...base, category, qty: qty ?? 1 });
+      const metadata = preset.components.find(c => c.id === id)?.metadata || {};
+      nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata });
     });
 
     // 3) Build selected add-ons
@@ -374,13 +402,7 @@ export function ConfigProvider({ children }) {
       nextAddons.push({ ...base, category, qty: qty ?? 1 });
     });
 
-    // 4) Apply into state
-    setSelected(nextSelected);
-    setSelectedAddons(nextAddons);
-    setCustomMode(false);
-    setSelectedMachineModelLabel(modelLabel);
-
-    // 5) Sync specifications (Roller Width, Layflat & Output) from the source model data
+    // 4) Sync specifications (Roller Width, Layflat & Output) from the source model data
     let models = [];
     if (preset.machineType === "mono") models = MONO_MODELS || [];
     else if (preset.machineType === "aba") models = ABA_MODELS || [];
@@ -393,35 +415,186 @@ export function ConfigProvider({ children }) {
     const rollerMatch = String(modelLabel).match(/\d+/);
     const rollerNum = rollerMatch ? parseInt(rollerMatch[0], 10) : 0;
 
+    let machineWidth = 0;
     if (rollerNum > 0) {
       if (isMonoOrAba) {
         setCustomRollerWidth(`${rollerNum} inch`);
-        // Use layflat from record for Mono/ABA
-        const layflat = modelObj?.layflatWidthMm || modelObj?.widthMm || (rollerNum * 25);
-        setCustomLayflat(`${layflat} mm`);
+        machineWidth = modelObj?.layflatWidthMm || modelObj?.widthMm || (rollerNum * 25);
+        setCustomLayflat(`${machineWidth} mm`);
       } else {
         setCustomRollerWidth(`${rollerNum} mm`);
-        // Update Layflat: Roller Width - 125 (Standard offset for 3Layer)
-        setCustomLayflat(`${rollerNum - 125} mm`);
+        machineWidth = rollerNum - 125;
+        setCustomLayflat(`${machineWidth} mm`);
       }
       
       // Update Quotation Ref to follow new format automatically
       setCustomer(prev => {
         const region = prev.region || "DOM";
-        
         let prefix = "";
         if (preset.machineType === "mono") prefix = "U";
         else if (preset.machineType === "aba") prefix = "D";
-
-        // Ensure 2-digit sequence as per latest request
         const newRef = `AE/${region}/${prefix}${rollerNum}/01`;
         return { ...prev, quotationRef: newRef, ref: newRef };
       });
     } else if (modelObj) {
-      // Fallback if no digits in label
-      const layflat = modelObj.layflatWidthMm || modelObj.widthMm;
-      if (layflat) setCustomLayflat(`${layflat} mm`);
+      machineWidth = modelObj.layflatWidthMm || modelObj.widthMm || 0;
+      if (machineWidth) setCustomLayflat(`${machineWidth} mm`);
     }
+
+    // 4.5) DYNAMIC BUBBLE CAGE LOGIC
+    if (machineWidth > 0) {
+      nextSelected.forEach((item, index) => {
+        if (item.category === "Bubble Cage" && (item.isDynamic || item.id.includes("dynamic"))) {
+          const name = (item.name || "").toLowerCase();
+          const isManual = name.includes("manual");
+          const isUpDown = name.includes("up down");
+          const isOC = name.includes("open close") || (!isManual && !isUpDown);
+
+          let priceMap = OPEN_CLOSE_BC_PRICES;
+          let label = "Film width range";
+          let minRatio = 0.5;
+
+          if (isManual) {
+            priceMap = MANUAL_BC_PRICES;
+            label = "Bubble diameter range";
+            minRatio = 0.6;
+          } else if (isUpDown) {
+            priceMap = UP_DOWN_BC_PRICES;
+            label = "Bubble width range";
+            minRatio = 0.5;
+          }
+
+          // Find smallest size >= machineWidth
+          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
+          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1];
+          
+          const minRange = Math.round((chosenSize * minRatio) / 10) * 10;
+          const newPrice = priceMap[chosenSize.toString()] || 0;
+
+          // Update item properties directly at the top level
+          nextSelected[index] = {
+            ...item,
+            name: `${item.name} - ${chosenSize} mm`,
+            size: chosenSize.toString(),
+            price: newPrice,
+            customName: `${item.name} - ${chosenSize} mm`,
+            techDesc: {
+              ...(item.techDesc || {}),
+              [label]: `${minRange} to ${chosenSize} mm`,
+            }
+          };
+        }
+      });
+
+      // 4.6) DYNAMIC HAULOFF LOGIC
+      nextSelected.forEach((item, index) => {
+        const isHaulOffId = ["haul-horizontal-standard", "haul-horizontal-heavy", "haul-oscillating", "haul-horizontal-dynamic"].includes(item.id);
+        
+        if (item.category === "Haul-Off" && (isHaulOffId || item.isDynamic)) {
+          const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
+          // Find smallest size >= machineWidth, or fallback to smallest available
+          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
+          
+          const dynamicHauloffItem = HAULOFF_COMPONENTS.find(h => h.id === "haul-horizontal-dynamic") || item;
+
+          // Update item properties
+          nextSelected[index] = {
+            ...dynamicHauloffItem,
+            category: "Haul-Off",
+            qty: 1,
+            size: chosenSize.toString(),
+            price: newPrice,
+            customName: `HORIZONTAL HAULOFF - ${chosenSize} mm`,
+            techDesc: {
+              ...(dynamicHauloffItem.techDesc || {}),
+              "Hauloff Size": `${chosenSize} mm`,
+              "Nip roller width": `${chosenSize + 125} mm`,
+            }
+          };
+        }
+      });
+
+      // 4.7) DYNAMIC TOWER LOGIC
+      nextSelected.forEach((item, index) => {
+        const isTowerId = ["tower_std", "tower_h", "tower-dynamic"].includes(item.id);
+        
+        if (item.category === "Tower / Platform" && (isTowerId || item.isDynamic)) {
+          const availableSizes = Object.keys(TOWER_PRICES).map(Number).sort((a, b) => a - b);
+          // Find smallest size >= machineWidth, or fallback to smallest available
+          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const newPrice = TOWER_PRICES[chosenSize.toString()] || 0;
+          
+          const dynamicTowerItem = TOWER_COMPONENTS.find(h => h.id === "tower-dynamic") || item;
+
+          // Update item properties
+          nextSelected[index] = {
+            ...dynamicTowerItem,
+            category: "Tower / Platform",
+            qty: 1,
+            size: chosenSize.toString(),
+            price: newPrice,
+            customName: `TOWER / PLATFORM - ${chosenSize} mm`,
+            techDesc: {
+              ...(dynamicTowerItem.techDesc || {}),
+              "Tower Size": `${chosenSize} mm`,
+              "Idler rollers": `Set of 150 mm diameter idler aluminium rollers of ${chosenSize + 200} mm face width.`,
+            }
+          };
+        }
+      });
+      // 4.8) DYNAMIC WINDER LOGIC
+      nextSelected.forEach((item, index) => {
+        const isWinderId = [
+          "winder-manual-back-to-back-dynamic",
+          "winder-surface-dynamic",
+          "winder-automatic-dynamic",
+          "winder-surface-manual",
+          "winder-surface-semi-auto",
+          "winder-surface-auto"
+        ].includes(item.id);
+
+        if (item.category === "Winder" && isWinderId) {
+          const name = (item.name || "").toLowerCase();
+          const isManual = name.includes("manual");
+          const isAuto = name.includes("automatic") || name.includes("auto");
+          const isSurface = !isManual && !isAuto;
+
+          let priceMap = SURFACE_WINDER_PRICES;
+          if (isManual) priceMap = MANUAL_BACK_TO_BACK_PRICES;
+          else if (isAuto) priceMap = AUTOMATIC_WINDER_PRICES;
+
+          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
+          // Find smallest size >= machineWidth
+          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const newPrice = priceMap[chosenSize.toString()] || 0;
+
+          const stationLabel = isAuto ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)";
+
+          // Update item properties
+          nextSelected[index] = {
+            ...item,
+            size: chosenSize.toString(),
+            price: newPrice,
+            customName: `${item.name} - ${chosenSize} mm`,
+            techDesc: {
+              ...(item.techDesc || {}),
+              "film width": `${chosenSize} mm`,
+              "Winder Size": `${chosenSize} mm`,
+              "Nip roller width": `${chosenSize + 125} mm`,
+              [stationLabel]: `Maximum web width of ${chosenSize} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
+            }
+          };
+        }
+      });
+    }
+
+
+    // 5) Apply into state
+    setSelected(nextSelected);
+    setSelectedAddons(nextAddons);
+    setCustomMode(false);
+    setSelectedMachineModelLabel(modelLabel);
 
     if (modelObj) {
       const output = modelObj.maxOutputKgHr || modelObj.outputKgHr;
@@ -445,7 +618,7 @@ export function ConfigProvider({ children }) {
               ? "Innoflex 3 Layer"
               : "Innoflex 5 Layer",
       machineModel: modelLabel,
-      machineModelCode: modelLabel, // if you want code separately, adjust here
+      machineModelCode: modelLabel,
     }));
 
     return true;
@@ -466,10 +639,12 @@ export function ConfigProvider({ children }) {
   // ---------------- COMPONENT CRUD ----------------
 
 
-  function addComponent(category, item) {
+  function addComponent(category, item, metadata = null) {
     setSelected((prev) => {
-      const found = prev.find((p) => p.id === item.id);
-      if (found) {
+      const foundIndex = prev.findIndex((p) => p.id === item.id);
+      
+      // For non-dynamic items, handle as duplicate
+      if (foundIndex !== -1 && !item.isDynamic) {
         const now = Date.now();
         const last = duplicateToastRef.current[item.id] || 0;
         if (now - last > 800) {
@@ -483,14 +658,26 @@ export function ConfigProvider({ children }) {
         }
         return prev;
       }
+
+      // For dynamic items or new items, notify and add/replace
       toast.push({
-        title: "Added",
-        description: item.name,
+        title: foundIndex !== -1 ? "Updated" : "Added",
+        description: metadata?.customName || item.name,
         variant: "success",
         durationMs: 700,
       });
+
       setPresetBasePrice(0); // Revert to sum of parts if modified
-      return [...prev, { ...item, category, qty: 1 }];
+
+      const newItem = { ...item, category, qty: 1, ...metadata };
+      
+      if (foundIndex !== -1) {
+        const newArr = [...prev];
+        newArr[foundIndex] = newItem;
+        return newArr;
+      }
+      
+      return [...prev, newItem];
     });
   }
 
@@ -593,6 +780,14 @@ export function ConfigProvider({ children }) {
         const next = (p.qty || 1) - 1;
         return { ...p, qty: next < 1 ? 1 : next };
       })
+    );
+  }
+
+  function updateAddonPricing(id, pricing) {
+    setSelectedAddons((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, markup: pricing.markup, discount: pricing.discount } : p
+      )
     );
   }
 
@@ -709,9 +904,15 @@ export function ConfigProvider({ children }) {
        basicTotal = presetBasePrice;
     }
 
-    // 2. Calculate Optional Addons Total
+    // 2. Calculate Optional Addons Total with per-addon markup/discount
     const addonsTotal = selectedAddons.reduce(
-      (sum, item) => sum + (item.price || 0) * (item.qty || 1),
+      (sum, item) => {
+        const base = (item.price || 0) * (item.qty || 1);
+        const m = item.markup || 0;
+        const d = item.discount || 0;
+        const adjusted = base * (1 + m / 100) * (1 - d / 100);
+        return sum + adjusted;
+      },
       0
     );
 
@@ -744,6 +945,7 @@ export function ConfigProvider({ children }) {
       beforeMargin: isExport ? Math.ceil(beforeMargin / rate) : beforeMargin,
       withMarkup: isExport ? Math.ceil(withMarkup / rate) : withMarkup,
       afterDiscount: isExport ? Math.ceil(afterDiscount / rate) : afterDiscount,
+      totalWithAddons: isExport ? Math.ceil((afterDiscount + addonsTotal) / rate) : (afterDiscount + addonsTotal),
       isPackagePrice: presetBasePrice > 0,
       currency,
       rate,
@@ -860,28 +1062,56 @@ export function ConfigProvider({ children }) {
 
       const selectedScopeItems = (selected || [])
         .filter(item => item && item.name)
-        .map(item => {
+        .flatMap(item => {
           const c = (item.category || "").toLowerCase();
-          const isExtruder = c.includes("extruder") || (item.name || "").toLowerCase().includes("extruder") || (item.id || "").includes("ext-");
+          const nameLc = (item.name || "").toLowerCase();
+          const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
+          
           if (isExtruder) {
-            if (hasExtruder) return null;
+            if (hasExtruder) return [];
             hasExtruder = true;
           }
-          const isControl = c.includes("panel") || (item.name || "").toLowerCase().includes("panel") || c.includes("control") || (item.name || "").toLowerCase().includes("control");
-          if (isControl) return null;
-          if (c.includes("collapsing frame") || c.includes("filter")) return null;
+
+          const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
+          if (isControl) return [];
+          if (c.includes("collapsing frame") || c.includes("filter")) return [];
 
           const key = item.id || item.name;
-          const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
-          const finalDesc = overrides[key] !== undefined ? overrides[key] : autoDesc;
+          const customDesc = overrides[key];
 
-          return {
-            name: isExtruder ? "Extruders" : item.name,
+          // Check for combined Winder + Secondary Nip
+          const isCombinedWinder = c.includes("winder") && (nameLc.includes("secondary") || nameLc.includes("nip"));
+
+          if (isCombinedWinder && !customDesc) {
+            const nipDesc = generateSecondaryNip(item, currentMachineModel);
+            const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+
+            return [
+              {
+                id: `${item.id}-nip`,
+                name: "Secondary Nip Assembly",
+                qty: 1,
+                desc: nipDesc,
+              },
+              {
+                id: `${item.id}-winder`,
+                name: item.name.replace(/Secondary Nip & /i, ""),
+                qty: item.qty || 1,
+                desc: winderDesc,
+              }
+            ];
+          }
+
+          const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
+          const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
+
+          return [{
+            id: item.id || "",
+            name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
             qty: isExtruder ? 1 : (item.qty || 1),
             desc: finalDesc
-          };
-        })
-        .filter(Boolean);
+          }];
+        });
 
       const winderTowerAddonsRaw = (selectedAddons || []).filter(item => {
         if (!item || !item.name) return false;
@@ -890,17 +1120,31 @@ export function ConfigProvider({ children }) {
         return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel");
       });
 
-      const winderTowerScopeItems = winderTowerAddonsRaw.map(item => {
+      const winderTowerScopeItems = winderTowerAddonsRaw.flatMap(item => {
+        const key = item.id || item.name;
+        const customDesc = overrides[key];
+        const nameLc = (item.name || "").toLowerCase();
+        const isWinder = (item.category || "").toLowerCase().includes("winder") || nameLc.includes("winder");
+        const isCombinedWinder = isWinder && (nameLc.includes("secondary") || nameLc.includes("nip"));
+
+        if (isCombinedWinder && !customDesc) {
+          const nipDesc = generateSecondaryNip(item, currentMachineModel);
+          const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+          return [
+            { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
+            { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
+          ];
+        }
+
         const autoDesc = generateScopeDesc(item, selected, currentMachineModel) || item.shortDesc || item.cardDesc;
-        const finalDesc = overrides[item.id || item.name] !== undefined ? overrides[item.id || item.name] : autoDesc;
-        return { name: item.name, qty: item.qty || 1, desc: finalDesc };
+        const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
+        return { id: item.id || "", name: item.name, qty: item.qty || 1, desc: finalDesc };
       });
 
       const hasSelectedTower = [...selectedScopeItems, ...winderTowerScopeItems].some(item => (item.name || "").toLowerCase().includes("tower"));
 
       const staticItems = [
         { name: "Idler Rollers", qty: 1, desc: "Aluminum Idler rollers as per layout drawing." },
-        { name: "Secondary Nip", qty: 1, desc: "One Secondary nip with edge slitting assembly and edge trimming assembly." },
         !hasSelectedTower && { name: "Tower Structure", qty: 1, desc: "Tower Structure to support bubble stabilizing basket, haul-off, etc." },
         { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
       ].filter(Boolean);
@@ -911,7 +1155,8 @@ export function ConfigProvider({ children }) {
         for (let i = 0; i < SORT_ORDER.length; i++) if (n.includes(SORT_ORDER[i])) return i;
         return 99;
       };
-      const manualExtraDesc = (scopeOverrides["manual_extra"] || "").trim();
+
+      const manualExtraDesc = (overrides["manual_extra"] || "").trim();
       const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
       
       const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a.name) - getIdx(b.name));
@@ -951,6 +1196,8 @@ export function ConfigProvider({ children }) {
             category: a.category || "",
             qty: a.qty || 1,
             price: convertedPrice,
+            markup: a.markup || 0,
+            discount: a.discount || 0,
           };
         }),
         pricing: {
@@ -1058,8 +1305,8 @@ export function ConfigProvider({ children }) {
           schema: "adroit_v2",
           machineType,
           customer,
-          selected: selected.map(s => ({ id: s.id, name: s.name, category: s.category, qty: s.qty })),
-          selectedAddons: selectedAddons.map(a => ({ id: a.id, name: a.name, category: a.category, qty: a.qty })),
+          selected: selected, // Save full object to preserve dynamic techDesc and headers
+          selectedAddons: selectedAddons, // Save full object
           markup_percent: markup,
           discount_percent: discount,
           machineModelIndex,
@@ -1072,6 +1319,10 @@ export function ConfigProvider({ children }) {
           conversionRate,
           quoteTemplate,
           showPricingFields,
+          showMarkupField,
+          showDiscountField,
+          showAddonPricing,
+          showPrices,
           presetBasePrice,
         }
       };
@@ -2008,11 +2259,14 @@ export function ConfigProvider({ children }) {
         const newSelected = (r.selected || []).map((row) => {
           const resolved = resolveBaseComponent(row.category, row.id) ||
                            resolveBaseComponent(row.category, row.name);
+          
           if (resolved) {
-            return { ...resolved.base, category: resolved.category, qty: row.qty || 1 };
+            // Prioritize row data (from JSON) over base data to preserve techDesc overrides
+            return { ...resolved.base, ...row, category: resolved.category, qty: row.qty || 1 };
           }
           // Fallback: use whatever is in the JSON snapshot
           return {
+            ...row,
             id: row.id || `${row.category}_${row.name}`,
             name: row.name || "",
             category: row.category || "",
@@ -2028,14 +2282,24 @@ export function ConfigProvider({ children }) {
           const resolved = resolveBaseAddon(row.category, row.id) ||
                            resolveBaseAddon(row.category, row.name);
           if (resolved) {
-            return { ...resolved.base, category: resolved.category, qty: row.qty || 1 };
+            return { 
+              ...resolved.base, 
+              ...row,
+              category: resolved.category, 
+              qty: row.qty || 1,
+              markup: row.markup || 0,
+              discount: row.discount || 0
+            };
           }
           return {
+            ...row,
             id: row.id || `${row.category}_${row.name}`,
             name: row.name || "",
             category: row.category || "",
             qty: row.qty || 1,
             price: row.price ?? 0,
+            markup: row.markup || 0,
+            discount: row.discount || 0,
             shortDesc: row.shortDesc || "",
             image: row.image || null,
           };
@@ -2063,6 +2327,11 @@ export function ConfigProvider({ children }) {
         
         // Export Conversion Fields
         if (typeof r.conversionRate === "number") setConversionRate(r.conversionRate);
+        if (typeof r.showMarkupField === "boolean") setShowMarkupField(r.showMarkupField);
+        if (typeof r.showDiscountField === "boolean") setShowDiscountField(r.showDiscountField);
+        if (typeof r.showAddonPricing === "boolean") setShowAddonPricing(r.showAddonPricing);
+        if (typeof r.showPrices === "boolean") setShowPrices(r.showPrices);
+        if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
 
         toast.push({
           title: "Configuration imported ✓",
@@ -2512,6 +2781,7 @@ export function ConfigProvider({ children }) {
     setQuoteTemplate,
     showPricingFields,
     setShowPricingFields,
+    setPresetBasePrice,
 
     // component CRUD
     addComponent,
@@ -2528,6 +2798,12 @@ export function ConfigProvider({ children }) {
     // UI
     showPrices,
     setShowPrices,
+    showMarkupField,
+    setShowMarkupField,
+    showDiscountField,
+    setShowDiscountField,
+    showAddonPricing,
+    setShowAddonPricing,
     openModal: setModalItem,
     dirHandleRef,
 
@@ -2540,6 +2816,7 @@ export function ConfigProvider({ children }) {
     resetAll,
     generateKioskQR,
     buildWordContext,
+    updateAddonPricing,
   };
 
 

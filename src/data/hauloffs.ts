@@ -17,7 +17,22 @@ export interface HauloffComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  isDynamic?: boolean;
 }
+
+// Prices extracted from master list image
+export const HAULOFF_PRICES: Record<string, number> = {
+  "1250": 1100000,
+  "1350": 1150000,
+  "1500": 1200000,
+  "1750": 1400000,
+  "1850": 1500000,
+  "2000": 1800000,
+  "2250": 2500000,
+  "2500": 2700000,
+  "2750": 3200000,
+  "3000": 3500000,
+};
 
 export const HAULOFF_COMPONENTS: HauloffComponent[] = [
   {
@@ -47,76 +62,23 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
   },
 
   {
-    id: "haul-horizontal-standard",
+    id: "haul-horizontal-dynamic",
     name: "Horizontal Haul-Off",
-    variant: "horizontal",
-    machineTypes: ["mono", "aba", "3layer"],
-    usedInModels: ["UNOFLEX-1000_1250", "Innoflex-1350A", "Innoflex-1350B", "Innoflex-1625"],
-    image: "/images/components/hauloff/horizontal_standard.png",
-    cardDesc:
-      "Horizontal haul-off platform as per spec screenshot – 1950 mm nip, AC drive.",
-    price: 0,
-    techDesc: {
-      "Construction":
-        "Haul-off supplied in assembled modules, mounted on robust platform.",
-      "Main Nip Rollers":
-        "2 Nos. nip rollers mounted in bearings: one chrome plated roller and one rubber coated roller, pneumatically loaded.",
-      "Nip Roller Width": "Approx. 1950 mm (model dependent).",
-      "Nip Roller Drive":
-        "3 HP gear motor with variable frequency drive for precise speed control.",
-      "Collapsing Frames": "Aluminium / PBT rollers mounted before nip.",
-      "Idler Rollers":
-        "Adequate idler rollers in aluminium to guide film without wrinkles.",
-      "Oscillation":
-        "360° oscillation arrangement with limit switches and override protection, ensuring even thickness distribution on rolls.",
-      "Turnbars":
-        "2 Nos. aluminium turn bars with hard anodized surface in haul-off.",
-    },
-  },
-
-  {
-    id: "haul-horizontal-heavy",
-    name: "Horizontal Haul-Off – Heavy Duty",
-    variant: "horizontal",
-    machineTypes: ["3layer", "5layer"],
-    usedInModels: ["Innoflex-1870", "Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
-    image: "/images/components/hauloff/horizontal-heavy.png",
-    cardDesc:
-      "Heavy duty horizontal haul-off for wide web 3-layer / future 5-layer lines.",
-    price: 0,
-    techDesc: {
-      "Construction":
-        "Heavy duty haul-off platform designed for wide web and high line speed.",
-      "Main Nip Rollers":
-        "Large diameter chrome plated and rubber covered rollers with pneumatic loading.",
-      "Nip Roller Width": "Up to 2650–3150 mm (machine dependent).",
-      "Drive":
-        "5–7.5 HP AC gear motor with VFD, integrated with line control.",
-      "Oscillation":
-        "Motorized oscillation with electronic end-limit sensing for perfect roll build-up.",
-      "Turnbars": "Heavy duty aluminium turnbars with hard anodized surface.",
-    },
-  },
-
-  {
-    id: "haul-oscillating",
-    name: "Oscillating Haul-Off Assembly",
     variant: "oscillating",
-    machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["DUOFLEX-1750", "Innoflex-1870", "Innoflex-2125", "Innoflex-2370"],
-    image: "/images/components/hauloff/oscillating.png",
-    cardDesc:
-      "Oscillating haul-off with 360° rotation for excellent roll geometry.",
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    image: "/images/components/hauloff/horizontal_standard.png",
+    cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,
+    isDynamic: true,
     techDesc: {
-      "Construction":
-        "Horizontal haul-off mounted on oscillating frame for 360° rotation.",
-      "Drive":
-        "AC geared motor with VFD for oscillation, with adjustable speed and stroke.",
-      "Control":
-        "Limit switches and control logic to avoid over-travel, ensuring uniform lay of film on rolls.",
-      "Benefit":
-        "Improves thickness distribution and roll geometry, reduces gauge bands.",
+      "Construction": "The haul off will be shipped in assembled parts.",
+      "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+      "Nip roller width": "TBD mm",
+      "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+      "Collapsing Frames": "PBT rollers.",
+      "Idler rollers": "Adequate quantity as per layout.",
+      "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
+      "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
     },
   },
 ];

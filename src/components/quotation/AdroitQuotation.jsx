@@ -237,7 +237,7 @@ function CoverPage({ machine, customer }) {
             {/* ── Machine photo box ──────────────────────────────────────── */}
             <div style={{
                 width: "100%",
-                height: "600px",
+                height: "650px",
                 boxSizing: "border-box",
                 display: "flex",
                 alignItems: "center",
@@ -251,7 +251,7 @@ function CoverPage({ machine, customer }) {
                     crossOrigin="anonymous"
                     style={{
                         width: "100%",
-                        height: "600px",
+                        height: "700px",
                         objectFit: "contain",
                         display: "block",
                     }}
@@ -279,7 +279,7 @@ function CoverPage({ machine, customer }) {
             </div>
 
             {/* ── Blue rule ──────────────────────────────────────────────── */}
-            <div style={{ height: "2px", backgroundColor: BLUE, margin: "12px 0 16px 0" }} /> <br />
+            {/* <div style={{ height: "2px", backgroundColor: BLUE, margin: "12px 0 16px 0" }} /> <br /> */}
 
             {/* ── Proposal text block ────────────────────────────────────── */}
             <div style={{ textAlign: "center" }}>
@@ -516,7 +516,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
 
     return (
         <Page>
-            {/* ── Price summary at the top of commercial page ──────────────── */}
+            {/* ── Price summary at the top of commercial page ────────────────
             <div style={{ marginBottom: "24px" }}>
                 {price && (
                     <div style={{ marginBottom: discountedPrice ? "12px" : "0px" }}>
@@ -549,7 +549,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                         )}
                     </div>
                 )}
-            </div>
+            </div> */}
 
             {/* ── Optional equipments heading ────────────────────────── */}
             <SectionTitle>

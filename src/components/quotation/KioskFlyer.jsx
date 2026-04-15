@@ -34,8 +34,8 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
     const scope = Array.isArray(data?.scope) ? data.scope : [];
     const optionals = Array.isArray(data?.optional_items) ? data.optional_items : [];
 
-    const topItems = scope.slice(0, 12);
-    const extraCount = Math.max(0, scope.length - 12);
+    const topItems = scope.slice(0, 20);
+    const extraCount = Math.max(0, scope.length - 20);
 
     // LOGIC FIX: Check both 'company' and 'company_name' to ensure it's not empty
     let companyDisplay = "VISITOR";
@@ -50,96 +50,92 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
         }}>
 
             {/* HEADER */}
-            <div style={{ height: "70px", borderBottom: `4px solid ${C.RED}`, padding: "0 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ height: "65px", borderBottom: `4px solid ${C.RED}`, padding: "0 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ width: "200px" }}>
-                    <SafeImage src="/images/logo.jpg" style={{ height: "40px", objectFit: "contain" }} />
+                    <SafeImage src="/images/logo.jpg" style={{ height: "35px", objectFit: "contain" }} />
                 </div>
                 <div style={{ textAlign: "right" }}>
-                    <h2 style={{ fontSize: "16px", fontWeight: "900", color: C.RED, margin: 0, textTransform: "uppercase" }}>Budgetary Offer</h2>
-                    <p style={{ fontSize: "11px", fontWeight: "bold", color: "#888", margin: "5px 0 0 0" }}>{refNo} &nbsp;|&nbsp; {dateStr}</p>
+                    <h2 style={{ fontSize: "14px", fontWeight: "900", color: C.RED, margin: 0, textTransform: "uppercase" }}>Budgetary Offer</h2>
+                    <p style={{ fontSize: "10px", fontWeight: "bold", color: "#888", margin: "3px 0 0 0" }}>{refNo} &nbsp;|&nbsp; {dateStr}</p>
                 </div>
             </div>
 
             {/* HERO SECTION */}
-            <div style={{ background: C.BG_GRAY, padding: "15px 40px", borderBottom: `1px solid ${C.BORDER}`, display: "flex", height: "170px" }}>
+            <div style={{ background: C.BG_GRAY, padding: "12px 40px", borderBottom: `1px solid ${C.BORDER}`, display: "flex", height: "150px" }}>
 
                 <div style={{ width: "60%" }}>
-                    <p style={{ fontSize: "9px", fontWeight: "bold", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", margin: "0 0 6px 0" }}>PREPARED FOR</p>
+                    <p style={{ fontSize: "8px", fontWeight: "bold", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", margin: "0 0 5px 0" }}>PREPARED FOR</p>
 
-                    <div style={{ borderLeft: `5px solid ${C.RED}`, paddingLeft: "15px", marginBottom: "20px" }}>
-                        {/* FONT FIX: Reduced size from 26px to 18px */}
-                        <h1 style={{ fontSize: "14px", fontWeight: "900", color: "#000", margin: 0, lineHeight: 1.2, textTransform: "uppercase" }}>
+                    <div style={{ borderLeft: `5px solid ${C.RED}`, paddingLeft: "15px", marginBottom: "12px" }}>
+                        <h1 style={{ fontSize: "13px", fontWeight: "900", color: "#000", margin: 0, lineHeight: 1.1, textTransform: "uppercase" }}>
                             {companyDisplay}
                         </h1>
                         {customer.name && (
-                            <p style={{ fontSize: "11px", fontWeight: "600", color: "#555", margin: "4px 0 0 0", textTransform: "uppercase" }}>
+                            <p style={{ fontSize: "10px", fontWeight: "600", color: "#555", margin: "3px 0 0 0", textTransform: "uppercase" }}>
                                 Attn: {customer.name}
                             </p>
                         )}
                         {customer.city && (
-                            <p style={{ fontSize: "11px", fontWeight: "bold", color: "#888", margin: "2px 0 0 0", textTransform: "uppercase" }}>
+                            <p style={{ fontSize: "10px", fontWeight: "bold", color: "#888", margin: "1px 0 0 0", textTransform: "uppercase" }}>
                                 {customer.city}, INDIA
                             </p>
                         )}
                     </div>
 
-                    <div style={{ display: "flex", gap: "30px" }}>
+                    <div style={{ display: "flex", gap: "25px" }}>
                         <div>
-                            <span style={{ display: "block", fontSize: "9px", fontWeight: "bold", color: "#aaa" }}>MODEL</span>
-                            <strong style={{ fontSize: "16px", color: C.DARK }}>{machine.modelCode || "AE-SERIES"}</strong>
+                            <span style={{ display: "block", fontSize: "8px", fontWeight: "bold", color: "#aaa" }}>MODEL</span>
+                            <strong style={{ fontSize: "14px", color: C.DARK }}>{machine.modelCode || "AE-SERIES"}</strong>
                         </div>
                         <div>
-                            <span style={{ display: "block", fontSize: "9px", fontWeight: "bold", color: "#aaa" }}>FAMILY</span>
-                            <strong style={{ fontSize: "16px", color: C.RED }}>{machine.family || "Extrusion System"}</strong>
+                            <span style={{ display: "block", fontSize: "8px", fontWeight: "bold", color: "#aaa" }}>FAMILY</span>
+                            <strong style={{ fontSize: "14px", color: C.RED }}>{machine.family || "Extrusion System"}</strong>
                         </div>
                     </div>
                 </div>
 
                 <div style={{ width: "40%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ background: "white", padding: "5px", border: `1px solid ${C.BORDER}`, borderRadius: "5px", height: "140px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ background: "white", padding: "5px", border: `1px solid ${C.BORDER}`, borderRadius: "5px", height: "120px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <SafeImage src={machineDetails.machineImagePath} style={{ maxWidth: "90%", maxHeight: "90%", objectFit: "contain" }} />
                     </div>
                 </div>
             </div>
 
             {/* BODY CONTENT */}
-            <div style={{ padding: "20px 40px", flex: 1 }}>
+            <div style={{ padding: "15px 40px", flex: 1 }}>
 
                 {/* STANDARD SCOPE */}
-                <div style={{ marginBottom: "20px" }}>
-                    <h3 style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", borderBottom: `2px solid #333`, paddingBottom: "4px", marginBottom: "6px", color: C.DARK }}>
+                <div style={{ marginBottom: "15px" }}>
+                    <h3 style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", borderBottom: `2px solid #333`, paddingBottom: "3px", marginBottom: "5px", color: C.DARK }}>
                         Standard Scope (Basic Machine)
                     </h3>
-                    <table style={{ width: "100%", fontSize: "10.5px", borderCollapse: "collapse" }}>
+                    <table style={{ width: "100%", fontSize: "9.5px", borderCollapse: "collapse" }}>
                         <thead>
                             <tr>
-                                <th style={{ textAlign: "left", padding: "4px 0", color: "#666" }}>ITEM DESCRIPTION</th>
-                                {/* <th style={{ textAlign: "right", padding: "4px 0", color: "#666" }}>QTY</th> */}
+                                <th style={{ textAlign: "left", padding: "3px 0", color: "#666" }}>ITEM DESCRIPTION</th>
                             </tr>
                         </thead>
                         <tbody>
                             {topItems.map((item, i) => (
                                 <tr key={i} style={{ borderBottom: `1px dashed ${C.BORDER}` }}>
-                                    <td style={{ padding: "5px 0" }}>
+                                    <td style={{ padding: "3px 0" }}>
                                         <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                            <span style={{ color: "#999", marginRight: "8px", fontWeight: "bold", fontSize: "10px", marginTop: "2px" }}>{i + 1}</span>
+                                            <span style={{ color: "#999", marginRight: "8px", fontWeight: "bold", fontSize: "9px", marginTop: "1px" }}>{i + 1}</span>
                                             <div>
-                                                {/* <div style={{ fontWeight: "800", color: "#000", fontSize: "10px" }}>{item.name}</div> */}
                                                 {item.desc && (
-                                                    <div style={{ fontSize: "11px", color: "#000000ff", lineHeight: "1.2", marginTop: "2px", maxWidth: "7000px", fontStyle: "italic" }}>
+                                                    <div style={{ fontSize: "9.5px", color: "#000", lineHeight: "1.1", marginTop: "1px", maxWidth: "700mm", fontStyle: "italic" }}>
                                                         {item.desc}
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
                                     </td>
-                                    {/* <td style={{ padding: "5px 0", textAlign: "right", fontWeight: "bold", verticalAlign: "top", fontSize: "11px" }}>{item.qty || 1}</td> */}
                                 </tr>
                             ))}
-                            {extraCount > 0 && <tr><td colSpan={2} style={{ textAlign: "center", padding: "6px", fontSize: "10px", color: "#b45309" }}>... + {extraCount} more components included ...</td></tr>}
+                            {extraCount > 0 && <tr><td style={{ textAlign: "center", padding: "4px", fontSize: "9px", color: "#b45309" }}>... + {extraCount} more components included ...</td></tr>}
                         </tbody>
                     </table>
-                </div><br /><br />
+                </div>
 
                 {/* OPTIONAL ITEMS (Detailed Table) */}
                 {optionals.length > 0 && (

@@ -1294,6 +1294,7 @@ export const prevalidateImages = async (data) => {
   };
 
   d.components = await validateItems(d.components);
+  d.annexure_components = await validateItems(d.annexure_components || []);
   d.optional_items = await validateItems(d.optional_items || d.optionalItems || []);
 
   return d;

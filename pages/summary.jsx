@@ -4,7 +4,7 @@ import { useContext, useMemo, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { numberToWords } from "../utils/numberToWords";
-import { generateScopeDesc } from "../src/utils/generateScopeDesc";
+import { generateScopeDesc, generateWinder, generateSecondaryNip } from "../src/utils/generateScopeDesc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SEO from "../components/SEO";
 import { AdroitQuotation } from "../src/components/quotation/AdroitQuotation";
@@ -153,16 +153,18 @@ function getMachineHeading(machineType, customer, currentMachineModel) {
  * Called once in useMemo — result feeds both PDF paths.
  */
 function buildProposalData({
-  customer, machineType, currentMachineModel, selectedMachineModelLabel,
-  selected, selectedAddons, customOutput, customLayflat, customRollerWidth,
-  withMarkup, afterDiscount, addonsTotal, discount, markup,
-  machineModelIndex, customMode, scopeOverrides,
+  customer = {}, machineType = "3layer", currentMachineModel = {}, selectedMachineModelLabel = "",
+  selected = [], selectedAddons = [], customOutput = "", customLayflat = "", customRollerWidth = "",
+  withMarkup = 0, afterDiscount = 0, addonsTotal = 0, discount = 0, markup = 0,
+  machineModelIndex = null, customMode = false, scopeOverrides = {},
   // Add UI persistence flags
-  quoteTemplate, showPricingFields,
-  presetBasePrice,
+  quoteTemplate = "v2", showPricingFields = false,
+  showMarkupField = false, showDiscountField = false, showPrices = false,
+  conversionRate = 84,
+  presetBasePrice = 0,
   currency = "INR",
   rate = 1,
-}) {
+} = {}) {
   const SERIES = { mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex" };
   const TYPE_NAMES = {
     mono: "MONOLAYER BLOWN FILM LINE",
@@ -250,7 +252,13 @@ function buildProposalData({
       shortDesc: item.shortDesc || item.cardDesc || "",
       techDesc: item.techDesc || {},
       price: item.price != null
-        ? fmtPrice((item.price * (item.qty || 1)) / (currency === 'USD' ? rate : 1), currency)
+        ? (() => {
+          const base = (item.price * (item.qty || 1));
+          const m = item.markup || 0;
+          const d = item.discount || 0;
+          const adjusted = base * (1 + m / 100) * (1 - d / 100);
+          return fmtPrice(adjusted / (currency === 'USD' ? rate : 1), currency);
+        })()
         : "",
       rawPrice: (item.price || 0) * (item.qty || 1),
     }));
@@ -261,46 +269,144 @@ function buildProposalData({
   const overrides = scopeOverrides || {};
   let hasExtruder = false;
 
+  function fillTechDesc(item, techDesc) {
+    if (!techDesc) return {};
+    const filled = { ...techDesc };
+    const nameLc = (item.name || "").toLowerCase();
+    const isWinder = nameLc.includes("winder") || (item.category || "").toLowerCase().includes("winder");
+
+    // Extract size from item name or size property
+    let size = item.size || item.currentSize || "";
+    if (!size) {
+      const match = nameLc.match(/(\d+)\s*mm/i);
+      if (match) size = match[1];
+    }
+    // Prefer user input roller width if applicable
+    const displayWidth = customRollerWidth || (size ? `${size} mm` : "");
+
+    Object.keys(filled).forEach(key => {
+      if (filled[key] === "TBD") {
+        const kLc = key.toLowerCase();
+        if (kLc.includes("nip") && kLc.includes("width")) {
+          filled[key] = displayWidth;
+        } else if (kLc.includes("surface winder")) {
+          filled[key] = `${displayWidth}${displayWidth.includes("mm") ? "" : " mm"} film width.`;
+        } else if (kLc.includes("film width")) {
+          filled[key] = displayWidth;
+        }
+      }
+    });
+    return filled;
+  }
+
   const selectedScopeItems = (selected || [])
     .filter(item => item && item.name)
-    .map(item => {
+    .flatMap(item => {
       const c = (item.category || "").toLowerCase();
-      // Deduplicate extruders — generateScopeDesc groups them all into one line
-      const isExtruder = c.includes("extruder") || (item.name || "").toLowerCase().includes("extruder") || (item.id || "").includes("ext-");
+      const nameLc = (item.name || "").toLowerCase();
+      const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
+      
       if (isExtruder) {
-        if (hasExtruder) return null;
+        if (hasExtruder) return [];
         hasExtruder = true;
       }
 
       // Deduplicate Control Panels as they are now injected statically
-      const isControl = c.includes("panel") || (item.name || "").toLowerCase().includes("panel") || c.includes("control") || (item.name || "").toLowerCase().includes("control");
-      if (isControl) return null;
+      const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
+      if (isControl) return [];
 
       // Hide internal components whose text is merged into parent items
       if (c.includes("collapsing frame") || c.includes("filter")) {
-        return null;
+        return [];
       }
 
       const key = item.id || item.name;
       const customDesc = overrides[key];
+
+      // Check for combined Winder + Secondary Nip
+      const isCombinedWinder = c.includes("winder") && (nameLc.includes("secondary") || nameLc.includes("nip"));
+
+      if (isCombinedWinder && !customDesc) {
+        // Produce TWO items for SOS
+        const nipDesc = generateSecondaryNip(item, currentMachineModel);
+        const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+
+        const techDescFilled = fillTechDesc(item, item.techDesc);
+        return [
+          {
+            id: `${item.id}-nip`,
+            name: "Secondary Nip Assembly",
+            qty: 1,
+            image: item.image,
+            shortDesc: nipDesc,
+            scopeDesc: nipDesc,
+            techDesc: techDescFilled,
+            _autoDesc: nipDesc,
+          },
+          {
+            id: `${item.id}-winder`,
+            name: item.name.replace(/Secondary Nip & /i, ""),
+            qty: item.qty || 1,
+            image: item.image,
+            shortDesc: winderDesc,
+            scopeDesc: winderDesc,
+            techDesc: techDescFilled,
+            _autoDesc: winderDesc,
+          }
+        ];
+      }
+
       const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
       const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
-      return {
+      return [{
         id: item.id || "",
-        name: isExtruder ? "Extruders" : (item.name || ""),
+        name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
         qty: isExtruder ? 1 : (item.qty || 1),
-        image: item.image || "", shortDesc: finalDesc,
+        image: item.image || "", 
+        shortDesc: finalDesc,
         scopeDesc: autoScopeDesc({ ...item, name: isExtruder ? "Extruders" : item.name, shortDesc: finalDesc }),
-        techDesc: item.techDesc || {},
+        techDesc: fillTechDesc(item, item.techDesc),
         _autoDesc: autoDesc
-      };
-    })
-    .filter(Boolean);
+      }];
+    });
 
-  const winderTowerScopeItems = winderTowerAddonsRaw.map(item => {
+  const winderTowerScopeItems = winderTowerAddonsRaw.flatMap(item => {
     const key = item.id || item.name;
     const customDesc = overrides[key];
+    const nameLc = (item.name || "").toLowerCase();
+    const isWinder = (item.category || "").toLowerCase().includes("winder") || nameLc.includes("winder");
+    const isCombinedWinder = isWinder && (nameLc.includes("secondary") || nameLc.includes("nip"));
+
+    if (isCombinedWinder && !customDesc) {
+      const nipDesc = generateSecondaryNip(item, currentMachineModel);
+      const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+
+      const techDescFilled = fillTechDesc(item, item.techDesc);
+      return [
+        {
+          id: `${item.id}-nip`,
+          name: "Secondary Nip Assembly",
+          qty: 1,
+          image: item.image,
+          shortDesc: nipDesc,
+          scopeDesc: nipDesc,
+          techDesc: techDescFilled,
+          _autoDesc: nipDesc,
+        },
+        {
+          id: `${item.id}-winder`,
+          name: (item.name || "").replace(/Secondary Nip & /i, ""),
+          qty: item.qty || 1,
+          image: item.image,
+          shortDesc: winderDesc,
+          scopeDesc: winderDesc,
+          techDesc: techDescFilled,
+          _autoDesc: winderDesc,
+        }
+      ];
+    }
+
     const autoDesc = generateScopeDesc(item, selected, currentMachineModel) || item.shortDesc || item.cardDesc;
     const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
@@ -310,7 +416,7 @@ function buildProposalData({
       qty: item.qty || 1,
       image: item.image || "",
       shortDesc: finalDesc,
-      techDesc: item.techDesc || {},
+      techDesc: fillTechDesc(item, item.techDesc),
       _autoDesc: autoDesc
     };
   });
@@ -318,7 +424,7 @@ function buildProposalData({
   const annexureComponents = (selected || [])
     .filter(item => item && item.name)
     .map(item => {
-      const c = (item.category || "").toLowerCase();
+      const c = (item?.category || "").toLowerCase();
       // Only exclude inner-utility items 
       if (c.includes("collapsing frame") || c.includes("filter")) {
         return null;
@@ -329,18 +435,20 @@ function buildProposalData({
       // We explicitly preserve core machine components in the technical annexure.
       const isCore = c.includes("extruder") || c.includes("die") || c.includes("ring") ||
         c.includes("haul") || c.includes("winder") || c.includes("tower") ||
-        (item.name || "").toLowerCase().includes("extruder");
+        c.includes("cage") || c.includes("basket") || c.includes("ibc") ||
+        (item.name || "").toLowerCase().includes("extruder") ||
+        (item.name || "").toLowerCase().includes("ibc");
 
-      const isAddon = (item.price > 0 || c.includes("addon") || c.includes("optional")) && !isCore;
+      const isAddon = ((item?.price || 0) > 0 || c.includes("addon") || c.includes("optional")) && !isCore;
       if (isAddon) return null;
 
       return {
         id: item.id || "",
-        name: item.name || "",
+        name: item.customName || item.name || "",
         qty: item.qty || 1,
         image: item.image || "",
         shortDesc: item.shortDesc || item.cardDesc || "",
-        techDesc: item.techDesc || {},
+        techDesc: fillTechDesc(item, item.techDesc),
       };
     })
     .concat(winderTowerScopeItems)
@@ -360,13 +468,6 @@ function buildProposalData({
       scopeDesc: autoScopeDesc({ name: "Idler Rollers", shortDesc: "Aluminum Idler rollers as per layout drawing." }),
       techDesc: {},
       _autoDesc: "Aluminum Idler rollers as per layout drawing."
-    },
-    {
-      id: "auto_secnip", name: "Secondary Nip", qty: 1, image: "",
-      shortDesc: "One Secondary nip with edge slitting assembly and edge trimming assembly.",
-      scopeDesc: autoScopeDesc({ name: "Secondary Nip", shortDesc: "One Secondary nip with edge slitting assembly and edge trimming assembly." }),
-      techDesc: {},
-      _autoDesc: "One Secondary nip with edge slitting assembly and edge trimming assembly."
     },
     !hasSelectedTower && {
       id: "auto_tower", name: "Tower Structure", qty: 1, image: "",
@@ -394,7 +495,7 @@ function buildProposalData({
       image: "", shortDesc: desc, scopeDesc: desc, techDesc: {}, _isExtra: true,
     };
   }).filter(item => item.shortDesc !== "");
-  
+
   // Add a dedicated manual extra row that is always available if needed
   const manualExtra = {
     id: "manual_extra",
@@ -424,8 +525,9 @@ function buildProposalData({
     ];
     return [...items].sort((a, b) => {
       function getIdx(item) {
+        if (!item) return 99;
         const n = String(item.name || "").toLowerCase();
-        const d = String(item.shortDesc || "").toLowerCase();
+        const d = String(item.shortDesc || item.description || "").toLowerCase();
         for (let i = 0; i < SORT_ORDER.length; i++) {
           if (n.includes(SORT_ORDER[i]) || d.includes(SORT_ORDER[i])) return i;
         }
@@ -546,11 +648,14 @@ function buildProposalData({
       customMode,
       customOutput,
       customLayflat,
-      scopeOverrides,
-      quotationRef: customer?.quotationRef || customer?.ref,
-      // UI flags for perfect restoration
-      quoteTemplate, showPricingFields,
       customRollerWidth,
+      scopeOverrides,
+      conversionRate,
+      quoteTemplate,
+      showPricingFields,
+      showMarkupField,
+      showDiscountField,
+      showPrices,
       presetBasePrice,
     }
   };
@@ -581,7 +686,11 @@ export default function SummaryPage() {
     exportJsonOnly,
     quoteTemplate, setQuoteTemplate,
     showPricingFields, setShowPricingFields,
+    showMarkupField, setShowMarkupField,
+    showDiscountField, setShowDiscountField,
+    showAddonPricing, setShowAddonPricing,
     scopeOverrides, setScopeOverrides,
+    updateAddonPricing,
   } = useContext(ConfigContext);
 
   const [isClient, setIsClient] = useState(false);
@@ -608,6 +717,8 @@ export default function SummaryPage() {
       machineModelIndex, customMode, scopeOverrides,
       // Pass UI states
       quoteTemplate, showPricingFields,
+      showMarkupField, showDiscountField, showPrices,
+      conversionRate,
       presetBasePrice: computePriceSummary().isPackagePrice ? computePriceSummary().basicTotal : 0, // Fallback if context not direct
       currency,
       rate,
@@ -617,7 +728,8 @@ export default function SummaryPage() {
     selected, selectedAddons, customOutput, customLayflat, customRollerWidth,
     withMarkup, afterDiscount, addonsTotal, discount, markup,
     machineModelIndex, customMode, scopeOverrides,
-    quoteTemplate, showPricingFields,
+    quoteTemplate, showPricingFields, showMarkupField, showDiscountField, showPrices,
+    conversionRate,
     currency, rate,
   ]);
 
@@ -710,7 +822,7 @@ export default function SummaryPage() {
                 />
                 <p className="text-xs text-slate-400 mt-1">Deducted from the marked-up price</p>
               </div>
-              {customer.region === 'EXP' && (
+              {customer?.region === 'EXP' && (
                 <div className="flex-1">
                   <label className="block text-xs font-medium text-slate-500 mb-1">Exchange Rate (₹/$)</label>
                   <input
@@ -853,7 +965,7 @@ export default function SummaryPage() {
                   {(proposalData?.scope || []).map((item, i) => {
                     const key = item.id || item.name;
 
-                    if (item.id === "auto_idler" || item.id === "auto_secnip") {
+                    if (["auto_idler", "auto_secnip", "auto_tower", "auto_control"].includes(item.id)) {
                       return (
                         <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
                           <td className="py-2 px-3 text-center font-bold text-slate-400 align-top">
@@ -924,7 +1036,7 @@ export default function SummaryPage() {
                       </tr>
                     );
                   })}
-                  
+
                   {/* Always append a manual extra row for the editor if it's not already in proposalData.scope */}
                   {!proposalData?.scope?.some(x => x.id === "manual_extra") && (
                     <tr key="manual_extra" className={proposalData?.scope?.length % 2 === 0 ? "bg-white" : "bg-slate-50"}>
@@ -1013,13 +1125,31 @@ export default function SummaryPage() {
 
         {/* ── OPTIONAL EQUIPMENTS TABLE ─────────────────────────────────── */}
         <section className="glass-card p-6 mb-8">
-          <h3 className="text-sm font-semibold mb-4 text-brand-blue">Optional Equipments</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-brand-blue">Optional Equipments</h3>
+            <button
+              onClick={() => setShowAddonPricing(!showAddonPricing)}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${showAddonPricing
+                ? " text-amber-700 shadow-inner"
+                : " text-slate-200 hover:bg-slate-100"
+                }`}
+            >
+              {showAddonPricing ? <FaEyeSlash className="text-sm" /> : <FaEye className="text-sm" />}
+              {/* {showAddonPricing ? "Hide Internal Pricing" : "View Internal Pricing"} */}
+            </button>
+          </div>
           <div className="overflow-x-auto rounded-xl border border-slate-200">
             <table className="w-full text-xs">
               <thead className="bg-slate-50">
                 <tr>
                   <th className="px-3 py-2 text-left font-semibold text-slate-700">Component</th>
                   <th className="px-3 py-2 text-right font-semibold w-16 text-slate-700">Qty</th>
+                  {showAddonPricing && (
+                    <>
+                      <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Markup %</th>
+                      <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Disc %</th>
+                    </>
+                  )}
                   <th className="px-3 py-2 text-right font-semibold w-28 text-slate-700">Price</th>
                 </tr>
               </thead>
@@ -1029,21 +1159,47 @@ export default function SummaryPage() {
                 ) : (
                   <>
                     {selectedAddons.map((addon, idx) => (
-                      <tr key={addon.id || idx} className="border-t border-slate-100">
-                        <td className="px-3 py-2 align-top text-slate-900">
+                      <tr key={addon.id || idx} className="border-t border-slate-100 group">
+                        <td className="px-3 py-2 align-top text-slate-900 group-hover:text-brand-blue transition-colors">
                           {addon.customName || addon.name}
                         </td>
-                        <td className="px-3 py-2 align-top text-right text-slate-900">{addon.qty || 1}</td>
-                        <td className="px-3 py-2 align-top text-right text-slate-500 font-mono">
+                        <td className="px-3 py-2 align-top text-right text-slate-900 font-medium">{addon.qty || 1}</td>
+                        {showAddonPricing && (
+                          <>
+                            <td className="px-2 py-1 align-middle bg-amber-50/20">
+                              <input
+                                type="number"
+                                value={addon.markup || 0}
+                                onChange={(e) => updateAddonPricing(addon.id, { markup: parseFloat(e.target.value) || 0, discount: addon.discount || 0 })}
+                                className="w-full text-center py-1 rounded bg-white border border-amber-200 text-brand-blue font-bold focus:ring-1 focus:ring-amber-400 outline-none"
+                              />
+                            </td>
+                            <td className="px-2 py-1 align-middle bg-amber-50/20">
+                              <input
+                                type="number"
+                                value={addon.discount || 0}
+                                onChange={(e) => updateAddonPricing(addon.id, { markup: addon.markup || 0, discount: parseFloat(e.target.value) || 0 })}
+                                className="w-full text-center py-1 rounded bg-white border border-amber-200 text-rose-500 font-bold focus:ring-1 focus:ring-amber-400 outline-none"
+                              />
+                            </td>
+                          </>
+                        )}
+                        <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold">
                           {addon.price != null
-                            ? fmtPrice((addon.price * (addon.qty || 1)) / (currency === 'USD' ? rate : 1), currency)
+                            ? (() => {
+                              const basePrice = (addon.price * (addon.qty || 1));
+                              const m = addon.markup || 0;
+                              const d = addon.discount || 0;
+                              const final = basePrice * (1 + m / 100) * (1 - d / 100);
+                              return fmtPrice(final / (currency === 'USD' ? rate : 1), currency);
+                            })()
                             : "—"}
                         </td>
                       </tr>
                     ))}
                     {addonsTotal != null && (
                       <tr className="border-t-2 border-slate-300 bg-slate-50">
-                        <td colSpan={2} className="px-3 py-2 text-right font-bold text-slate-700">
+                        <td colSpan={showAddonPricing ? 4 : 2} className="px-3 py-2 text-right font-bold text-slate-700">
                           Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
                         </td>
                         <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm">

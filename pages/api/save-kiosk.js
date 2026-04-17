@@ -42,12 +42,19 @@ export default async function handler(req, res) {
   try {
     const { pdfBase64, fullContextData } = req.body;
 
-    // Naming Logic
-    const company = fullContextData?.customer?.company || fullContextData?.raw_state?.customer?.company || 'Visitor';
-    const safeName = company.replace(/[^a-z0-9]/gi, '_').toLowerCase().slice(0, 30);
-    const timestamp = Date.now();
-    const pdfName = `adroit_${safeName}_${timestamp}.pdf`;
-    const jsonName = `adroit_${safeName}_${timestamp}.json`;
+    // Naming Logic: Quoteref_customername_city
+    const quoteRef = fullContextData?.quotation?.refNo || fullContextData?.quotation?.ref_no || 
+                     fullContextData?.customer?.quotationRef || fullContextData?.customer?.ref || 'NoRef';
+    const company = fullContextData?.customer?.company || fullContextData?.customer?.company_name || 'Visitor';
+    const city = fullContextData?.customer?.city || 'NoCity';
+
+    const safeRef = String(quoteRef).replace(/[^a-z0-9]/gi, '_');
+    const safeCompany = String(company).replace(/[^a-z0-9]/gi, '_');
+    const safeCity = String(city).replace(/[^a-z0-9]/gi, '_');
+
+    const baseFileName = `${safeRef}_${safeCompany}_${safeCity}`;
+    const pdfName = `${baseFileName}.pdf`;
+    const jsonName = `${baseFileName}.json`;
 
     // 1. BUFFER PREP
     const pdfBuffer = Buffer.from(pdfBase64.replace(/^data:application\/pdf;base64,/, ""), 'base64');

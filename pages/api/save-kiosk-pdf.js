@@ -16,9 +16,14 @@ export default function handler(req, res) {
         // Clean data
         const base64Data = pdfBase64.replace(/^data:application\/pdf;base64,/, "");
 
-        // Generate filename
-        const safeName = (customerName || 'visitor').replace(/[^a-z0-9]/gi, '_').toLowerCase();
-        const filename = `adroit_${safeName}_${uuidv4().slice(0, 4)}.pdf`;
+        // Generate filename: Quoteref_customername_city
+        const quoteRef = req.body.quotationRef || 'NoRef';
+        const city = req.body.city || 'NoCity';
+        const safeRef = String(quoteRef).replace(/[^a-z0-9]/gi, '_');
+        const safeName = (customerName || 'Visitor').replace(/[^a-z0-9]/gi, '_');
+        const safeCity = String(city).replace(/[^a-z0-9]/gi, '_');
+        
+        const filename = `${safeRef}_${safeName}_${safeCity}.pdf`;
 
         // Define public path
         const downloadDir = path.join(process.cwd(), 'public', 'downloads');

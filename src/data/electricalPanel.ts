@@ -21,6 +21,18 @@ export interface ElectricalAddon {
   shortDesc?: string;
 }
 
+export const PANEL_3LAYER_PRICES: Record<string, number> = {
+  "1125": 1100000,
+  "1350": 1350000,
+  "1450": 1450000,
+  "1625": 1650000,
+  "1870": 1870000,
+  "1970": 1970000,
+  "2125": 2125000,
+  "2370": 2370000,
+  "2650": 2650000,
+};
+
 export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
   // ---------------- BASIC PANEL – MONO ----------------
   {
@@ -136,5 +148,23 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
         "Option for remote diagnostics / support via VPN or secure link (if offered).",
     },
     shortDesc: "High-end PLC/drive panel for wide web lines with full integration.",
+  },
+  {
+    id: "panel-3layer-dynamic",
+    name: "Electrical Control Panel",
+    type: "ac-drive-panel",
+    machineTypes: ["3layer"],
+    image: "/images/addons/electrical/panel-acdrive.png",
+    cardDesc: "Select size to add electrical control panel for 3-layer line.",
+    price: 0,
+    qty: 1,
+    isDynamic: true,
+    techDesc: {
+      "Panel Type": "Floor mounted, compartmentalized panel with segregated power & control wiring.",
+      "Drives": "Individual AC drives for extruders, haul-off, winder and auxiliary motors.",
+      "Temperature Control": "PID temperature controllers for each heating zone, with digital display.",
+      "Interlocks": "Safety interlocks for heaters, motors, emergency stop and doors."
+    },
+    shortDesc: "Dynamic control panel with model-specific size selection.",
   },
 ];

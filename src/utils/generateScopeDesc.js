@@ -48,7 +48,7 @@ function td(techDesc, ...keyHints) {
  * Expects callers to pass the FIRST extruder item + the FULL allSelected list
  * so we can group them. The caller must skip duplicate extruders.
  */
-function generateExtruder(firstItem, allSelected) {
+function generateExtruder(firstItem, allSelected, machineModel, selectedAddons = []) {
   const extruders = (allSelected || []).filter(
     (it) =>
       it &&
@@ -112,9 +112,24 @@ function generateExtruder(firstItem, allSelected) {
 
   // Material
   const material = td(firstItem.techDesc, "material") || "Nitro Alloy";
-  const materialLine = material.toLowerCase().includes("nitro")
+  
+  // Check for bimetallic addons in selectedAddons
+  const bimetallicAddons = (selectedAddons || []).filter(a => a.id.startsWith("bimetallic-upgrade-"));
+  const numBimetallic = bimetallicAddons.length;
+
+  let materialLine = material.toLowerCase().includes("nitro")
     ? "Imported Nitro Alloy screw & barrel"
     : material;
+
+  if (numBimetallic > 0) {
+    if (numBimetallic === totalQty) {
+      materialLine = "Imported Bi-metallic screw & barrel";
+    } else {
+      // Mixed case
+      const nitroCount = totalQty - numBimetallic;
+      materialLine = `${numWord(numBimetallic)} with Bi-metallic screw & barrel, ${numWord(nitroCount)} with Imported Nitro Alloy screw & barrel`;
+    }
+  }
 
   const driveStr = driveList.some(d => d && d !== "?") ? driveList.join("/") : "";
 
@@ -404,14 +419,15 @@ const GENERATORS = {
 // ─── Public API ──────────────────────────────────────────────────────────────
 
 /**
- * generateScopeDesc(item, allSelected, machineModel?)
+ * generateScopeDesc(item, allSelected, machineModel?, selectedAddons?)
  *
  * @param {object}  item         – the selected component object
- * @param {object[]} allSelected – the full `selected` array (needed for extruder grouping)
+ * @param {object[]} allSelected – the full `selected` array
  * @param {object}  [machineModel] – currentMachineModel from ConfigContext (optional)
+ * @param {object[]} [selectedAddons] – the list of selected addons (optional)
  * @returns {string}
  */
-export function generateScopeDesc(item, allSelected = [], machineModel = null) {
+export function generateScopeDesc(item, allSelected = [], machineModel = null, selectedAddons = []) {
   if (!item) return "";
 
   // ① Manual scopeDesc always wins
@@ -427,7 +443,7 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null) {
     if (gen) {
       // Extruder is special — needs allSelected for multi-extruder grouping
       if (category === "Extruder") {
-        return generateExtruder(item, allSelected);
+        return generateExtruder(item, allSelected, machineModel, selectedAddons);
       }
       if (
         category === "Winder" &&
@@ -436,7 +452,7 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null) {
       ) {
         return generateSecondaryNip(item, machineModel);
       }
-      return gen(item, allSelected, machineModel);
+      return gen(item, allSelected, machineModel, selectedAddons);
     }
 
     // ③ Name-based heuristics for items without a strict category match

@@ -9,6 +9,7 @@ const C = {
 };
 
 const formatCurrency = (val, currency = "INR") => {
+    if (typeof val === "string") return val;
     if (currency === "USD") {
         return "$ " + Math.round(val || 0).toLocaleString('en-US');
     }

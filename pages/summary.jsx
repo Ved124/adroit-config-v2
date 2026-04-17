@@ -160,10 +160,12 @@ function buildProposalData({
   // Add UI persistence flags
   quoteTemplate = "v2", showPricingFields = false,
   showMarkupField = false, showDiscountField = false, showPrices = false,
+  showAddonPricing = false,
   conversionRate = 84,
   presetBasePrice = 0,
   currency = "INR",
   rate = 1,
+  quotationDate = null,
 } = {}) {
   const SERIES = { mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex" };
   const TYPE_NAMES = {
@@ -240,7 +242,8 @@ function buildProposalData({
     const c = (item.category || "").toLowerCase();
     const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
     const isTrim = n.includes("trim");
-    return !isWinderTower || isTrim;
+    const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons";
+    return (!isWinderTower || isTrim) && !isBimetallic;
   });
 
   const optItems = realAddonsRaw
@@ -283,6 +286,21 @@ function buildProposalData({
     }
     // Prefer user input roller width if applicable
     const displayWidth = customRollerWidth || (size ? `${size} mm` : "");
+
+    // --- BIMETALLIC LOGIC FOR TECH DESC ---
+    const isExtruder = (item.category || "").toLowerCase() === "extruder" || nameLc.includes("extruder") || (item.id || "").includes("ext-");
+    if (isExtruder) {
+      const hasBimetallic = (selectedAddons || []).some(a => a.id.startsWith("bimetallic-upgrade-") && a.metadata?.targetExtruderId === item.id);
+      if (hasBimetallic) {
+        // Find the material key (Material or material)
+        const materialKey = Object.keys(filled).find(k => k.toLowerCase() === "material");
+        if (materialKey) {
+          filled[materialKey] = "Bi-metallic screw and barrel";
+        } else {
+          filled["Material"] = "Bi-metallic screw and barrel";
+        }
+      }
+    }
 
     Object.keys(filled).forEach(key => {
       if (filled[key] === "TBD") {
@@ -356,7 +374,7 @@ function buildProposalData({
         ];
       }
 
-      const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
+      const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
       const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
       return [{
@@ -407,7 +425,7 @@ function buildProposalData({
       ];
     }
 
-    const autoDesc = generateScopeDesc(item, selected, currentMachineModel) || item.shortDesc || item.cardDesc;
+    const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
     const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
     return {
@@ -546,7 +564,7 @@ function buildProposalData({
     },
     quotation: {
       refNo: customer?.quotationRef || customer?.ref || "DRAFT",
-      date: new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" }),
+      date: quotationDate || new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" }),
     },
     machine: {
       type: machineType || "3layer",
@@ -656,7 +674,9 @@ function buildProposalData({
       showMarkupField,
       showDiscountField,
       showPrices,
+      showAddonPricing,
       presetBasePrice,
+      quotationDate: quotationDate || new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" }),
     }
   };
 }
@@ -689,6 +709,7 @@ export default function SummaryPage() {
     showMarkupField, setShowMarkupField,
     showDiscountField, setShowDiscountField,
     showAddonPricing, setShowAddonPricing,
+    quotationDate, setQuotationDate,
     scopeOverrides, setScopeOverrides,
     updateAddonPricing,
   } = useContext(ConfigContext);
@@ -718,10 +739,12 @@ export default function SummaryPage() {
       // Pass UI states
       quoteTemplate, showPricingFields,
       showMarkupField, showDiscountField, showPrices,
+      showAddonPricing,
       conversionRate,
       presetBasePrice: computePriceSummary().isPackagePrice ? computePriceSummary().basicTotal : 0, // Fallback if context not direct
       currency,
       rate,
+      quotationDate,
     });
   }, [
     isClient, customer, machineType, currentMachineModel, selectedMachineModelLabel,
@@ -729,9 +752,46 @@ export default function SummaryPage() {
     withMarkup, afterDiscount, addonsTotal, discount, markup,
     machineModelIndex, customMode, scopeOverrides,
     quoteTemplate, showPricingFields, showMarkupField, showDiscountField, showPrices,
+    showAddonPricing, quotationDate,
     conversionRate,
     currency, rate,
   ]);
+
+  // Define optItems for local UI rendering (mirror logic in buildProposalData)
+  const realAddonsRaw = (selectedAddons || []).filter(item => {
+    if (!item || !item.name) return false;
+    const n = item.name.toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
+    const isTrim = n.includes("trim");
+    const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
+    return (!isWinderTower || isTrim) && !isBimetallic;
+  });
+
+  const optItems = realAddonsRaw.map(item => {
+    // Ensure item.price is a number (if it's a string like "Rs. 1,00,000/-" we try to strip it, but ideally it should be numeric)
+    let rawP = typeof item.price === "string" 
+      ? parseFloat(item.price.replace(/[^\d.]/g, '')) 
+      : (item.price || 0);
+    
+    // Safety check for NaN
+    if (isNaN(rawP)) rawP = 0;
+
+    const base = rawP * (item.qty || 1);
+    const m = item.markup || 0;
+    const d = item.discount || 0;
+    const adjusted = base * (1 + m / 100) * (1 - d / 100);
+    const displayVal = adjusted / (currency === 'USD' ? rate : 1);
+
+    return {
+      ...item,
+      id: item.id || "",
+      name: item.customName || item.name || "",
+      qty: item.qty || 1,
+      rawPrice: base,
+      price: item.price != null ? fmtPrice(displayVal, currency) : "—"
+    };
+  });
 
   return (
     <div className="min-h-screen bg-brand-light pt-24 sm:pt-28">
@@ -871,7 +931,7 @@ export default function SummaryPage() {
                 placeholder="e.g. AE/DOM/1350/01"
               />
               <span className="text-slate-500">
-                Date: {new Date().toLocaleDateString("en-IN")}
+                Date: {proposalData?.quotation?.date || new Date().toLocaleDateString("en-IN")}
               </span>
             </div>
 
@@ -1154,11 +1214,11 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {selectedAddons.length === 0 ? (
+                {optItems.length === 0 ? (
                   <tr><td colSpan={3} className="px-3 py-3 text-center text-slate-400">No optional equipments selected.</td></tr>
                 ) : (
                   <>
-                    {selectedAddons.map((addon, idx) => (
+                    {optItems.map((addon, idx) => (
                       <tr key={addon.id || idx} className="border-t border-slate-100 group">
                         <td className="px-3 py-2 align-top text-slate-900 group-hover:text-brand-blue transition-colors">
                           {addon.customName || addon.name}
@@ -1185,15 +1245,7 @@ export default function SummaryPage() {
                           </>
                         )}
                         <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold">
-                          {addon.price != null
-                            ? (() => {
-                              const basePrice = (addon.price * (addon.qty || 1));
-                              const m = addon.markup || 0;
-                              const d = addon.discount || 0;
-                              const final = basePrice * (1 + m / 100) * (1 - d / 100);
-                              return fmtPrice(final / (currency === 'USD' ? rate : 1), currency);
-                            })()
-                            : "—"}
+                          {addon.price || "—"}
                         </td>
                       </tr>
                     ))}

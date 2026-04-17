@@ -10,6 +10,7 @@ import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
 import { CHILLER_PRICES, CHILLER_BRANDS } from "../src/data/chiller";
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
+import { SCREW_SIZES } from "../src/data/bimetallic";
 
 export default function AddonsPage() {
   const router = useRouter();
@@ -169,18 +170,19 @@ function AddonCard({
   const isChiller = item.id.includes("chiller") && item.isDynamic;
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isHeatExchanger = item.id === "heat-exchanger-dynamic";
+  const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
 
   const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : []))));
-  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isChiller ? CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : {}))));
+  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isChiller ? CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : (isBimetallic ? SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {}) : {})))));
 
   // UI customization based on component type
   const isOutputBased = isChiller || isMixerDryer || isHeatExchanger;
-  const selectorLabel = isOutputBased ? "Output" : "Max Roller";
+  const selectorLabel = isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : "Max Roller");
   const unit = isHeatExchanger ? "kg" : (isOutputBased ? "kg/hr" : "mm");
 
   // Local state for dynamic config
-  const [selectedBrand, setSelectedBrand] = useState(brands[0] || "");
-  const [selectedSize, setSelectedSize] = useState(Object.keys(prices)[0] || "");
+  const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
+  const [selectedSize, setSelectedSize] = useState(item.metadata?.size || Object.keys(prices)[0] || "");
 
   // Sync if already selected
   useEffect(() => {
@@ -193,10 +195,14 @@ function AddonCard({
   // Handle case where brands might change if multiple dynamic items exist
   useEffect(() => {
     if (!isSelected && item.isDynamic) {
-      setSelectedBrand(brands[0] || "");
-      setSelectedSize(Object.keys(prices)[0] || "");
+      if (item.metadata?.size) {
+        setSelectedSize(item.metadata.size);
+      } else {
+        setSelectedSize(Object.keys(prices)[0] || "");
+      }
+      setSelectedBrand(brands[0] || "Adroit");
     }
-  }, [item.id, item.isDynamic, isSelected]);
+  }, [item.id, item.isDynamic, isSelected, item.metadata?.size]);
 
   const currentPrice = item.isDynamic
     ? prices[selectedSize] || 0
@@ -226,6 +232,9 @@ function AddonCard({
       } else if (isHeatExchanger) {
         // Example: Heat Exchanger Adroit make - 150 kg
         customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;
+      } else if (isBimetallic) {
+        // Example: Bi-metallic Screw Barrel for Ext-1 - 45mm
+        customName = `${item.name.split(' (')[0]} - ${selectedSize}mm`;
       }
 
       addAddon(category, item, {

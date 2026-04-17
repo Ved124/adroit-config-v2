@@ -7,6 +7,7 @@ import { MANUAL_BC_PRICES, OPEN_CLOSE_BC_PRICES, UP_DOWN_BC_PRICES } from "../sr
 import { HAULOFF_PRICES } from "../src/data/hauloffs";
 import { TOWER_PRICES } from "../src/data/tower";
 import { MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES } from "../src/data/winders";
+import { PANEL_3LAYER_PRICES } from "../src/data/electricalPanel";
 
 
 export default function SelectionPage() {
@@ -145,6 +146,7 @@ function ComponentCard({
   const isManualWinder = item.id === "winder-manual-back-to-back-dynamic";
   const isSurfaceWinder = item.id === "winder-surface-dynamic";
   const isAutoWinder = item.id === "winder-automatic-dynamic";
+  const is3LayerPanel = item.id === "panel-3layer-dynamic";
 
   let prices = {};
   if (isGAirRing) prices = G_AIR_RING_PRICES;
@@ -158,6 +160,7 @@ function ComponentCard({
   else if (isManualWinder) prices = MANUAL_BACK_TO_BACK_PRICES;
   else if (isSurfaceWinder) prices = SURFACE_WINDER_PRICES;
   else if (isAutoWinder) prices = AUTOMATIC_WINDER_PRICES;
+  else if (is3LayerPanel) prices = PANEL_3LAYER_PRICES;
 
   const sizes = Object.keys(prices);
 
@@ -183,7 +186,7 @@ function ComponentCard({
         customName: customName,
         techDesc: {
           ...item.techDesc,
-          [isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : "Cage Size")))]: `${selectedSize} mm`,
+          [isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : "Cage Size"))))]: `${selectedSize} mm`,
           ...(item.category === "Winder" ? { 
             "film width": `${selectedSize} mm`,
             "Winder Size": `${selectedSize} mm`,
@@ -235,7 +238,7 @@ function ComponentCard({
       {item.isDynamic && (
         <div className="mt-4 p-2.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-1.5 animate-in fade-in slide-in-from-top-1 duration-300">
           <label className="text-[9px] font-bold text-slate-500 uppercase tracking-widest px-1">
-            {isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : "Cage Size")))}
+            {isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : "Cage Size"))))}
           </label>
           <select
             disabled={isSelected}
@@ -245,7 +248,7 @@ function ComponentCard({
           >
             {sizes.map((s) => (
               <option key={s} value={s}>
-                {s} mm
+                {s}{is3LayerPanel ? "" : " mm"}
               </option>
             ))}
           </select>

@@ -713,7 +713,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
           <tr>
             <th style={{ ...TH, width: "8%",  textAlign: "center" }}>Sr. No</th>
             <th style={{ ...TH,               textAlign: "left"   }}>Description</th>
-            <th style={{ ...TH, width: "28%", textAlign: "right"  }}>Price (INR)</th>
+            <th style={{ ...TH, width: "28%", textAlign: "right"  }}>Price ({p.currency || "INR"})</th>
           </tr>
         </thead>
         <tbody>
@@ -732,7 +732,8 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
               <td style={{ ...TD, textAlign: "center" }}>{i + 1}</td>
               <td style={TD}>{item.name}</td>
               <td style={{ ...TD, textAlign: "right" }}>
-                {clean(item.price) || "—"}
+                {/* Use the pre-formatted string if it exists; otherwise fallback to cleaning numbers */}
+                {typeof item.price === "string" ? item.price : (clean(item.price) || "—")}
               </td>
             </tr>
           ))}

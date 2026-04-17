@@ -36,8 +36,31 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-225", qty: 1 },
 
       // Bubble cage & collapsing frame
-      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
+      { 
+        category: "Bubble Cage", 
+        id: "bc-open-close-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 250000,
+          customName: "Open Close Bubble Cage - 1250 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+
+      // Air Ring (Missing)
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
 
       // Haul-Off + Tower + Winder
       { 
@@ -55,13 +78,21 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Nip roller width": "1375 mm",
             "Nip roller drive": "5 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
-            "Idler rollers": "Adequate quantity as per layout.",
-            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
-            "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
+            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1000000,
+          customName: "TOWER / PLATFORM - 1250 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+        }
+      },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
@@ -80,8 +111,26 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-275", qty: 1 },
-      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
+      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
+        metadata: {
+           size: "1350",
+           price: 250000,
+           customName: "Open Close Bubble Cage - 1350 mm",
+           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
       { 
         category: "Haul-Off", 
         id: "haul-horizontal-dynamic", 
@@ -97,9 +146,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Nip roller width": "1475 mm",
             "Nip roller drive": "5 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
-            "Idler rollers": "Adequate quantity as per layout.",
-            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
-            "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
+            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
         }
       },
@@ -108,17 +155,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "tower-dynamic", 
         qty: 1,
         metadata: {
-          size: "1250",
-          price: 1000000,
-          customName: "TOWER / PLATFORM - 1250 mm",
-          techDesc: {
-            "Structure": "Knock-down type tower structure.",
-            "Tower Size": "1250 mm",
-            "Platforms": "3-walk around platforms.",
-            "Staircase": "600 mm wide staircase.",
-            "Safety": "Hand rails and kick plates according to European safety standards.",
-            "Idler rollers": "Set of 150 mm diameter idler aluminium rollers of 1450 mm face width.",
-          }
+          size: "1350",
+          price: 1150000,
+          customName: "TOWER / PLATFORM - 1350 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -136,8 +176,26 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-275-stationary", qty: 1 },
-      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
+      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
+        metadata: {
+           size: "1350",
+           price: 250000,
+           customName: "Open Close Bubble Cage - 1350 mm",
+           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
       { 
         category: "Haul-Off", 
         id: "haul-horizontal-dynamic", 
@@ -153,9 +211,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Nip roller width": "1475 mm",
             "Nip roller drive": "5 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
-            "Idler rollers": "Adequate quantity as per layout.",
-            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
-            "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
+            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
         }
       },
@@ -167,14 +223,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1350",
           price: 1150000,
           customName: "TOWER / PLATFORM - 1350 mm",
-          techDesc: {
-            "Structure": "Knock-down type tower structure.",
-            "Tower Size": "1350 mm",
-            "Platforms": "3-walk around platforms.",
-            "Staircase": "600 mm wide staircase.",
-            "Safety": "Hand rails and kick plates according to European safety standards.",
-            "Idler rollers": "Set of 150 mm diameter idler aluminium rollers of 1550 mm face width.",
-          }
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -254,8 +303,44 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1500",
+          price: 1200000,
+          customName: "HORIZONTAL HAULOFF - 1500 mm",
+          techDesc: {
+            "Construction": "The haul off will be shipped in assembled parts.",
+            "Main Nip rollers": "2 Nos. mounted in bearings.",
+            "Hauloff Size": "1500 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1500",
+          price: 1300000,
+          customName: "TOWER / PLATFORM - 1500 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
@@ -274,8 +359,42 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-325", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "325",
+          price: 475000,
+          customName: "325 mm Standard Air Ring (15 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "325 mm", "Blower": "15 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1750",
+          price: 1400000,
+          customName: "HORIZONTAL HAULOFF - 1750 mm",
+          techDesc: {
+            "Hauloff Size": "1750 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1750",
+          price: 1500000,
+          customName: "TOWER / PLATFORM - 1750 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
     ],
 
@@ -293,8 +412,42 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-375", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-heavy", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "375",
+          price: 525000,
+          customName: "375 mm Standard Air Ring (15 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "375 mm", "Blower": "15 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1850",
+          price: 1500000,
+          customName: "HORIZONTAL HAULOFF - 1850 mm",
+          techDesc: {
+            "Hauloff Size": "1850 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1850",
+          price: 1650000,
+          customName: "TOWER / PLATFORM - 1850 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
     ],
 
@@ -313,8 +466,42 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-400", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-heavy", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "400",
+          price: 575000,
+          customName: "400 mm Standard Air Ring (15 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "400 mm", "Blower": "15 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2000",
+          price: 1800000,
+          customName: "HORIZONTAL HAULOFF - 2000 mm",
+          techDesc: {
+            "Hauloff Size": "2000 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2000",
+          price: 1800000,
+          customName: "TOWER / PLATFORM - 2000 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
     ],
 
@@ -332,8 +519,42 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-450", qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-heavy", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "450",
+          price: 600000,
+          customName: "450 mm Standard Air Ring (20 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2250",
+          price: 2500000,
+          customName: "HORIZONTAL HAULOFF - 2250 mm",
+          techDesc: {
+            "Hauloff Size": "2250 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2125",
+          price: 2000000,
+          customName: "TOWER / PLATFORM - 2125 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "4-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
     ],
 
@@ -351,9 +572,43 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-525", qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-heavy", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-slat-motorized", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "550",
+          price: 850000,
+          customName: "550 mm Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2500",
+          price: 2700000,
+          customName: "HORIZONTAL HAULOFF - 2500 mm",
+          techDesc: {
+            "Hauloff Size": "2500 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2370",
+          price: 2350000,
+          customName: "TOWER / PLATFORM - 2370 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "4-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
     ],
 
@@ -371,9 +626,43 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-550", qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-heavy", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-heavy-duty", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "550",
+          price: 850000,
+          customName: "550 mm Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
+        }
+      },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2750",
+          price: 3200000,
+          customName: "HORIZONTAL HAULOFF - 2750 mm",
+          techDesc: {
+            "Hauloff Size": "2750 mm",
+            "Oscillation": "360 degree oscillating mechanism."
+          }
+        }
+      },
+      { 
+        category: "Tower / Platform", 
+        id: "tower-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2650",
+          price: 2650000,
+          customName: "TOWER / PLATFORM - 2650 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "4-walk around platforms." }
+        }
+      },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
     ],
 
@@ -594,9 +883,29 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-35-aba", qty: 1 },
       { category: "Extruder", id: "ext-40-aba", qty: 1 },
       { category: "Die Head", id: "die-aba-100", qty: 1 },
-      { category: "Air Ring", id: "airring-irish", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1100000,
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          techDesc: { "Hauloff Size": "1250 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -615,9 +924,29 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-35-aba", qty: 1 },
       { category: "Extruder", id: "ext-45-aba", qty: 1 },
       { category: "Die Head", id: "die-aba-150", qty: 1 },
-      { category: "Air Ring", id: "airring-irish", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1100000,
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          techDesc: { "Hauloff Size": "1250 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -636,7 +965,17 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-40-aba", qty: 1 },
       { category: "Extruder", id: "ext-45-aba", qty: 1 },
       { category: "Die Head", id: "die-aba-200", qty: 1 },
-      { category: "Air Ring", id: "airring-5hp-mono", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
       { 
         category: "Bubble Cage", 
         id: "bc-manual-dynamic", 
@@ -649,7 +988,17 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1100000,
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          techDesc: { "Hauloff Size": "1250 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -668,10 +1017,40 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-45-aba", qty: 1 },
       { category: "Extruder", id: "ext-55-aba", qty: 1 },
       { category: "Die Head", id: "die-aba-300", qty: 1 },
-      { category: "Air Ring", id: "airring-7.5hp-mono", qty: 1 },
-      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
+      { 
+        category: "Bubble Cage", 
+        id: "bc-manual-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 55000,
+          customName: "Manual Bubble Cage - 1250 mm",
+          techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "HORIZONTAL HAULOFF - 1350 mm",
+          techDesc: { "Hauloff Size": "1350 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -690,10 +1069,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-55-aba", qty: 1 },
       { category: "Extruder", id: "ext-65-aba", qty: 1 },
       { category: "Die Head", id: "die-aba-600", qty: 1 },
-      { category: "Air Ring", id: "airring-10hp-mono", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "400",
+          price: 450000,
+          customName: "400 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "400 mm" }
+        }
+      },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1750",
+          price: 1400000,
+          customName: "HORIZONTAL HAULOFF - 1750 mm",
+          techDesc: { "Hauloff Size": "1750 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -711,9 +1110,29 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-35-mono-short", qty: 1 },
       { category: "Die Head", id: "die-mono-100", qty: 1 },
-      { category: "Air Ring", id: "airring-irish", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1100000,
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          techDesc: { "Hauloff Size": "1250 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -731,10 +1150,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
       { category: "Die Head", id: "die-mono-200", qty: 1 },
-      { category: "Air Ring", id: "airring-irish", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1100000,
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          techDesc: { "Hauloff Size": "1250 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -752,10 +1191,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
       { category: "Die Head", id: "die-mono-250", qty: 1 },
-      { category: "Air Ring", id: "airring-irish", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 1100000,
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          techDesc: { "Hauloff Size": "1250 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -773,10 +1232,40 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-55-mono-short", qty: 1 },
       { category: "Die Head", id: "die-mono-300", qty: 1 },
-      { category: "Air Ring", id: "airring-5hp-mono", qty: 1 },
-      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 350000,
+          customName: "300 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+        }
+      },
+      { 
+        category: "Bubble Cage", 
+        id: "bc-manual-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1250",
+          price: 55000,
+          customName: "Manual Bubble Cage - 1250 mm",
+          techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "HORIZONTAL HAULOFF - 1350 mm",
+          techDesc: { "Hauloff Size": "1350 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -794,10 +1283,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-65-mono-short", qty: 1 },
       { category: "Die Head", id: "die-mono-400", qty: 1 },
-      { category: "Air Ring", id: "airring-10hp-mono", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "400",
+          price: 575000,
+          customName: "400 mm Standard Air Ring (15 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "400 mm" }
+        }
+      },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "2000",
+          price: 1800000,
+          customName: "HORIZONTAL HAULOFF - 2000 mm",
+          techDesc: { "Hauloff Size": "2000 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
@@ -815,10 +1324,40 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-90-mono-short", qty: 1 },
       { category: "Die Head", id: "die-mono-600", qty: 1 },
-      { category: "Air Ring", id: "airring-15hp-mono", qty: 1 },
-      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "600",
+          price: 950000,
+          customName: "600 mm Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "600 mm" }
+        }
+      },
+      { 
+        category: "Bubble Cage", 
+        id: "bc-manual-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "3000",
+          price: 500000,
+          customName: "Manual Bubble Cage - 3000 mm",
+          techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "3000 mm" }
+        }
+      },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
+      { 
+        category: "Haul-Off", 
+        id: "haul-horizontal-dynamic", 
+        qty: 1,
+        metadata: {
+          size: "3000",
+          price: 3500000,
+          customName: "HORIZONTAL HAULOFF - 3000 mm",
+          techDesc: { "Hauloff Size": "3000 mm" }
+        }
+      },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],

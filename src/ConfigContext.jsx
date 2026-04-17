@@ -32,6 +32,7 @@ import { HEAT_EXCHANGER_ADDONS } from "./data/heatExchanger";
 import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
+import { BIMETALLIC_BASE, SCREW_SIZES } from "./data/bimetallic";
 
 import { MODEL_PRESETS } from "./data/modelPresets";
 
@@ -96,6 +97,7 @@ export const ADDONS_DATA = {
   "Cooling System": CHILLER_ADDONS,
   "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
   "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
+  "Extruder Addons": [BIMETALLIC_BASE],
   // "MDO Unit": MDO_ADDONS,
 
 };
@@ -132,6 +134,48 @@ export function ConfigProvider({ children }) {
   
   // --- Export Conversion States ---
   const [conversionRate, setConversionRate] = useState(84);
+  const [quotationDate, setQuotationDate] = useState(null); // null = "Use Today"
+  
+  // Ref to store the snapshot of the configuration immediately after an import.
+  // This allows us to detect if "anything" has changed.
+  const lastImportedSnapshotRef = useRef(null);
+
+  useEffect(() => {
+    // We only care about resetting the date if one was explicitly imported/set
+    if (!quotationDate) return;
+
+    const currentSnapshot = JSON.stringify({
+      customer, machineType, selected, selectedAddons, discount, markup,
+      customOutput, customLayflat, customRollerWidth, scopeOverrides,
+      quoteTemplate, showPricingFields, showPrices, showAddonPricing, 
+      showMarkupField, showDiscountField, conversionRate, presetBasePrice
+    });
+
+    // If we haven't set a base snapshot yet, set it now (likely just after import)
+    if (!lastImportedSnapshotRef.current) {
+      lastImportedSnapshotRef.current = currentSnapshot;
+      return;
+    }
+
+    // If the configuration now differs from the imported one, reset the date to today (null)
+    if (currentSnapshot !== lastImportedSnapshotRef.current) {
+      setQuotationDate(null);
+      lastImportedSnapshotRef.current = null; // Clear to prevent recursive loops
+      
+      toast.push({
+        title: "Date updated",
+        description: "Configuration changed; date updated to today.",
+        variant: "info",
+        durationMs: 1500,
+      });
+    }
+  }, [
+    customer, machineType, selected, selectedAddons, discount, markup,
+    customOutput, customLayflat, customRollerWidth, scopeOverrides,
+    quoteTemplate, showPricingFields, showPrices, showAddonPricing,
+    showMarkupField, showDiscountField, conversionRate, presetBasePrice,
+    quotationDate // included so we only check if a date is present
+  ]);
 
   const [components] = useState(COMPONENTS_DATA);
   const [addons] = useState(ADDONS_DATA);
@@ -862,8 +906,43 @@ export function ConfigProvider({ children }) {
       }
     }
 
+    // --- DYNAMIC PER-EXTRUDER BIMETALLIC ADDONS ---
+    const extAddons = [];
+    const selectedExtruders = (selected || []).filter(s => 
+      s.category === "Extruder" || 
+      (s.name || "").toLowerCase().includes("extruder") ||
+      (s.id || "").includes("ext-")
+    );
+    
+    let flatIdx = 0;
+    selectedExtruders.forEach((ext) => {
+      const q = ext.qty || 1;
+      for (let i = 0; i < q; i++) {
+        const currentNum = flatIdx + 1;
+        const bimetallicItem = {
+          ...BIMETALLIC_BASE,
+          id: `bimetallic-upgrade-${ext.id}-${currentNum}`, // Unique ID for each physical unit
+          name: `Bi-metallic Screw Barrel for Ext-${currentNum} (${ext.sizeMm || ext.size || ext.extruder || "45"} mm)`,
+          cardDesc: `Upgrade Extruder ${currentNum} to premium wear-resistant Bi-metallic screw and barrel.`,
+          metadata: {
+            ...BIMETALLIC_BASE.metadata,
+            targetExtruderIndex: flatIdx,
+            targetExtruderId: ext.id,
+            subIdx: i,
+            size: String(ext.sizeMm || ext.size || ext.extruder || "45").split('/')[i] || String(ext.sizeMm || ext.size || ext.extruder || "45"),
+          }
+        };
+        extAddons.push(bimetallicItem);
+        flatIdx++;
+      }
+    });
+
+    if (extAddons.length > 0) {
+      out["Extruder Addons"] = extAddons;
+    }
+
     return out;
-  }, [addons, machineType, selectedAddons]);
+  }, [addons, machineType, selectedAddons, selected]);
 
 
   // ---------------- MACHINE MODEL DETAILS (from CSV/TS) ----------------
@@ -904,8 +983,25 @@ export function ConfigProvider({ children }) {
        basicTotal = presetBasePrice;
     }
 
-    // 2. Calculate Optional Addons Total with per-addon markup/discount
-    const addonsTotal = selectedAddons.reduce(
+    // 2. Split Optional Addons into Visible and Hidden (e.g. Bimetallic Upgrades)
+    let bimetallicTotal = 0;
+    const visibleAddons = [];
+
+    (selectedAddons || []).forEach(item => {
+      const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
+      const base = (item.price || 0) * (item.qty || 1);
+      const m = item.markup || 0;
+      const d = item.discount || 0;
+      const adjusted = base * (1 + m / 100) * (1 - d / 100);
+
+      if (isBimetallic) {
+        bimetallicTotal += adjusted;
+      } else {
+        visibleAddons.push(item);
+      }
+    });
+
+    const addonsTotal = visibleAddons.reduce(
       (sum, item) => {
         const base = (item.price || 0) * (item.qty || 1);
         const m = item.markup || 0;
@@ -916,8 +1012,8 @@ export function ConfigProvider({ children }) {
       0
     );
 
-    // 3. Margin & Discount Logic (Apply ONLY to Basic Scope as requested)
-    const beforeMargin = basicTotal;
+    // 3. Margin & Discount Logic (Apply ONLY to Basic Scope + Hidden Upgrades)
+    const beforeMargin = basicTotal + bimetallicTotal;
 
     const withMarkup =
       markup && markup > 0
@@ -1102,7 +1198,7 @@ export function ConfigProvider({ children }) {
             ];
           }
 
-          const autoDesc = generateScopeDesc(item, selected, currentMachineModel);
+          const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
           const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
           return [{
@@ -1136,7 +1232,7 @@ export function ConfigProvider({ children }) {
           ];
         }
 
-        const autoDesc = generateScopeDesc(item, selected, currentMachineModel) || item.shortDesc || item.cardDesc;
+        const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
         const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
         return { id: item.id || "", name: item.name, qty: item.qty || 1, desc: finalDesc };
       });
@@ -1187,7 +1283,7 @@ export function ConfigProvider({ children }) {
         },
         machine_details: machineDetails,
         scope: finalScope,
-        optional_items: (selectedAddons || []).map((a, idx) => {
+        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-")).map((a, idx) => {
           const rawPrice = (a.price || 0) * (a.qty || 1);
           const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
           return {
@@ -1324,6 +1420,7 @@ export function ConfigProvider({ children }) {
           showAddonPricing,
           showPrices,
           presetBasePrice,
+          quotationDate,
         }
       };
 
@@ -2332,6 +2429,12 @@ export function ConfigProvider({ children }) {
         if (typeof r.showAddonPricing === "boolean") setShowAddonPricing(r.showAddonPricing);
         if (typeof r.showPrices === "boolean") setShowPrices(r.showPrices);
         if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
+        
+        // Smart Date Tracking: Load the date from JSON
+        if (r.quotationDate) setQuotationDate(r.quotationDate);
+
+        // Reset the "Import Snapshot" so that any subsequent changes trigger a date update
+        lastImportedSnapshotRef.current = null; 
 
         toast.push({
           title: "Configuration imported ✓",

@@ -36,9 +36,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-225", qty: 1 },
 
       // Bubble cage & collapsing frame
-      { 
-        category: "Bubble Cage", 
-        id: "bc-open-close-dynamic", 
+      {
+        category: "Bubble Cage",
+        id: "bc-open-close-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -63,9 +63,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
 
       // Haul-Off + Tower + Winder
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -82,9 +82,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -111,12 +111,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-275", qty: 1 },
-      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
+      {
+        category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
         metadata: {
-           size: "1350",
-           price: 250000,
-           customName: "Open Close Bubble Cage - 1350 mm",
-           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
+          size: "1350",
+          price: 250000,
+          customName: "Open Close Bubble Cage - 1350 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -131,9 +132,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
@@ -150,9 +151,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
@@ -176,12 +177,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-275-stationary", qty: 1 },
-      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
+      {
+        category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
         metadata: {
-           size: "1350",
-           price: 250000,
-           customName: "Open Close Bubble Cage - 1350 mm",
-           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
+          size: "1350",
+          price: 250000,
+          customName: "Open Close Bubble Cage - 1350 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
@@ -196,9 +198,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
@@ -215,9 +217,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
@@ -242,10 +244,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-275", qty: 1 },
-      { 
-        category: "Bubble Cage", 
-        id: "bc-open-close-dynamic", 
-        qty: 1, 
+      {
+        category: "Bubble Cage",
+        id: "bc-open-close-dynamic",
+        qty: 1,
         metadata: {
           size: "1350",
           price: 250000,
@@ -271,10 +273,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
-      { 
-        category: "Bubble Cage", 
-        id: "bc-open-close-dynamic", 
-        qty: 1, 
+      {
+        category: "Bubble Cage",
+        id: "bc-open-close-dynamic",
+        qty: 1,
         metadata: {
           size: "1350",
           price: 250000,
@@ -314,9 +316,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1500",
@@ -330,9 +332,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "1500",
@@ -370,9 +372,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "325 mm", "Blower": "15 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1750",
@@ -380,13 +382,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "HORIZONTAL HAULOFF - 1750 mm",
           techDesc: {
             "Hauloff Size": "1750 mm",
+            "Main Nip": "3 HP",
+            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "1750",
@@ -423,9 +427,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "375 mm", "Blower": "15 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1850",
@@ -433,13 +437,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "HORIZONTAL HAULOFF - 1850 mm",
           techDesc: {
             "Hauloff Size": "1850 mm",
+            "Main Nip": "3 HP",
+            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "1850",
@@ -477,9 +483,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "400 mm", "Blower": "15 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "2000",
@@ -487,13 +493,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "HORIZONTAL HAULOFF - 2000 mm",
           techDesc: {
             "Hauloff Size": "2000 mm",
+            "Main Nip": "3 HP",
+            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "2000",
@@ -530,23 +538,25 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "2250",
           price: 2500000,
-          customName: "HORIZONTAL HAULOFF - 2250 mm",
+          customName: "HORIZONTAL HAULOFF - 2125 mm",
           techDesc: {
-            "Hauloff Size": "2250 mm",
+            "Hauloff Size": "2125 mm",
+            "Main Nip": "3 HP",
+            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "2125",
@@ -584,23 +594,25 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "2500",
           price: 2700000,
-          customName: "HORIZONTAL HAULOFF - 2500 mm",
+          customName: "HORIZONTAL HAULOFF - 2370 mm",
           techDesc: {
-            "Hauloff Size": "2500 mm",
+            "Hauloff Size": "2370 mm",
+            "Main Nip": "5 HP",
+            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "2370",
@@ -638,9 +650,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
         }
       },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "2750",
@@ -652,9 +664,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      { 
-        category: "Tower / Platform", 
-        id: "tower-dynamic", 
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
         qty: 1,
         metadata: {
           size: "2650",
@@ -895,9 +907,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -936,9 +948,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -976,9 +988,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
         }
       },
-      { 
-        category: "Bubble Cage", 
-        id: "bc-manual-dynamic", 
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -988,9 +1000,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1028,9 +1040,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
         }
       },
-      { 
-        category: "Bubble Cage", 
-        id: "bc-manual-dynamic", 
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1040,9 +1052,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
@@ -1082,9 +1094,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1750",
@@ -1122,9 +1134,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1163,9 +1175,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1204,9 +1216,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1243,9 +1255,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
         }
       },
-      { 
-        category: "Bubble Cage", 
-        id: "bc-manual-dynamic", 
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1255,9 +1267,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
@@ -1296,9 +1308,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "2000",
@@ -1335,9 +1347,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "Standard Series Air Ring", "Size": "600 mm" }
         }
       },
-      { 
-        category: "Bubble Cage", 
-        id: "bc-manual-dynamic", 
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
         qty: 1,
         metadata: {
           size: "3000",
@@ -1347,9 +1359,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
-      { 
-        category: "Haul-Off", 
-        id: "haul-horizontal-dynamic", 
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
           size: "3000",
@@ -1366,6 +1378,258 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       {
         category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
       },
+    ],
+  },
+
+  // ---------------------------------------------------------
+  // IBC MODELS
+  // ---------------------------------------------------------
+  "INNOFLEX-1870 IBC": {
+    machineType: "3layer",
+    basePrice: 17951000,
+    components: [
+      { category: "Extruder", id: "ext-65-coex-long", qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Extruder", id: "ext-75-coex-long", qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Die Head", id: "die-3layeribc-375", qty: 1 },
+      { category: "IBC", id: "ibc-system", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "375",
+          price: 525000,
+          customName: "375 mm Standard Air Ring (20 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "375 mm", "Blower": "20 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1850",
+          price: 1500000,
+          customName: "HORIZONTAL HAULOFF - 1850 mm",
+          techDesc: { "Hauloff Size": "1850 mm", "Nip roller drive": "3 HP", "Line Speed": "80 MPM" }
+        }
+      },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1850", price: 1650000 } },
+      {
+        category: "Bubble Cage",
+        id: "bc-up-down-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1850",
+          price: 700000,
+          customName: "6 Segment Motorized Up-Down Bubble Cage - 1850 mm",
+          techDesc: { "Segments": "6", "Type": "Motorized Up-Down & Open-Close" }
+        }
+      },
+      { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "1850", price: 3200000 } },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+    ],
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+    ],
+  },
+  "INNOFLEX-1975 IBC": {
+    machineType: "3layer",
+    basePrice: 20850000,
+    components: [
+      { category: "Extruder", id: "ext-55-coex-long", qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "50 HP AC motor (ABB)" } } },
+      { category: "Extruder", id: "ext-75-coex-long", qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "100 HP AC motor (ABB)" } } },
+      { category: "Die Head", id: "die-3layeribc-350", qty: 1 },
+      { category: "IBC", id: "ibc-system", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "350",
+          price: 500000,
+          customName: "350 mm Standard Air Ring (20 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "350 mm", "Blower": "20 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1975",
+          price: 1750000,
+          customName: "HORIZONTAL HAULOFF - 1975 mm",
+          techDesc: { "Hauloff Size": "1975 mm", "Nip roller drive": "3 HP", "Line Speed": "80 MPM" }
+        }
+      },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1975", price: 1750000 } },
+      {
+        category: "Bubble Cage",
+        id: "bc-up-down-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1975",
+          price: 725000,
+          customName: "6 Segment Motorized Up-Down Bubble Cage - 1975 mm",
+          techDesc: { "Segments": "6", "Type": "Motorized Up-Down & Open-Close" }
+        }
+      },
+      { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "1975", price: 3400000 } },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+    ],
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+    ],
+  },
+  "INNOFLEX-2125 IBC": {
+    machineType: "3layer",
+    basePrice: 22751000,
+    components: [
+      { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
+      { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
+      { category: "Die Head", id: "die-3layeribc-450", qty: 1 },
+      { category: "IBC", id: "ibc-system", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "450",
+          price: 600000,
+          customName: "450 mm Standard Air Ring (20 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "2125",
+          price: 2500000,
+          customName: "HORIZONTAL HAULOFF - 2125 mm",
+          techDesc: { "Hauloff Size": "2125 mm", "Nip roller drive": "3 HP", "Line Speed": "80 MPM" }
+        }
+      },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2125", price: 2000000 } },
+      {
+        category: "Bubble Cage",
+        id: "bc-up-down-dynamic",
+        qty: 1,
+        metadata: {
+          size: "2125",
+          price: 800000,
+          customName: "9 Segment Motorized Up-Down Bubble Cage - 2125 mm",
+          techDesc: { "Segments": "9", "Type": "Motorized Up-Down & Open-Close" }
+        }
+      },
+      { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2125", price: 4000000 } },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+    ],
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+    ],
+  },
+  "INNOFLEX-2370 IBC": {
+    machineType: "3layer",
+    basePrice: 25851000,
+    components: [
+      { category: "Extruder", id: "ext-65-coex-long", qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Extruder", id: "ext-75-coex-long", qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Die Head", id: "die-3layeribc-500", qty: 1 },
+      { category: "IBC", id: "ibc-system", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "500",
+          price: 750000,
+          customName: "500 mm Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "500 mm", "Blower": "25 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "2370",
+          price: 2700000,
+          customName: "HORIZONTAL HAULOFF - 2370 mm",
+          techDesc: { "Hauloff Size": "2370 mm", "Nip roller drive": "5 HP", "Line Speed": "80 MPM" }
+        }
+      },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2370", price: 2350000 } },
+      {
+        category: "Bubble Cage",
+        id: "bc-up-down-dynamic",
+        qty: 1,
+        metadata: {
+          size: "2370",
+          price: 900000,
+          customName: "9 Segment Motorized Up-Down Bubble Cage - 2370 mm",
+          techDesc: { "Segments": "9", "Type": "Motorized Up-Down & Open-Close" }
+        }
+      },
+      { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "2370", price: 4500000 } },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+    ],
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+    ],
+  },
+  "INNOFLEX-2370 IBC (75/75/75)": {
+    machineType: "3layer",
+    basePrice: 26045000,
+    components: [
+      { category: "Extruder", id: "ext-75-coex-long", qty: 3, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "100 HP AC motor (ABB)" } } },
+      { category: "Die Head", id: "die-3layeribc-500", qty: 1 },
+      { category: "IBC", id: "ibc-system", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "500",
+          price: 750000,
+          customName: "500 mm Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "500 mm", "Blower": "25 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "2370",
+          price: 2700000,
+          customName: "HORIZONTAL HAULOFF - 2370 mm",
+          techDesc: { "Hauloff Size": "2370 mm", "Nip roller drive": "5 HP", "Line Speed": "80 MPM" }
+        }
+      },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2370", price: 2350000 } },
+      {
+        category: "Bubble Cage",
+        id: "bc-up-down-dynamic",
+        qty: 1,
+        metadata: {
+          size: "2370",
+          price: 900000,
+          customName: "9 Segment Motorized Up-Down Bubble Cage - 2370 mm",
+          techDesc: { "Segments": "9", "Type": "Motorized Up-Down & Open-Close" }
+        }
+      },
+      { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2370", price: 4500000 } },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+    ],
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
     ],
   },
 };

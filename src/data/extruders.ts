@@ -30,7 +30,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
   // ---------------- UNOFLEX SHORT EXTRUDERS ----------------
   {
     id: "ext-35-mono-short",
-    name: "Extruder 35 mm (Monolayer)",
+    name: "Extruder 35 mm",
     sizeMm: 35,
     variant: "short",
     machineTypes: ["mono"],
@@ -62,7 +62,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-45-mono-short",
-    name: "Extruder 45 mm (Monolayer – Short)",
+    name: "Extruder 45 mm",
     sizeMm: 45,
     variant: "short",
     machineTypes: ["mono"],
@@ -92,7 +92,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-55-mono-short",
-    name: "Extruder 55 mm (Monolayer – Short)",
+    name: "Extruder 55 mm",
     sizeMm: 55,
     variant: "short",
     machineTypes: ["mono"],
@@ -119,7 +119,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-60-mono-short",
-    name: "Extruder 60 mm (Monolayer – Short)",
+    name: "Extruder 60 mm",
     sizeMm: 60,
     variant: "short",
     machineTypes: ["mono"],
@@ -143,7 +143,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-75-mono-short",
-    name: "Extruder 75 mm (Monolayer – Short)",
+    name: "Extruder 75 mm",
     sizeMm: 75,
     variant: "short",
     machineTypes: ["mono"],
@@ -166,7 +166,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-90-mono-short",
-    name: "Extruder 90 mm (Monolayer – Short)",
+    name: "Extruder 90 mm",
     sizeMm: 90,
     variant: "short",
     machineTypes: ["mono"],
@@ -186,7 +186,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-100-mono-short",
-    name: "Extruder 100 mm (Monolayer – Short)",
+    name: "Extruder 100 mm",
     sizeMm: 100,
     variant: "short",
     machineTypes: ["mono"],
@@ -208,7 +208,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-35-aba",
-    name: "Extruder 35 mm (ABA)",
+    name: "Extruder 35 mm",
     sizeMm: 35,
     variant: "long",
     machineTypes: ["aba"],
@@ -236,7 +236,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-40-coex-long",
-    name: "Extruder 40 mm (3-Layer / 5-Layer)",
+    name: "Extruder 40 mm",
     sizeMm: 40,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -264,7 +264,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-40-aba",
-    name: "Extruder 40 mm (ABA)",
+    name: "Extruder 40 mm",
     sizeMm: 40,
     variant: "long",
     machineTypes: ["aba"],
@@ -292,7 +292,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-45-coex-long",
-    name: "Extruder 45 mm (3-Layer / 5-Layer)",
+    name: "Extruder 45 mm",
     sizeMm: 45,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -320,7 +320,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-45-aba",
-    name: "Extruder 45 mm (ABA)",
+    name: "Extruder 45 mm",
     sizeMm: 45,
     variant: "long",
     machineTypes: ["aba"],
@@ -348,7 +348,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-50-coex-long",
-    name: "Extruder 50 mm (3-Layer / 5-Layer)",
+    name: "Extruder 50 mm",
     sizeMm: 50,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -375,7 +375,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-50-aba",
-    name: "Extruder 50 mm (ABA)",
+    name: "Extruder 50 mm",
     sizeMm: 50,
     variant: "long",
     machineTypes: ["aba"],
@@ -402,7 +402,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-55-coex-long",
-    name: "Extruder 55 mm (3-Layer / 5-Layer)",
+    name: "Extruder 55 mm",
     sizeMm: 55,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -430,7 +430,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-55-aba",
-    name: "Extruder 55 mm (ABA)",
+    name: "Extruder 55 mm",
     sizeMm: 55,
     variant: "long",
     machineTypes: ["aba"],
@@ -458,7 +458,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-65-coex-long",
-    name: "Extruder 65 mm (3-Layer / 5-Layer)",
+    name: "Extruder 65 mm",
     sizeMm: 65,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -485,7 +485,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-65-aba",
-    name: "Extruder 65 mm (ABA)",
+    name: "Extruder 65 mm",
     sizeMm: 65,
     variant: "long",
     machineTypes: ["aba"],
@@ -512,7 +512,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-65-mono-short",
-    name: "Extruder 65 mm (Monolayer)",
+    name: "Extruder 65 mm",
     sizeMm: 65,
     variant: "short",
     machineTypes: ["mono"],
@@ -539,7 +539,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-75-coex-long",
-    name: "Extruder 75 mm (3-Layer / 5-Layer)",
+    name: "Extruder 75 mm",
     sizeMm: 75,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -566,7 +566,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-75-aba",
-    name: "Extruder 75 mm (ABA)",
+    name: "Extruder 75 mm",
     sizeMm: 75,
     variant: "long",
     machineTypes: ["aba"],
@@ -593,7 +593,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-90-coex-long",
-    name: "Extruder 90 mm (3-Layer / 5-Layer)",
+    name: "Extruder 90 mm",
     sizeMm: 90,
     variant: "long",
     machineTypes: ["3layer", "5layer"],
@@ -621,7 +621,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
 
   {
     id: "ext-90-aba",
-    name: "Extruder 90 mm (ABA)",
+    name: "Extruder 90 mm",
     sizeMm: 90,
     variant: "long",
     machineTypes: ["aba"],

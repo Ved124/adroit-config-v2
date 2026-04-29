@@ -256,8 +256,13 @@ export function ConfigProvider({ children }) {
       setCustomer(cust);
       if (typeof savedData.machineType === "string") setMachineTypeState(savedData.machineType);
       else setMachineTypeState("mono");
-      if (Array.isArray(savedData.selected)) setSelected(savedData.selected);
-      if (Array.isArray(savedData.selectedAddons)) setSelectedAddons(savedData.selectedAddons);
+      
+      if (Array.isArray(savedData.selected)) {
+        setSelected(savedData.selected.map(syncComponentWithBase));
+      }
+      if (Array.isArray(savedData.selectedAddons)) {
+        setSelectedAddons(savedData.selectedAddons.map(syncAddonWithBase));
+      }
       if (typeof savedData.discount === "number") setDiscount(savedData.discount);
       if (typeof savedData.markup === "number") setMarkup(savedData.markup);
       if (typeof savedData.machineModelIndex === "number") {
@@ -386,6 +391,37 @@ export function ConfigProvider({ children }) {
       return prev;
     });
   }, [customer.region, customRollerWidth, machineType]);
+  
+  // Helper to re-sync a component from a save/import with its base definition in the library
+  function syncComponentWithBase(row) {
+    if (!row || !row.category) return row;
+    const list = COMPONENTS_DATA[row.category] || [];
+    const base = list.find(c => c.id === row.id) || list.find(c => c.name === row.name);
+    
+    if (!base) return row; // fallback to existing row data if not found in library
+
+    // Deep merge techDesc: prioritize base data but keep overrides from row
+    const mergedTechDesc = { ...(base.techDesc || {}), ...(row.techDesc || {}) };
+    
+    return {
+      ...base,
+      ...row,
+      category: row.category,
+      qty: row.qty || 1,
+      techDesc: mergedTechDesc,
+      // If row has an image, keep it, otherwise use base image
+      image: row.image || base.image
+    };
+  }
+
+  function syncAddonWithBase(row) {
+    if (!row || !row.category) return row;
+    const list = ADDONS_DATA[row.category] || [];
+    const base = list.find(a => a.id === row.id) || list.find(a => a.name === row.name);
+    if (!base) return row;
+    return { ...base, ...row, category: row.category, qty: row.qty || 1 };
+  }
+
 
 
   // ---------------- MACHINE TYPE ----------------
@@ -424,15 +460,17 @@ export function ConfigProvider({ children }) {
     setPresetBasePrice(preset.basePrice || 0);
 
     // 2) Build selected base components
-    preset.components.forEach(({ category, id, qty }) => {
+    preset.components.forEach((comp) => {
+      const { category, id, qty, metadata = {} } = comp;
       const list = components[category] || [];
       const base = list.find((c) => c.id === id);
       if (!base) {
         console.warn("Component not found for preset:", category, id);
         return;
       }
-      const metadata = preset.components.find(c => c.id === id)?.metadata || {};
-      nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata });
+      // Deep merge techDesc if it exists in metadata
+      const mergedTechDesc = { ...(base.techDesc || {}), ...(metadata.techDesc || {}) };
+      nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata, techDesc: mergedTechDesc });
     });
 
     // 3) Build selected add-ons
@@ -515,15 +553,24 @@ export function ConfigProvider({ children }) {
           const minRange = Math.round((chosenSize * minRatio) / 10) * 10;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
+          const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
+          const segments = (chosenSize >= 2370) ? 9 : (chosenSize >= 2000 ? 8 : 6);
+          const typeStr = `Calibration bubble guide basket with ${segments} arms arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
+
           // Update item properties directly at the top level
           nextSelected[index] = {
             ...item,
             name: `${item.name} - ${chosenSize} mm`,
             size: chosenSize.toString(),
+            segments: segments,
             price: newPrice,
-            customName: `${item.name} - ${chosenSize} mm`,
+            image: dynamicBCItem.image || item.image,
+            customName: `${segments} Segment Motorized Up-Down Bubble Cage - ${chosenSize} mm`,
             techDesc: {
+              ...(dynamicBCItem.techDesc || {}),
               ...(item.techDesc || {}),
+              "Type": typeStr,
+              "Segments": segments.toString(),
               [label]: `${minRange} to ${chosenSize} mm`,
             }
           };
@@ -542,18 +589,25 @@ export function ConfigProvider({ children }) {
           
           const dynamicHauloffItem = HAULOFF_COMPONENTS.find(h => h.id === "haul-horizontal-dynamic") || item;
 
+          const hp = (chosenSize >= 2370) ? "5 HP" : "3 HP";
+          const speed = (chosenSize >= 2370) ? "100 MPM" : "80 MPM";
+
           // Update item properties
           nextSelected[index] = {
-            ...dynamicHauloffItem,
+            ...item, // Preserve metadata from preset
             category: "Haul-Off",
             qty: 1,
             size: chosenSize.toString(),
             price: newPrice,
+            image: dynamicHauloffItem.image || item.image, // Ensure image is preserved
             customName: `HORIZONTAL HAULOFF - ${chosenSize} mm`,
             techDesc: {
-              ...(dynamicHauloffItem.techDesc || {}),
+              ...(dynamicHauloffItem.techDesc || {}), // Start with base data
+              ...(item.techDesc || {}), // Overlay existing overrides
               "Hauloff Size": `${chosenSize} mm`,
               "Nip roller width": `${chosenSize + 125} mm`,
+              "Nip Drive": `${hp} AC motor with variable frequency drive.`,
+              "Line Speed": speed
             }
           };
         }
@@ -573,14 +627,16 @@ export function ConfigProvider({ children }) {
 
           // Update item properties
           nextSelected[index] = {
-            ...dynamicTowerItem,
+            ...item, // Preserve metadata from preset
             category: "Tower / Platform",
             qty: 1,
             size: chosenSize.toString(),
             price: newPrice,
+            image: dynamicTowerItem.image || item.image,
             customName: `TOWER / PLATFORM - ${chosenSize} mm`,
             techDesc: {
               ...(dynamicTowerItem.techDesc || {}),
+              ...(item.techDesc || {}),
               "Tower Size": `${chosenSize} mm`,
               "Idler rollers": `Set of 150 mm diameter idler aluminium rollers of ${chosenSize + 200} mm face width.`,
             }
@@ -615,16 +671,18 @@ export function ConfigProvider({ children }) {
 
           const stationLabel = isAuto ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)";
 
+          const dynamicWinderItem = WINDER_COMPONENTS.find(w => w.id === item.id) || item;
+
           // Update item properties
           nextSelected[index] = {
             ...item,
             size: chosenSize.toString(),
             price: newPrice,
+            image: dynamicWinderItem.image || item.image,
             customName: `${item.name} - ${chosenSize} mm`,
             techDesc: {
+              ...(dynamicWinderItem.techDesc || {}),
               ...(item.techDesc || {}),
-              "film width": `${chosenSize} mm`,
-              "Winder Size": `${chosenSize} mm`,
               "Nip roller width": `${chosenSize + 125} mm`,
               [stationLabel]: `Maximum web width of ${chosenSize} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
             }
@@ -713,7 +771,8 @@ export function ConfigProvider({ children }) {
 
       setPresetBasePrice(0); // Revert to sum of parts if modified
 
-      const newItem = { ...item, category, qty: 1, ...metadata };
+      const mergedTechDesc = { ...(item.techDesc || {}), ...(metadata?.techDesc || {}) };
+      const newItem = { ...item, category, qty: 1, ...metadata, techDesc: mergedTechDesc };
       
       if (foundIndex !== -1) {
         const newArr = [...prev];
@@ -2353,54 +2412,8 @@ export function ConfigProvider({ children }) {
         }
 
         // 3) Rebuild selected components — try to merge with master data for full techDesc/images
-        const newSelected = (r.selected || []).map((row) => {
-          const resolved = resolveBaseComponent(row.category, row.id) ||
-                           resolveBaseComponent(row.category, row.name);
-          
-          if (resolved) {
-            // Prioritize row data (from JSON) over base data to preserve techDesc overrides
-            return { ...resolved.base, ...row, category: resolved.category, qty: row.qty || 1 };
-          }
-          // Fallback: use whatever is in the JSON snapshot
-          return {
-            ...row,
-            id: row.id || `${row.category}_${row.name}`,
-            name: row.name || "",
-            category: row.category || "",
-            qty: row.qty || 1,
-            price: row.price ?? 0,
-            shortDesc: row.shortDesc || "",
-            image: row.image || null,
-          };
-        });
-
-        // 4) Rebuild selectedAddons
-        const newAddons = (r.selectedAddons || []).map((row) => {
-          const resolved = resolveBaseAddon(row.category, row.id) ||
-                           resolveBaseAddon(row.category, row.name);
-          if (resolved) {
-            return { 
-              ...resolved.base, 
-              ...row,
-              category: resolved.category, 
-              qty: row.qty || 1,
-              markup: row.markup || 0,
-              discount: row.discount || 0
-            };
-          }
-          return {
-            ...row,
-            id: row.id || `${row.category}_${row.name}`,
-            name: row.name || "",
-            category: row.category || "",
-            qty: row.qty || 1,
-            price: row.price ?? 0,
-            markup: row.markup || 0,
-            discount: row.discount || 0,
-            shortDesc: row.shortDesc || "",
-            image: row.image || null,
-          };
-        });
+        const newSelected = (r.selected || []).map(syncComponentWithBase);
+        const newAddons = (r.selectedAddons || []).map(syncAddonWithBase);
 
         // 5) Apply all state
         setCustomer(rebuiltCustomer);

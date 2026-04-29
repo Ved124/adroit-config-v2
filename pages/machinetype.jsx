@@ -279,63 +279,148 @@ export default function MachineTypePage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-4">
-                {machineModels.map((model, index) => {
-                  const label = getModelLabel(model, index);
-                  const highlights = getModelHighlights(model);
-                  const isActive = index === machineModelIndex;
+                {/* 1. Standard Models */}
+                {activeFamily === "3layer" && (
+                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-2 mb-1">
+                    Standard Models
+                  </h3>
+                )}
+                
+                {machineModels
+                  .filter((m) => !m.isIbc)
+                  .map((model, index) => {
+                    // Find actual index in original array for handleSelectModel
+                    const originalIndex = machineModels.findIndex((m) => m.code === model.code);
+                    const label = getModelLabel(model, originalIndex);
+                    const highlights = getModelHighlights(model);
+                    const isActive = originalIndex === machineModelIndex;
 
-                  return (
-                    <motion.div
-                      whileHover={{ scale: 1.01 }}
-                      key={index}
-                      className={[
-                        "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
-                        isActive
-                          ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
-                          : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
-                      ].join(" ")}
-                      onClick={() => handleSelectModel(model, index)}
-                    >
-                      <div className="flex items-center justify-between gap-4">
-                        <div>
-                          <div className="font-bold text-base mb-2 text-slate-800 group-hover:text-brand-blue transition-colors">
-                            {label}
+                    return (
+                      <motion.div
+                        whileHover={{ scale: 1.01 }}
+                        key={model.code || index}
+                        className={[
+                          "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
+                          isActive
+                            ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
+                            : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
+                        ].join(" ")}
+                        onClick={() => handleSelectModel(model, originalIndex)}
+                      >
+                        <div className="flex items-center justify-between gap-4">
+                          <div>
+                            <div className="font-bold text-base mb-2 text-slate-800 group-hover:text-brand-blue transition-colors">
+                              {label}
+                            </div>
+                            <div className="text-xs text-slate-500 space-y-1.5">
+                              {highlights.map((line, i) => (
+                                <div key={i} className="flex items-center gap-2">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
+                                  {line}
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          <div className="text-xs text-slate-500 space-y-1.5">
-                            {highlights.map((line, i) => (
-                              <div key={i} className="flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
-                                {line}
+                          <div className="flex flex-col gap-2 shrink-0">
+                            <button
+                              type="button"
+                              className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSelectModel(model, originalIndex);
+                              }}
+                            >
+                              Select
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalModel({ model, label });
+                              }}
+                              className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+                            >
+                              Details
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+
+                {/* 2. IBC Models Section */}
+                {activeFamily === "3layer" && machineModels.some(m => m.isIbc) && (
+                  <>
+                    <h3 className="text-sm font-semibold text-brand-blue uppercase tracking-wider mt-8 mb-1 border-b border-brand-blue/20 pb-2">
+                      IBC Models
+                    </h3>
+                    {machineModels
+                      .filter((m) => m.isIbc)
+                      .map((model, index) => {
+                        const originalIndex = machineModels.findIndex((m) => m.code === model.code);
+                        const label = getModelLabel(model, originalIndex);
+                        const highlights = getModelHighlights(model);
+                        const isActive = originalIndex === machineModelIndex;
+
+                        return (
+                          <motion.div
+                            whileHover={{ scale: 1.01 }}
+                            key={model.code || index}
+                            className={[
+                              "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
+                              isActive
+                                ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
+                                : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
+                            ].join(" ")}
+                            onClick={() => handleSelectModel(model, originalIndex)}
+                          >
+                            <div className="flex items-center justify-between gap-4">
+                              <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                  <div className="font-bold text-base text-slate-800 group-hover:text-brand-blue transition-colors">
+                                    {label}
+                                  </div>
+                                  <span className="px-2 py-0.5 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-tight">
+                                    IBC Line
+                                  </span>
+                                </div>
+                                <div className="text-xs text-slate-500 space-y-1.5">
+                                  {highlights.map((line, i) => (
+                                    <div key={i} className="flex items-center gap-2">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
+                                      {line}
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-2 shrink-0">
-                          <button
-                            type="button"
-                            className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleSelectModel(model, index);
-                            }}
-                          >
-                            Select
-                          </button>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalModel({ model, label });
-                            }}
-                            className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-                          >
-                            Details
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                              <div className="flex flex-col gap-2 shrink-0">
+                                <button
+                                  type="button"
+                                  className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleSelectModel(model, originalIndex);
+                                  }}
+                                >
+                                  Select
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setModalModel({ model, label });
+                                  }}
+                                  className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+                                >
+                                  Details
+                                </button>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                  </>
+                )}
               </div>
             )}
           </div>

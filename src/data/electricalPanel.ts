@@ -17,6 +17,7 @@ export interface ElectricalAddon {
   cardDesc: string;
   price: number;
   qty?: number;
+  isDynamic?: boolean;
   techDesc: TechSpecMap;
   shortDesc?: string;
 }

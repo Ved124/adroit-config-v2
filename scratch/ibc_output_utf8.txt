@@ -1,0 +1,2210 @@
+﻿--- Proposal for 3 layer 557555 mm with IBC,1975 mm.docx ---
+PROPOSAL OF
+AE Innoflex THREE LAYER CO EXTRUSION BLOWN FILM LINE 1975_55*75*55 
+FOR
+M/s. ALBEA, GOA
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+Ref. No. AEP/DOM/1975/002
+Date: 22/01/2026
+
+(ADROIT EXTRUSION SCOPE OF SUPPLY)
+
+
+ITEM #
+ITEM DESCRIPTION
+1
+Three Nos. Extruders of 55/75/55 mm screw diameter and L/D ratio of 32:1,                Imported Bimetallic screw & barrel, Ceramic Heater, 50/100/50 HP AC Motor & AC variable frequency Drive. Three Candle type Manual Screen Changers for 55/75/55 mm Extruders. Imported Chinese Gearbox with external cooling.
+2
+Complete extrusion controls on main panel with Cold start protection and with   Touch Panel.
+3
+One Canadian design Imported Chrome plated Three Layer Spiral Mandrel Die with lip diameter of 350 mm, complete with die adapters and carriage. Die with IBC.
+4
+Advanced European design Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 20 HP Blower with AC Frequency drive.
+5
+Complete IBC package and Controls. IBC hardware, manifolds, Inlet and Outlet blower controls etc. will be provided.
+6
+One Bubble Stabilizing Basket with Silicon roller cage. Motorized Open Close and Up Down operation. Bubble Cage for 2500 mm Film width.
+7
+One standard design 360-degree rotation bottom supported Horizontal Oscillating Haul Off.  Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 3 HP AC Drive. Linespeed is 80 MPM.
+8
+Aluminum Idler rollers as per layout drawing. 
+9
+One Secondary nip with edge slitting assembly and edge trimming assembly. 
+10
+Two Separate Surface Winders of 1850 mm film width. Automatic roll change over mechanism, digital length counter, 04 nos.- 6ΓÇ¥ Air shaft Resource make, bow roller, 02 HP AC Motor and Drive. Tension Control through Loadcell. 
+11
+Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip etc.
+12
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+BASIC PRICE EX-WORKS, UNPACKED ΓÇªΓÇªΓÇªΓÇªΓÇªΓÇª. INR 2,08,50,000/-
+
+(INR TWO CRORE EIGHT LAC FIFTY THOUSAND ONLY)
+
+FINAL PRICE AFTER DISCOUNT: INR 1,72,00,000/-
+
+
+
+
+Digital Edge Guide Adroit make: Rs. 2,60,000/-
+Vertical Granule Mixer with Dryer 200 kg Adroit make: Rs. 2,60,000/- 
+
+
+
+
+
+Panels                                                       : Powder coated panels with exhaust fans. 
+Synchronisation                                      : (1) For all extruders (2) For Nips & winder drives.
+Temp. controllers:  Multispan / Omron.
+Drives : Danfoss or equivalent variable frequency drives. 
+Hauloff: PLC based operation.
+
+
+
+
+
+Electrical accessories
+Main source of electrical power or generator with stabilizer or UPS if needed by you.
+Power Cables from Main supply to distribution panel and to individual panels.
+Earthing to all equipments to be provided by you. (Recommended 3 pits)
+Finished roll handling system
+Unloading from winders.
+Installation of equipment
+Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers.
+All interconnecting piping for water & air to the equipments.
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Product to be made                               : High Quality Three Layer Film
+
+Max Pumping Capacity: 340-360 KG / HR
+
+Max Output * on 350 mm die : 280 ΓÇô 300 KG / HR
+80% LL + 20% LD
+
+Thickness Variation                                :  +/-  8%  above 40 ╬╝ and +/- 10% upto 40 ╬╝ or +/- 4 micron whichever is 
+    higher Film thickness over 90% periphery. 
+
+Raw Materials:  LDPE, LLDPE, HDPE, mLLDPE etc.
+
+Thickness Range :  20 ΓÇô 200 micron
+
+Lay flat Width: 1850 MM maximum process able width.
+
+Provided that the temperature of air at the air ring will not be more than 10 ΓÇô 12┬░ C and 2.5 BUR+ Widths only.         
+Ambient temperature and relative humidity within normal range.
+
+LIMITATIONS:
+Although we can design our equipment to as high a standard as possible, there are many factors other than equipment that can significantly affect the quality of the film. As these factors are out of our control,                  they are not covered by our performance guarantee. These factors include but are not limited to:
+
+Resin ΓÇô Bad Batches, Off-spec. Resins, Changes in additives or the use of resins other than Specified can 
+produce poor film.
+Interfacial Instability ΓÇô Mismatched viscosity in adjacent layers, can be reduced by 
+matching resins or increasing thickness of thin layers.
+Blocking ΓÇô Weather effects, resins, additives and processing conditions can induce 
+blocking, even with a tower of recommended height running the guarantee structures.
+Gels ΓÇô Defective resins, dirty screws or processing conditions can cause gels.
+Gloss and Haze ΓÇô Can be affected by resin, temperature profiles or inappropriate purge resins.
+Melt fracture due to a too narrow die gap and material properties. Processing aid may be required.
+Curling ΓÇô Asymmetrical film structures will curl.
+Film Characteristics ΓÇô Impact resistance, tear strength and other film qualities can be 
+radically affected by processing conditions, resins and additives.
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Screw Diameter                                      :  55 mm single screw extruder mounted on a sturdy frame.
+L/D ratio :  32:1
+Type :  Barrier
+Screw Speed :  115 RPM
+Barrel :  Water cooled grooved feed section
+Material :  Bimetallic
+Heating System :  Ceramic Band type Heaters (AUM or equivalent)
+No. of Zones :  04 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual inspection.  
+   Magnetic grill provided.
+Main Drive :  50 HP AC motor (ABB) with frequency variable drive.
+Transmission System :  Motor directly coupled with helical gearbox. (Imported)
+Screen changer :  Candle type 
+
+
+
+Screw Diameter                                     : 75 mm single screw extruder mounted on a sturdy frame.
+L/D ratio : 32:1
+Type : Barrier
+Screw Speed : 115 RPM
+Barrel : Water cooled semi grooved feed section
+Material : Bimetallic
+Heating System : Ceramic Band type Heaters (Hitco or equivalent)
+No. of Zones : 05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual       
+   inspection. Magnetic grill provided.
+Main Drive : 100 HP AC motor with frequency variable drive.
+Transmission System : Motor directly coupled with helical gearbox. (Imported)
+Screen changer : Candle type 
+
+
+
+Material of Construction                      : Hardened high strength alloy steel.  
+Surface Treatment                                 : Electroless Nickel plated & highly polished melt paths.
+Die Size : 350 MM diameter with lips of 2.3 mm gap.
+Die setting : Die adjusting bolts will be provided.
+Distribution : Spiral distribution.
+Heating Zones: 04 Nos.
+Heating System : Ceramic band heaters (AUM or equivalent)
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+              
+
+IBC System                                               : Complete controls including sensors, control software.
+Blowers                                                    :  Inlet and Outlet Blowers Provided.
+IBC Hardware                                          :  IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided.
+
+
+
+Type: Calibration bubble guide basket with 6 arms arranged to provide full 
+  support. Bubble contact is through Aluminum roller for minimum drag.
+Actuation of arms: Motorized Open-Close and Up Down operation.
+Film Width range: 900 to 1850 mm
+
+
+
+
+Construction                                            : The haul off will be shipped in assembled parts. 
+Main Nip rollers                                      : 2 Nos. mounted in bearings. One chrome plated roller 
+                                                                     and one rubber roller movable pneumatically.
+Nip roller width: 1975 mm
+Nip roller drive : 3 HP Gear motor (Bonvario, Italy) with variable frequency drive. 
+Collapsing Frames: Aluminum rollers
+Idler rollers: Adequate quantity as per layout.
+Oscillation: 360 degree with end limit switch sensing and override protection      
+  ensuring even thickness variation distribution on rolls giving                
+  excellent roll geometry.
+Turnbars                                                   : 02 Nos. Aluminum rollers with Hard Anodized mounted in haul off. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+
+Additional Nip                                         : 2 Nos. mounted in bearings. One chrome plated roller and one rubber
+  roller movable pneumatically.
+Edge slit assembly                                  : Highly efficient design for trouble free operation reduces trim wastage.
+Nip roller width: 1975 mm
+Nip roller drive : 2 HP Gear motor with variable frequency drive. 
+Tension control:  Through Loadcell.
+
+Surface Winders (01 No.): Maximum web width of 1850 mm with Automatic Changeover.
+Roll diameter: 1000 mm diameter or 700 kg weight in single up Which ever reaches first.  
+  Bow roller prior to drum roller for wrinkle free winding.
+Surface winder drive : 2 HP Gear motor with variable frequency drive. 
+Tension control: Through Loadcell
+Length counter meter: Provided
+Trim Suction Blower                              : Provided
+
+
+
+Electrical Power Standard Voltages
+
+Network Structure                                 : TN-S neutral conductor capable of carrying full load,
+  Separate earthing for power circuit and control circuit
+  earthing voltage should be less than 1V
+Service Voltage for drive motors        :  3 x 415 V, 50 Hz, with N
+Service Voltage for heaters                 :  3 x 415 V, 50 Hz, with N
+Control Voltage                                     :  230 V/AC, 50 Hz.
+Permissible Voltage Fluctuation         :  + 5% to - 5%
+Permissible Frequency Fluctuation    :  +/- 3 Hz.
+SR. NO.
+EQUIPMENTS
+QTY.
+APP. HEATING LOAD KW
+APP. MOTIVE LOAD KW
+1
+EXTRUDER 55 MM
+2
+22.4
+60
+2
+EXTRUDER 65 MM
+1
+17.2
+45
+3
+SCREEN CHANGER 
+3
+6.75
+┬á
+4
+3 LAYER DIE
+1
+24.30
+┬á
+5
+AIR RING
+1
+┬á
+11.5
+6
+OSC. HAULOFF
+1
+┬á
+2.25
+7
+SURFACE WINDER WITH ADD. NIP
+3
+┬á
+4.5
+TOTAL KW
+70.65
+118.50
+
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Treated water
+
+Classification              : Boiler feed water 
+pH Value : 7.5 - 8 
+Operating pressure : 3 - 4 Bar 
+Permissible Fluctuation : +/- 0.25 Bar 
+Max. hardness : 5 Degrees dH 
+Max. non-carbonate hardness : 2 Degrees dH 
+Filter to max. : 40 microns 
+General criteria : Free from corrosion substances and any foreign particles. 
+Water requirement: 30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade.
+
+
+
+Operating pressure         :  5 - 7 Bar 
+Permissible Fluctuations : +/- 0.25 Bar 
+Dew point : - 25 Degrees C 
+Dust-oil-water Content : None
+
+SR. NO.
+EQUIPMENTS
+QTY.
+PRESSURE (BAR)
+TOTAL AMT. OF AIR  M3/HR
+1
+AT DIE DURING STARTUP & OPERATION
+1
+5-7 BAR
+8.5
+2
+OSC. HAULOFF
+1
+5-7 BAR
+1.7
+3
+SURFACE WINDER WITH ADD. NIP
+1
+5-7 BAR
+5.1
+TOTAL
+15.3
+
+
+
+
+
+
+
+
+Allocation of the extrusion plants in rooms as dry and dust free as possible.
+Air Temperature
+Classification : Boiler feed water 
+Electrical equipment                             : Permissible ambient temperature is max. 45 deg. For elect. equipment. 
+Air Ring Blower inlet                              :  Maximum 40 degrees Centigrade
+Air Humidity                                            :  Formation of condensed moisture has to be avoided otherwise special 
+   measures are necessary. 
+Altitude                                                     :  Below 1000 m above sea level.
+
+The above mentioned specifications are minimum requirements to ensure proper operation 
+of Extrusion System. Any deviation affects the performance of the Extrusion system.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+PRICES: 
+Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered.           
+These are applicable as per rule. Prices are valid for 30 days from the date of quotation. 
+
+PACKING & FORWARDING: Packing charges will be charged extra.
+
+INSURANCE: Transit insurance of the machine is to be cover by the buyer. In the event of any Insurance claim, the                       procedure would be done by the buyer.
+TRANSPORTATION: Cost of the transport will be borne by the customer. 
+
+DELIVERY: 04 Months from the date receipt of technically and commercially clear purchase order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment even a month after the machine will ready, then ADROIT EXTRUSION has right to sell it to another customer. In that case, you have to wait till another same machine will be ready by us. The agreed prices will change in case buyer fails to take delivery of the ordered machine within 30 days from the date of conveying readiness of the machine to the buyer.
+PAYMENT TERMS:  We require 40% of the Total value of order as irrevocable security deposit. Balance payment along with 
+all incidental charges, Taxes & Duties are to be paid before delivery. The advance is non-interest bearing. In the event of 
+cancellation of the order, advance will be adjusting against order cancellation charges. Offsetting or retention of payments 
+based on any counterclaims whatsoever of the Buyer are not admissible. Once Machine Dispatched, It cannot be Returned  
+at any Condition.
+
+JURISDICTION: All Contract of sell Shall be Subject to Ahmadabad jurisdiction only.
+
+PRE-DISPATCH TESTING & TRIALS: We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre- designed standards to ensure faultless running of the complete line          
+on installation at Customer end. For the wet trials, the buyer is required to arrange all the input raw materials or Seller will arrange the same at buyer cost.
+ERECTION & COMMISSIONING:  Our service engineers will supervise erection, installation and commissioning of the machine. Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineers. The customer will pay To & Fro 2 AC Train Fare, Lodging, Boarding, and Transportation during period of the services provided. 
+
+Thanking you, 
+
+Yours truly, 
+
+19367505842000FOR ADROIT EXTRUSION 
+6858001079500
+
+
+Urveesh Jepaliya
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+WARRANTY PERIOD:  
+
+All Mechanical components warranty for 1 year, All Pneumatic Parts Warranty for 1 year (Dry Air Compulsory   with Air Compressor. If not Dry Air, then Warranty will not Apply), Drives Warranty for 1 year (Voltage stabilizer compulsory, If not then Warranty will not Apply) All Electrical & Electronics parts like Switch, Contactor, MCB, etc. warranty for 06 months from date of commissioning against faulty material or bad workmanship and undertake  to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. The cost of the new materials or repairing of the defective ones will be borne by the Seller. However, the cost of transportation and destination clearance charges etc. will be borne by the buyer.
+ΓÇóΓüá  ΓüáThe buyer is required to return the defective parts or equipment to seller or to the manufacturer and the cost for the            same will be bear by the buyer
+In case of payment terms agreed upon in the contract are not been obeyed, the warranty expires consequentially.
+   
+WARRANTY EXCLUDES FOLLOWING:
+
+Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCBΓÇÖs etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
+
+WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements. 
+
+Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order. 
+
+
+
+It is understood that order once placed cannot be cancelled for any reason whatso ever. In case of cancellation of the order, the entire amount of the advance will be forfeited.
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+========================================================
+
+--- Proposal for 3 layer with IBC 657565, 1870 mm.docx ---
+PROPOSAL OF
+AE Innoflex THREE LAYER CO EXTRUSION BLOWN FILM LINE 1870_65*75*65 
+FOR
+M/s. VISHWA EXIM, AHMEDBAD
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+Ref. No. AEP/DOM/1870/001
+Date: 14/03/2024
+
+(ADROIT EXTRUSION SCOPE OF SUPPLY)
+
+
+ITEM #
+ITEM DESCRIPTION
+1
+Three Nos. Extruders of 65/75/65 mm screw diameter and L/D ratio of 32:1, Imported Bimetallic screw & barrel, Ceramic Heater, 60/75/60 HP AC Motor & AC variable frequency Drive. Three Candle type Manual Screen Changers for 65/75/65 mm Extruders. 
+2
+Complete extrusion controls on main panel with Cold start protection. 
+3
+One Nickel plated Three Layer Spiral Mandrel Die with lip diameter of 375 mm, complete with die adapters and carriage. Die with IBC Provision.
+4
+Advanced Saturn type Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 20 HP Blower with AC Frequency drive.                 Inlet & Outlet blowers provided.
+5
+Complete IBC package and Controls from D.R. Joseph, USA. IBC hardware, manifolds, Inlet and Outlet blower controls etc. will be provided.
+6
+One Bubble Stabilizing Basket with Silicon roller cage. Motorized Open Close and Up down operation.
+7
+One 360-degree rotation bottom supported Horizontal Oscillating Haul Off.  Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 3 HP AC Drive. Gearmotor will be Bonvario, Italy. Max linespeed is 80 MPM.
+8
+Aluminum Idler rollers as per layout drawing.
+9
+One Secondary nip with edge slitting assembly and edge trimming assembly. Secondary Nip with 2 HP AC Drive. Post Extrusion Gearmotor will be Bonvario, Italy.
+10
+Two Surface Winders of 2250 mm film width.  Manual roll change over mechanism, digital length counter, 4 nos.- 3ΓÇ¥ Air shaft, bow roller, 2 HP AC Motor and Drive.
+11
+Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.
+
+
+BASIC PRICE EX-WORKS, UNPACKED ΓÇªΓÇªΓÇªΓÇªΓÇªΓÇª. Rs. 1,79,51,000.00
+(RUPEES ONE CRORE SEVENTY NINE LACS FIFTY ONE THOUSAND ONLY)
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Product to be made                               : High Quality Three Layer Film
+
+Max Pumping Capacity: 370 - 400 KG/ HR
+
+Max Output * on 375 mm die : 280 ΓÇô 320 KG / HR
+75% LL + 25% LD
+
+Thickness Variation                                :  +/-  8%  above 40 ╬╝ and +/- 10% upto 40 ╬╝ or +/- 4 micron whichever is 
+    higher Film thickness over 90% periphery. 
+
+Raw Materials:  LDPE, LLDPE, HDPE, mLLDPE, PP etc.
+
+Thickness Range :  20 ΓÇô 200 micron
+
+Lay flat Width:  1750 MM maximum process able width.
+
+Provided that the temperature of air at the air ring will not be more than 10 ΓÇô 12┬░ C and 2.5 BUR+ Widths only.         
+Ambient temperature and relative humidity within normal range.
+
+LIMITATIONS:
+Although we can design our equipment to as high a standard as possible, there are many factors other than equipment that can significantly affect the quality of the film. As these factors are out of our control,                  they are not covered by our performance guarantee. These factors include but are not limited to:
+
+Resin ΓÇô Bad Batches, Off-spec. Resins, Changes in additives or the use of resins other than Specified can 
+produce poor film.
+Interfacial Instability ΓÇô Mismatched viscosity in adjacent layers, can be reduced by 
+matching resins or increasing thickness of thin layers.
+Blocking ΓÇô Weather effects, resins, additives and processing conditions can induce 
+blocking, even with a tower of recommended height running the guarantee structures.
+Gels ΓÇô Defective resins, dirty screws or processing conditions can cause gels.
+Gloss and Haze ΓÇô Can be affected by resin, temperature profiles or inappropriate purge resins.
+Melt fracture due to a too narrow die gap and material properties. Processing aid may be required.
+Curling ΓÇô Asymmetrical film structures will curl.
+Film Characteristics ΓÇô Impact resistance, tear strength and other film qualities can be 
+radically affected by processing conditions, resins and additives.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Screw Diameter                                      :  65 mm single screw extruder mounted on a sturdy frame.
+L/D ratio :  32:1
+Type :  Barrier
+Screw Speed :  115 RPM
+Barrel :  Water cooled grooved feed section
+Material :  Imported Bimetallic
+Heating System :  Ceramic Band type Heaters (Heatsun or AUM)
+No. of Zones :  05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual inspection.  
+   Magnetic grill provided.
+Main Drive :  60 HP AC motor (ABB) with frequency variable drive.
+Transmission System :  Motor directly coupled with helical gearbox. (Premium or Zeal)
+Screen changer :  Candle type 
+
+
+
+
+Screw Diameter                                     : 75 mm single screw extruder mounted on a sturdy frame.
+L/D ratio : 32:1
+Type : Barrier
+Screw Speed : 105 RPM
+Barrel : Water cooled semi grooved feed section
+Material : Imported Bimetallic
+Heating System : Ceramic Band type Heaters (Heatsun or AUM)
+No. of Zones : 05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual       
+   inspection. Magnetic grill provided.
+Main Drive : 75 HP AC motor (ABB) with frequency variable drive.
+Transmission System : Motor directly coupled with helical gearbox. (Premium or Zeal)
+Screen changer : Candle type 
+
+
+
+Material of Construction                      : Hardened high strength alloy steel.  
+Surface Treatment                                 : Electroless Nickel plated & highly polished melt paths.
+Die Size : 375 MM diameter with lips of 2.3 mm gap.
+Die setting : Die adjusting bolts will be provided.
+Distribution : Spiral distribution.
+Heating System : Ceramic band heaters (Heatsun or AUM)
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+
+Construcion                                             : Aluminum body aerodynamic type Dual air cooling ring for cooling.
+                                                                     The airing had circular casing with many entry ports 4 efficient cooling. 
+Blower  : 20 HP AC variable frequency drive.
+Additional details: Differential pressure gauge and temperature gauge to record and             
+     setting the bubble. Aerodynamic shaped Air distributor.     
+
+              
+
+IBC System                                               : Complete controls including sensors, control software from D. R. JOSEPH.
+Blowers                                                    :  Inlet and Outlet Blowers Provided.
+IBC Hardware                                          :  IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided.   
+              
+
+
+Type: Calibration bubble guide basket with 6 arms arranged to provide full 
+  support. Bubble contact is through PBT for minimum drag.
+Actuation of arms: Motorized Open-Close with Liner Actuator and Up Down with gearmotor.
+Bubble width range: 900 to 1800 mm
+
+
+
+
+Construction                                            : The haul off will be shipped in assembled parts. 
+Main Nip rollers                                      : 2 Nos. mounted in bearings. One chrome plated roller 
+                                                                     and one rubber roller movable pneumatically.
+Nip roller width: 1870 mm
+Nip roller drive : 3 HP AC motor with variable frequency drive. 
+Collapsing Frames: PBT rollers.
+Idler rollers: Adequate quantity as per layout.
+Oscillation: 360 degree with end limit switch sensing and override protection      
+  ensuring even thickness variation distribution on rolls giving                
+  excellent roll geometry.
+Turnbars                                                   : 02 Nos. Hard Anodized mounted in haul off. 
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Additional Nip                                         : 02 Nos. mounted in bearings. One chrome plated roller and one rubber
+  roller movable pneumatically.
+Edge slit assembly                                  : Highly efficient design for trouble free operation reduces trim wastage.
+Nip roller width: 1870 mm
+Nip roller drive : 02 HP AC motor with variable frequency drive. 
+Tension control:  Through Loadcell.
+
+Surface Winders (02 Nos.): Maximum web width of 1750 mm with Manual Changeover.
+Roll diameter: 800 mm diameter or 600 kg weight in single up Which ever reaches first.  
+  Bow roller prior to drum roller for wrinkle free winding.
+Surface winder drive : 03 HP AC motor with variable frequency drive. 
+Tension control: Through Loadcell.
+Length counter meter:  Provided
+Trim Suction Blower                              :  Provided
+
+
+
+
+Panels                                                       :  Powder coated panels with exhaust fans.
+Synchronisation                                      : (1) For all extruders (2) For Nips & winder drives.
+Temp. controllers:  Fuji or equivalent type.
+Drives :  Danfoss or equivalent variable frequency drives. 
+Hauloff:  PLC based operation.
+
+
+
+
+
+Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
+Hauloff, Secondary nip etc. Beams will be provided at Bubble Cage for lifting the die parts.
+
+
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+1+3 Multicomponent Gravimetric System with Auto Gauge System Doteco make: Rs. 1,65,00,000/-
+Corona Treater Jain Electrotech make: Rs. 9,25,000/-
+Digital Edge Guide Alteem/ Adroit make: Rs. 2,65,000/-
+Air Cooled Air Chiller Conair / Plastech make for Airring: Rs. 12,85,000/-
+Air Cooled Air Chiller Conair / Plastech make for IBC: Rs. 5,30,000/-
+Vertical Granule Mixer with Dryer 200 kg Adroit make: Rs. 2,45,000/- 
+Hopper Loader: Rs. 1,85,000/-
+
+
+
+
+Electrical accessories
+Main source of electrical power or generator with stabilizer or UPS if needed by you.
+Cables from Main supply to distribution panel.
+Supply Cable from distribution panel to individual panel or equipment.
+Earthing to all equipment to be provided by you. (Recommended 3 pits)
+
+Finished roll handling system
+Unloading from winders.
+Installation of equipment
+Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers.
+All interconnecting piping for water & air to the equipments.
+
+
+
+
+Electrical Power Standard Voltages
+
+Network Structure                                 : TN-S neutral conductor capable of carrying full load,
+  Separate earthing for power circuit and control circuit
+  earthing voltage should be less than 1V
+Service Voltage for drive motors        :  3 x 415 V, 50 Hz, with N
+Service Voltage for heaters                 :  3 x 415 V, 50 Hz, with N
+Control Voltage                                     :  230 V/AC, 50 Hz.
+Permissible Voltage Fluctuation         :  + 5% to - 5%
+Connected Load                                     :  295 KW
+Permissible Frequency Fluctuation    :  +/- 3 Hz.
+* Accessories Power Consumptions are not considered.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Treated water
+
+Classification              : Boiler feed water 
+pH Value : 7.5 - 8 
+Operating pressure : 3 - 4 Bar 
+Permissible Fluctuation : +/- 0.25 Bar 
+Max. hardness : 5 Degrees dH 
+Max. non-carbonate hardness : 2 Degrees dH 
+Filter to max. : 40 microns 
+General criteria : Free from corrosion substances and any foreign particles. 
+Water requirement: 30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade.
+
+
+
+Operating pressure         :  5 - 7 Bar 
+Permissible Fluctuations : +/- 0.25 Bar 
+Dew point : - 25 Degrees C 
+Dust-oil-water Content :  None
+
+SR. NO.
+EQUIPMENTS
+QTY.
+PRESSURE (BAR)
+TOTAL AMT. OF AIR  M3/HR
+1
+AT DIE DURING STARTUP & OPERATION
+1
+5-7 BAR
+8.5
+2
+OSC. HAULOFF
+1
+5-7 BAR
+1.7
+3
+SURFACE WINDER WITH ADD. NIP
+1
+5-7 BAR
+5.1
+TOTAL
+15.3
+
+
+
+
+
+
+
+
+Allocation of the extrusion plants in rooms as dry and dust free as possible.
+Air Temperature
+Classification : Boiler feed water 
+Electrical equipment                             : Permissible ambient temperature is max. 45 deg. For elect. equipment. 
+Air Ring Blower inlet                              :  Maximum 40 degrees Centigrade
+Air Humidity                                            :  Formation of condensed moisture has to be avoided otherwise special 
+   measures are necessary. 
+Altitude                                                     :  Below 1000 m above sea level.
+
+The above mentioned specifications are minimum requirements to ensure proper operation 
+of Extrusion System. Any deviation affects the performance of the Extrusion system.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+PRICES: 
+Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties
+are not considered. These are applicable as per rule. Prices are valid for 30 days from the
+date of quotation. 
+
+PACKING & FORWARDING: Packing charges will be charged extra.
+
+INSURANCE: Insurance to be organized by the customer. 
+
+TRANSPORTATION: Cost of the transport will be borne by the customer. 
+
+DELIVERY: 04-05 Months from the date receipt of technically and commercially clear purchase order              with minimum 40% irrevocable security deposit. 
+PAYMENT TERMS:  We require 40% of the Total value of order as irrevocable security deposit.                                
+Balance payment along with all incidental charges, Taxes & Duties are to be paid before delivery. The deposit
+is non-interest bearing, and will be forfeited in the event of cancellation of the order.
+
+PRE-DISPATCH TESTING & TRIALS: 
+
+We follow discrete testing methods. This method involves discrete testing of individual system elements             
+like Winders, Extruders etc. to our pre- designed standards to ensure faultless running of the complete line          
+on installation at Customer end.
+
+ERECTION & COMMISSIONING:  
+
+Our service engineers will supervise erection, installation and commissioning of the machine.                      Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. 
+Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineer. The customer will pay To & For Air Fare, Visa Fees, Lodging, Boarding, and Transportation during period of the services provided. 
+
+Thanking you, 
+
+Yours truly, 
+
+FOR ADROIT EXTRUSION 
+
+Urveesh Jepaliya
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+WARRANTY PERIOD:  
+
+For electrical, Boughtout items & Manufacturing items : 12 months from date of commissioning against           faulty material or bad workmanship and undertake to repair/replacement the defective parts within period.      The defect brought to notice has to be genuine.
+
+For Third Party Products: Manufacturer warranty will be applicable.
+
+WARRANTY EXCLUDES FOLLOWING:
+
+Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCBΓÇÖs etc.           The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse,     accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
+
+WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and                       other things or workmanship. No liability is assumed beyond such replacements. 
+
+Any condition or other matters relating to this quotation not expressly stimulated will be a matter of             mutual discussion and agreement at the time of accepting the order. 
+
+
+
+It is understood that order once placed cannot be cancelled without payment of cancellation  charges, in addition to forfeiture of the advance paid by the customer.
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+========================================================
+
+--- Proposal for 3 layer with IBC 657565, 2125 mm.docx ---
+PROPOSAL OF
+AE Innoflex THREE LAYER CO EXTRUSION BLOWN FILM LINE 2125_65*75*65 
+FOR
+M/s. CREATIVE POLYPACKS, KOLKATA
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+Ref. No. AEP/DOM/2125/001
+Date: 09/03/2026
+
+(ADROIT EXTRUSION SCOPE OF SUPPLY)
+
+
+ITEM #
+ITEM DESCRIPTION
+1
+Three Nos. Extruders of 65/75/65 mm screw diameter and L/D ratio of 32:1, Nitro Alloy Screw and Barrel, Ceramic Heater, 60/100/60 HP AC Motor & AC variable frequency Drive. Three Candle type Manual Screen Changers for 65/75/65 mm Extruders.
+2
+Complete extrusion controls on main panel with Cold start protection. 
+3
+One Imported Chrome plated die with lip diameter of 450 mm, complete with die adapters and carriage. Die with IBC Provision.
+4
+Advanced Saturn type Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 20 HP Blower with AC Frequency drive.                 Inlet & Outlet blowers provided.
+5
+Complete IBC package and Control. IBC hardware, manifolds, Inlet and Outlet blower controls etc. will be provided.
+6
+One Bubble Stabilizing Basket with Silicon roller cage. Motorized Open Close and Up down operation.
+7
+One 360-degree rotation Horizontal Oscillating Haul Off.  Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 3 HP AC Drive. Post Extrusion Gearmotor will be Bonvario, Italy.
+8
+Aluminum Idler rollers as per layout drawing.
+9
+One Secondary nip with edge slitting assembly and edge trimming assembly. Secondary Nip with 3 HP AC Drive. Post Extrusion Gearmotor will be Bonvario, Italy.
+10
+Two Surface Winders of 2000 mm film width.  Manual roll change over mechanism, digital length counter, 4 nos.- 3ΓÇ¥ Air shaft, bow roller, 3 HP AC Motor and Drive. Tension Control through Loadcell.
+11
+Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.
+
+
+BASIC PRICE EX-WORKS, UNPACKED ΓÇªΓÇªΓÇªΓÇªΓÇªΓÇª. Rs. 2,27,51,000.00
+(RUPEES TWO CRORE TWENTY SEVEN LACS FIFTY ONE THOUSAND ONLY)
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+Digital Edge guide Adroit make: Rs. 2,75,000/-
+Corona Treater Jain Electrotech make: Rs. 8,45,000/-
+Air Chillers Con Air / Prasad make: Rs. 11,75,000/-
+Air Chiller Con Air / Prasad make for IBC: Rs. 7,90,000/-
+Air Cooled Water Chiller Con Air / Prasad make: Rs. 3,15,000/-
+
+
+
+
+
+Electrical accessories
+Main source of electrical power or generator with stabilizer or UPS if needed by you.
+Cables from Main supply to distribution panel.
+Supply Cable from distribution panel to individual panel or equipment.
+Earthing to all equipment to be provided by you. (Recommended 3 pits)
+
+Finished roll handling system
+Unloading from winders.
+Installation of equipment
+Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers.
+All interconnecting piping for water & air to the equipments.
+
+
+
+Electrical Power Standard Voltages
+
+Network Structure                                 : TN-S neutral conductor capable of carrying full load,
+  Separate earthing for power circuit and control circuit
+  earthing voltage should be less than 1V
+Service Voltage for drive motors        :  3 x 415 V, 50 Hz, with N
+Service Voltage for heaters                 :  3 x 415 V, 50 Hz, with N
+Control Voltage                                     :  230 V/AC, 50 Hz.
+Permissible Voltage Fluctuation         :  + 5% to - 5%
+Connected Load                                     :  295 KW
+Permissible Frequency Fluctuation    :  +/- 3 Hz.
+* Accessories Power Consumptions are not considered 
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Product to be made                               : High Quality Three Layer Film
+
+Max Pumping Capacity: 380 - 400 KG/ HR
+
+Max Output * on 450 mm die : 320 ΓÇô 340 KG / HR
+80% LL + 20% LD
+
+Thickness Variation                                :  +/-  8%  above 40 ╬╝ and +/- 10% upto 40 ╬╝ or +/- 4 micron whichever is 
+    higher Film thickness over 90% periphery. 
+
+Raw Materials:  LDPE, LLDPE, HDPE, mLLDPE, PP etc.
+
+Thickness Range :  20 ΓÇô 200 micron
+
+Lay flat Width:  2000 MM maximum process able width.
+
+Provided that the temperature of air at the air ring will not be more than 10 ΓÇô 12┬░ C and 2.5 BUR+ Widths only.         
+Ambient temperature and relative humidity within normal range.
+
+LIMITATIONS:
+Although we can design our equipment to as high a standard as possible, there are many factors other than equipment that can significantly affect the quality of the film. As these factors are out of our control,                  they are not covered by our performance guarantee. These factors include but are not limited to:
+
+Resin ΓÇô Bad Batches, Off-spec. Resins, Changes in additives or the use of resins other than Specified can 
+produce poor film.
+Interfacial Instability ΓÇô Mismatched viscosity in adjacent layers, can be reduced by 
+matching resins or increasing thickness of thin layers.
+Blocking ΓÇô Weather effects, resins, additives and processing conditions can induce 
+blocking, even with a tower of recommended height running the guarantee structures.
+Gels ΓÇô Defective resins, dirty screws or processing conditions can cause gels.
+Gloss and Haze ΓÇô Can be affected by resin, temperature profiles or inappropriate purge resins.
+Melt fracture due to a too narrow die gap and material properties. Processing aid may be required.
+Curling ΓÇô Asymmetrical film structures will curl.
+Film Characteristics ΓÇô Impact resistance, tear strength and other film qualities can be 
+radically affected by processing conditions, resins and additives.
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Screw Diameter                                      :  65 mm single screw extruder mounted on a sturdy frame.
+L/D ratio :  32:1
+Type :  Barrier
+Screw Speed :  115 RPM
+Barrel :  Water cooled grooved feed section
+Material :  Imported Nitro Alloy
+Heating System :  Ceramic Band type Heaters (AUM or equivalent)
+No. of Zones :  05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual inspection.  
+   Magnetic grill provided.
+Main Drive :  60 HP AC motor (ABB) with frequency variable drive.
+Transmission System :  Motor directly coupled with helical gearbox. (Premium or Zeal)
+Screen changer :  Candle type 
+
+
+
+
+Screw Diameter                                     : 75 mm single screw extruder mounted on a sturdy frame.
+L/D ratio : 32:1
+Type : Barrier
+Screw Speed : 105 RPM
+Barrel : Water cooled semi grooved feed section
+Material : Imported Nitro Alloy
+Heating System : Ceramic Band type Heaters (AUM or equivalent)
+No. of Zones : 05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual       
+   inspection. Magnetic grill provided.
+Main Drive : 100 HP AC motor (ABB) with frequency variable drive.
+Transmission System : Motor directly coupled with helical gearbox. (Premium or Zeal)
+Screen changer : Candle type 
+
+
+
+Material of Construction                      : Hardened high strength alloy steel.  
+Surface Treatment                                 : Chrome plated & highly polished melt paths.
+Die Size : 450 MM diameter with lips of 2.3 mm gap.
+Die setting : Die adjusting bolts will be provided.
+Distribution : Spiral distribution.
+Heating System : Ceramic band heaters (AUM or equivalent)
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+
+Construcion                                             : Aluminum body aerodynamic type Dual air cooling ring for cooling.
+                                                                     The airing had circular casing with many entry ports 4 efficient cooling. 
+Blower  : 20 HP AC variable frequency drive.
+Additional details: Differential pressure gauge and temperature gauge to record and             
+     setting the bubble. Aerodynamic shaped Air distributor.     
+
+              
+
+IBC System                                               : Complete controls including sensors, control software.
+Blowers                                                    :  Inlet and Outlet Blowers Provided.
+IBC Hardware                                          :  IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided.   
+              
+
+
+Type: Calibration bubble guide basket with 6 arms arranged to provide full 
+  support. Bubble contact is through PBT for minimum drag.
+Actuation of arms: Motorized Up Down & Open-Close with Liner Actuator.
+Bubble width range: 1000 to 2000 mm
+
+
+
+
+Construction                                            : The haul off will be shipped in assembled parts. 
+Main Nip rollers                                      : 2 Nos. mounted in bearings. One chrome plated roller 
+                                                                     and one rubber roller movable pneumatically.
+Nip roller width: 2125 mm
+Nip roller drive : 3 HP AC motor with variable frequency drive. 
+Collapsing Frames: PBT rollers.
+Idler rollers: Adequate quantity as per layout.
+Oscillation: 360 degree with end limit switch sensing and override protection      
+  ensuring even thickness variation distribution on rolls giving                
+  excellent roll geometry.
+Turnbars                                                   : 02 Nos. Hard Anodized Aluminum roller mounted in haul off. 
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Additional Nip                                         : 02 Nos. mounted in bearings. One chrome plated roller and one rubber
+  roller movable pneumatically.
+Edge slit assembly                                  : Highly efficient design for trouble free operation reduces trim wastage.
+Nip roller width: 2125 mm
+Nip roller drive : 03 HP AC motor with variable frequency drive. 
+Tension control:  Through Loadcell.
+
+Surface Winders (02 Nos.): Maximum web width of 2000 mm with Manual Changeover.
+Roll diameter: 800 mm diameter or 600 kg weight in single up Which ever reaches first.  
+  Bow roller prior to drum roller for wrinkle free winding.
+Surface winder drive : 03 HP AC motor with variable frequency drive. 
+Tension control: Through Loadcell.
+Length counter meter:  Provided
+Trim Suction Blower                              :  Provided
+
+
+
+
+Panels                                                       :  Powder coated panels with exhaust fans.
+Synchronisation                                      : (1) For all extruders (2) For Nips & winder drives.
+Temp. controllers:  Fuji or equivalent type.
+Drives :  Danfoss or equivalent variable frequency drives. 
+Hauloff:  PLC based operation.
+
+
+
+
+
+Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
+Hauloff, Secondary nip etc. Beams will be provided at Bubble Cage for lifting the die parts.
+
+
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Treated water
+
+Classification              : Boiler feed water 
+pH Value : 7.5 - 8 
+Operating pressure : 3 - 4 Bar 
+Permissible Fluctuation : +/- 0.25 Bar 
+Max. hardness : 5 Degrees dH 
+Max. non-carbonate hardness : 2 Degrees dH 
+Filter to max. : 40 microns 
+General criteria : Free from corrosion substances and any foreign particles. 
+Water requirement: 30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade.
+
+
+
+Operating pressure         :  5 - 7 Bar 
+Permissible Fluctuations : +/- 0.25 Bar 
+Dew point : - 25 Degrees C 
+Dust-oil-water Content :  None
+
+SR. NO.
+EQUIPMENTS
+QTY.
+PRESSURE (BAR)
+TOTAL AMT. OF AIR  M3/HR
+1
+AT DIE DURING STARTUP & OPERATION
+1
+5-7 BAR
+8.5
+2
+OSC. HAULOFF
+1
+5-7 BAR
+1.7
+3
+SURFACE WINDER WITH ADD. NIP
+1
+5-7 BAR
+5.1
+TOTAL
+15.3
+
+
+
+
+
+
+
+
+Allocation of the extrusion plants in rooms as dry and dust free as possible.
+Air Temperature
+Classification : Boiler feed water 
+Electrical equipment                             : Permissible ambient temperature is max. 45 deg. For elect. equipment. 
+Air Ring Blower inlet                              :  Maximum 40 degrees Centigrade
+Air Humidity                                            :  Formation of condensed moisture has to be avoided otherwise special 
+   measures are necessary. 
+Altitude                                                     :  Below 1000 m above sea level.
+
+The above mentioned specifications are minimum requirements to ensure proper operation 
+of Extrusion System. Any deviation affects the performance of the Extrusion system.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+PRICES: 
+Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered.           
+These are applicable as per rule. Prices are valid for 30 days from the date of quotation. 
+
+PACKING & FORWARDING: Packing charges will be charged extra.
+
+INSURANCE: Transit insurance of the machine is to be cover by the buyer. In the event of any Insurance claim, the                       procedure would be done by the buyer.
+TRANSPORTATION: Cost of the transport will be borne by the customer. 
+
+DELIVERY: 04 Months from the date receipt of technically and commercially clear purchase order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment even a month after the machine will ready, then ADROIT EXTRUSION has right to sell it to another customer. In that case, you have to wait till another same machine will be ready by us. The agreed prices will change in case buyer fails to take delivery of the ordered machine within 30 days from the date of conveying readiness of the machine to the buyer.
+PAYMENT TERMS:  We require 40% of the Total value of order as irrevocable security deposit. Balance payment along with 
+all incidental charges, Taxes & Duties are to be paid before delivery. The advance is non-interest bearing. In the event of 
+cancellation of the order, advance will be adjusting against order cancellation charges. Offsetting or retention of payments 
+based on any counterclaims whatsoever of the Buyer are not admissible. Once Machine Dispatched, It cannot be Returned  
+at any Condition.
+
+JURISDICTION: All Contract of sell Shall be Subject to Ahmadabad jurisdiction only.
+
+PRE-DISPATCH TESTING & TRIALS: We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre- designed standards to ensure faultless running of the complete line          
+on installation at Customer end. For the wet trials, the buyer is required to arrange all the input raw materials or Seller will arrange the same at buyer cost.
+ERECTION & COMMISSIONING:  Our service engineers will supervise erection, installation and commissioning of the machine. Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineers. The customer will pay To & Fro Air Fare, Lodging, Boarding, and Transportation during period of the services provided. 
+
+Thanking you, 
+Yours truly, 
+
+19367505842000FOR ADROIT EXTRUSION 
+6858001079500
+
+
+Urveesh Jepaliya
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+WARRANTY PERIOD:  
+
+All Mechanical components warranty for 1 year, All Pneumatic Parts Warranty for 1 year (Dry Air Compulsory   with Air Compressor. If not Dry Air, then Warranty will not Apply), Drives Warranty for 1 year (Voltage stabilizer compulsory, If not then Warranty will not Apply) All Electrical & Electronics parts like Switch, Contactor, MCB, etc. warranty for 06 months from date of commissioning against faulty material or bad workmanship and undertake  to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. The cost of the new materials or repairing of the defective ones will be borne by the Seller. However, the cost of transportation and destination clearance charges etc. will be borne by the buyer.
+ΓÇóΓüá  ΓüáThe buyer is required to return the defective parts or equipment to seller or to the manufacturer and the cost for the            same will be bear by the buyer
+In case of payment terms agreed upon in the contract are not been obeyed, the warranty expires consequentially.
+   
+WARRANTY EXCLUDES FOLLOWING:
+
+Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCBΓÇÖs etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
+
+WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements. 
+
+Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order. 
+
+
+
+It is understood that order once placed cannot be cancelled for any reason whatso ever. In case of cancellation of the order, the entire amount of the advance will be forfeited.
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+========================================================
+
+--- Proposal for 3 layer with IBC 657565, 2370 mm.docx ---
+PROPOSAL OF
+AE Innoflex THREE LAYER CO EXTRUSION BLOWN FILM LINE 2370_65*75*65 
+FOR
+M/s. JAGATI FLEXIBLES AND INNOVATIONS LLP, ASSAM
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+Ref. No. AEP/DOM/2370/001
+Date: 06/11/2025
+
+(ADROIT EXTRUSION SCOPE OF SUPPLY)
+
+
+ITEM #
+ITEM DESCRIPTION
+1
+Three Nos. Extruders of 65/75/65 mm screw diameter and L/D ratio of 32:1, Imported Bimetallic screw & barrel, Ceramic Heater, 60/100/60 HP AC Motor & AC variable frequency Drive. Three Candle type Manual Screen Changers for 65/75/65 mm Extruders.
+2
+Complete extrusion controls on main panel with Cold start protection. 
+3
+One Nickel plated Three Layer Spiral Mandrel Die with lip diameter of 500 mm, complete with die adapters and carriage. Die with IBC Provision.
+4
+Advanced Saturn type Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 20 HP Blower with AC Frequency drive.                 Inlet & Outlet blowers provided.
+5
+Complete IBC package and Controls, IBC hardware, manifolds, Inlet and Outlet blower controls etc. will be provided.
+6
+One Bubble Stabilizing Basket with Silicon roller cage. Motorized Open Close and Up down operation.
+7
+One 360-degree bottom supported rotation Horizontal Oscillating Haul Off.  Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 5 HP AC Drive. Post Extrusion Gearmotor will be Bonvario, Italy.
+8
+Aluminum Idler rollers as per layout drawing.
+9
+One Secondary nip with edge slitting assembly and edge trimming assembly. Secondary Nip with 3 HP AC Drive. Post Extrusion Gearmotor will be Bonvario, Italy.
+10
+Two Surface Winders of 2250 mm film width.  Automatic roll change over mechanism, digital length counter, 4 nos.- 3ΓÇ¥ Air shaft, bow roller, 3 HP AC Motor and Drive.
+11
+Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip etc.
+
+
+BASIC PRICE EX-WORKS, UNPACKED ΓÇªΓÇªΓÇªΓÇªΓÇªΓÇª. Rs. 2,58,51,000.00
+(RUPEES TWO CRORE FIFTY EIGHT LACS FIFTY ONE THOUSAND ONLY)
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+Digital Edge Guide Adroit make: Rs. 3,87,000/- 
+Corona Treater Jain Electrotech make: Rs. 10,75,000/-
+Air Chillers Con Air / Prasad make: Rs. 14,65,000/- 
+Air cooled Air Chiller Con Air / Prasad make for IBC: Rs. 6,80,000/-
+Air Cooled Water Chiller for Gearbox and Groove Sleeve: Rs. 3,85,000/-
+Extrusion Process Control with Trio Loader Adroit make: Rs. 10,85,000/-
+Vertical Granule Mixer with Dryer 200 kg: Rs. 2,60,000/-
+
+
+
+
+Electrical accessories
+Main source of electrical power or generator with stabilizer or UPS if needed by you.
+Cables from Main supply to distribution panel.
+Supply Cable from distribution panel to individual panel or equipment.
+Earthing to all equipment to be provided by you. (Recommended 3 pits)
+
+Finished roll handling system
+Unloading from winders.
+Installation of equipment
+Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers.
+All interconnecting piping for water & air to the equipments.
+
+
+
+Electrical Power Standard Voltages
+
+Network Structure                                 : TN-S neutral conductor capable of carrying full load,
+  Separate earthing for power circuit and control circuit
+  earthing voltage should be less than 1V
+Service Voltage for drive motors        :  3 x 415 V, 50 Hz, with N
+Service Voltage for heaters                 :  3 x 415 V, 50 Hz, with N
+Control Voltage                                     :  230 V/AC, 50 Hz.
+Permissible Voltage Fluctuation         :  + 5% to - 5%
+Connected Load                                     :  295 KW
+Permissible Frequency Fluctuation    :  +/- 3 Hz.
+* Accessories Power Consumptions are not considered.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Product to be made                               : High Quality Three Layer Film
+
+Max Pumping Capacity: 480 KG/ HR
+
+Max Output * on 500 mm die : 350 ΓÇô 380 KG / HR
+75% LL + 25% LD
+
+Thickness Variation                                :  +/-  8%  above 40 ╬╝ and +/- 10% upto 40 ╬╝ or +/- 4 micron whichever is 
+    higher Film thickness over 90% periphery. 
+
+Raw Materials:  LDPE, LLDPE, HDPE, mLLDPE, PP etc.
+
+Thickness Range :  20 ΓÇô 200 micron
+
+Lay flat Width:  2250 MM maximum process able width.
+
+Provided that the temperature of air at the air ring will not be more than 10 ΓÇô 12┬░ C and 2.5 BUR+ Widths only.         
+Ambient temperature and relative humidity within normal range.
+
+LIMITATIONS:
+Although we can design our equipment to as high a standard as possible, there are many factors other than equipment that can significantly affect the quality of the film. As these factors are out of our control,                  they are not covered by our performance guarantee. These factors include but are not limited to:
+
+Resin ΓÇô Bad Batches, Off-spec. Resins, Changes in additives or the use of resins other than Specified can 
+produce poor film.
+Interfacial Instability ΓÇô Mismatched viscosity in adjacent layers, can be reduced by 
+matching resins or increasing thickness of thin layers.
+Blocking ΓÇô Weather effects, resins, additives and processing conditions can induce 
+blocking, even with a tower of recommended height running the guarantee structures.
+Gels ΓÇô Defective resins, dirty screws or processing conditions can cause gels.
+Gloss and Haze ΓÇô Can be affected by resin, temperature profiles or inappropriate purge resins.
+Melt fracture due to a too narrow die gap and material properties. Processing aid may be required.
+Curling ΓÇô Asymmetrical film structures will curl.
+Film Characteristics ΓÇô Impact resistance, tear strength and other film qualities can be 
+radically affected by processing conditions, resins and additives.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Screw Diameter                                      :  65 mm single screw extruder mounted on a sturdy frame.
+L/D ratio :  32:1
+Type :  Barrier
+Screw Speed :  115 RPM
+Barrel :  Water cooled grooved feed section
+Material :  Imported Bimetallic
+Heating System :  Ceramic Band type Heaters (Heatsun or AUM)
+No. of Zones :  05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual inspection.  
+   Magnetic grill provided.
+Main Drive :  60 HP AC motor (ABB) with frequency variable drive.
+Transmission System :  Motor directly coupled with helical gearbox. (Premium or Zeal)
+Screen changer :  Candle type 
+
+
+
+
+Screw Diameter                                     : 75 mm single screw extruder mounted on a sturdy frame.
+L/D ratio : 32:1
+Type : Barrier
+Screw Speed : 105 RPM
+Barrel : Water cooled semi grooved feed section
+Material : Imported Bimetallic
+Heating System : Ceramic Band type Heaters (Heatsun or AUM)
+No. of Zones : 05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual       
+   inspection. Magnetic grill provided.
+Main Drive : 100 HP AC motor (ABB) with frequency variable drive.
+Transmission System : Motor directly coupled with helical gearbox. (Premium or Zeal)
+Screen changer : Candle type 
+
+
+
+Material of Construction                      : Hardened high strength alloy steel.  
+Surface Treatment                                 : Electroless Nickel plated & highly polished melt paths.
+Die Size : 500 MM diameter with lips of 2.3 mm gap.
+Die setting : Die adjusting bolts will be provided.
+Distribution : Spiral distribution.
+Heating System : Ceramic band heaters (Heatsun or AUM)
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+
+Construcion                                             : Aluminum body aerodynamic type Dual air cooling ring for cooling.
+                                                                     The airing had circular casing with many entry ports 4 efficient cooling. 
+Blower  : 20 HP AC variable frequency drive.
+Additional details: Differential pressure gauge and temperature gauge to record and             
+     setting the bubble. Aerodynamic shaped Air distributor.     
+
+              
+
+IBC System                                               : Complete controls including sensors, control software.
+Blowers                                                    :  Inlet and Outlet Blowers Provided.
+IBC Hardware                                          :  IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided.   
+              
+
+
+Type: Calibration bubble guide basket with 6 arms arranged to provide full 
+  support. Bubble contact is through PBT for minimum drag.
+Actuation of arms: Motorized Open-Close with Liner Actuator and Up Down with gearmotor.
+Bubble width range: 1100 to 2250 mm
+
+
+
+
+Construction                                            : The haul off will be shipped in assembled parts. 
+Main Nip rollers                                      : 2 Nos. mounted in bearings. One chrome plated roller 
+                                                                     and one rubber roller movable pneumatically.
+Nip roller width: 2370 mm
+Nip roller drive : 5 HP AC motor with variable frequency drive. 
+Collapsing Frames: PBT rollers.
+Idler rollers: Adequate quantity as per layout.
+Oscillation: 360 degree with end limit switch sensing and override protection      
+  ensuring even thickness variation distribution on rolls giving                
+  excellent roll geometry.
+Turnbars                                                   : 02 Nos. Hard Anodized mounted in haul off. 
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Additional Nip                                         : 02 Nos. mounted in bearings. One chrome plated roller and one rubber
+  roller movable pneumatically.
+Edge slit assembly                                  : Highly efficient design for trouble free operation reduces trim wastage.
+Nip roller width: 2370 mm
+Nip roller drive : 03 HP AC motor with variable frequency drive. 
+Tension control:  Through Loadcell.
+
+Surface Winders (02 Nos.): Maximum web width of 2250 mm with Manual Changeover.
+Roll diameter: 600 mm diameter or 450 kg weight in single up Which ever reaches first.  
+  Bow roller prior to drum roller for wrinkle free winding.
+Surface winder drive : 03 HP AC motor with variable frequency drive. 
+Tension control: Through Loadcell.
+Length counter meter:  Provided
+Trim Suction Blower                              :  Provided
+
+
+
+
+Panels                                                       :  Powder coated panels with exhaust fans.
+Synchronisation                                      : (1) For all extruders (2) For Nips & winder drives.
+Temp. controllers:  Fuji or equivalent type.
+Drives :  Danfoss or equivalent variable frequency drives. 
+Hauloff:  PLC based operation.
+
+
+
+
+
+Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
+Hauloff, Secondary nip etc. Beams will be provided at Bubble Cage for lifting the die parts.
+
+
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Treated water
+
+Classification              : Boiler feed water 
+pH Value : 7.5 - 8 
+Operating pressure : 3 - 4 Bar 
+Permissible Fluctuation : +/- 0.25 Bar 
+Max. hardness : 5 Degrees dH 
+Max. non-carbonate hardness : 2 Degrees dH 
+Filter to max. : 40 microns 
+General criteria : Free from corrosion substances and any foreign particles. 
+Water requirement: 30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade.
+
+
+
+Operating pressure         :  5 - 7 Bar 
+Permissible Fluctuations : +/- 0.25 Bar 
+Dew point : - 25 Degrees C 
+Dust-oil-water Content :  None
+
+SR. NO.
+EQUIPMENTS
+QTY.
+PRESSURE (BAR)
+TOTAL AMT. OF AIR  M3/HR
+1
+AT DIE DURING STARTUP & OPERATION
+1
+5-7 BAR
+8.5
+2
+OSC. HAULOFF
+1
+5-7 BAR
+1.7
+3
+SURFACE WINDER WITH ADD. NIP
+1
+5-7 BAR
+5.1
+TOTAL
+15.3
+
+
+
+
+
+
+
+
+Allocation of the extrusion plants in rooms as dry and dust free as possible.
+Air Temperature
+Classification : Boiler feed water 
+Electrical equipment                             : Permissible ambient temperature is max. 45 deg. For elect. equipment. 
+Air Ring Blower inlet                              :  Maximum 40 degrees Centigrade
+Air Humidity                                            :  Formation of condensed moisture has to be avoided otherwise special 
+   measures are necessary. 
+Altitude                                                     :  Below 1000 m above sea level.
+
+The above mentioned specifications are minimum requirements to ensure proper operation 
+of Extrusion System. Any deviation affects the performance of the Extrusion system.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+PRICES: 
+Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered.           
+These are applicable as per rule. Prices are valid for 30 days from the date of quotation. 
+
+PACKING & FORWARDING: Packing charges will be charged extra.
+
+INSURANCE: Transit insurance of the machine is to be cover by the buyer. In the event of any Insurance claim, the                       procedure would be done by the buyer.
+TRANSPORTATION: Cost of the transport will be borne by the customer. 
+
+DELIVERY: 04 Months from the date receipt of technically and commercially clear purchase order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment even a month after the machine will ready, then ADROIT EXTRUSION has right to sell it to another customer. In that case, you have to wait till another same machine will be ready by us. The agreed prices will change in case buyer fails to take delivery of the ordered machine within 30 days from the date of conveying readiness of the machine to the buyer.
+PAYMENT TERMS:  We require 40% of the Total value of order as irrevocable security deposit. Balance payment along with 
+all incidental charges, Taxes & Duties are to be paid before delivery. The advance is non-interest bearing. In the event of 
+cancellation of the order, advance will be adjusting against order cancellation charges. Offsetting or retention of payments 
+based on any counterclaims whatsoever of the Buyer are not admissible. Once Machine Dispatched, It cannot be Returned  
+at any Condition.
+
+JURISDICTION: All Contract of sell Shall be Subject to Ahmadabad jurisdiction only.
+
+PRE-DISPATCH TESTING & TRIALS: We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre- designed standards to ensure faultless running of the complete line          
+on installation at Customer end. For the wet trials, the buyer is required to arrange all the input raw materials or Seller will arrange the same at buyer cost.
+ERECTION & COMMISSIONING:  Our service engineers will supervise erection, installation and commissioning of the machine. Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineers. The customer will pay To & Fro 2 AC Train Fare, Lodging, Boarding, and Transportation during period of the services provided. 
+
+Thanking you, 
+Yours truly, 
+
+19367505842000FOR ADROIT EXTRUSION 
+6858001079500
+
+
+Urveesh Jepaliya
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+WARRANTY PERIOD:  
+
+All Mechanical components warranty for 1 year, All Pneumatic Parts Warranty for 1 year (Dry Air Compulsory   with Air Compressor. If not Dry Air, then Warranty will not Apply), Drives Warranty for 1 year (Voltage stabilizer compulsory, If not then Warranty will not Apply) All Electrical & Electronics parts like Switch, Contactor, MCB, etc. warranty for 06 months from date of commissioning against faulty material or bad workmanship and undertake  to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. The cost of the new materials or repairing of the defective ones will be borne by the Seller. However, the cost of transportation and destination clearance charges etc. will be borne by the buyer.
+ΓÇóΓüá  ΓüáThe buyer is required to return the defective parts or equipment to seller or to the manufacturer and the cost for the            same will be bear by the buyer
+In case of payment terms agreed upon in the contract are not been obeyed, the warranty expires consequentially.
+   
+WARRANTY EXCLUDES FOLLOWING:
+
+Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCBΓÇÖs etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
+
+WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements. 
+
+Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order. 
+
+
+
+It is understood that order once placed cannot be cancelled for any reason whatso ever. In case of cancellation of the order, the entire amount of the advance will be forfeited.
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+========================================================
+
+--- Proposal for 3 layer with IBC 757575, 2370 mm.docx ---
+PROPOSAL OF
+AE THREE LAYER CO EXTRUSION BLOWN FILM LINE 2370_75*75*75 
+FOR
+M/s. SATYENDRA PACKAGING, ANAND
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+Ref. No. AEP/DOM/2370/001
+Date: 23/12/2025
+
+(ADROIT EXTRUSION SCOPE OF SUPPLY)
+
+
+ITEM #
+ITEM DESCRIPTION
+1
+Three Nos. Extruders of 75/75/75 mm screw diameter and L/D ratio of 30:1, Bi-metallic screw & barrel, Ceramic Heater, 100/100/100 HP AC Motor & AC variable frequency Drive. Three Candle type Manual Screen Changers for 75/75/75 mm Extruders.
+2
+Complete extrusion controls on main panel with Cold start protection. 
+3
+One Nickel plated Three Layer Spiral Mandrel Die with lip diameter of 500 mm, complete with die adapters and carriage. Die with IBC provision.
+4
+Complete IBC package and Controls. IBC hardware, manifolds, Inlet and Outlet blower controls etc. will be provided
+5
+Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 25 HP Blower with AC Frequency drive. IBC Inlet and Outlet blower provided
+6
+One Bubble Stabilizing Basket with Silicon roller cage. Motorized Up- Down and Open Close with linear actuator.
+7
+One 360-degree rotation Horizontal Oscillating Haul Off.  Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 5 HP AC Drive.
+8
+Aluminum Idler rollers as per layout drawing.
+9
+One Secondary nip with edge slitting assembly and edge trimming assembly. 
+10
+Two Surface Winders of 2250 mm film width.  Manual roll change over mechanism, digital length counter, 4 nos.- 3ΓÇ¥ pneumatic airshaft, bow roller, 3 HP AC Motor and Drive. Tension Control through Loadcell.
+11
+Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.
+12
+
+
+BASIC PRICE EX-WORKS, UNPACKED ΓÇªΓÇªΓÇªΓÇªΓÇªΓÇª. INR 2,60,45,000.00
+
+(INR TWO CRORE SIXTY LAC FOURTY FIVE THOUSAND ONLY)
+
+FINAL PRICE AFTER DISCOUNT: INR 2,20,00,000/-
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Product to be made                               : High Quality Three Layer Film
+
+Max Output * on 500 mm die : 450 ΓÇô 475 KG / HR
+75% LL + 25% LD
+
+Thickness Variation                                :  +/-  8%  above 40 ╬╝ and +/- 10% upto 40 ╬╝ or +/- 4 micron whichever is 
+    higher Film thickness over 90% periphery. 
+
+Raw Materials:  LDPE, LLDPE, HDPE, mLLDPE, PP etc.
+
+Thickness Range :  20 ΓÇô 200 micron
+
+Lay flat Width: 2250 MM maximum process able width.
+
+Provided that the temperature of air at the air ring will not be more than 10 ΓÇô 12┬░ C and 2.5 BUR+ Widths only.         
+Ambient temperature and relative humidity within normal range.
+
+LIMITATIONS:
+Although we can design our equipment to as high a standard as possible, there are many factors other than equipment that can significantly affect the quality of the film. As these factors are out of our control,                  they are not covered by our performance guarantee. These factors include but are not limited to:
+
+Resin ΓÇô Bad Batches, Off-spec. Resins, Changes in additives or the use of resins other than Specified can 
+produce poor film.
+Interfacial Instability ΓÇô Mismatched viscosity in adjacent layers, can be reduced by 
+matching resins or increasing thickness of thin layers.
+Blocking ΓÇô Weather effects, resins, additives and processing conditions can induce 
+blocking, even with a tower of recommended height running the guarantee structures.
+Gels ΓÇô Defective resins, dirty screws or processing conditions can cause gels.
+Gloss and Haze ΓÇô Can be affected by resin, temperature profiles or inappropriate purge resins.
+Melt fracture due to a too narrow die gap and material properties. Processing aid may be required.
+Curling ΓÇô Asymmetrical film structures will curl.
+Film Characteristics ΓÇô Impact resistance, tear strength and other film qualities can be 
+radically affected by processing conditions, resins and additives.
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Screw Diameter                                     : 75 mm single screw extruder mounted on a sturdy frame.
+L/D ratio : 30:1
+Type : Barrier
+Screw Speed : 105 RPM
+Barrel : Water cooled semi grooved feed section
+Material : Bi-metallic steel
+Heating System : Ceramic Band type Heaters (Hitco or equivalent)
+No. of Zones : 05 Nos. on barrel
+Hopper :  MS fabricated with glass window for visual       
+   inspection. Magnetic grill provided.
+Main Drive : 100 HP AC motor with frequency variable drive.
+Transmission System : Motor directly coupled with helical gearbox. 
+Screen changer : Candle type 
+
+
+
+Material of Construction                      : Hardened high strength alloy steel.  
+Surface Treatment                                 : Electroless Nickel plated & highly polished melt paths.
+Die Size : 500 MM diameter with lips of 2.2 mm gap.
+Die setting : Die adjusting bolts will be provided.
+Distribution : Spiral distribution.
+Heating Zones: 05 Nos.
+Heating System : Ceramic band heaters (Hitco or equivalent)
+IBC Provision                                           : Die with IBC provision.
+
+
+
+IBC System                                               : Complete controls including sensors, control software.
+   
+Blowers                                                    :  Inlet and Outlet Blowers Provided.
+IBC Hardware                                          :  IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided.
+
+
+
+Construcion                                             : Aluminum body aerodynamic type Dual air cooling ring for cooling.
+                                                                     The airing had circular casing with many entry ports 4 efficient cooling. 
+Blower  : 25 HP AC variable frequency drive.
+Additional details: Differential pressure gauge and temperature gauge to record and             
+  setting the bubble. Aerodynamic shaped Air distributor.                                            
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Type: Calibration bubble guide basket with 6 arms arranged to provide full 
+  support. Bubble contact is through PBT for minimum drag.
+Actuation of arms: Motorized Up Down and Open-Close with Liner Actuator.
+Bubble width range: 1300 to 2200 mm
+
+
+
+
+Construction                                            : The haul off will be shipped in assembled parts. 
+Main Nip rollers                                      : 2 Nos. mounted in bearings. One chrome plated roller 
+                                                                     and one rubber roller movable pneumatically.
+Nip roller width: 2370 mm
+Nip roller drive : 5 HP AC motor with variable frequency drive. 
+Collapsing Frames: PBT rollers.
+Idler rollers: Adequate quantity as per layout.
+Oscillation: 360 degree with end limit switch sensing and override protection      
+  ensuring even thickness variation distribution on rolls giving                
+  excellent roll geometry.
+Turnbars                                                   : 2 Nos. Hard Anodized Aluminum rollers
+
+
+
+
+Additional Nip                                         : 2 Nos. mounted in bearings. One chrome plated roller and one rubber
+  roller movable pneumatically.
+Edge slit assembly                                  : Highly efficient design for trouble free operation reduces trim wastage.
+Nip roller width: 2370 mm
+Nip roller drive : 3 HP AC motor with variable frequency drive. 
+Tension control:  Through Loadcell.
+
+Surface Winders (02 Nos.): Maximum web width of 2250 mm with Automatic Changeover.
+Roll diameter: 600 mm diameter or 450 kg weight in single up Which ever reaches first.  
+  Bow roller prior to drum roller for wrinkle free winding.
+Surface winder drive : 3 HP AC motor with variable frequency drive. 
+Tension control: Through Loadcell
+Length counter meter:  Provided
+Trim Suction Blower                              :  Provided
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+
+Panels                                                       : Powder coated panels with exhaust fans.
+Synchronisation                                      : (1) For all extruders (2) For Nips & winder drives.
+Temp. controllers:  Fuji or equivalent type.
+Drives : Delta or equivalent variable frequency drives. 
+Hauloff: PLC based operation.
+
+
+
+
+Tower structure with idler rollers to support and mount bubble cage, collapsing frame,
+Hauloff,  Secondary nip etc. Beams will be provided at Bubble Cage for lifting the die parts.
+
+
+
+
+
+
+
+Motorized Gusset Board Assembly: Rs. 7,50,000/-
+Digital Edge Guide: Rs. 3,40,000/-
+Corona Treater Jain Electrotech make: Rs. 12,75,000/-
+Air Chillers Con Air / Plastech make for Airring: Rs. 14,15,000/-
+Air Chillers Con Air / Plastech make for IBC: Rs. 7,35,000/-
+Hopper Loader: Rs. 2,15,000/-
+Vertical Granule Mixer with dryer 300 kg: Rs. 2,68,000/-
+
+
+
+
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Electrical accessories
+Main source of electrical power or generator with stabilizer or UPS if needed by you.
+Cables from Main supply to distribution panel.
+Earthing to all equipments to be provided by you. (Recommended 3 pits)
+
+Finished roll handling system
+Unloading from winders.
+Installation of equipment
+Customer to arrange contractor or team of mechanical/structural/electrical team to work under supervision of engineers.
+All interconnecting piping for water & air to the equipments.
+
+
+
+
+Electrical Power Standard Voltages
+
+Network Structure                                 : TN-S neutral conductor capable of carrying full load,
+  Separate earthing for power circuit and control circuit
+  earthing voltage should be less than 1V
+Service Voltage for drive motors        :  3 x 415 V, 50 Hz, with N
+Service Voltage for heaters                 :  3 x 415 V, 50 Hz, with N
+Control Voltage                                     :  230 V/AC, 50 Hz.
+Permissible Voltage Fluctuation         :  + 5% to - 5%
+Permissible Frequency Fluctuation    :  +/- 3 Hz.
+SR. NO.
+EQUIPMENTS
+QTY.
+APP. HEATING LOAD KW
+APP. MOTIVE LOAD KW
+1
+EXTRUDER 75 MM
+2
+42.4
+120
+2
+EXTRUDER 75 MM
+1
+21.2
+60
+3
+SCREEN CHANGER 
+3
+4.75
+┬á
+4
+3 LAYER DIE
+1
+30.30
+┬á
+5
+AIR RING & IBC BLOWERS
+3
+┬á
+22
+6
+OSC. HAULOFF
+1
+┬á
+3.5
+7
+SURFACE WINDER WITH ADD. NIP
+1
+┬á
+6.0
+TOTAL KW
+103.85
+211.50
+
+
+* 
+
+
+
+
+
+Accessories Power Consumptions are not considered.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+Treated water
+
+Classification              : Boiler feed water 
+pH Value : 7.5 - 8 
+Operating pressure : 3 - 4 Bar 
+Permissible Fluctuation : +/- 0.25 Bar 
+Max. hardness : 5 Degrees dH 
+Max. non-carbonate hardness : 2 Degrees dH 
+Filter to max. : 40 microns 
+General criteria : Free from corrosion substances and any foreign particles. 
+Water requirement: 30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade.
+
+
+
+Operating pressure         :  5 - 7 Bar 
+Permissible Fluctuations : +/- 0.25 Bar 
+Dew point : - 25 Degrees C 
+Dust-oil-water Content : None
+
+SR. NO.
+EQUIPMENTS
+QTY.
+PRESSURE (BAR)
+TOTAL AMT. OF AIR  M3/HR
+1
+AT DIE DURING STARTUP & OPERATION
+1
+5-7 BAR
+8.5
+2
+OSC. HAULOFF
+1
+5-7 BAR
+1.7
+3
+SURFACE WINDER WITH ADD. NIP
+1
+5-7 BAR
+5.1
+TOTAL
+15.3
+
+
+
+
+
+
+
+
+Allocation of the extrusion plants in rooms as dry and dust free as possible.
+Air Temperature
+Classification : Boiler feed water 
+Electrical equipment                             : Permissible ambient temperature is max. 45 deg. For elect. equipment. 
+Air Ring Blower inlet                              :  Maximum 40 degrees Centigrade
+Air Humidity                                            :  Formation of condensed moisture has to be avoided otherwise special 
+   measures are necessary. 
+Altitude                                                     :  Below 1000 m above sea level.
+
+The above mentioned specifications are minimum requirements to ensure proper operation 
+of Extrusion System. Any deviation affects the performance of the Extrusion system.
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+PRICES: 
+Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered.           
+These are applicable as per rule. Prices are valid for 30 days from the date of quotation. 
+
+PACKING & FORWARDING: Packing charges will be charged extra.
+
+INSURANCE: Transit insurance of the machine is to be cover by the buyer. In the event of any Insurance claim, the                       procedure would be done by the buyer.
+TRANSPORTATION: Cost of the transport will be borne by the customer. 
+
+DELIVERY: 04 Months from the date receipt of technically and commercially clear purchase order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment even a month after the machine will ready, then ADROIT EXTRUSION has right to sell it to another customer. In that case, you have to wait till another same machine will be ready by us. The agreed prices will change ( 0.25% per week ) in case buyer fails to take delivery of the ordered machine within 45 days from the date of conveying readiness of the machine to the buyer. 
+PAYMENT TERMS: We require 40% of the Total value of order as irrevocable security deposit. Balance payment along with all incidental charges, Taxes & Duties are to be paid before delivery. The advance is non-interest bearing. In the event of cancellation of the order, advance will be adjusting against order cancellation charges. Offsetting or retention of payments based on any counterclaims whatsoever of the Buyer are not admissible. Once Machine Dispatched, It cannot be returned   at any Condition.
+JURISDICTION: All Contract of sell Shall be Subject to Ahmadabad jurisdiction only.
+
+PRE-DISPATCH TESTING & TRIALS: We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre- designed standards to ensure faultless running of the complete line          
+on installation at Customer end. For the wet trials, the buyer is required to arrange all the input raw materials or Seller will arrange the same at buyer cost.
+ERECTION & COMMISSIONING:  Our service engineers will supervise erection, installation and commissioning of the machine. Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineers. The customer will pay To & Fro 2 AC Train Fare, Lodging, Boarding, and Transportation during period of the services provided. 
+
+Thanking you, 
+Yours truly, 
+
+19367505842000FOR ADROIT EXTRUSION 
+6858001079500
+
+
+Urveesh Jepaliya
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+
+
+
+WARRANTY PERIOD:  
+
+All Mechanical components warranty for 1 year, All Pneumatic Parts Warranty for 1 year (Dry Air Compulsory   with Air Compressor. If not Dry Air, then Warranty will not Apply), Drives Warranty for 1 year (Voltage stabilizer compulsory, If not then Warranty will not Apply) All Electrical & Electronics parts like Switch, Contactor, MCB, etc. warranty for 06 months from date of commissioning against faulty material or bad workmanship and undertake  to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. The cost of the new materials or repairing of the defective ones will be borne by the Seller. However, the cost of transportation and destination clearance charges etc. will be borne by the buyer.
+ΓÇóΓüá  ΓüáThe buyer is required to return the defective parts or equipment to seller or to the manufacturer and the cost for the            same will be bear by the buyer
+In case of payment terms agreed upon in the contract are not been obeyed, the warranty expires consequentially.
+   
+WARRANTY EXCLUDES FOLLOWING:
+
+Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCBΓÇÖs etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.
+
+WARRANTY IS LIMITED to the extend of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements. 
+
+Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order. 
+
+
+
+It is understood that order once placed cannot be cancelled for any reason whatso ever. In case of cancellation of the order, the entire amount of the advance will be forfeited.
+
+
+
+
+____________________________________________________________________________________________________________
+Unit 1: Survey 822, Village Bhumapura, Ahmedabad ΓÇô Mahemdavad Road, Dist. Kheda, Gujarat ΓÇô 387130, India.
+Unit 2: 75/A, Akshar Industrial Park, B/H Amba Estate, Nr. Hathijan Circle, Vatva GIDC Phase-4, Ahmedabad ΓÇô 382445, India.
+Mobile: +919925143048 / +918758665507   Email: info@adroitextrusion.com   Website: www.adroitextrusion.com
+
+========================================================
+

@@ -110,7 +110,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     <h3 style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", borderBottom: `2px solid #333`, paddingBottom: "3px", marginBottom: "5px", color: C.DARK }}>
                         Standard Scope (Basic Machine)
                     </h3>
-                    <table style={{ width: "100%", fontSize: "9.5px", borderCollapse: "collapse" }}>
+                    <table style={{ width: "100%", fontSize: "11.5px", borderCollapse: "collapse" }}>
                         <thead>
                             <tr>
                                 <th style={{ textAlign: "left", padding: "3px 0", color: "#666" }}>ITEM DESCRIPTION</th>
@@ -121,10 +121,10 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                 <tr key={i} style={{ borderBottom: `1px dashed ${C.BORDER}` }}>
                                     <td style={{ padding: "3px 0" }}>
                                         <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                            <span style={{ color: "#999", marginRight: "8px", fontWeight: "bold", fontSize: "9px", marginTop: "1px" }}>{i + 1}</span>
+                                            <span style={{ color: "#999", marginRight: "8px", fontWeight: "bold", fontSize: "11px", marginTop: "1px" }}>{i + 1}</span>
                                             <div>
                                                 {item.desc && (
-                                                    <div style={{ fontSize: "9.5px", color: "#000", lineHeight: "1.1", marginTop: "1px", maxWidth: "700mm", fontStyle: "italic" }}>
+                                                    <div style={{ fontSize: "11.5px", color: "#000", lineHeight: "1.1", marginTop: "1px", maxWidth: "700mm", fontStyle: "italic" }}>
                                                         {item.desc}
                                                     </div>
                                                 )}
@@ -133,7 +133,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                     </td>
                                 </tr>
                             ))}
-                            {extraCount > 0 && <tr><td style={{ textAlign: "center", padding: "4px", fontSize: "9px", color: "#b45309" }}>... + {extraCount} more components included ...</td></tr>}
+                            {extraCount > 0 && <tr><td style={{ textAlign: "center", padding: "4px", fontSize: "11px", color: "#b45309" }}>... + {extraCount} more components included ...</td></tr>}
                         </tbody>
                     </table>
                 </div>

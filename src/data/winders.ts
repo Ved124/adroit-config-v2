@@ -87,10 +87,6 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
       "Tension control ": "Through torque.", // Note the space to distinguish from Nip tension
       "Length counter meter": "Provided",
       "Trim Suction Blower": "Provided",
-      // Legacy compatibility keys for generateScopeDesc
-      "Manual Roll Change Over": "Manual change over mechanism.",
-      "Air Shafts": "04 nos.- 3” Air shafts.",
-      "Post Extrusion Gear Motors": "Bonvario, Italy.",
     },
   },
 
@@ -112,10 +108,6 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
       "Tension control ": "Through Loadcell.",
       "Length counter meter": "Provided",
       "Trim Suction Blower": "Provided",
-      // Legacy/Sentence generators
-      "Manual Roll Change Over": "Manual change over mechanism.",
-      "Air Shafts": "04 nos.- 3” Resource Air shafts.",
-      "Post Extrusion Gear Motors": "Bonvario, Italy.",
     },
   },
 
@@ -138,10 +130,6 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
       "Tension control ": "Through Loadcell.",
       "Length counter meter": "Provided",
       "Trim Suction Blower": "Provided",
-      // Legacy/Sentence generators
-      "Automatic Roll Change Over": "Automatic change over mechanism.",
-      "Air Shafts": "04 nos.- 3” airshafts.",
-      "Post Extrusion Gear Motors": "Bonvario, Italy.",
     },
   },
 ];

@@ -24,14 +24,26 @@ function numWord(n) {
  * Case-insensitive partial match on the key name.
  * Returns the first matching value string, or null.
  */
-function td(techDesc, ...keyHints) {
+function td(source, ...keyHints) {
+  if (!source) return null;
+  
+  // Consolidate search target: merge base techDesc and metadata overrides
+  const baseTD = source.techDesc || (typeof source === "object" && !source.id ? source : {});
+  const metaTD = (source.metadata && source.metadata.techDesc) ? source.metadata.techDesc : {};
+  const techDesc = { ...baseTD, ...metaTD };
+
   if (!techDesc || typeof techDesc !== "object") return null;
+  
   for (const hint of keyHints) {
     const h = hint.toLowerCase();
     const entry = Object.entries(techDesc).find(([k]) =>
       k.toLowerCase().includes(h)
     );
-    if (entry && entry[1]) return String(entry[1]);
+    if (entry && entry[1]) {
+      const val = String(entry[1]);
+      if (val.includes("?") || val.toUpperCase().includes("TBD")) return null;
+      return val;
+    }
   }
   return null;
 }
@@ -57,12 +69,25 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
         (it.id || "").includes("ext-"))
   );
 
+  const totalQty = extruders.reduce((sum, it) => sum + (it.qty || 1), 0);
+
   // Motor HP — extract digits from "Main Drive" or "Drive" tech field
   const allDrives = extruders
-    .map((ext) => {
-      const driveStr = td(ext.techDesc, "main drive", "drive") || "";
+    .map((ext, idx) => {
+      const driveStr = td(ext, "main drive", "drive") || "";
       const m = driveStr.match(/(\d+)\s*HP/i) || driveStr.match(/(\d+)\s*kW/i);
-      return m ? m[1] : null;
+      if (m) return m[1];
+
+      // Fallback: If techDesc is missing, try to parse from machineModel.motorsHp (e.g. "50/100/50")
+      if (machineModel && machineModel.motorsHp) {
+        const hpParts = machineModel.motorsHp.split("/");
+        if (hpParts.length === totalQty) {
+          const part = hpParts[idx].trim();
+          const pm = part.match(/(\d+)/);
+          return pm ? pm[1] : null;
+        }
+      }
+      return null;
     });
 
   const combined = [];
@@ -100,29 +125,29 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
   const sizes = ordered.map(o => o.sz);
   const driveList = ordered.map(o => o.hp);
 
-  const totalQty = sizes.length;
+  // const totalQty = sizes.length; // Already defined above
   const qtyWord = numWord(totalQty);
   const sizeStr = sizes.join("/");
   const plural = totalQty > 1;
 
-  // L/D from first extruder's techDesc or default
-  const ldRaw = td(firstItem.techDesc, "l/d", "ld ratio") || "30:1";
+  // L/D from first extruder's techDesc, machineModel fallback, or default
+  const ldRaw = td(firstItem, "l/d", "ld ratio") || (machineModel ? machineModel.ldRatio : "") || "30:1";
   // clean up to bare ratio e.g. "30 : 1" → "30:1"
   const ld = ldRaw.replace(/\s*:\s*/g, ":").split(" ")[0];
 
   // Material
-  const material = td(firstItem.techDesc, "material") || "Nitro Alloy";
+  const material = td(firstItem, "material") || "Nitro Alloy";
   
   // Check for bimetallic addons in selectedAddons
   const bimetallicAddons = (selectedAddons || []).filter(a => a.id.startsWith("bimetallic-upgrade-"));
-  const numBimetallic = bimetallicAddons.length;
+  const numBimetallic = bimetallicAddons.reduce((sum, a) => sum + (a.qty || 1), 0);
 
   let materialLine = material.toLowerCase().includes("nitro")
     ? "Imported Nitro Alloy screw & barrel"
     : material;
 
   if (numBimetallic > 0) {
-    if (numBimetallic === totalQty) {
+    if (numBimetallic >= totalQty) {
       materialLine = "Imported Bi-metallic screw & barrel";
     } else {
       // Mixed case
@@ -135,8 +160,8 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
 
   // Screen changer
   const scRaw =
-    td(firstItem.techDesc, "screen changer") ||
-    td(firstItem.techDesc, "screen") ||
+    td(firstItem, "screen changer") ||
+    td(firstItem, "screen") ||
     "Candle type";
   const scType = scRaw.split(",")[0].trim(); // e.g. "Candle type"
 
@@ -178,7 +203,7 @@ function generateDieHead(item) {
   }
 
   const surface =
-    td(item.techDesc, "surface treatment", "surface") || "Nickel plated";
+    td(item, "surface treatment", "surface") || "Nickel plated";
   const isNickel = surface.toLowerCase().includes("nickel");
   const nickelStr = isNickel ? "Nickel plated " : "";
 
@@ -198,26 +223,26 @@ function generateDieHead(item) {
     layerStr = "Five Layer ";
   }
 
-  const distribution = td(item.techDesc, "distribution") || "Spiral";
+  const distribution = td(item, "distribution") || "Spiral";
   const distStr = distribution.toLowerCase().includes("spiral")
     ? "Spiral Mandrel"
     : distribution;
 
+  const isIbc = name.toLowerCase().includes("ibc") || (item.id || "").toLowerCase().includes("ibc");
+  const ibcSuffix = isIbc ? " and IBC provision" : "";
+
   return (
     `${numWord(qty)} Imported Canadian design ${nickelStr}${layerStr}${distStr} Die` +
     (diam ? ` with lip diameter of ${diam}` : "") +
-    `, complete with die adapters and carriage.`
+    `, complete with die adapters and carriage${ibcSuffix}.`
   );
 }
 
 function generateAirRing(item) {
-  const hp = item.blowerPowerHP
-    ? `${item.blowerPowerHP} HP`
-    : (() => {
-      const raw = td(item.techDesc, "blower") || "";
-      const m = raw.match(/(\d+)\s*HP/i);
-      return m ? `${m[1]} HP` : "High Pressure";
-    })();
+  const hpFromTech = td(item, "blower");
+  const hp = hpFromTech
+    ? (hpFromTech.includes("HP") ? hpFromTech : `${hpFromTech} HP`)
+    : (item.blowerPowerHP ? `${item.blowerPowerHP} HP` : "High Pressure");
 
   const lipType =
     item.type === "dual" || (item.name || "").toLowerCase().includes("dual")
@@ -281,18 +306,19 @@ function generateCollapsingFrame(item) {
  *                Haul Off. Collapsing frame with Segmented PBT Roller, side guides,
  *                Main Nip with AC Drive."
  */
-function generateHaulOff(item) {
+function generateHaulOff(item, machineModel) {
   const qty = item.qty || 1;
   const name = (item.name || "").toLowerCase();
 
   const isOscillating =
     name.includes("oscillat") ||
     item.variant === "oscillating" ||
-    (td(item.techDesc, "type") || "").toLowerCase().includes("oscillat");
+    (td(item, "type") || "").toLowerCase().includes("oscillat");
 
-  // Extract motor HP from techDesc if present
-  const motorRaw =
-    td(item.techDesc, "main nip", "nip drive", "main drive", "nip roller drive") || "";
+  // Extract motor HP from techDesc or machineModel fallback
+  const motorRawFromTech = td(item, "nip drive", "main drive", "nip roller drive");
+  const motorRaw = motorRawFromTech || (machineModel ? machineModel.mainNipDrive : "") || "";
+  
   const hpMatch = motorRaw.match(/(\d+)\s*HP/i);
   const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "AC";
 
@@ -300,8 +326,12 @@ function generateHaulOff(item) {
     ? `One 360-degree rotation bottom supported Horizontal Oscillating Haul Off.`
     : `${numWord(qty)} Haul Off.`;
 
+  const lineSpeedFromTech = td(item, "line speed");
+  const lineSpeed = lineSpeedFromTech || (machineModel ? machineModel.lineSpeed : "") || "";
+  const speedSuffix = lineSpeed ? ` Linespeed is ${lineSpeed}.` : "";
+
   return (
-    `${prefix} Collapsing frame with Segmented PBT Roller, side guides, Main Nip with ${motorStr} Drive.`
+    `${prefix} Collapsing frame with Segmented PBT Roller, side guides, Main Nip with ${motorStr} Drive.${speedSuffix}`
   );
 }
 
@@ -387,7 +417,7 @@ export function generateSecondaryNip(item, machineModel) {
 
 function generateElectricalPanel(item) {
   const control =
-    td(item.techDesc, "control system", "controller", "control") ||
+    td(item, "control system", "controller", "control") ||
     "PID Controller";
   return `Complete extrusion controls on main panel with Cold start protection. Control System: ${control}.`;
 }
@@ -409,7 +439,7 @@ const GENERATORS = {
   "Air Ring": (item) => generateAirRing(item),
   "Bubble Cage": (item) => generateBubbleCage(item),
   "Collapsing Frame": (item) => generateCollapsingFrame(item),
-  "Haul-Off": (item) => generateHaulOff(item),
+  "Haul-Off": (item, allSelected, machineModel) => generateHaulOff(item, machineModel),
   Winder: (item) => generateWinder(item),
   "Tower / Platform": (item) => generateTower(item),
   "Electrical & Control Panel": (item) => generateElectricalPanel(item),

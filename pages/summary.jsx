@@ -444,7 +444,7 @@ function buildProposalData({
     .map(item => {
       const c = (item?.category || "").toLowerCase();
       // Only exclude inner-utility items 
-      if (c.includes("collapsing frame") || c.includes("filter")) {
+      if (c.includes("filter")) {
         return null;
       }
 
@@ -454,6 +454,7 @@ function buildProposalData({
       const isCore = c.includes("extruder") || c.includes("die") || c.includes("ring") ||
         c.includes("haul") || c.includes("winder") || c.includes("tower") ||
         c.includes("cage") || c.includes("basket") || c.includes("ibc") ||
+        c.includes("trim") ||
         (item.name || "").toLowerCase().includes("extruder") ||
         (item.name || "").toLowerCase().includes("ibc");
 

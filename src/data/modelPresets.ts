@@ -1548,8 +1548,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "500",
           price: 750000,
-          customName: "500 mm Standard Air Ring (25 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "500 mm", "Blower": "25 HP AC Motor" }
+          customName: "500 mm Standard Air Ring (20 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "500 mm", "Blower": "20 HP AC Motor" }
         }
       },
       {

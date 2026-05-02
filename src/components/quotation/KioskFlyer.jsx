@@ -46,147 +46,166 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
     return (
         <div ref={ref} id="kiosk-flyer-root" style={{
             width: "210mm", height: "296mm",
-            background: "white", color: "#333", fontFamily: "Arial, sans-serif",
+            background: "white",
+            color: "#333", fontFamily: "Arial, sans-serif",
             position: "relative", overflow: "hidden", margin: 0, padding: 0
         }}>
+            {/* Letterhead Background Layer */}
+            <img
+                src="/images/letterhead.png"
+                style={{
+                    position: "absolute",
+                    top: 0, left: 0,
+                    width: "100%", height: "100%",
+                    zIndex: 0,
+                    objectFit: "fill"
+                }}
+                alt=""
+                crossOrigin="anonymous"
+            />
 
-            {/* HEADER */}
-            <div style={{ height: "65px", borderBottom: `4px solid ${C.RED}`, padding: "0 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div style={{ width: "200px" }}>
-                    <SafeImage src="/images/logo.jpg" style={{ height: "35px", objectFit: "contain" }} />
-                </div>
-                <div style={{ textAlign: "right" }}>
-                    <h2 style={{ fontSize: "14px", fontWeight: "900", color: C.RED, margin: 0, textTransform: "uppercase" }}>Budgetary Offer</h2>
-                    <p style={{ fontSize: "10px", fontWeight: "bold", color: "#888", margin: "3px 0 0 0" }}>{refNo} &nbsp;|&nbsp; {dateStr}</p>
-                </div>
-            </div>
+            {/* CONTENT LAYER — absolutely positioned between letterhead header (top:38mm) and footer (bottom:28mm) */}
+            <div style={{
+                position: "absolute",
+                top: "38mm",
+                bottom: "42mm",
+                left: "15mm",
+                right: "15mm",
+                zIndex: 1,
+                display: "flex",
+                flexDirection: "column"
+            }}>
 
-            {/* HERO SECTION */}
-            <div style={{ background: C.BG_GRAY, padding: "12px 40px", borderBottom: `1px solid ${C.BORDER}`, display: "flex", height: "150px" }}>
-
-                <div style={{ width: "60%" }}>
-                    <p style={{ fontSize: "8px", fontWeight: "bold", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", margin: "0 0 5px 0" }}>PREPARED FOR</p>
-
-                    <div style={{ borderLeft: `5px solid ${C.RED}`, paddingLeft: "15px", marginBottom: "12px" }}>
-                        <h1 style={{ fontSize: "13px", fontWeight: "900", color: "#000", margin: 0, lineHeight: 1.1, textTransform: "uppercase" }}>
-                            {companyDisplay}
-                        </h1>
-                        {customer.name && (
-                            <p style={{ fontSize: "10px", fontWeight: "600", color: "#555", margin: "3px 0 0 0", textTransform: "uppercase" }}>
-                                Attn: {customer.name}
-                            </p>
-                        )}
-                        {customer.city && (
-                            <p style={{ fontSize: "10px", fontWeight: "bold", color: "#888", margin: "1px 0 0 0", textTransform: "uppercase" }}>
-                                {customer.city}, INDIA
-                            </p>
-                        )}
-                    </div>
-
-                    <div style={{ display: "flex", gap: "25px" }}>
-                        <div>
-                            <span style={{ display: "block", fontSize: "8px", fontWeight: "bold", color: "#aaa" }}>MODEL</span>
-                            <strong style={{ fontSize: "14px", color: C.DARK }}>{machine.modelCode || "AE-SERIES"}</strong>
-                        </div>
-                        <div>
-                            <span style={{ display: "block", fontSize: "8px", fontWeight: "bold", color: "#aaa" }}>FAMILY</span>
-                            <strong style={{ fontSize: "14px", color: C.RED }}>{machine.family || "Extrusion System"}</strong>
+                {/* HERO SECTION (Condensed) */}
+                <div style={{ background: "rgba(255, 255, 255, 0.4)", padding: "8px 15px", display: "flex", marginBottom: "20px", alignItems: "center", flexShrink: 0 }}>
+                    <div style={{ flex: 1 }}>
+                        <p style={{ fontSize: "10px", fontWeight: "bold", color: "#94a3b8", textTransform: "uppercase", margin: "0 0 2px 0" }}>PREPARED FOR</p>
+                        <h1 style={{ fontSize: "15px", fontWeight: "900", color: "#000", margin: 0, textTransform: "uppercase" }}>{companyDisplay}</h1>
+                        <div style={{ display: "flex", gap: "15px", marginTop: "5px" }}>
+                            <div>
+                                <span style={{ display: "block", fontSize: "10px", fontWeight: "bold", color: "#aaa" }}>MODEL</span>
+                                <strong style={{ fontSize: "15px", color: C.DARK }}>{machine.modelCode || "AE-SERIES"}</strong>
+                            </div>
+                            <div>
+                                <span style={{ display: "block", fontSize: "10px", fontWeight: "bold", color: "#aaa" }}>FAMILY</span>
+                                <strong style={{ fontSize: "15px", color: C.RED }}>{machine.family || "Extrusion"}</strong>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div style={{ width: "40%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ background: "white", padding: "5px", border: `1px solid ${C.BORDER}`, borderRadius: "5px", height: "120px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <SafeImage src={machineDetails.machineImagePath} style={{ maxWidth: "90%", maxHeight: "90%", objectFit: "contain" }} />
+                    <div style={{ width: "130px", height: "100px", background: "white", borderRadius: "4px", padding: "2px", border: `1px solid ${C.BORDER}` }}>
+                        <SafeImage src={machineDetails.machineImagePath} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                     </div>
                 </div>
-            </div>
 
-            {/* BODY CONTENT */}
-            <div style={{ padding: "15px 40px", flex: 1 }}>
+                {/* BODY CONTENT — increased paddingBottom to 85px to ensure no overlap with absolute footer */}
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, paddingBottom: "85px", overflow: "hidden" }}>
+                    {/* STANDARD SCOPE */}
+                    {(() => {
+                        const sosLimit = 14;
+                        const addonsLimit = 9;
+                        const sosItems = topItems.slice(0, sosLimit);
+                        const addonItems = optionals.slice(0, addonsLimit);
+                        const totalLines = sosItems.length + (addonItems.length > 0 ? addonItems.length + 1 : 0); // +1 for header
 
-                {/* STANDARD SCOPE */}
-                <div style={{ marginBottom: "15px" }}>
-                    <h3 style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", borderBottom: `2px solid #333`, paddingBottom: "3px", marginBottom: "5px", color: C.DARK }}>
-                        Standard Scope (Basic Machine)
-                    </h3>
-                    <table style={{ width: "100%", fontSize: "11.5px", borderCollapse: "collapse" }}>
-                        <thead>
-                            <tr>
-                                <th style={{ textAlign: "left", padding: "3px 0", color: "#666" }}>ITEM DESCRIPTION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {topItems.map((item, i) => (
-                                <tr key={i} style={{ borderBottom: `1px dashed ${C.BORDER}` }}>
-                                    <td style={{ padding: "3px 0" }}>
-                                        <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                            <span style={{ color: "#999", marginRight: "8px", fontWeight: "bold", fontSize: "11px", marginTop: "1px" }}>{i + 1}</span>
-                                            <div>
-                                                {item.desc && (
-                                                    <div style={{ fontSize: "11.5px", color: "#000", lineHeight: "1.1", marginTop: "1px", maxWidth: "700mm", fontStyle: "italic" }}>
-                                                        {item.desc}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                            {extraCount > 0 && <tr><td style={{ textAlign: "center", padding: "4px", fontSize: "11px", color: "#b45309" }}>... + {extraCount} more components included ...</td></tr>}
-                        </tbody>
-                    </table>
+                        // Dynamic Scaling Logic: Shrink font and padding if total lines exceed 18
+                        const scale = totalLines > 18 ? Math.max(0.7, 1 - (totalLines - 18) * 0.03) : 1;
+                        
+                        const fSizeSOS = `${12 * scale}px`;
+                        const fSizeAddons = `${9.5 * scale}px`;
+                        const pad = `${4 * scale}px 0`;
+                        const gap = `${15 * scale}px`;
+
+                        return (
+                            <>
+                                <div style={{ flexShrink: 0 }}>
+                                    <h3 style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", borderBottom: `1.5px solid #333`, paddingBottom: "2px", marginBottom: "8px", color: C.DARK }}>
+                                        Standard Scope (Basic Machine)
+                                    </h3>
+                                    <table style={{ width: "100%", fontSize: fSizeSOS, borderCollapse: "collapse" }}>
+                                        <tbody>
+                                            {sosItems.map((item, i) => (
+                                                <tr key={i} style={{ borderBottom: `1px dashed ${C.BORDER}` }}>
+                                                    <td style={{ padding: pad, verticalAlign: "top" }}>
+                                                        <div style={{ display: "flex" }}>
+                                                            <span style={{ color: "#999", width: "18px", fontWeight: "bold", fontSize: "10px" }}>{i + 1}</span>
+                                                            <div style={{ color: "#000", lineHeight: "1.2", fontStyle: "italic", flex: 1 }}>
+                                                                {item.desc}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            {scope.length > sosLimit && <tr><td style={{ textAlign: "center", padding: "4px", fontSize: "9px", color: "#b45309" }}>... + more components included in the basic machine ...</td></tr>}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {/* GAP between sections */}
+                                <div style={{ height: gap, flexShrink: 0 }} />
+
+                                {/* OPTIONAL ITEMS */}
+                                {addonItems.length > 0 && (
+                                    <div style={{ flexShrink: 0, paddingTop: "5px" }}>
+                                        <h3 style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", paddingBottom: "2px", marginBottom: "8px", color: C.RED }}>
+                                            Optional Equipment (Selection Based)
+                                        </h3>
+                                        <table style={{ width: "100%", fontSize: fSizeAddons, borderCollapse: "collapse" }}>
+                                            <thead>
+                                                <tr style={{ borderBottom: `1.5px solid ${C.RED}` }}>
+                                                    <th style={{ textAlign: "left", padding: "3px 0", color: "#991b1b" }}>COMPONENT</th>
+                                                    <th style={{ textAlign: "right", padding: "3px 5px", color: "#991b1b", width: "35px" }}>QTY</th>
+                                                    <th style={{ textAlign: "right", padding: "3px 0", color: "#991b1b", width: "110px" }}>PRICE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {addonItems.map((item, i) => (
+                                                    <tr key={i} style={{ borderBottom: `1px dashed #fee2e2` }}>
+                                                        <td style={{ padding: pad, fontWeight: "600", color: "#333" }}>{item.name}</td>
+                                                        <td style={{ padding: pad, textAlign: "right", paddingRight: "5px" }}>{item.qty || 1}</td>
+                                                        <td style={{ padding: pad, textAlign: "right", fontWeight: "bold", whiteSpace: "nowrap" }}>{formatCurrency(item.price, pricing.currency)}</td>
+                                                    </tr>
+                                                ))}
+                                                <tr style={{ background: "linear-gradient(90deg, #fff 0%, #fff5f5 100%)", borderTop: `1px solid ${C.RED}` }}>
+                                                    <td colSpan="2" style={{ padding: "8px 5px", textAlign: "right", fontWeight: "900", color: C.RED, fontSize: "10px" }}>TOTAL OPTIONAL PRICE:</td>
+                                                    <td style={{ padding: "8px 0", textAlign: "right", fontWeight: "900", color: C.RED, fontSize: "11px", whiteSpace: "nowrap" }}>
+                                                        {formatCurrency(optionals.reduce((sum, it) => sum + (it.price || 0), 0), pricing.currency)}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </>
+                        );
+                    })()}
                 </div>
 
-                {/* OPTIONAL ITEMS (Detailed Table) */}
-                {optionals.length > 0 && (
-                    <div style={{ marginBottom: "10px" }}>
-                        <h3 style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", paddingBottom: "4px", marginBottom: "6px", color: C.RED }}>
-                            Optional Equipment (Selection Based)
-                        </h3>
-                        <table style={{ width: "100%", fontSize: "10.5px", borderCollapse: "collapse" }}>
-                            <thead>
-                                <tr style={{ borderBottom: `1px solid ${C.RED}` }}>
-                                    <th style={{ textAlign: "left", padding: "4px 0", color: "#991b1b" }}>COMPONENT</th>
-                                    <th style={{ textAlign: "right", padding: "4px 5px", color: "#991b1b" }}>QTY</th>
-                                    <th style={{ textAlign: "right", padding: "4px 0", color: "#991b1b" }}>PRICE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {optionals.slice(0, 8).map((item, i) => (
-                                    <tr key={i} style={{ borderBottom: `1px dashed #fee2e2` }}>
-                                        <td style={{ padding: "5px 0", fontWeight: "600", color: "#333" }}>{item.name}</td>
-                                        <td style={{ padding: "5px 5px", textAlign: "right", fontWeight: "600" }}>{item.qty || 1}</td>
-                                        <td style={{ padding: "5px 0", textAlign: "right", fontWeight: "bold", fontFamily: "monospace" }}>
-                                            {formatCurrency(item.price, pricing.currency)}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+
+                {/* FOOTER — absolutely fixed to bottom of content layer, never overlaps body */}
+                <div style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: "15mm",
+                    right: "15mm",
+                    borderTop: `1.5px solid ${C.BORDER}`,
+                    paddingTop: "5px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                    background: "white"
+                }}>
+                    <div style={{ fontSize: "8.5px", color: "#64748b", maxWidth: "60%", lineHeight: 1.4 }}>
+                        <strong>TERMS:</strong> Ex-Works Ahmedabad. Taxes extra as applicable. <br />
+                        <strong>OFFER:</strong> Budgetary Proposal. Validity: 30 Days.
                     </div>
-                )}
-            </div>
-
-            {/* FOOTER - ONLY MAIN PRICE */}
-            <div style={{ position: "absolute", bottom: 0, width: "100%", borderTop: `2px solid ${C.BORDER}`, padding: "15px 40px 20px 40px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-                <div style={{ width: "55%", fontSize: "10px", color: "#64748b", lineHeight: "1.4" }}>
-                    <strong>TERMS:</strong> Ex-Works Ahmedabad. Prices exclude Transport & Insurance. <br />
-                    <strong>VALIDITY:</strong> 30 Days. <em>*Optional items are extra as per selection.</em>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                    <span style={{ fontSize: "10px", fontWeight: "bold", color: "#aaa", textTransform: "uppercase", display: "block" }}>Basic Machine Price ({pricing.currency || 'INR'})</span>
-                    <span style={{ fontSize: "32px", fontWeight: "900", color: C.RED, lineHeight: "1" }}>
-                        <span style={{ fontSize: "32px", fontWeight: "900", color: C.RED, lineHeight: "1" }}>
+                    <div style={{ textAlign: "right" }}>
+                        <span style={{ fontSize: "8px", fontWeight: "bold", color: "#aaa", textTransform: "uppercase" }}>Basic Machine Price ({pricing.currency || 'INR'})</span>
+                        <div style={{ fontSize: "24px", fontWeight: "900", color: C.RED, lineHeight: 1 }}>
                             {pricing.final_price_text || formatCurrency(pricing.afterDiscount)}
-                        </span>
-                    </span>
-                    <span style={{ display: "block", fontSize: "9px", fontWeight: "600", color: "#94a3b8", marginTop: "4px" }}>
-                        {pricing.currency === 'USD' ? "*Zero Rated Export" : "+ Taxes (18%)"}
-                    </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     );
 });

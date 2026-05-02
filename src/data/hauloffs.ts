@@ -41,7 +41,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     variant: "vertical",
     machineTypes: ["mono", "3layer"],
     usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "Innoflex-1350A"],
-    image: "/images/parts/haul_2r.png",
+    image: "/images/hauloff/Vertical Hauloff Path (1).png",
     cardDesc:
       "Compact vertical haul-off for small and medium monolayer lines.",
     price: 0,
@@ -66,7 +66,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     name: "Horizontal Haul-Off",
     variant: "oscillating",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/parts/haul_osc.png",
+    image: "/images/hauloff/Horizontal Hauloff (1).jpeg",
     cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,
     isDynamic: true,

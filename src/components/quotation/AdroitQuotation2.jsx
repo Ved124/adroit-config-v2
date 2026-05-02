@@ -733,7 +733,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
               <td style={TD}>{item.name}</td>
               <td style={{ ...TD, textAlign: "right" }}>
                 {/* Use the pre-formatted string if it exists; otherwise fallback to cleaning numbers */}
-                {typeof item.price === "string" ? item.price : (clean(item.price) || "—")}
+                {item.isIncluded ? "Included" : (typeof item.price === "string" ? item.price : (clean(item.price) || "—"))}
               </td>
             </tr>
           ))}

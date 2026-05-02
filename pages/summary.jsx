@@ -212,7 +212,8 @@ function buildProposalData({
   const layflatWidth = customLayflat?.trim() ||
     m["Layflat Width (mm)"] || m["Lay Flat Width"] || m["WIDTH"] || m["Width"] || m["layflat"] || "";
   const dieSize = m["Die Size"] || m["DIE"] || m["Die"] || "";
-  const thicknessRange = m["Thichness Range (micron)"] || m["Thickness Range (micron)"] || m["THICKNESS"] || "20 – 150 micron";
+  const thicknessRange = m.thickness || m["Thichness Range (micron)"] || m["Thickness Range (micron)"] || m["THICKNESS"] || "20 – 150 micron";
+  const thicknessVariation = m.variation || m["Thickness Variation"] || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.";
 
   function autoScopeDesc(item) {
     const desc = item.shortDesc || item.cardDesc || "";
@@ -264,6 +265,7 @@ function buildProposalData({
         })()
         : "",
       rawPrice: (item.price || 0) * (item.qty || 1),
+      isIncluded: item.isIncluded,
     }));
 
   const addonsTotalStr = addonsTotal != null ? fmtPrice(addonsTotal, currency) : "";
@@ -272,7 +274,7 @@ function buildProposalData({
   const overrides = scopeOverrides || {};
   let hasExtruder = false;
 
-  function fillTechDesc(item, techDesc) {
+  function fillTechDesc(item, techDesc, machineModel = null) {
     if (!techDesc) return {};
     const filled = { ...techDesc };
     const nameLc = (item.name || "").toLowerCase();
@@ -302,6 +304,68 @@ function buildProposalData({
       }
     }
 
+    // --- MACHINE MODEL OVERRIDES (from threeLayerModels.ts etc) ---
+    if (machineModel) {
+      // 1. Winder specific overrides
+      if (isWinder) {
+        if (machineModel.rollCapacity) {
+          const rollKey = Object.keys(filled).find(k => k.toLowerCase().includes("roll diameter") || k.toLowerCase().includes("capacity"));
+          if (rollKey) {
+            const cap = machineModel.rollCapacity;
+            if (cap.includes("/")) {
+              const [kg, mm] = cap.split("/").map(s => s.trim());
+              filled[rollKey] = `${mm} diameter or ${kg} weight in single up which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.`;
+            } else {
+              filled[rollKey] = cap;
+            }
+          }
+        }
+        if (machineModel.winderDrive) {
+          const driveKey = Object.keys(filled).find(k => k.toLowerCase().includes("winder drive"));
+          if (driveKey) {
+            filled[driveKey] = `${machineModel.winderDrive} AC motor with variable frequency drive.`;
+          }
+        }
+      }
+
+      // 2. Haul-off / Nip specific overrides
+      const isHaulOff = nameLc.includes("haul") || (item.category || "").toLowerCase().includes("haul");
+      if (isHaulOff || isWinder) { // Winders often have nip specs too
+        if (machineModel.mainNipDrive) {
+          const nipDriveKey = Object.keys(filled).find(k => k.toLowerCase().includes("nip roller drive"));
+          if (nipDriveKey) {
+            filled[nipDriveKey] = `${machineModel.mainNipDrive} AC motor with variable frequency drive.`;
+          }
+        }
+      }
+
+      // 3. General overrides (Line speed, Output)
+      if (machineModel.lineSpeed) {
+        const speedKey = Object.keys(filled).find(k => k.toLowerCase().includes("line speed"));
+        if (speedKey) {
+          filled[speedKey] = machineModel.lineSpeed;
+        }
+      }
+      if (machineModel.outputKgHr) {
+        const outputKey = Object.keys(filled).find(k => k.toLowerCase().includes("output"));
+        if (outputKey) {
+          filled[outputKey] = machineModel.outputKgHr;
+        }
+      }
+      if (machineModel.thickness) {
+        const thickKey = Object.keys(filled).find(k => k.toLowerCase().includes("thickness") && !k.toLowerCase().includes("variation"));
+        if (thickKey) {
+          filled[thickKey] = machineModel.thickness;
+        }
+      }
+      if (machineModel.variation) {
+        const varKey = Object.keys(filled).find(k => k.toLowerCase().includes("variation"));
+        if (varKey) {
+          filled[varKey] = machineModel.variation;
+        }
+      }
+    }
+
     Object.keys(filled).forEach(key => {
       if (filled[key] === "TBD") {
         const kLc = key.toLowerCase();
@@ -324,11 +388,6 @@ function buildProposalData({
       const nameLc = (item.name || "").toLowerCase();
       const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
       
-      if (isExtruder) {
-        if (hasExtruder) return [];
-        hasExtruder = true;
-      }
-
       // Deduplicate Control Panels as they are now injected statically
       const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
       if (isControl) return [];
@@ -349,7 +408,7 @@ function buildProposalData({
         const nipDesc = generateSecondaryNip(item, currentMachineModel);
         const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
 
-        const techDescFilled = fillTechDesc(item, item.techDesc);
+        const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
         return [
           {
             id: `${item.id}-nip`,
@@ -377,14 +436,20 @@ function buildProposalData({
       const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
       const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
+      if (isExtruder) {
+        if (hasExtruder) return [];
+        hasExtruder = true;
+      }
+
       return [{
         id: item.id || "",
         name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
         qty: isExtruder ? 1 : (item.qty || 1),
+        category: item.category || "",
         image: item.image || "", 
         shortDesc: finalDesc,
         scopeDesc: autoScopeDesc({ ...item, name: isExtruder ? "Extruders" : item.name, shortDesc: finalDesc }),
-        techDesc: fillTechDesc(item, item.techDesc),
+        techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
         _autoDesc: autoDesc
       }];
     });
@@ -400,7 +465,7 @@ function buildProposalData({
       const nipDesc = generateSecondaryNip(item, currentMachineModel);
       const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
 
-      const techDescFilled = fillTechDesc(item, item.techDesc);
+      const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
       return [
         {
           id: `${item.id}-nip`,
@@ -428,13 +493,17 @@ function buildProposalData({
     const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
     const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
+    const isExtruderNow = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
+    const qtySuffix = (isExtruderNow && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
+
     return {
       id: item.id || "",
-      name: item.name || "",
+      name: (item.name || "") + qtySuffix,
       qty: item.qty || 1,
+      category: item.category || "",
       image: item.image || "",
-      shortDesc: finalDesc,
-      techDesc: fillTechDesc(item, item.techDesc),
+      shortDesc: (finalDesc || "") + qtySuffix,
+      techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
       _autoDesc: autoDesc
     };
   });
@@ -461,13 +530,17 @@ function buildProposalData({
       const isAddon = ((item?.price || 0) > 0 || c.includes("addon") || c.includes("optional")) && !isCore;
       if (isAddon) return null;
 
+      const isExtruderNow = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
+      const qtySuffix = (isExtruderNow && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
+
       return {
         id: item.id || "",
-        name: item.customName || item.name || "",
+        name: (item.customName || item.name || "") + qtySuffix,
         qty: item.qty || 1,
+        category: item.category || "",
         image: item.image || "",
-        shortDesc: item.shortDesc || item.cardDesc || "",
-        techDesc: fillTechDesc(item, item.techDesc),
+        shortDesc: (item.shortDesc || item.cardDesc || "") + qtySuffix,
+        techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
       };
     })
     .concat(winderTowerScopeItems)
@@ -582,7 +655,7 @@ function buildProposalData({
       layflat_width: layflatWidth,
       die_size: dieSize,
       thickness_range: thicknessRange,
-      thickness_variation: "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.",
+      thickness_variation: thicknessVariation,
       raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
     },
 
@@ -1211,7 +1284,7 @@ export default function SummaryPage() {
                       <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Disc %</th>
                     </>
                   )}
-                  <th className="px-3 py-2 text-right font-semibold w-28 text-slate-700">Price</th>
+                  <th className="px-3 py-2 text-right font-semibold w-32 text-slate-700">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -1245,8 +1318,8 @@ export default function SummaryPage() {
                             </td>
                           </>
                         )}
-                        <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold">
-                          {addon.price || "—"}
+                        <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold whitespace-nowrap">
+                          {addon.isIncluded ? "Included" : (addon.price || "—")}
                         </td>
                       </tr>
                     ))}
@@ -1255,7 +1328,7 @@ export default function SummaryPage() {
                         <td colSpan={showAddonPricing ? 4 : 2} className="px-3 py-2 text-right font-bold text-slate-700">
                           Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
                         </td>
-                        <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm">
+                        <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm whitespace-nowrap">
                           {fmtPrice(addonsTotal, currency)}
                         </td>
                       </tr>

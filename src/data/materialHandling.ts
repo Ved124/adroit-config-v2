@@ -36,11 +36,11 @@ export const MIXER_DRYER_BRANDS = ["Adroit"];
 export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
   {
     id: "hopper-loader-300kg",
-    name: "Hopper Loader 300kg",
+    name: "Hopper Loader",
     type: "hopper-loader",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     image: "/images/Acessories/Vertical Granule Mixer with Dryer.JPG",
-    cardDesc: "Robust automatic material loader for 300kg capacity feeding system.",
+    cardDesc: "Robust automatic material loader for upto 300kg capacity feeding system.",
     price: 195000,
     qty: 1,
     techDesc: {

@@ -195,26 +195,34 @@ export function ConfigProvider({ children }) {
   const dirHandleRef = useRef(null); // kept for future folder import if you use it
 
   // ---------- MACHINE MODELS PER FAMILY (from your TS/json) ----------
-  const machineModels = useMemo(() => {
-    switch (machineType) {
-      case "mono":
-        return MONO_MODELS || [];
-      case "aba":
-        return ABA_MODELS || [];
-      case "3layer":
-        return THREE_LAYER_MODELS || [];
-      case "5layer":
-        // when you have 5-layer data, plug it here
-        return [];
-      default:
-        return [];
-    }
-  }, [machineType]);
+  let machineModels = [];
+  switch (machineType) {
+    case "mono":
+      machineModels = MONO_MODELS || [];
+      break;
+    case "aba":
+      machineModels = ABA_MODELS || [];
+      break;
+    case "3layer":
+      machineModels = THREE_LAYER_MODELS || [];
+      break;
+    default:
+      machineModels = [];
+  }
 
-  const currentMachineModel =
-    machineModelIndex != null && machineModels[machineModelIndex]
-      ? machineModels[machineModelIndex]
-      : null;
+  const currentMachineModel = useMemo(() => {
+    if (machineModelIndex != null && machineModels[machineModelIndex]) {
+      return machineModels[machineModelIndex];
+    }
+    // Fallback: search by label/code if index is stale or missing
+    if (selectedMachineModelLabel) {
+      return machineModels.find(m => 
+        m.label === selectedMachineModelLabel || 
+        m.code === selectedMachineModelLabel
+      );
+    }
+    return null;
+  }, [machineModelIndex, machineModels, selectedMachineModelLabel]);
 
 
   // ---------------- LOAD / SAVE TO LOCAL STORAGE ----------------
@@ -391,7 +399,26 @@ export function ConfigProvider({ children }) {
       return prev;
     });
   }, [customer.region, customRollerWidth, machineType]);
-  
+
+  // Helper to strip unwanted fields from techDesc
+  function sanitizeTechDesc(category, techDesc) {
+    if (!techDesc || typeof techDesc !== "object") return techDesc;
+    const clean = { ...techDesc };
+    if (category === "Bubble Cage") {
+      delete clean["Segments"];
+      delete clean["Actuation of arms"];
+      if (clean["Type"] && /with \d+ arms/i.test(clean["Type"])) {
+        clean["Type"] = clean["Type"].replace(/\s*with \d+ arms\s*/gi, " ").trim();
+        // Ensure first letter is capitalized and ends with a period if it was stripped
+        if (clean["Type"].length > 0) {
+          clean["Type"] = clean["Type"].charAt(0).toUpperCase() + clean["Type"].slice(1);
+          if (!clean["Type"].endsWith(".")) clean["Type"] += ".";
+        }
+      }
+    }
+    return clean;
+  }
+
   // Helper to re-sync a component from a save/import with its base definition in the library
   function syncComponentWithBase(row) {
     if (!row || !row.category) return row;
@@ -401,7 +428,7 @@ export function ConfigProvider({ children }) {
     if (!base) return row; // fallback to existing row data if not found in library
 
     // Deep merge techDesc: prioritize base data but keep overrides from row
-    const mergedTechDesc = { ...(base.techDesc || {}), ...(row.techDesc || {}) };
+    const mergedTechDesc = sanitizeTechDesc(row.category, { ...(base.techDesc || {}), ...(row.techDesc || {}) });
     
     return {
       ...base,
@@ -469,11 +496,12 @@ export function ConfigProvider({ children }) {
         return;
       }
       // Deep merge techDesc if it exists in metadata
-      const mergedTechDesc = { ...(base.techDesc || {}), ...(metadata.techDesc || {}) };
+      const mergedTechDesc = sanitizeTechDesc(category, { ...(base.techDesc || {}), ...(metadata.techDesc || {}) });
       nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata, techDesc: mergedTechDesc });
     });
 
     // 3) Build selected add-ons
+    const isPackage = (preset.basePrice || 0) > 0;
     (preset.addons || []).forEach(({ category, id, qty }) => {
       const list = addons[category] || [];
       const base = list.find((a) => a.id === id);
@@ -481,7 +509,13 @@ export function ConfigProvider({ children }) {
         console.warn("Add-on not found for preset:", category, id);
         return;
       }
-      nextAddons.push({ ...base, category, qty: qty ?? 1 });
+      nextAddons.push({ 
+        ...base, 
+        category, 
+        qty: qty ?? 1,
+        price: isPackage ? 0 : base.price,
+        isIncluded: isPackage
+      });
     });
 
     // 4) Sync specifications (Roller Width, Layflat & Output) from the source model data
@@ -555,7 +589,7 @@ export function ConfigProvider({ children }) {
 
           const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
           const segments = (chosenSize >= 2370) ? 9 : (chosenSize >= 2000 ? 8 : 6);
-          const typeStr = `Calibration bubble guide basket with ${segments} arms arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
+          const typeStr = `Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
 
           // Update item properties directly at the top level
           nextSelected[index] = {
@@ -565,14 +599,13 @@ export function ConfigProvider({ children }) {
             segments: segments,
             price: newPrice,
             image: dynamicBCItem.image || item.image,
-            customName: `${segments} Segment Motorized Up-Down Bubble Cage - ${chosenSize} mm`,
-            techDesc: {
+            customName: `Motorised Bubble Cage - ${chosenSize} mm`,
+            techDesc: sanitizeTechDesc("Bubble Cage", {
               ...(dynamicBCItem.techDesc || {}),
               ...(item.techDesc || {}),
               "Type": typeStr,
-              "Segments": segments.toString(),
               [label]: `${minRange} to ${chosenSize} mm`,
-            }
+            })
           };
         }
       });
@@ -771,7 +804,7 @@ export function ConfigProvider({ children }) {
 
       setPresetBasePrice(0); // Revert to sum of parts if modified
 
-      const mergedTechDesc = { ...(item.techDesc || {}), ...(metadata?.techDesc || {}) };
+      const mergedTechDesc = sanitizeTechDesc(category, { ...(item.techDesc || {}), ...(metadata?.techDesc || {}) });
       const newItem = { ...item, category, qty: 1, ...metadata, techDesc: mergedTechDesc };
       
       if (foundIndex !== -1) {
@@ -913,23 +946,20 @@ export function ConfigProvider({ children }) {
           if (!comp.machineTypes.includes(machineType)) return false;
         }
 
-        // 2) fixed model mode → filter by usedInModels, but match flexibly
-        if (!customMode && modelLabel) {
-          if (Array.isArray(comp.usedInModels) && comp.usedInModels.length > 0) {
-            const labelNorm = modelLabel.toUpperCase().trim();
-
-            const matches = comp.usedInModels.some((tag) => {
-              const t = String(tag).toUpperCase().trim();
-              // exact match or label starts with code (e.g. "AE-1125 (40/40/40)")
-              return labelNorm === t || labelNorm.startsWith(t + " ");
-            });
-
-            if (!matches) return false;
-          }
-        }
-
-        // 3) otherwise allowed
+        // We show all components for the family now, to allow tweaking presets.
+        // But we'll mark which ones are "standard" for this model.
         return true;
+      }).map(comp => {
+        // Add a recommendation flag if it matches the model tags
+        let isRecommended = true;
+        if (!customMode && modelLabel && Array.isArray(comp.usedInModels) && comp.usedInModels.length > 0) {
+          const labelNorm = modelLabel.toUpperCase().trim();
+          isRecommended = comp.usedInModels.some((tag) => {
+            const t = String(tag).toUpperCase().trim();
+            return labelNorm === t || labelNorm.startsWith(t + " ");
+          });
+        }
+        return { ...comp, isRecommended };
       });
 
       if (filtered.length > 0) {
@@ -1222,11 +1252,6 @@ export function ConfigProvider({ children }) {
           const nameLc = (item.name || "").toLowerCase();
           const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
           
-          if (isExtruder) {
-            if (hasExtruder) return [];
-            hasExtruder = true;
-          }
-
           const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
           if (isControl) return [];
           if (c.includes("collapsing frame") || c.includes("filter")) return [];
@@ -1260,10 +1285,16 @@ export function ConfigProvider({ children }) {
           const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
           const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
 
+          if (isExtruder) {
+            if (hasExtruder) return [];
+            hasExtruder = true;
+          }
+
           return [{
             id: item.id || "",
             name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
             qty: isExtruder ? 1 : (item.qty || 1),
+            category: item.category || "",
             desc: finalDesc
           }];
         });
@@ -1293,7 +1324,16 @@ export function ConfigProvider({ children }) {
 
         const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
         const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
-        return { id: item.id || "", name: item.name, qty: item.qty || 1, desc: finalDesc };
+        const isExtruder = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
+        const qtySuffix = (isExtruder && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
+
+        return { 
+            id: item.id || "", 
+            name: (item.name || "") + qtySuffix, 
+            qty: item.qty || 1, 
+            category: item.category || "",
+            desc: (finalDesc || "") + qtySuffix 
+        };
       });
 
       const hasSelectedTower = [...selectedScopeItems, ...winderTowerScopeItems].some(item => (item.name || "").toLowerCase().includes("tower"));

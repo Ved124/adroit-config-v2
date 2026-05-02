@@ -93,6 +93,8 @@ export default function SelectionPage() {
                       removeComponent={removeComponent}
                       setQty={setQty}
                       openModal={openModal}
+                      customMode={customMode}
+                      selectedMachineModelLabel={selectedMachineModelLabel}
                     />
                   ))}
                 </div>
@@ -130,6 +132,8 @@ function ComponentCard({
   removeComponent,
   setQty,
   openModal,
+  customMode,
+  selectedMachineModelLabel,
 }) {
   const isSelected = !!line;
   const qty = line?.qty || 0;
@@ -220,11 +224,18 @@ function ComponentCard({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-bold text-slate-900 leading-tight">
-            {isSelected && item.isDynamic ? line.customName : item.name}
+          <div className="flex items-center gap-2 mb-1">
+            <div className="text-[13px] font-bold text-slate-900 leading-tight truncate" title={isSelected && item.isDynamic ? line.customName : item.name}>
+              {isSelected && item.isDynamic ? line.customName : item.name}
+            </div>
+            {item.isRecommended && !customMode && selectedMachineModelLabel && (
+              <span className="shrink-0 bg-blue-100 text-brand-blue text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter">
+                Standard
+              </span>
+            )}
           </div>
           {showPrices && (
-            <div className="text-[11px] font-bold text-emerald-600 mt-1">
+            <div className="text-[11px] font-bold text-emerald-600 mt-0.5">
               ₹{currentPrice.toLocaleString("en-IN")}
             </div>
           )}

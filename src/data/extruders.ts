@@ -412,7 +412,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     price: 1470000,
     techDesc: {
       "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
-      "L/D ratio": "30 : 1",
+      "L/D ratio": "32 : 1",
       "Type": "Barrier",
       "Screw Speed": "115 RPM",
       "Barrel": "Water cooled grooved feed section",

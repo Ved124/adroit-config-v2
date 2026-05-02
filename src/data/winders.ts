@@ -72,11 +72,11 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
   // ---------- DYNAMIC COMBINED WINDER & SECONDARY NIP SECTION ----------
   {
     id: "winder-manual-back-to-back-dynamic",
-    name: "Secondary Nip & manual Back to Back Winder",
+    name: "Secondary Nip & Manual Back to Back Winder",
     variant: "surface-manual",
     machineTypes: ["mono", "aba", "3layer"],
-    image: "/images/parts/wind_center4.png",
-    cardDesc: "Secondary Nip & manual Back to Back Surface Winder. Select size to add.",
+    image: "/images/winder/Back to Back Winder.JPG.jpeg",
+    cardDesc: "Secondary Nip & Manual Back to Back Surface Winder. Select size to add.",
     price: 0,
     isDynamic: true,
     techDesc: {
@@ -95,7 +95,7 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     name: "Secondary Nip & Two Separate Surface Winder",
     variant: "surface-semi-auto",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/parts/wind_surface2.png",
+    image: "/images/winder/Separate_Winder.jpg",
     cardDesc: "Secondary Nip & two separate surface winders. Select size to add.",
     price: 0,
     isDynamic: true,
@@ -116,7 +116,7 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     name: "Secondary Nip & Two Separate Automatic Surface Winder",
     variant: "surface-auto",
     machineTypes: ["aba", "3layer", "5layer"],
-    image: "/images/parts/wind_turret.png",
+    image: "/images/winder/5_layer_winder.jpg",
     cardDesc: "Secondary Nip & two separate surface winders with fully automatic changeover. Select size to add.",
     price: 0,
     isDynamic: true,

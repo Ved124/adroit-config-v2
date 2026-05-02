@@ -924,7 +924,7 @@ const DEFAULT_DATA = {
   },
   quotation: { ref_no: 'AE/2024/001', date: '2024-01-15' },
   scope: [
-    { sr: 1, description: 'Bubble Cage – 6 Segment / 4 Row (Manual)' },
+    { sr: 1, description: 'Manual Bubble Cage' },
     { sr: 2, description: 'Collapsing Frame – PBT Rollers (Wide Web)' },
     { sr: 3, description: 'Horizontal Haul-Off with 360° Oscillation' },
     { sr: 4, description: 'Tower – Standard' },
@@ -947,10 +947,10 @@ const DEFAULT_DATA = {
   },
   components: [
     {
-      name: 'Bubble Cage – 6 Segment / 4 Row (Manual)',
+      name: 'Manual Bubble Cage',
       image: null,
       tech_desc: {
-        'Type': 'Calibration bubble guide basket with 6 arms arranged symmetrically around the bubble.',
+        'Type': 'Calibration bubble guide basket arranged symmetrically around the bubble.',
         'Support Rollers': 'Multiple aluminium rollers with low friction bearings to minimize film drag.',
         'Adjustment': 'Manual radial adjustment of each segment with locking handles.',
         'Film Width Range': '1000 to 1500 mm layflat (model dependent).',

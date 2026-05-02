@@ -43,7 +43,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1250",
           price: 250000,
-          customName: "Open Close Bubble Cage - 1250 mm",
+          customName: "Motorised Bubble Cage - 1250 mm",
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
@@ -116,7 +116,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Open Close Bubble Cage - 1350 mm",
+          customName: "Motorised Bubble Cage - 1350 mm",
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
@@ -182,7 +182,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Open Close Bubble Cage - 1350 mm",
+          customName: "Motorised Bubble Cage - 1350 mm",
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
@@ -251,13 +251,41 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Open Close Bubble Cage - 1350 mm",
+          customName: "Motorised Bubble Cage - 1350 mm",
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "HORIZONTAL HAULOFF - 1350 mm",
+          techDesc: {
+            "Construction": "The haul off will be shipped in assembled parts.",
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Hauloff Size": "1350 mm",
+            "Nip roller width": "1475 mm",
+            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers.",
+            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+          }
+        }
+      },
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "TOWER / PLATFORM - 1350 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+        }
+      },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
@@ -280,13 +308,41 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Open Close Bubble Cage - 1350 mm",
+          customName: "Motorised Bubble Cage - 1350 mm",
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
-      { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "HORIZONTAL HAULOFF - 1350 mm",
+          techDesc: {
+            "Construction": "The haul off will be shipped in assembled parts.",
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Hauloff Size": "1350 mm",
+            "Nip roller width": "1475 mm",
+            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers.",
+            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+          }
+        }
+      },
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "TOWER / PLATFORM - 1350 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+        }
+      },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
@@ -995,7 +1051,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1250",
           price: 55000,
-          customName: "Manual Bubble Cage - 1250 mm",
+          customName: "Manual BC - 1250 mm",
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
@@ -1047,7 +1103,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1250",
           price: 55000,
-          customName: "Manual Bubble Cage - 1250 mm",
+          customName: "Manual BC - 1250 mm",
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
@@ -1262,7 +1318,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1250",
           price: 55000,
-          customName: "Manual Bubble Cage - 1250 mm",
+          customName: "Manual BC - 1250 mm",
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
@@ -1354,7 +1410,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "3000",
           price: 500000,
-          customName: "Manual Bubble Cage - 3000 mm",
+          customName: "Manual BC - 3000 mm",
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "3000 mm" }
         }
       },
@@ -1422,12 +1478,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1850",
           price: 700000,
-          customName: "6 Segment Motorized Up-Down Bubble Cage - 1850 mm",
-          techDesc: { "Segments": "6", "Type": "Motorized Up-Down & Open-Close" }
+          customName: "Motorised Bubble Cage - 1850 mm",
+          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "1850", price: 3200000 } },
-      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
@@ -1472,12 +1528,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1975",
           price: 725000,
-          customName: "6 Segment Motorized Up-Down Bubble Cage - 1975 mm",
-          techDesc: { "Segments": "6", "Type": "Motorized Up-Down & Open-Close" }
+          customName: "Motorised Bubble Cage - 1975 mm",
+          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
       { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "1975", price: 3400000 } },
-      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
@@ -1522,12 +1578,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "2125",
           price: 800000,
-          customName: "9 Segment Motorized Up-Down Bubble Cage - 2125 mm",
-          techDesc: { "Segments": "9", "Type": "Motorized Up-Down & Open-Close" }
+          customName: "Motorised Bubble Cage - 2125 mm",
+          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2125", price: 4000000 } },
-      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
@@ -1571,12 +1627,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "2370",
           price: 900000,
-          customName: "9 Segment Motorized Up-Down Bubble Cage - 2370 mm",
-          techDesc: { "Segments": "9", "Type": "Motorized Up-Down & Open-Close" }
+          customName: "Motorised Bubble Cage - 2370 mm",
+          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
       { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "2370", price: 4500000 } },
-      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
@@ -1620,12 +1676,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "2370",
           price: 900000,
-          customName: "9 Segment Motorized Up-Down Bubble Cage - 2370 mm",
-          techDesc: { "Segments": "9", "Type": "Motorized Up-Down & Open-Close" }
+          customName: "Motorised Bubble Cage - 2370 mm",
+          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2370", price: 4500000 } },
-      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, price: 0 },
+      { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },

@@ -77,15 +77,15 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
-      "Actuation of arms": "Manual open-close operation.",
+      "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+      "Actuation": "Manual open-close operation.",
       "Bubble diameter range": "750 to 1250 mm"
     },
     shortDesc: "Universal manual bubble cage with adjustable diameter."
   },
   {
     id: "bc-open-close-dynamic",
-    name: "Open Close Bubble Cage",
+    name: "Motorised Bubble Cage",
     variant: "motorized",
     segments: 6,
     machineTypes: ["mono", "aba", "3layer", "5layer"],
@@ -94,15 +94,15 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Type": "Calibration bubble guide basket with 6 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
-      "Actuation of arms": "Motorized Open-Close operation.",
+      "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+      "Actuation": "Motorized Open-Close operation.",
       "Film width range": "800 to 1600 mm"
     },
     shortDesc: "Motorized open-close bubble cage for precision control."
   },
   {
     id: "bc-up-down-dynamic",
-    name: "Up Down Bubble Cage",
+    name: "Motorised Bubble Cage",
     variant: "motorized",
     segments: 6,
     machineTypes: ["mono", "aba", "3layer", "5layer"],
@@ -111,8 +111,8 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Type": "Calibration bubble guide basket with 6 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
-      "Actuation of arms": "Motorized Up Down and Open-Close with Liner Actuator.",
+      "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+      "Actuation": "Motorized Up Down and Open-Close with Liner Actuator.",
       "Bubble width range": "1300 to 2250 mm"
     },
     shortDesc: "Full motorized bubble cage with vertical and radial adjustment."

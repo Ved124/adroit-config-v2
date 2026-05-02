@@ -178,7 +178,7 @@ function AddonCard({
   // UI customization based on component type
   const isOutputBased = isChiller || isMixerDryer || isHeatExchanger;
   const selectorLabel = isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : "Max Roller");
-  const unit = isHeatExchanger ? "kg" : (isOutputBased ? "kg/hr" : "mm");
+  const unit = (isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm");
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
@@ -225,10 +225,10 @@ function AddonCard({
         }
       } else if (isChiller) {
         // Example: Air Cooled Air Chiller Prasad make - 300 kg/hr
-        customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg/hr`;
+        customName = `${item.name} ${selectedBrand} make`;
       } else if (isMixerDryer) {
         // Example: Vertical Granule Mixer with Dryer Adroit make - 300 kg/hr
-        customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg/hr`;
+        customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;
       } else if (isHeatExchanger) {
         // Example: Heat Exchanger Adroit make - 150 kg
         customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;

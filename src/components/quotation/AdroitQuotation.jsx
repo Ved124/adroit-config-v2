@@ -287,14 +287,12 @@ function CoverPage({ machine, customer }) {
                 {/* "PROPOSAL OF" pill */}
                 <div style={{ marginBottom: "14px" }}>
                     <span style={{
-                        display: "inline-block",
-                        backgroundColor: BLUE,
-                        color: "#fff",
-                        padding: "5px 32px",
+                        fontSize: "14pt",
                         fontWeight: "bold",
-                        fontSize: "12pt",
                         fontFamily: F,
-                        letterSpacing: "2px",
+                        color: BLUE,
+                        lineHeight: "1.4",
+                        // marginBottom: "16px",
                     }}>
                         PROPOSAL OF
                     </span>
@@ -701,7 +699,7 @@ function ComponentPage({ item }) {
             {/* Image — top, centred */}
             <div style={{
                 border: `1px solid ${LIGHT_BDR}`,
-                backgroundColor: "#fafafa",
+                backgroundColor: "#fcfcfcff",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -812,7 +810,7 @@ function OptionalAndUtilitiesPage({ optionalItems, powerLoads }) {
                                     fontWeight: item.price ? "bold" : "normal",
                                     color: item.price ? BLUE : DIM,
                                 }}>
-                                    {item.price || "On request"}
+                                    {item.isIncluded ? "Included" : (item.price || "On request")}
                                 </td>
                             </tr>
                         ))}

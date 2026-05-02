@@ -258,9 +258,10 @@ function generateAirRing(item) {
 function generateBubbleCage(item) {
   const size = item.size || "";
   const name = (item.name || "").toLowerCase();
+  const id = (item.id || "").toLowerCase();
 
   // Specific statement for Up Down Bubble Cage (UD BC)
-  if (name.includes("up down")) {
+  if (name.includes("up down") || id.includes("up-down")) {
     return (
       "One Bubble Stabilizing Basket with Silicon roller cage. " +
       "Motorized Up Down and Open-Close with Liner Actuator. " +
@@ -269,7 +270,7 @@ function generateBubbleCage(item) {
   }
 
   // Specific statement for Manual Bubble Cage
-  if (name.includes("manual")) {
+  if (name.includes("manual") || id.includes("manual")) {
     return (
       "One Bubble Stabilizing Basket with PBT roller cage. " +
       "Manual open-close operation. " +
@@ -278,7 +279,7 @@ function generateBubbleCage(item) {
   }
 
   // Specific statement for Open Close Bubble Cage (OC BC)
-  if (name.includes("open close")) {
+  if (name.includes("open close") || id.includes("open-close")) {
     return (
       "One Bubble Stabilizing Basket with Silicon roller cage. " +
       "Motorized Open-Close operation. " +

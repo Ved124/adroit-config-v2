@@ -1,5 +1,5 @@
-export function numberToWords(n) {
-  if (n < 0) return "Minus " + numberToWords(-n);
+export function numberToWords(n, system = 'IN') {
+  if (n < 0) return "Minus " + numberToWords(-n, system);
   if (n === 0) return "Zero";
 
   const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
@@ -24,6 +24,34 @@ export function numberToWords(n) {
       str += units[num] + " ";
     }
     return str;
+  }
+
+  if (system === 'US') {
+    let str = "";
+    const floor = Math.floor;
+    
+    const billion = floor(n / 1000000000);
+    n %= 1000000000;
+    
+    const million = floor(n / 1000000);
+    n %= 1000000;
+    
+    const thousand = floor(n / 1000);
+    n %= 1000;
+    
+    if (billion > 0) {
+      str += convertBelow1000(billion) + "Billion ";
+    }
+    if (million > 0) {
+      str += convertBelow1000(million) + "Million ";
+    }
+    if (thousand > 0) {
+      str += convertBelow1000(thousand) + "Thousand ";
+    }
+    if (n > 0) {
+      str += convertBelow1000(n);
+    }
+    return str.trim();
   }
 
   // Indian Numbering System for Adroit Quotation

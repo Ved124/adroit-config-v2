@@ -1227,9 +1227,10 @@ export function ConfigProvider({ children }) {
 
     // Number to words helper with currency
     const fmtWordsFull = (n, curr) => {
-      if (!n) return curr === "USD" ? "Zero Dollars" : "Zero";
-      const w = numberToWords(Math.round(n));
-      return curr === "USD" ? `${w} Dollars Only` : `${w} Only`;
+      if (!n) return curr === "USD" ? "Zero Dollars" : "INR Zero";
+      const system = curr === "USD" ? "US" : "IN";
+      const w = numberToWords(Math.round(n), system);
+      return curr === "USD" ? `${w} Dollars Only` : `INR ${w} Only`;
     };
 
     const fmtPriceFull = (n, curr) => {

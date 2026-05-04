@@ -41,14 +41,15 @@ function fmtPrice(n, currency = "INR") {
 /** Number in words with Currency prefix */
 function fmtWords(n, currency = "INR") {
   if (n == null || isNaN(n)) return "";
-  if (n === 0) return currency === "USD" ? "(ZERO DOLLARS ONLY)" : "(RUPEES ZERO ONLY)";
+  if (n === 0) return currency === "USD" ? "(ZERO DOLLARS ONLY)" : "(INR ZERO ONLY)";
   try {
-    const w = numberToWords(Math.round(n));
+    const system = currency === "USD" ? "US" : "IN";
+    const w = numberToWords(Math.round(n), system);
     if (!w) return "";
     if (currency === "USD") {
       return `(${w} Dollars Only)`.toUpperCase();
     }
-    return `(${w} Only)`.toUpperCase();
+    return `(INR ${w} Only)`.toUpperCase();
   } catch {
     return "";
   }

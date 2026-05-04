@@ -637,7 +637,7 @@ function PerformancePage({ perf }) {
                                 75% LL + 25% LD`} value={p.max_output || "—"} shaded />
                 <SpecRow label="Lay-flat Width(mm)" value={p.layflat_width || "—"} />
                 <SpecRow label="Film Thickness Range" value={p.thickness_range || "20 – 150 micron"} shaded />
-                <SpecRow label="Thickness Variation" value={p.thickness_variation || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery."} />
+                <SpecRow label="Thickness Variation" value={"+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery."} />
                 <SpecRow label="Raw Materials" value={p.raw_materials || "LDPE, LLDPE, HDPE, mLLDPE, etc."} shaded noBorder />
             </div><br />
 

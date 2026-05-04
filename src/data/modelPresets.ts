@@ -55,10 +55,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 425000,
-          customName: "300 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+          size: "225",
+          price: 0,
+          customName: "225 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "225 mm", "Blower": "10 HP AC Motor" }
         }
       },
 
@@ -126,10 +126,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 425000,
-          customName: "300 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+          size: "275",
+          price: 0,
+          customName: "275 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -192,10 +192,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 425000,
-          customName: "300 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+          size: "275",
+          price: 0,
+          customName: "275 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -244,6 +244,17 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-275", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "275",
+          price: 0,
+          customName: "275 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
       {
         category: "Bubble Cage",
         id: "bc-open-close-dynamic",
@@ -301,6 +312,17 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Standard Air Ring (10 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
       {
         category: "Bubble Cage",
         id: "bc-open-close-dynamic",
@@ -410,7 +432,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1625": {
     machineType: "3layer",
-    basePrice: 9875000,
+    basePrice: 10671000,
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
@@ -644,10 +666,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "550",
-          price: 850000,
-          customName: "550 mm Standard Air Ring (25 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
+          size: "525",
+          price: 0,
+          customName: "525 mm Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring", "Size": "525 mm", "Blower": "25 HP AC Motor" }
         }
       },
       {
@@ -956,10 +978,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          size: "100",
+          price: 0,
+          customName: "100 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "100 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
@@ -997,10 +1019,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          size: "150",
+          price: 0,
+          customName: "150 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "150 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
@@ -1038,10 +1060,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          size: "200",
+          price: 0,
+          customName: "200 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "200 mm" }
         }
       },
       {
@@ -1142,10 +1164,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "400",
-          price: 450000,
-          customName: "400 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "400 mm" }
+          size: "600",
+          price: 0,
+          customName: "600 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "600 mm" }
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
@@ -1183,10 +1205,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          size: "100",
+          price: 0,
+          customName: "100 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "100 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
@@ -1223,10 +1245,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          size: "200",
+          price: 0,
+          customName: "200 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "200 mm" }
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
@@ -1264,10 +1286,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
-          price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          size: "250",
+          price: 0,
+          customName: "250 mm G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "250 mm" }
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },

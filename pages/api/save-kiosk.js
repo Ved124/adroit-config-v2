@@ -58,7 +58,8 @@ export default async function handler(req, res) {
 
     // 1. BUFFER PREP
     const pdfBuffer = Buffer.from(pdfBase64.replace(/^data:application\/pdf;base64,/, ""), 'base64');
-    const jsonBuffer = Buffer.from(JSON.stringify(fullContextData, null, 2), 'utf-8');
+    const jsonString = JSON.stringify(fullContextData, null, 2);
+    const jsonBuffer = Buffer.from(jsonString, 'utf-8');
 
     // 2. CHECK MODE
     const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
@@ -67,7 +68,11 @@ export default async function handler(req, res) {
     if (BLOB_TOKEN && VERCEL_ENV) {
       // === CLOUD MODE ===
       const blob = await put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' });
-      await put(`data/${jsonName}`, jsonBuffer, { access: 'public', contentType: 'application/json' });
+      await put(`data/${jsonName}`, jsonString, { 
+        access: 'public', 
+        contentType: 'application/json',
+        contentDisposition: `attachment; filename="${jsonName}"`
+      });
       return res.status(200).json({ url: blob.url, mode: 'cloud' });
     } else {
       // === LOCAL OFFLINE MODE ===

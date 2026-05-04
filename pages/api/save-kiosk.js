@@ -70,7 +70,7 @@ export default async function handler(req, res) {
       const blob = await put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' });
       await put(`data/${jsonName}`, jsonString, { 
         access: 'public', 
-        contentType: 'application/json',
+        contentType: 'application/octet-stream',
         contentDisposition: `attachment; filename="${jsonName}"`
       });
       return res.status(200).json({ url: blob.url, mode: 'cloud' });

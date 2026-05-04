@@ -124,13 +124,19 @@ export default function CustomerPage() {
               <input id="cust-state" value={customer.state || ''} onChange={handleChange} className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue text-slate-900" placeholder="State / Country" />
             </div>
           </form>
-          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap gap-3 w-full">
             <Button onClick={handleNext} variant="primary" size="md" className="w-full sm:w-auto justify-center">Choose Machine Type</Button>
             <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-200 text-slate-800 text-sm font-medium shadow-sm hover:bg-slate-300 transition w-full sm:w-auto">
               Import JSON
               <input ref={fileRef} type="file" accept="application/json" onChange={importJsonFile} className="hidden" />
             </label>
             <Button onClick={handleReset} variant="secondary" size="md" className="w-full sm:w-auto justify-center">Reset</Button>
+            
+            <div className="hidden sm:block flex-1"></div>
+            
+            <Link href="/admin/leads" className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 text-red-700 border border-red-200 text-sm font-semibold shadow-sm hover:bg-red-100 transition w-full sm:w-auto sm:ml-auto">
+              View Leads Dashboard
+            </Link>
           </div>
         </main>
 

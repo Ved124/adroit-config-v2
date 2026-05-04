@@ -90,13 +90,13 @@ export const COMPONENTS_DATA = {
 export const ADDONS_DATA = {
 
   "Corona Treater": CORONA_TREATER_COMPONENTS,
-  "Trim Handling": TRIM_ADDONS,
+  // "Trim Handling": TRIM_ADDONS,
   "Material Handling": MATERIAL_HANDLING_ADDONS,
   "Gauge / Thickness Control": GAUGE_ADDONS,
   "Web Guide": WEB_GUIDE_ADDONS,
   "Cooling System": CHILLER_ADDONS,
   "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
-  "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
+  // "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
   "Extruder Addons": [BIMETALLIC_BASE],
   // "MDO Unit": MDO_ADDONS,
 

@@ -198,6 +198,15 @@ export default function Navbar({ currentStep }) {
                                     </span>
                                 </div>
                             )}
+
+                            {/* Admin Link for multi-device management */}
+                            <Link 
+                                href="/admin/leads"
+                                onClick={() => setMenuOpen(false)}
+                                className="px-4 py-3 border-t border-slate-100 bg-indigo-50 text-indigo-700 flex items-center gap-2 hover:bg-indigo-100 transition-colors"
+                            >
+                                <span className="text-xs font-bold uppercase tracking-wider">📊 Leads Dashboard</span>
+                            </Link>
                         </motion.div>
                     </>
                 )}

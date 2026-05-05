@@ -787,6 +787,7 @@ export default function SummaryPage() {
     quotationDate, setQuotationDate,
     scopeOverrides, setScopeOverrides,
     updateAddonPricing,
+    resetAll,
   } = useContext(ConfigContext);
 
   const [isClient, setIsClient] = useState(false);
@@ -1213,6 +1214,18 @@ export default function SummaryPage() {
 
             <button onClick={() => setShowPdfPreview(true)} className="w-full sm:w-auto btn-primary">
               Download Proposal
+            </button>
+
+            <button
+              onClick={() => {
+                if (window.confirm("Are you sure? This will clear all current selections and start a fresh quotation.")) {
+                  resetAll();
+                  router.push("/customer");
+                }
+              }}
+              className="w-full sm:w-auto border-2 border-red-500 text-red-500 hover:bg-red-50 px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2"
+            >
+              <span>🔄 Start New Configuration</span>
             </button>
           </div>
         </section>

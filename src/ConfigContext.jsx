@@ -1046,7 +1046,7 @@ export function ConfigProvider({ children }) {
     else if (mType === "3layer") models = THREE_LAYER_MODELS;
 
     let model =
-      models.find((m) => m.code === selectedCode) ||
+      models.find((m) => m.code === selectedCode || m.label === selectedCode) ||
       models.find(
         (m) =>
           (m.layflatWidthMm || m.widthMm || m.width) ===
@@ -1379,7 +1379,7 @@ export function ConfigProvider({ children }) {
         machine: {
           model: machineDetails.label || safeCustomer.machineModel || "BLOWN FILM LINE",
           family: safeCustomer.machineFamily || machineType || "",
-          modelCode: safeCustomer.machineModelCode || "",
+          modelCode: machineDetails.code || safeCustomer.machineModelCode || safeCustomer.machineModel || "",
         },
         machine_details: machineDetails,
         scope: finalScope,
@@ -1403,6 +1403,11 @@ export function ConfigProvider({ children }) {
           final_price_in_words: fmtWordsFull(afterDiscount, currency),
           currency: currency,
           rate: rate,
+          markup_percent: markup,
+          discount_percent: discount,
+          addons_total: addonsTotal,
+          total_price: afterDiscount + addonsTotal,
+          total_price_text: fmtPriceFull(afterDiscount + addonsTotal, currency),
         },
 
       // Performance (you can tweak more later)
@@ -2338,10 +2343,42 @@ export function ConfigProvider({ children }) {
       reader.onloadend = async () => {
         const base64data = reader.result;
         try {
+          // Build the full restorable payload
+          const payload = {
+            schema: "adroit_quotation_v1",
+            generated_at: new Date().toISOString(),
+            ...robustData,
+            _restore: {
+              schema: "adroit_v2",
+              machineType,
+              customer,
+              selected: selected,
+              selectedAddons: selectedAddons,
+              markup_percent: markup,
+              discount_percent: discount,
+              machineModelIndex,
+              selectedMachineModelLabel,
+              customMode,
+              customOutput,
+              customLayflat,
+              customRollerWidth,
+              scopeOverrides,
+              conversionRate,
+              quoteTemplate,
+              showPricingFields,
+              showMarkupField,
+              showDiscountField,
+              showAddonPricing,
+              showPrices,
+              presetBasePrice,
+              quotationDate: quotationDate || new Date().toLocaleDateString("en-IN")
+            }
+          };
+
           const res = await fetch('/api/save-kiosk', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pdfBase64: base64data, fullContextData: robustData })
+            body: JSON.stringify({ pdfBase64: base64data, fullContextData: payload })
           });
           const json = await res.json();
           if (json.url) {
@@ -2520,8 +2557,8 @@ export function ConfigProvider({ children }) {
           gst: c.gst || "",
 
           machineFamily: m.family || c.machine_family || "",
-          machineModel: m.model_label || c.machine_model_label || "",
-          machineModelCode: m.model_code || c.machine_model_code || "",
+          machineModel: m.model || m.model_label || c.machine_model_label || "",
+          machineModelCode: m.modelCode || m.model_code || c.machine_model_code || "",
           machineWidth: m.width_mm || c.machine_width || "",
           machineThickness: m.thickness_range || c.machine_thickness || "",
           outputCapacity: m.output_capacity_kgph || c.output_capacity || "",

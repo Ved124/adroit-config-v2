@@ -5,8 +5,15 @@ export default function LeadsDashboard() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [serverInfo, setServerInfo] = useState(null);
 
   useEffect(() => {
+    // Fetch Server Info
+    fetch('/api/server-info')
+      .then(res => res.json())
+      .then(setServerInfo)
+      .catch(e => console.error("Server Info Error:", e));
+
     fetch('/api/list-leads')
       .then(res => res.json())
       .then(data => {
@@ -34,6 +41,57 @@ export default function LeadsDashboard() {
         Below are all the JSON configuration files automatically saved during the exhibition. 
         Click "Download JSON" to safely download them to your computer.
       </p>
+
+      {serverInfo && (
+        serverInfo.mode === 'local' ? (
+          <div style={{ 
+            background: '#F0F9FF', 
+            border: '1px solid #BAE6FD', 
+            borderRadius: '12px', 
+            padding: '20px', 
+            marginBottom: '30px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}>
+            <h2 style={{ fontSize: '16px', margin: 0, color: '#0369A1' }}>📱 Multi-Device Setup</h2>
+            <p style={{ fontSize: '14px', margin: 0, color: '#0C4A6E' }}>
+              To use other tablets or phones, ensure they are on the same WiFi and open:
+            </p>
+            <code style={{ 
+              background: 'white', 
+              padding: '8px 12px', 
+              borderRadius: '6px', 
+              fontSize: '18px', 
+              fontWeight: 'bold', 
+              color: '#0F4761',
+              border: '1px solid #E0F2FE',
+              width: 'fit-content'
+            }}>
+              {serverInfo.url}
+            </code>
+            <p style={{ fontSize: '12px', margin: 0, color: '#64748B', fontStyle: 'italic' }}>
+              Note: This device must stay on and the app must be running for other devices to work.
+            </p>
+          </div>
+        ) : (
+          <div style={{ 
+            background: '#F0FDF4', 
+            border: '1px solid #BBF7D0', 
+            borderRadius: '12px', 
+            padding: '12px 20px', 
+            marginBottom: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <span style={{ fontSize: '18px' }}>☁️</span>
+            <p style={{ fontSize: '14px', margin: 0, color: '#166534', fontWeight: '500' }}>
+              Connected to <strong>Vercel Cloud Storage</strong>. All leads are synced globally across all devices.
+            </p>
+          </div>
+        )
+      )}
 
       {loading && <p>Loading leads...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}

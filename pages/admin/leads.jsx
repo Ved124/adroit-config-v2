@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 
+import Link from 'next/link';
+
 export default function LeadsDashboard() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,9 +35,23 @@ export default function LeadsDashboard() {
         <title>Exhibition Leads Dashboard</title>
       </Head>
       
-      <h1 style={{ color: '#0F4761', borderBottom: '3px solid #DC2626', paddingBottom: '10px' }}>
-        Exhibition Leads (JSON Configurations)
-      </h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #DC2626', paddingBottom: '10px', marginBottom: '20px' }}>
+        <h1 style={{ color: '#0F4761', margin: 0 }}>
+          Exhibition Leads (JSON Configurations)
+        </h1>
+        <Link href="/customer" style={{ 
+          textDecoration: 'none', 
+          color: '#0F4761', 
+          fontWeight: 'bold', 
+          fontSize: '14px',
+          padding: '10px 20px', 
+          border: '2px solid #0F4761', 
+          borderRadius: '10px',
+          transition: 'all 0.2s'
+        }}>
+          ← Back to Configurator
+        </Link>
+      </div>
       
       <p style={{ color: '#555', marginBottom: '30px' }}>
         Below are all the JSON configuration files automatically saved during the exhibition. 
@@ -134,6 +150,7 @@ export default function LeadsDashboard() {
                   <td style={{ padding: '12px', border: '1px solid #ddd' }}>
                     <a 
                       href={downloadUrl} 
+                      download={blob.pathname.replace('data/', '')}
                       style={{
                         background: '#0F4761',
                         color: 'white',

@@ -1222,7 +1222,7 @@ export function ConfigProvider({ children }) {
       safeCustomer.ref || safeCustomer.quotationRef || generateQuotationRef();
 
     // --- PRICE CALC (Refactored to use computePriceSummary) ---
-    const { withMarkup, afterDiscount, currency, rate, isPackagePrice } = computePriceSummary();
+    const { withMarkup, afterDiscount, addonsTotal, currency, rate, isPackagePrice } = computePriceSummary();
     const finalRounded = Math.round(afterDiscount || 0);
 
     // Number to words helper with currency

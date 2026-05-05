@@ -41,7 +41,7 @@ export const CORONA_TREATER_COMPONENTS: CoronaTreater[] = [
     name: "Corona Treater",
     type: "single",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/addons/corona/semi_auto.png",
+    image: "/images/Acessories/coronatreater.jpg",
     cardDesc: "Select Brand and Max Roller Width to add.",
     price: 0,
     qty: 1,

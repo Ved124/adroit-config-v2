@@ -1,0 +1,30 @@
+// src/data/winderAddons.ts
+import { MachineType, TechSpecMap } from "./winders";
+
+export interface WinderAddon {
+  id: string;
+  name: string;
+  category: string;
+  machineTypes: MachineType[];
+  image: string;
+  cardDesc: string;
+  price: number;
+  techDesc: TechSpecMap;
+}
+
+export const WINDER_ADDONS: WinderAddon[] = [
+  {
+    id: "addon-loadcell-tension",
+    name: "Automatic Tension Control with Loadcell",
+    category: "Winder Addons",
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    image: "/images/winder/loadcell.png",
+    cardDesc: "Upgrade winder tension control from torque to loadcell-based feedback for precise tension management.",
+    price: 150000,
+    techDesc: {
+      "Type": "Loadcell feedback based automatic tension control.",
+      "Benefit": "Precise tension control for thin and sensitive films.",
+      "Components": "Loadcells, amplifier, and PLC integration."
+    }
+  }
+];

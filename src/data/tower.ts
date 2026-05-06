@@ -45,9 +45,9 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
       "Structure": "Knock-down type tower structure.",
       "Tower Size": "TBD mm",
       "Platforms": "3-walk around platforms.",
-      "Staircase": "600 mm wide staircase.",
+      "Staircase": "Staircase with hand rails.",
       "Safety": "Hand rails and kick plates according to European safety standards.",
-      "Idler rollers": "Set of 150 mm diameter idler aluminium rollers of TBD mm face width.",
+      "Idler rollers": "Set of idler aluminium rollers of TBD mm face width.",
     },
   },
 ];

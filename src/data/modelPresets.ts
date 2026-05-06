@@ -52,13 +52,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       // Air Ring (Missing)
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "225",
           price: 0,
-          customName: "225 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "225 mm", "Blower": "10 HP AC Motor" }
+          customName: "225 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "225 mm", "Blower": "10 HP AC Motor" }
         }
       },
 
@@ -90,7 +90,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1250",
           price: 1000000,
           customName: "TOWER / PLATFORM - 1250 mm",
-          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -123,13 +123,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "275",
           price: 0,
-          customName: "275 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+          customName: "275 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -159,7 +159,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1350",
           price: 1150000,
           customName: "TOWER / PLATFORM - 1350 mm",
-          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -189,13 +189,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "275",
           price: 0,
-          customName: "275 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+          customName: "275 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -225,7 +225,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1350",
           price: 1150000,
           customName: "TOWER / PLATFORM - 1350 mm",
-          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -246,13 +246,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-275", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "275",
           price: 0,
-          customName: "275 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+          customName: "275 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -294,7 +294,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1350",
           price: 1150000,
           customName: "TOWER / PLATFORM - 1350 mm",
-          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -314,13 +314,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "300",
           price: 425000,
-          customName: "300 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -362,7 +362,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1350",
           price: 1150000,
           customName: "TOWER / PLATFORM - 1350 mm",
-          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "600 mm wide staircase." }
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -385,13 +385,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "300",
           price: 425000,
-          customName: "300 mm Standard Air Ring (10 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -441,13 +441,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "325",
           price: 475000,
-          customName: "325 mm Standard Air Ring (15 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "325 mm", "Blower": "15 HP AC Motor" }
+          customName: "325 mm Dual Lip Air Ring (15 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "325 mm", "Blower": "15 HP AC Motor" }
         }
       },
       {
@@ -496,13 +496,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "375",
           price: 525000,
-          customName: "375 mm Standard Air Ring (15 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "375 mm", "Blower": "15 HP AC Motor" }
+          customName: "375 mm Dual Lip Air Ring (15 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "375 mm", "Blower": "15 HP AC Motor" }
         }
       },
       {
@@ -552,13 +552,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "400",
           price: 575000,
-          customName: "400 mm Standard Air Ring (15 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "400 mm", "Blower": "15 HP AC Motor" }
+          customName: "400 mm Dual Lip Air Ring (15 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "400 mm", "Blower": "15 HP AC Motor" }
         }
       },
       {
@@ -607,13 +607,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "450",
-          price: 600000,
-          customName: "450 mm Standard Air Ring (20 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
+          price: 800000,
+          customName: "450 mm Dual Lip Air Ring (20 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
         }
       },
       {
@@ -663,13 +663,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-slat-motorized", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "525",
           price: 0,
-          customName: "525 mm Standard Air Ring (25 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "525 mm", "Blower": "25 HP AC Motor" }
+          customName: "525 mm Dual Lip Air Ring (25 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "525 mm", "Blower": "25 HP AC Motor" }
         }
       },
       {
@@ -719,13 +719,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Collapsing Frame", id: "cf-heavy-duty", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "550",
           price: 850000,
-          customName: "550 mm Standard Air Ring (25 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
+          customName: "550 mm Dual Lip Air Ring (25 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "550 mm", "Blower": "25 HP AC Motor" }
         }
       },
       {
@@ -1472,13 +1472,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "375",
           price: 525000,
-          customName: "375 mm Standard Air Ring (20 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "375 mm", "Blower": "20 HP AC Motor" }
+          customName: "375 mm Dual Lip Air Ring (20 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "375 mm", "Blower": "20 HP AC Motor" }
         }
       },
       {
@@ -1522,13 +1522,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "350",
           price: 500000,
-          customName: "350 mm Standard Air Ring (20 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "350 mm", "Blower": "20 HP AC Motor" }
+          customName: "350 mm Dual Lip Air Ring (20 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "350 mm", "Blower": "20 HP AC Motor" }
         }
       },
       {
@@ -1572,13 +1572,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "450",
-          price: 600000,
-          customName: "450 mm Standard Air Ring (20 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
+          price: 800000,
+          customName: "450 mm Dual Lip Air Ring (20 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
         }
       },
       {
@@ -1621,13 +1621,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "500",
           price: 750000,
-          customName: "500 mm Standard Air Ring (20 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "500 mm", "Blower": "20 HP AC Motor" }
+          customName: "500 mm Dual Lip Air Ring (20 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "500 mm", "Blower": "20 HP AC Motor" }
         }
       },
       {
@@ -1670,13 +1670,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
-        id: "airring-standard-dynamic",
+        id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
           size: "500",
           price: 750000,
-          customName: "500 mm Standard Air Ring (25 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "500 mm", "Blower": "25 HP AC Motor" }
+          customName: "500 mm Dual Lip Air Ring (25 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "500 mm", "Blower": "25 HP AC Motor" }
         }
       },
       {

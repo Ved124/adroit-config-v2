@@ -26,14 +26,14 @@ function numWord(n) {
  */
 function td(source, ...keyHints) {
   if (!source) return null;
-  
+
   // Consolidate search target: merge base techDesc and metadata overrides
   const baseTD = source.techDesc || (typeof source === "object" && !source.id ? source : {});
   const metaTD = (source.metadata && source.metadata.techDesc) ? source.metadata.techDesc : {};
   const techDesc = { ...baseTD, ...metaTD };
 
   if (!techDesc || typeof techDesc !== "object") return null;
-  
+
   for (const hint of keyHints) {
     const h = hint.toLowerCase();
     const entry = Object.entries(techDesc).find(([k]) =>
@@ -137,7 +137,7 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
 
   // Material
   const material = td(firstItem, "material") || "Nitro Alloy";
-  
+
   // Check for bimetallic addons in selectedAddons
   const bimetallicAddons = (selectedAddons || []).filter(a => a.id.startsWith("bimetallic-upgrade-"));
   const numBimetallic = bimetallicAddons.reduce((sum, a) => sum + (a.qty || 1), 0);
@@ -202,10 +202,8 @@ function generateDieHead(item) {
     diam = m ? `${m[1]} mm` : raw || null;
   }
 
-  const surface =
-    td(item, "surface treatment", "surface") || "Nickel plated";
-  const isNickel = surface.toLowerCase().includes("nickel");
-  const nickelStr = isNickel ? "Nickel plated " : "";
+  // All Adroit dies are Chrome plated.
+  const surfaceStr = "Chrome plated ";
 
   // Layer count from dieFamily or name
   const name = item.name || "";
@@ -232,7 +230,7 @@ function generateDieHead(item) {
   const ibcSuffix = isIbc ? " and IBC provision" : "";
 
   return (
-    `${numWord(qty)} Imported Canadian design ${nickelStr}${layerStr}${distStr} Die` +
+    `${numWord(qty)} Imported Canadian design ${surfaceStr}${layerStr}${distStr} Die` +
     (diam ? ` with lip diameter of ${diam}` : "") +
     `, complete with die adapters and carriage${ibcSuffix}.`
   );
@@ -264,8 +262,7 @@ function generateBubbleCage(item) {
   if (name.includes("up down") || id.includes("up-down")) {
     return (
       "One Bubble Stabilizing Basket with Silicon roller cage. " +
-      "Motorized Up Down and Open-Close with Liner Actuator. " +
-      (size ? `For bubble diameter up to ${size} mm.` : "")
+      "Motorized Up Down and Open-Close with Liner Actuator. "
     );
   }
 
@@ -273,8 +270,7 @@ function generateBubbleCage(item) {
   if (name.includes("manual") || id.includes("manual")) {
     return (
       "One Bubble Stabilizing Basket with PBT roller cage. " +
-      "Manual open-close operation. " +
-      (size ? `For bubble diameter up to ${size} mm.` : "")
+      "Manual open-close operation. "
     );
   }
 
@@ -282,8 +278,7 @@ function generateBubbleCage(item) {
   if (name.includes("open close") || id.includes("open-close")) {
     return (
       "One Bubble Stabilizing Basket with Silicon roller cage. " +
-      "Motorized Open-Close operation. " +
-      (size ? `For bubble diameter up to ${size} mm.` : "")
+      "Motorized Open-Close operation. "
     );
   }
 
@@ -319,7 +314,7 @@ function generateHaulOff(item, machineModel) {
   // Extract motor HP from techDesc or machineModel fallback
   const motorRawFromTech = td(item, "nip drive", "main drive", "nip roller drive");
   const motorRaw = motorRawFromTech || (machineModel ? machineModel.mainNipDrive : "") || "";
-  
+
   const hpMatch = motorRaw.match(/(\d+)\s*HP/i);
   const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "AC";
 
@@ -344,7 +339,7 @@ function generateHaulOff(item, machineModel) {
  * @param {object} [options]
  * @param {boolean} [options.includeNipPrefix=true] 
  */
-export function generateWinder(item, machineModel = null, { includeNipPrefix = true } = {}) {
+export function generateWinder(item, machineModel = null, { includeNipPrefix = true, selectedAddons = [] } = {}) {
   const qty = item.qty || 1;
   const variant = item.variant || "";
   const nameLc = (item.name || "").toLowerCase();
@@ -354,7 +349,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   const isBackToBack = nameLc.includes("back to back");
   const isTwoSeparate = nameLc.includes("two separate") || nameLc.includes("separate surface");
   const isAutomatic = nameLc.includes("automatic");
-  
+
   if (variant.includes("turret") || nameLc.includes("turret")) {
     typeLabel = "Turret Winder";
   } else if (isAutomatic && isTwoSeparate) {
@@ -374,15 +369,19 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   let widthStr = widthRaw.match(/\d+/)
     ? widthRaw.match(/\d+/)[0] + " mm"
     : widthRaw || "";
-  
+
   // If still no width, try item.size or item.currentSize
   if (!widthStr && (item.size || item.currentSize)) {
     widthStr = `${item.size || item.currentSize} mm`;
   }
 
-  const prefix = includeNipPrefix 
+  const prefix = includeNipPrefix
     ? `One Secondary nip with edge slitting assembly and edge trimming assembly. `
     : "";
+
+  const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
+  const isIBC = (machineModel?.name || "").toLowerCase().includes("ibc") || (item.name || "").toLowerCase().includes("ibc");
+  const tensionStr = (hasLoadcell || isIBC) ? "automatic tension control through Loadcell" : "tension control through Torque";
 
   const qWord = (qty === 1 && (typeLabel.toLowerCase().startsWith("two") || typeLabel.toLowerCase().startsWith("back")))
     ? ""
@@ -390,8 +389,8 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
 
   if (isBackToBack) {
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-           `Manual roll change over mechanism, digital length counter, 04 nos.- 3” Air shaft, ` +
-           `bow roller, 2 HP AC Motor and Drive. Post Extrusion Gear Motors will be Bonvario, Italy.`;
+      `Manual roll change over mechanism, ${tensionStr}, digital length counter, 04 nos.- 3” Air shaft, ` +
+      `bow roller, 2 HP AC Motor and Drive. Post Extrusion Gear Motors will be Bonvario, Italy.`;
   }
 
   if (isTwoSeparate) {
@@ -401,15 +400,15 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     const gearMotorMake = "Bonvario";
 
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-           `${mechanism} roll change over mechanism, digital length counter, 04 nos.- 3” ${airShaftLabel}, ` +
-           `bow roller, ${hpLabel} AC Motor and Drive. Post Extrusion Gear motor will be ${gearMotorMake}, Italy.`;
+      `${mechanism} roll change over mechanism, ${tensionStr}, digital length counter, 04 nos.- 3” ${airShaftLabel}, ` +
+      `bow roller, ${hpLabel} AC Motor and Drive. Post Extrusion Gear motor will be ${gearMotorMake}, Italy.`;
   }
 
   const changeover = variant.includes("auto")
     ? "Automatic roll change over mechanism"
     : "Manual roll change over mechanism";
 
-  return prefix + `${qWord}${typeLabel} of ${widthStr} film width with ${changeover}.`;
+  return prefix + `${qWord}${typeLabel} of ${widthStr} film width with ${changeover} and ${tensionStr}.`;
 }
 
 export function generateSecondaryNip(item, machineModel) {
@@ -424,7 +423,7 @@ function generateElectricalPanel(item) {
 }
 
 function generateTower(item) {
-  return `The tower is bottom supported heavy duty MS structure with service platform, cage & haul-off mounting arrangement, ladders and safety rails.`;
+  return `Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip etc.`;
 }
 
 function generateIBC(item) {
@@ -441,7 +440,7 @@ const GENERATORS = {
   "Bubble Cage": (item) => generateBubbleCage(item),
   "Collapsing Frame": (item) => generateCollapsingFrame(item),
   "Haul-Off": (item, allSelected, machineModel) => generateHaulOff(item, machineModel),
-  Winder: (item) => generateWinder(item),
+  Winder: (item, allSelected, machineModel, selectedAddons) => generateWinder(item, machineModel, { selectedAddons }),
   "Tower / Platform": (item) => generateTower(item),
   "Electrical & Control Panel": (item) => generateElectricalPanel(item),
   IBC: (item) => generateIBC(item),
@@ -511,7 +510,7 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null, s
       return generateAirRing(item);
     }
     if (nameLc.includes("winder")) {
-      return generateWinder(item);
+      return generateWinder(item, machineModel, { selectedAddons });
     }
   } catch (e) {
     console.warn("[generateScopeDesc] error during generation:", category, item.name, e);

@@ -305,6 +305,26 @@ function buildProposalData({
       }
     }
 
+    // --- TENSION CONTROL LOGIC FOR WINDERS ---
+    if (isWinder) {
+      const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
+      const isIBC = (currentMachineModel?.name || "").toLowerCase().includes("ibc") || 
+                    (selectedMachineModelLabel || "").toLowerCase().includes("ibc");
+
+      // Rule: IBC gets Loadcell by default. Non-IBC gets Loadcell only if addon is selected.
+      const tensionVal = (isIBC || hasLoadcell) ? "Through loadcell." : "Through torque.";
+      
+      const tensionKeys = Object.keys(filled).filter(k => k.toLowerCase().includes("tension control"));
+      if (tensionKeys.length > 0) {
+        tensionKeys.forEach(tk => {
+          filled[tk] = tensionVal;
+        });
+      } else {
+        // Fallback: Add it if not present
+        filled["Tension control"] = tensionVal;
+      }
+    }
+
     // --- MACHINE MODEL OVERRIDES (from threeLayerModels.ts etc) ---
     if (machineModel) {
       // 1. Winder specific overrides
@@ -407,7 +427,7 @@ function buildProposalData({
       if (isCombinedWinder && !customDesc) {
         // Produce TWO items for SOS
         const nipDesc = generateSecondaryNip(item, currentMachineModel);
-        const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+        const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
         const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
         return [
@@ -464,7 +484,7 @@ function buildProposalData({
 
     if (isCombinedWinder && !customDesc) {
       const nipDesc = generateSecondaryNip(item, currentMachineModel);
-      const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+      const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
       const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
       return [
@@ -787,6 +807,8 @@ export default function SummaryPage() {
     quotationDate, setQuotationDate,
     scopeOverrides, setScopeOverrides,
     updateAddonPricing,
+    addAddon,
+    removeAddon,
     resetAll,
   } = useContext(ConfigContext);
 
@@ -795,6 +817,37 @@ export default function SummaryPage() {
   const [qrUrl, setQrUrl] = useState(null);
   const [showPdfPreview, setShowPdfPreview] = useState(false);
 
+
+  // Custom Add-on Inputs
+  const [customAddonName, setCustomAddonName] = useState("");
+  const [customAddonPrice, setCustomAddonPrice] = useState("");
+  const [customAddonQty, setCustomAddonQty] = useState(1);
+
+  const handleAddCustomAddon = () => {
+    if (!customAddonName || !customAddonPrice) {
+      alert("Please enter both name and price.");
+      return;
+    }
+    const price = parseFloat(customAddonPrice);
+    if (isNaN(price)) {
+      alert("Please enter a valid number for price.");
+      return;
+    }
+
+    addAddon("Optional Equipment", {
+      id: `custom-${Date.now()}`,
+      name: customAddonName,
+      price: price,
+      qty: customAddonQty,
+      isCustom: true,
+      cardDesc: "Custom item added by sales representative.",
+      image: ""
+    });
+
+    setCustomAddonName("");
+    setCustomAddonPrice("");
+    setCustomAddonQty(1);
+  };
 
   const handleQuotationRefChange = (e) => {
     const value = e.target.value;
@@ -1302,52 +1355,102 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {optItems.length === 0 ? (
-                  <tr><td colSpan={3} className="px-3 py-3 text-center text-slate-400">No optional equipments selected.</td></tr>
-                ) : (
-                  <>
-                    {optItems.map((addon, idx) => (
-                      <tr key={addon.id || idx} className="border-t border-slate-100 group">
-                        <td className="px-3 py-2 align-top text-slate-900 group-hover:text-brand-blue transition-colors">
-                          {addon.customName || addon.name}
+                {optItems.length === 0 && (
+                  <tr><td colSpan={showAddonPricing ? 5 : 3} className="px-3 py-3 text-center text-slate-400">No optional equipments selected.</td></tr>
+                )}
+
+                {optItems.map((addon, idx) => (
+                  <tr key={addon.id || idx} className="border-t border-slate-100 group">
+                    <td className="px-3 py-2 align-top text-slate-900 group-hover:text-brand-blue transition-colors flex items-center gap-2">
+                      <button
+                        onClick={() => removeAddon(addon.id)}
+                        className="text-slate-300 hover:text-red-500 transition-colors"
+                        title="Remove item"
+                      >
+                        ×
+                      </button>
+                      <span>{addon.customName || addon.name}</span>
+                    </td>
+                    <td className="px-3 py-2 align-top text-right text-slate-900 font-medium">{addon.qty || 1}</td>
+                    {showAddonPricing && (
+                      <>
+                        <td className="px-2 py-1 align-middle bg-amber-50/20">
+                          <input
+                            type="number"
+                            value={addon.markup || 0}
+                            onChange={(e) => updateAddonPricing(addon.id, { markup: parseFloat(e.target.value) || 0, discount: addon.discount || 0 })}
+                            className="w-full text-center py-1 rounded bg-white border border-amber-200 text-brand-blue font-bold focus:ring-1 focus:ring-amber-400 outline-none"
+                          />
                         </td>
-                        <td className="px-3 py-2 align-top text-right text-slate-900 font-medium">{addon.qty || 1}</td>
-                        {showAddonPricing && (
-                          <>
-                            <td className="px-2 py-1 align-middle bg-amber-50/20">
-                              <input
-                                type="number"
-                                value={addon.markup || 0}
-                                onChange={(e) => updateAddonPricing(addon.id, { markup: parseFloat(e.target.value) || 0, discount: addon.discount || 0 })}
-                                className="w-full text-center py-1 rounded bg-white border border-amber-200 text-brand-blue font-bold focus:ring-1 focus:ring-amber-400 outline-none"
-                              />
-                            </td>
-                            <td className="px-2 py-1 align-middle bg-amber-50/20">
-                              <input
-                                type="number"
-                                value={addon.discount || 0}
-                                onChange={(e) => updateAddonPricing(addon.id, { markup: addon.markup || 0, discount: parseFloat(e.target.value) || 0 })}
-                                className="w-full text-center py-1 rounded bg-white border border-amber-200 text-rose-500 font-bold focus:ring-1 focus:ring-amber-400 outline-none"
-                              />
-                            </td>
-                          </>
-                        )}
-                        <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold whitespace-nowrap">
-                          {addon.isIncluded ? "Included" : (addon.price || "—")}
+                        <td className="px-2 py-1 align-middle bg-amber-50/20">
+                          <input
+                            type="number"
+                            value={addon.discount || 0}
+                            onChange={(e) => updateAddonPricing(addon.id, { markup: addon.markup || 0, discount: parseFloat(e.target.value) || 0 })}
+                            className="w-full text-center py-1 rounded bg-white border border-amber-200 text-rose-500 font-bold focus:ring-1 focus:ring-amber-400 outline-none"
+                          />
                         </td>
-                      </tr>
-                    ))}
-                    {addonsTotal != null && (
-                      <tr className="border-t-2 border-slate-300 bg-slate-50">
-                        <td colSpan={showAddonPricing ? 4 : 2} className="px-3 py-2 text-right font-bold text-slate-700">
-                          Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
-                        </td>
-                        <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm whitespace-nowrap">
-                          {fmtPrice(addonsTotal, currency)}
-                        </td>
-                      </tr>
+                      </>
                     )}
-                  </>
+                    <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold whitespace-nowrap">
+                      {addon.isIncluded ? "Included" : (addon.price || "—")}
+                    </td>
+                  </tr>
+                ))}
+
+                {/* Add Custom Item Row - ALWAYS VISIBLE */}
+                <tr className="border-t border-brand-blue/20 bg-brand-blue/5">
+                  <td className="px-2 py-2">
+                    <input
+                      type="text"
+                      placeholder="Add custom item name..."
+                      value={customAddonName}
+                      onChange={(e) => setCustomAddonName(e.target.value)}
+                      className="w-full px-2 py-1.5 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-brand-blue outline-none"
+                    />
+                  </td>
+                  <td className="px-2 py-2">
+                    <input
+                      type="number"
+                      placeholder="Qty"
+                      value={customAddonQty}
+                      onChange={(e) => setCustomAddonQty(parseInt(e.target.value) || 1)}
+                      className="w-full px-2 py-1.5 rounded border border-slate-200 text-xs text-right focus:ring-1 focus:ring-brand-blue outline-none"
+                    />
+                  </td>
+                  {showAddonPricing && (
+                    <>
+                      <td className="bg-amber-50/10"></td>
+                      <td className="bg-amber-50/10"></td>
+                    </>
+                  )}
+                  <td className="px-2 py-2 flex items-center gap-2">
+                    <input
+                      type="number"
+                      placeholder="Price"
+                      value={customAddonPrice}
+                      onChange={(e) => setCustomAddonPrice(e.target.value)}
+                      className="flex-1 px-2 py-1.5 rounded border border-slate-200 text-xs text-right focus:ring-1 focus:ring-brand-blue outline-none"
+                    />
+                    <button
+                      onClick={handleAddCustomAddon}
+                      className="w-8 h-8 rounded-lg bg-brand-blue text-white flex items-center justify-center font-bold hover:bg-brand-dark transition-colors shadow-sm"
+                      title="Add Custom Item"
+                    >
+                      +
+                    </button>
+                  </td>
+                </tr>
+
+                {optItems.length > 0 && addonsTotal != null && (
+                  <tr className="border-t-2 border-slate-300 bg-slate-50">
+                    <td colSpan={showAddonPricing ? 4 : 2} className="px-3 py-2 text-right font-bold text-slate-700">
+                      Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
+                    </td>
+                    <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm whitespace-nowrap">
+                      {fmtPrice(addonsTotal, currency)}
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

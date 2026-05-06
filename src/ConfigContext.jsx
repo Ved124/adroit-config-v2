@@ -33,6 +33,7 @@ import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
 import { BIMETALLIC_BASE, SCREW_SIZES } from "./data/bimetallic";
+import { WINDER_ADDONS } from "./data/winderAddons";
 
 import { MODEL_PRESETS } from "./data/modelPresets";
 
@@ -98,8 +99,8 @@ export const ADDONS_DATA = {
   "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
   // "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
   "Extruder Addons": [BIMETALLIC_BASE],
+  "Winder Addons": WINDER_ADDONS,
   // "MDO Unit": MDO_ADDONS,
-
 };
 
 
@@ -416,6 +417,9 @@ export function ConfigProvider({ children }) {
         }
       }
     }
+    if (category === "Die Head") {
+      clean["Surface Treatment"] = "Chrome plated and highly polished.";
+    }
     return clean;
   }
 
@@ -671,7 +675,8 @@ export function ConfigProvider({ children }) {
               ...(dynamicTowerItem.techDesc || {}),
               ...(item.techDesc || {}),
               "Tower Size": `${chosenSize} mm`,
-              "Idler rollers": `Set of 150 mm diameter idler aluminium rollers of ${chosenSize + 200} mm face width.`,
+              "Staircase": "Staircase with hand rails.",
+              "Idler rollers": `Set of idler aluminium rollers of ${chosenSize + 125} mm face width.`,
             }
           };
         }
@@ -868,7 +873,7 @@ export function ConfigProvider({ children }) {
         durationMs: 700,
       });
 
-      const newItem = { ...item, category, qty: 1, ...metadata };
+      const newItem = { ...item, category, qty: metadata?.qty || item.qty || 1, ...metadata };
       
       if (foundIndex !== -1) {
         const newArr = [...prev];

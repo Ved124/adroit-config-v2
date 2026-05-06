@@ -41,20 +41,20 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
   // ---------------- WIDE ABA / 3-LAYER ----------------
   {
     id: "cf-pbt-wide",
-    name: "Collapsing Frame – PBT Rollers (Wide Web)",
+    name: "Collapsing Frame – PBT Rollers",
     style: "PBT",
     machineTypes: ["aba", "3layer"],
     usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750", "Innoflex-1125", "Innoflex-1350A", "Innoflex-1350B"],
     image: "/images/Acessories/Gusset Board Assembly.jpeg",
-    cardDesc: "Wide web collapsing frame with PBT rollers.",
+    cardDesc: "Collapsing frame with PBT rollers.",
     price: 0,
     techDesc: {
       "Construction":
-        "Aluminium + PBT roller frame mounted before haul-off for layflat formation.",
-      "Material": "Hard anodized rollers for scratch-free handling.",
+        "PBT roller frame mounted before haul-off for layflat formation.",
+      "Material": "PBT rollers for scratch-free handling.",
       "Adjustment": "Manual width adjustment with locking system.",
       "Width Capability": "1000 to 1600 mm layflat.",
-      "Application": "Suitable for ABA / 3-layer lamination films.",
+      "Application": "Suitable for 3-layer lamination films.",
     },
     shortDesc: "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
   },

@@ -1077,19 +1077,22 @@ export function ConfigProvider({ children }) {
        basicTotal = presetBasePrice;
     }
 
-    // 2. Split Optional Addons into Visible and Hidden (e.g. Bimetallic Upgrades)
-    let bimetallicTotal = 0;
+    // 2. Split Optional Addons into Visible and Hidden (e.g. Bimetallic Upgrades, Loadcell)
+    let hiddenUpgradesTotal = 0;
     const visibleAddons = [];
 
     (selectedAddons || []).forEach(item => {
       const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
+      const isLoadcell = item.id === "addon-loadcell-tension";
+      const isHidden = isBimetallic || isLoadcell;
+
       const base = (item.price || 0) * (item.qty || 1);
       const m = item.markup || 0;
       const d = item.discount || 0;
       const adjusted = base * (1 + m / 100) * (1 - d / 100);
 
-      if (isBimetallic) {
-        bimetallicTotal += adjusted;
+      if (isHidden) {
+        hiddenUpgradesTotal += adjusted;
       } else {
         visibleAddons.push(item);
       }
@@ -1107,7 +1110,7 @@ export function ConfigProvider({ children }) {
     );
 
     // 3. Margin & Discount Logic (Apply ONLY to Basic Scope + Hidden Upgrades)
-    const beforeMargin = basicTotal + bimetallicTotal;
+    const beforeMargin = basicTotal + hiddenUpgradesTotal;
 
     const withMarkup =
       markup && markup > 0
@@ -1270,7 +1273,7 @@ export function ConfigProvider({ children }) {
 
           if (isCombinedWinder && !customDesc) {
             const nipDesc = generateSecondaryNip(item, currentMachineModel);
-            const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+            const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
             return [
               {
@@ -1309,7 +1312,7 @@ export function ConfigProvider({ children }) {
         if (!item || !item.name) return false;
         const n = item.name.toLowerCase();
         const c = (item.category || "").toLowerCase();
-        return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel");
+        return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel") && item.id !== "addon-loadcell-tension";
       });
 
       const winderTowerScopeItems = winderTowerAddonsRaw.flatMap(item => {
@@ -1321,7 +1324,7 @@ export function ConfigProvider({ children }) {
 
         if (isCombinedWinder && !customDesc) {
           const nipDesc = generateSecondaryNip(item, currentMachineModel);
-          const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false });
+          const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
           return [
             { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
             { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
@@ -1361,7 +1364,7 @@ export function ConfigProvider({ children }) {
       const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
       
       const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a.name) - getIdx(b.name));
-      const finalScope = [...sortedScope, ...manualExtra];
+      const finalScope = [...sortedScope, ...manualExtra].map(item => ({ ...item, description: item.desc }));
 
       return {
         company: COMPANY,
@@ -1388,7 +1391,7 @@ export function ConfigProvider({ children }) {
         },
         machine_details: machineDetails,
         scope: finalScope,
-        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-")).map((a, idx) => {
+        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension").map((a, idx) => {
           const rawPrice = (a.price || 0) * (a.qty || 1);
           const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
           return {

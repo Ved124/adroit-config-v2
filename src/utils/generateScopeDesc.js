@@ -381,6 +381,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
 
   const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
   const isIBC = (machineModel?.name || "").toLowerCase().includes("ibc") || (item.name || "").toLowerCase().includes("ibc");
+  
   const tensionStr = (hasLoadcell || isIBC) ? "automatic tension control through Loadcell" : "tension control through Torque";
 
   const qWord = (qty === 1 && (typeLabel.toLowerCase().startsWith("two") || typeLabel.toLowerCase().startsWith("back")))
@@ -388,9 +389,17 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     : `${numWord(qty)} `;
 
   if (isBackToBack) {
+    const parts = [
+      "Manual roll change over mechanism",
+      tensionStr,
+      "digital length counter",
+      "04 nos.- 3” Air shaft",
+      "bow roller",
+      "2 HP AC Motor and Drive"
+    ].filter(Boolean);
+
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-      `Manual roll change over mechanism, ${tensionStr}, digital length counter, 04 nos.- 3” Air shaft, ` +
-      `bow roller, 2 HP AC Motor and Drive. Post Extrusion Gear Motors will be Bonvario, Italy.`;
+      parts.join(", ") + ". Post Extrusion Gear Motors will be Bonvario, Italy.";
   }
 
   if (isTwoSeparate) {
@@ -399,16 +408,25 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     const hpLabel = isAutomatic ? "3 HP" : "2 HP";
     const gearMotorMake = "Bonvario";
 
+    const parts = [
+      `${mechanism} roll change over mechanism`,
+      tensionStr,
+      "digital length counter",
+      `04 nos.- 3” ${airShaftLabel}`,
+      "bow roller",
+      `${hpLabel} AC Motor and Drive`
+    ].filter(Boolean);
+
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-      `${mechanism} roll change over mechanism, ${tensionStr}, digital length counter, 04 nos.- 3” ${airShaftLabel}, ` +
-      `bow roller, ${hpLabel} AC Motor and Drive. Post Extrusion Gear motor will be ${gearMotorMake}, Italy.`;
+      parts.join(", ") + `. Post Extrusion Gear motor will be ${gearMotorMake}, Italy.`;
   }
 
   const changeover = variant.includes("auto")
     ? "Automatic roll change over mechanism"
     : "Manual roll change over mechanism";
 
-  return prefix + `${qWord}${typeLabel} of ${widthStr} film width with ${changeover} and ${tensionStr}.`;
+  const parts = [changeover, tensionStr].filter(Boolean);
+  return prefix + `${qWord}${typeLabel} of ${widthStr} film width with ` + parts.join(" and ") + ".";
 }
 
 export function generateSecondaryNip(item, machineModel) {
@@ -419,7 +437,7 @@ function generateElectricalPanel(item) {
   const control =
     td(item, "control system", "controller", "control") ||
     "PID Controller";
-  return `Complete extrusion controls on main panel with Cold start protection. Control System: ${control}.`;
+  return `Complete extrusion controls on main panel with Cold start protection. Control Syst4em: ${control}.`;
 }
 
 function generateTower(item) {
@@ -481,6 +499,9 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null, s
           ((item.name || "").toLowerCase().includes("secondary") && !(item.name || "").toLowerCase().includes("winder")))
       ) {
         return generateSecondaryNip(item, machineModel);
+      }
+      if (category === "Winder") {
+        return generateWinder(item, machineModel, { selectedAddons });
       }
       return gen(item, allSelected, machineModel, selectedAddons);
     }

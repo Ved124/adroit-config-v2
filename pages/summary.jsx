@@ -236,7 +236,7 @@ function buildProposalData({
     const c = (item.category || "").toLowerCase();
     const isTrim = n.includes("trim");
     const isControl = n.includes("panel") || c.includes("panel") || n.includes("control") || c.includes("control");
-    return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !isTrim && !isControl;
+    return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !isTrim && !isControl && item.id !== "addon-loadcell-tension";
   });
   const realAddonsRaw = selectedAddonsSafe.filter(item => {
     if (!item || !item.name) return false;
@@ -245,7 +245,8 @@ function buildProposalData({
     const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
     const isTrim = n.includes("trim");
     const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons";
-    return (!isWinderTower || isTrim) && !isBimetallic;
+    const isLoadcell = item.id === "addon-loadcell-tension";
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell;
   });
 
   const optItems = realAddonsRaw
@@ -628,6 +629,7 @@ function buildProposalData({
       ...item,
       sr: i + 1,
       description: item.scopeDesc || item.shortDesc || item.name || '',
+      desc: item.scopeDesc || item.shortDesc || item.name || '',
     }));
 
   // Refine SORT_ORDER index logic to put panel/control at the absolute bottom
@@ -894,7 +896,8 @@ export default function SummaryPage() {
     const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
     const isTrim = n.includes("trim");
     const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
-    return (!isWinderTower || isTrim) && !isBimetallic;
+    const isLoadcell = item.id === "addon-loadcell-tension";
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell;
   });
 
   const optItems = realAddonsRaw.map(item => {

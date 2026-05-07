@@ -1,20 +1,20 @@
 import React, { forwardRef, memo } from "react";
 
 // ─── ADROIT BRAND TOKENS ───────────────────────────────────────────────────────
-const NAVY    = "#003087";   // Adroit primary deep royal blue
-const NAVY2   = "#1a4080";   // table header navy
-const GOLD    = "#C8941A";   // Adroit accent gold
-const INK     = "#1a1a2e";   // near-black body text (slightly blue-black)
-const DIM     = "#5a6a7a";   // secondary / muted text
-const BDR     = "#d1d9e0";   // border colour
-const RED     = "#b91c1c";   // warning / discount highlight
-const LIGHT   = "#f0f4fb";   // alternating row tint
-const GREEN   = "#166534";   // price highlight green
-const F       = `"Calibri","Arial",sans-serif`;
+const NAVY = "#003087";   // Adroit primary deep royal blue
+const NAVY2 = "#1a4080";   // table header navy
+const GOLD = "#C8941A";   // Adroit accent gold
+const INK = "#1a1a2e";   // near-black body text (slightly blue-black)
+const DIM = "#5a6a7a";   // secondary / muted text
+const BDR = "#d1d9e0";   // border colour
+const RED = "#b91c1c";   // warning / discount highlight
+const LIGHT = "#f0f4fb";   // alternating row tint
+const GREEN = "#166534";   // price highlight green
+const F = `"Calibri","Arial",sans-serif`;
 
-const PAGE_W  = 794;   // A4 px at 96dpi
-const PAGE_H  = 1123;
-const PAD_X   = 38;    // horizontal content padding
+const PAGE_W = 794;   // A4 px at 96dpi
+const PAGE_H = 1123;
+const PAD_X = 38;    // horizontal content padding
 const PAD_TOP = 8;     // content top pad after header
 const FOOTER_H = 54;   // footer height reservation
 
@@ -434,37 +434,37 @@ function GeneralSpecsPage({ machine, perf, components, pageNum, total }) {
   const p = perf || {};
 
   const extruders = (components || []).filter((c) => /extruder/i.test(c.name));
-  const die       = (components || []).find((c) => /\bdie\b/i.test(c.name));
-  const airRing   = (components || []).find((c) => /air\s*ring/i.test(c.name));
-  const cage      = (components || []).find((c) => /cage|basket/i.test(c.name));
-  const haulOff   = (components || []).find((c) => /haul.?off/i.test(c.name));
-  const winder    = (components || []).find((c) => /winder/i.test(c.name));
+  const die = (components || []).find((c) => /\bdie\b/i.test(c.name));
+  const airRing = (components || []).find((c) => /air\s*ring/i.test(c.name));
+  const cage = (components || []).find((c) => /cage|basket/i.test(c.name));
+  const haulOff = (components || []).find((c) => /haul.?off/i.test(c.name));
+  const winder = (components || []).find((c) => /winder/i.test(c.name));
 
   const typeLabel = {
-    mono:    "Monolayer Single Screw Blown Film Line",
-    aba:     "ABA / AB Co-Extrusion Blown Film Line",
-    "3layer":"Three Layer Co-Extrusion Blown Film Line",
-    "5layer":"Five Layer Co-Extrusion Blown Film Line",
+    mono: "Monolayer Single Screw Blown Film Line",
+    aba: "ABA / AB Co-Extrusion Blown Film Line",
+    "3layer": "Three Layer Co-Extrusion Blown Film Line",
+    "5layer": "Five Layer Co-Extrusion Blown Film Line",
   };
 
   const specRows = [
-    ["Machine Make",    "Adroit Extrusion Technologies Pvt. Ltd., Halol, Gujarat, India"],
-    ["Machine Model",   m.code || "—"],
-    ["Machine Type",    typeLabel[m.type] || m.fullName || "—"],
-    ["No. of Extruders",extruders.length > 0
+    ["Machine Make", "Adroit Extrusion Technologies Pvt. Ltd., Halol, Gujarat, India"],
+    ["Machine Model", m.code || "—"],
+    ["Machine Type", typeLabel[m.type] || m.fullName || "—"],
+    ["No. of Extruders", extruders.length > 0
       ? extruders.map((e) => `${e.name} (Qty: ${e.qty || 1})`).join(" + ")
       : "—"],
-    ["Die",             die ? die.name : (p.die_size || "—")],
-    ["Air Ring",        airRing ? airRing.name : "—"],
+    ["Die", die ? die.name : (p.die_size || "—")],
+    ["Air Ring", airRing ? airRing.name : "—"],
     ["Bubble Cage / Calibration Basket", cage ? cage.name : "—"],
-    ["Haul-Off",        haulOff ? haulOff.name : "—"],
-    ["Winder",          winder ? winder.name : "—"],
-    ["Max. Layflat Width",     p.layflat_width ? `${p.layflat_width} mm` : "—"],
-    ["Max. Output",            p.max_output ? `${p.max_output} kg/hr (Indicative at standard conditions)` : "—"],
-    ["Film Thickness Range",   p.thickness_range || "20 – 150 Micron"],
-    ["Thickness Variation",    p.thickness_variation || "+/- 8% above 40 micron; +/- 10% upto 40 micron; or +/- 4 micron — whichever is higher"],
-    ["Raw Material",           p.raw_materials || "LDPE, LLDPE, HDPE, mLLDPE — as per standard test conditions"],
-    ["Product",                p.product || "High Quality Blown Film"],
+    ["Haul-Off", haulOff ? haulOff.name : "—"],
+    ["Winder", winder ? winder.name : "—"],
+    ["Max. Layflat Width", p.layflat_width ? `${p.layflat_width} mm` : "—"],
+    ["Max. Output", p.max_output ? `${p.max_output} kg/hr (Indicative at standard conditions)` : "—"],
+    ["Film Thickness Range", p.thickness_range || "20 – 150 Micron"],
+    ["Thickness Variation", p.thickness_variation || "+/- 8% above 40 micron; +/- 10% upto 40 micron; or +/- 4 micron — whichever is higher"],
+    ["Raw Material", p.raw_materials || "LDPE, LLDPE, HDPE, mLLDPE — as per standard test conditions"],
+    ["Product", p.product || "High Quality Blown Film"],
   ];
 
   const notes = [
@@ -549,7 +549,7 @@ function ScopePage2({ components, electricals, pageNum, total }) {
   ];
 
   // Render exact rows provided by summary.jsx without hardcoded injections
-  
+
   return (
     <Page2 pageNum={pageNum} total={total}>
       <AnnexTitle num={2} label="Standard Scope of Supply" />
@@ -604,19 +604,19 @@ function ScopePage2({ components, electricals, pageNum, total }) {
 // PAGE 4 — ANNEXURE 3: PRICE
 // ═══════════════════════════════════════════════════════════════════════════════
 function PricingPage({ pricing, optionalItems, pageNum, total }) {
-  const p    = pricing || {};
+  const p = pricing || {};
   const opts = (optionalItems || []).filter((o) => o && o.name);
   const clean = (s) =>
     s ? String(s).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim() : "";
 
   const commercialRows = [
-    ["Validity",           "30 days from date of issue of this quotation."],
-    ["Taxes",              "GST, TCS, and all applicable statutory levies will be charged extra at prevailing rates."],
-    ["Packing & Insurance","Packing charges and transit insurance will be borne by the customer."],
-    ["Freight",            "Transportation from our works to buyer's site is at customer's cost."],
-    ["Delivery",           "4 (Four) months from receipt of technically & commercially clear Purchase Order with advance."],
-    ["Payment Terms",      "40% irrevocable security deposit with order. Balance payment + all charges before dispatch. Advance is non-interest bearing."],
-    ["Jurisdiction",       "Ahmedabad, Gujarat jurisdiction only."],
+    ["Validity", "30 days from date of issue of this quotation."],
+    ["Taxes", "GST, TCS, and all applicable statutory levies will be charged extra at prevailing rates."],
+    ["Packing & Insurance", "Packing charges and transit insurance will be borne by the customer."],
+    ["Freight", "Transportation from our works to buyer's site is at customer's cost."],
+    ["Delivery", "4 (Four) months from receipt of technically & commercially clear Purchase Order with advance."],
+    ["Payment Terms", "40% irrevocable security deposit with order. Balance payment + all charges before dispatch. Advance is non-interest bearing."],
+    ["Jurisdiction", "Ahmedabad, Gujarat jurisdiction only."],
   ];
 
   return (
@@ -711,9 +711,9 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
       >
         <thead>
           <tr>
-            <th style={{ ...TH, width: "8%",  textAlign: "center" }}>Sr. No</th>
-            <th style={{ ...TH,               textAlign: "left"   }}>Description</th>
-            <th style={{ ...TH, width: "28%", textAlign: "right"  }}>Price ({p.currency || "INR"})</th>
+            <th style={{ ...TH, width: "8%", textAlign: "center" }}>Sr. No</th>
+            <th style={{ ...TH, textAlign: "left" }}>Description</th>
+            <th style={{ ...TH, width: "28%", textAlign: "right" }}>Price ({p.currency || "INR"})</th>
           </tr>
         </thead>
         <tbody>
@@ -828,7 +828,7 @@ function ComponentPage2({ item, pageNum, total }) {
               alt={item.name}
               style={{ maxHeight: "268px", maxWidth: "100%", objectFit: "contain" }}
               onError={(e) => {
-                try { e.target.parentNode.style.display = "none"; } catch {}
+                try { e.target.parentNode.style.display = "none"; } catch { }
               }}
             />
           </div>
@@ -859,18 +859,18 @@ const TC_PARTS = [
   {
     part: 1,
     clauses: [
-      ["PRICES",           "Prices are Un-Packed, Ex-Works, Ahmedabad, Gujarat basis. All Government taxes, duties, and levies are not included and will be charged extra as per prevailing rules. Prices are valid for 30 days from the date of quotation."],
+      ["PRICES", "Prices are Un-Packed, Ex-Works, Ahmedabad, Gujarat basis. All Government taxes, duties, and levies are not included and will be charged extra as per prevailing rules. Prices are valid for 30 days from the date of quotation."],
       ["PACKING & FORWARDING", "Packing charges will be charged extra as applicable at the time of dispatch."],
-      ["INSURANCE",        "Transit insurance of the machine is to be covered by the buyer. In the event of any claim, all claim procedures will be handled by the buyer."],
-      ["TRANSPORTATION",   "Cost of transportation from our works to buyer's site will be borne entirely by the customer."],
-      ["DELIVERY",         "04 Months from the date of receipt of technically and commercially clear Purchase Order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment within one month of machine readiness will entitle ADROIT EXTRUSION to sell it to another customer."],
+      ["INSURANCE", "Transit insurance of the machine is to be covered by the buyer. In the event of any claim, all claim procedures will be handled by the buyer."],
+      ["TRANSPORTATION", "Cost of transportation from our works to buyer's site will be borne entirely by the customer."],
+      ["DELIVERY", "04 Months from the date of receipt of technically and commercially clear Purchase Order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment within one month of machine readiness will entitle ADROIT EXTRUSION to sell it to another customer."],
     ],
   },
   {
     part: 2,
     clauses: [
-      ["PAYMENT TERMS",    "We require 40% of the total order value as an irrevocable security deposit. The balance payment, along with all incidental charges, Taxes & Duties, is to be paid before delivery. The advance is non-interest bearing. In the event of cancellation, the advance will be adjusted against order cancellation charges. Once the machine is dispatched, it cannot be returned under any condition."],
-      ["JURISDICTION",     "All contracts of sale shall be subject to Ahmedabad jurisdiction only."],
+      ["PAYMENT TERMS", "We require 40% of the total order value as an irrevocable security deposit. The balance payment, along with all incidental charges, Taxes & Duties, is to be paid before delivery. The advance is non-interest bearing. In the event of cancellation, the advance will be adjusted against order cancellation charges. Once the machine is dispatched, it cannot be returned under any condition."],
+      ["JURISDICTION", "All contracts of sale shall be subject to Ahmedabad jurisdiction only."],
       ["PRE-DISPATCH TESTING", "We follow discrete testing of individual system elements (Winders, Extruders, etc.) against pre-designed standards to ensure faultless running at the customer's site. For wet trials, the buyer must arrange all input raw materials, or the Seller will arrange the same at buyer's cost."],
       ["ERECTION & COMMISSIONING", "Our service engineers will supervise erection, installation, and commissioning of the machine. The customer must provide skilled and semi-skilled labour. All utilities and power connections must be ready before calling our engineers. The customer will pay To & Fro 2AC Train Fare, Lodging, Boarding, and local Transportation during the period of services."],
     ],
@@ -955,31 +955,31 @@ function TermsPage2({ startPage, total }) {
 
                 {/* Signature and Stamp Container */}
                 <div style={{ position: "relative", height: "60px", marginTop: "-10px" }}>
-                    {/* Signature - overlaps bottom of FOR ADROIT EXTRUSION slightly */}
-                    <img 
-                      src="/images/Usign.png" 
-                      alt="Signature" 
-                      style={{ 
-                        position: "absolute", 
-                        left: "20px", 
-                        top: "-15px", 
-                        height: "80px", 
-                        zIndex: 1 
-                      }} 
-                    />
-                    
-                    {/* Stamp - to the right of the signature */}
-                    <img 
-                      src="/images/adroit stamp.png" 
-                      alt="Stamp" 
-                      style={{ 
-                        position: "absolute", 
-                        left: "220px", 
-                        top: "-25px", 
-                        height: "100px", 
-                        zIndex: 1 
-                      }} 
-                    />
+                  {/* Signature - overlaps bottom of FOR ADROIT EXTRUSION slightly */}
+                  <img
+                    src="/images/Usign.png"
+                    alt="Signature"
+                    style={{
+                      position: "absolute",
+                      left: "20px",
+                      top: "-15px",
+                      height: "80px",
+                      zIndex: 1
+                    }}
+                  />
+
+                  {/* Stamp - to the right of the signature */}
+                  <img
+                    src="/images/adroit stamp.png"
+                    alt="Stamp"
+                    style={{
+                      position: "absolute",
+                      left: "220px",
+                      top: "-25px",
+                      height: "100px",
+                      zIndex: 1
+                    }}
+                  />
                 </div>
 
                 <div
@@ -1011,12 +1011,12 @@ function TermsPage2({ startPage, total }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 function WarrantyPage2({ pageNum, total }) {
   const wRows = [
-    ["All Mechanical Components",                          "1 Year",        "From date of commissioning"],
-    ["Pneumatic Parts",                                    "1 Year",        "Dry Air is compulsory. Warranty void if dry air not used."],
-    ["AC Drives / VFDs",                                   "1 Year",        "Voltage Stabilizer is compulsory. Warranty void if not provided."],
+    ["All Mechanical Components", "1 Year", "From date of commissioning"],
+    ["Pneumatic Parts", "1 Year", "Dry Air is compulsory. Warranty void if dry air not used."],
+    ["AC Drives / VFDs", "1 Year", "Voltage Stabilizer is compulsory. Warranty void if not provided."],
     ["Electrical & Electronic Parts\n(Switches, Contactors, MCBs, etc.)", "6 Months", "Against faulty material or bad workmanship from date of commissioning"],
-    ["Heaters",                                            "3 Months",      "Heater kits are chargeable separately."],
-    ["Screw & Barrel",                                     "Not Specified", "Life depends on abrasive material processed — cannot be guaranteed."],
+    ["Heaters", "3 Months", "Heater kits are chargeable separately."],
+    ["Screw & Barrel", "Not Specified", "Life depends on abrasive material processed — cannot be guaranteed."],
   ];
 
   const exclusions = [
@@ -1148,27 +1148,27 @@ export const AdroitQuotation2 = memo(
       );
     }
 
-    const customer    = data.customer || {};
-    const machine     = data.machine || {};
-    const quot        = data.quotation || {};
-    const perf        = data.indicative_performance || {};
-    const components  = data.components || [];
+    const customer = data.customer || {};
+    const machine = data.machine || {};
+    const quot = data.quotation || {};
+    const perf = data.indicative_performance || {};
+    const components = data.components || [];
     const annexureComponents = data.annexure_components || components;
-    const optItems    = data.optional_items || [];
-    const pricing     = data.pricing || {};
+    const optItems = data.optional_items || [];
+    const pricing = data.pricing || {};
     const electricals = data.electricals || {};
 
     // Page count: Cover(1) + Specs(1) + Scope(1) + Pricing(1) + Components(N) + T&C 1+2+Warranty(3)
-    const total      = 7 + annexureComponents.length;
+    const total = 7 + annexureComponents.length;
     const annex4Page = 5;
     const annex5Page = annex4Page + annexureComponents.length;
 
     const annexIndex = [
       { num: 1, label: "General Specifications, Machine Output & Gauge Variation", page: 2 },
-      { num: 2, label: "Standard Scope of Supply",                                  page: 3 },
-      { num: 3, label: "Price",                                                      page: 4 },
-      { num: 4, label: "Technical Specifications (One Page Per Component)",          page: annex4Page },
-      { num: 5, label: "Terms & Conditions + Warranty",                              page: annex5Page },
+      { num: 2, label: "Standard Scope of Supply", page: 3 },
+      { num: 3, label: "Price", page: 4 },
+      { num: 4, label: "Technical Specifications (One Page Per Component)", page: annex4Page },
+      { num: 5, label: "Terms & Conditions + Warranty", page: annex5Page },
     ];
 
     return (

@@ -257,7 +257,7 @@ export const MONO_MODELS = [
   // },
   {
     code: "UNOFLEX-20",
-    family: "Monolayer Basic",
+    family: "Monolayer",
     label: "UNOFLEX - 20\"",
     machineType: "mono",
     screwDiameter: "35 MM",
@@ -280,7 +280,7 @@ export const MONO_MODELS = [
   },
   {
     code: "UNOFLEX-32",
-    family: "Monolayer Basic",
+    family: "Monolayer",
     label: "UNOFLEX - 32\"",
     machineType: "mono",
     screwDiameter: "45 MM",
@@ -303,7 +303,7 @@ export const MONO_MODELS = [
   },
   {
     code: "UNOFLEX-40",
-    family: "Monolayer Basic",
+    family: "Monolayer",
     label: "UNOFLEX - 40\"",
     machineType: "mono",
     screwDiameter: "45 MM",
@@ -326,7 +326,7 @@ export const MONO_MODELS = [
   },
   {
     code: "UNOFLEX-50",
-    family: "Monolayer Basic",
+    family: "Monolayer",
     label: "UNOFLEX - 50\"",
     machineType: "mono",
     screwDiameter: "55 MM",
@@ -349,7 +349,7 @@ export const MONO_MODELS = [
   },
   {
     code: "UNOFLEX-72",
-    family: "Monolayer Basic",
+    family: "Monolayer",
     label: "UNOFLEX - 72\"",
     machineType: "mono",
     screwDiameter: "65 MM",
@@ -372,7 +372,7 @@ export const MONO_MODELS = [
   },
   {
     code: "UNOFLEX-110",
-    family: "Monolayer Basic",
+    family: "Monolayer",
     label: "UNOFLEX - 110\"",
     machineType: "mono",
     screwDiameter: "90 MM",

@@ -751,12 +751,12 @@ export function ConfigProvider({ children }) {
       customMachine: false,
       machineFamily:
         preset.machineType === "mono"
-          ? "Unoflex Monolayer"
+          ? "Monolayer"
           : preset.machineType === "aba"
-            ? "Duoflex ABA / AB"
+            ? "ABA"
             : preset.machineType === "3layer"
-              ? "Innoflex 3 Layer"
-              : "Innoflex 5 Layer",
+              ? "3 Layer"
+              : "5 Layer",
       machineModel: modelLabel,
       machineModelCode: modelLabel,
     }));
@@ -1225,9 +1225,8 @@ export function ConfigProvider({ children }) {
 
     // --- QUOTATION META (REF + DATE) ---
     const today = new Date();
-    const quotationDate = today.toLocaleDateString("en-IN");
-    const quotationRef =
-      safeCustomer.ref || safeCustomer.quotationRef || generateQuotationRef();
+    const qDate = quotationDate || today.toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" });
+    const qRef = safeCustomer.ref || safeCustomer.quotationRef || (typeof generateQuotationRef === 'function' ? generateQuotationRef() : "DRAFT");
 
     // --- PRICE CALC (Refactored to use computePriceSummary) ---
     const { withMarkup, afterDiscount, addonsTotal, currency, rate, isPackagePrice } = computePriceSummary();
@@ -1380,8 +1379,9 @@ export function ConfigProvider({ children }) {
           gst: safeCustomer.gst || "-",
         },
         quotation: {
-          ref_no: quotationRef,
-          date: quotationDate,
+          ref_no: qRef,
+          refNo: qRef,
+          date: qDate,
           subject: safeCustomer.subject || "Proposal for Blown Film Extrusion Line",
         },
         machine: {

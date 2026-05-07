@@ -3,7 +3,7 @@
 export const THREE_LAYER_MODELS = [
   {
     code: "INNOFLEX-1125",
-    family: "Innoflex 3 Layer",
+    family: "3 Layer",
     label: "INNOFLEX-1125",
     machineType: "3layer",
 

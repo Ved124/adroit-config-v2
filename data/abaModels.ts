@@ -142,7 +142,7 @@ export const ABA_MODELS = [
   // },
   {
     code: "DUOFLEX-26",
-    family: "ABA Basic",
+    family: "ABA",
     label: "DUOFLEX-26",
     machineType: "aba",
     screwDiameter: "35/40 MM",
@@ -165,7 +165,7 @@ export const ABA_MODELS = [
   },
   {
     code: "DUOFLEX-32",
-    family: "ABA Basic",
+    family: "ABA",
     label: "DUOFLEX-32",
     machineType: "aba",
     screwDiameter: "35/45 MM",
@@ -188,7 +188,7 @@ export const ABA_MODELS = [
   },
   {
     code: "DUOFLEX-40",
-    family: "ABA Basic",
+    family: "ABA",
     label: "DUOFLEX-40",
     machineType: "aba",
     screwDiameter: "40/45 MM",
@@ -211,7 +211,7 @@ export const ABA_MODELS = [
   },
   {
     code: "DUOFLEX-50",
-    family: "ABA Basic",
+    family: "ABA",
     label: "DUOFLEX-50",
     machineType: "aba",
     screwDiameter: "45/55 MM",
@@ -234,7 +234,7 @@ export const ABA_MODELS = [
   },
   {
     code: "DUOFLEX-60",
-    family: "ABA Basic",
+    family: "ABA",
     label: "DUOFLEX-60",
     machineType: "aba",
     screwDiameter: "55/65 MM",

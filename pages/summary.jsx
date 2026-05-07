@@ -57,7 +57,7 @@ function fmtWords(n, currency = "INR") {
 
 // ─── buildMachineCode ─────────────────────────────────────────────────────────
 function buildMachineCode({ machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat, customRollerWidth }) {
-  const SERIES = { mono: "AE-Unoflex", aba: "AE-Duoflex", "3layer": "AE-Innoflex", "5layer": "AE-Innoflex" };
+  const SERIES = { mono: "Monolayer", aba: "ABA", "3layer": "3 Layer", "5layer": "3 Layer" };
 
   const presetLabel = selectedMachineModelLabel || "";
   const seriesBase = SERIES[machineType] || "AE";
@@ -116,18 +116,18 @@ function getMachineHeading(machineType, customer, currentMachineModel) {
 
   // 1. Detect family from model label prefix if possible
   if (modelLabel.toUpperCase().startsWith("UNOFLEX")) {
-    familyLabel = "Unoflex Monolayer";
+    familyLabel = "Monolayer";
   } else if (modelLabel.toUpperCase().startsWith("DUOFLEX")) {
-    familyLabel = "Duoflex ABA / AB";
+    familyLabel = "ABA";
   } else if (modelLabel.toUpperCase().startsWith("INNOFLEX")) {
-    familyLabel = "Innoflex";
+    familyLabel = "3 Layer";
   } else {
     // 2. Fallback to machineType
     const labels = {
-      mono: "Unoflex Monolayer",
-      aba: "Duoflex ABA / AB",
-      "3layer": "Innoflex 3 Layer",
-      "5layer": "Innoflex 5 Layer"
+      mono: "Monolayer",
+      aba: "ABA",
+      "3layer": "3 Layer",
+      "5layer": "5 Layer"
     };
     familyLabel = labels[machineType] || "Machine";
   }
@@ -168,7 +168,7 @@ function buildProposalData({
   rate = 1,
   quotationDate = null,
 } = {}) {
-  const SERIES = { mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex" };
+  const SERIES = { mono: "Monolayer", aba: "ABA", "3layer": "3 Layer", "5layer": "5 Layer" };
   const TYPE_NAMES = {
     mono: "MONOLAYER BLOWN FILM LINE",
     aba: "ABA / AB CO-EXTRUSION BLOWN FILM LINE",
@@ -190,13 +190,13 @@ function buildProposalData({
   // Auto-correct branding if model label implies a different series
   const modelCap = (selectedMachineModelLabel || "").toUpperCase();
   if (modelCap.includes("UNOFLEX")) {
-    displaySeries = "Unoflex";
+    displaySeries = "Monolayer";
     displayType = TYPE_NAMES.mono;
   } else if (modelCap.includes("DUOFLEX")) {
-    displaySeries = "Duoflex";
+    displaySeries = "ABA";
     displayType = TYPE_NAMES.aba;
   } else if (modelCap.includes("INNOFLEX")) {
-    displaySeries = "Innoflex";
+    displaySeries = "3 Layer";
     displayType = TYPE_NAMES["3layer"];
     displayProduct = PRODUCTS["3layer"];
   }
@@ -309,12 +309,12 @@ function buildProposalData({
     // --- TENSION CONTROL LOGIC FOR WINDERS ---
     if (isWinder) {
       const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
-      const isIBC = (currentMachineModel?.name || "").toLowerCase().includes("ibc") || 
-                    (selectedMachineModelLabel || "").toLowerCase().includes("ibc");
+      const isIBC = (currentMachineModel?.name || "").toLowerCase().includes("ibc") ||
+        (selectedMachineModelLabel || "").toLowerCase().includes("ibc");
 
       // Rule: IBC gets Loadcell by default. Non-IBC gets Loadcell only if addon is selected.
       const tensionVal = (isIBC || hasLoadcell) ? "Through loadcell." : "Through torque.";
-      
+
       const tensionKeys = Object.keys(filled).filter(k => k.toLowerCase().includes("tension control"));
       if (tensionKeys.length > 0) {
         tensionKeys.forEach(tk => {
@@ -409,7 +409,7 @@ function buildProposalData({
       const c = (item.category || "").toLowerCase();
       const nameLc = (item.name || "").toLowerCase();
       const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
-      
+
       // Deduplicate Control Panels as they are now injected statically
       const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
       if (isControl) return [];
@@ -468,7 +468,7 @@ function buildProposalData({
         name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
         qty: isExtruder ? 1 : (item.qty || 1),
         category: item.category || "",
-        image: item.image || "", 
+        image: item.image || "",
         shortDesc: finalDesc,
         scopeDesc: autoScopeDesc({ ...item, name: isExtruder ? "Extruders" : item.name, shortDesc: finalDesc }),
         techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
@@ -665,6 +665,7 @@ function buildProposalData({
     },
     machine: {
       type: machineType || "3layer",
+      family: m.family || displaySeries,
       series: displaySeries,
       fullName: displayType,
       code: machineCode,
@@ -902,10 +903,10 @@ export default function SummaryPage() {
 
   const optItems = realAddonsRaw.map(item => {
     // Ensure item.price is a number (if it's a string like "Rs. 1,00,000/-" we try to strip it, but ideally it should be numeric)
-    let rawP = typeof item.price === "string" 
-      ? parseFloat(item.price.replace(/[^\d.]/g, '')) 
+    let rawP = typeof item.price === "string"
+      ? parseFloat(item.price.replace(/[^\d.]/g, ''))
       : (item.price || 0);
-    
+
     // Safety check for NaN
     if (isNaN(rawP)) rawP = 0;
 
@@ -1254,13 +1255,6 @@ export default function SummaryPage() {
 
           {/* Export buttons */}
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:justify-end mt-2">
-            <button
-              onClick={() => exportJsonOnly()}
-              className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"
-            >
-              <span>Download Json file</span>
-            </button>
-
             <button
               onClick={() => generateKioskQR(setQrUrl)}
               className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"

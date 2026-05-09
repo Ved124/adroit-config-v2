@@ -7,7 +7,7 @@ import { ConfigContext } from "../src/ConfigContext";
 import { motion } from "framer-motion";
 import { CORONA_PRICES, CORONA_BRANDS } from "../src/data/corona";
 import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
-import { CHILLER_PRICES, CHILLER_BRANDS } from "../src/data/chiller";
+import { AIR_CHILLER_PRICES, WATER_CHILLER_PRICES, CHILLER_BRANDS } from "../src/data/chiller";
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
 import { SCREW_SIZES } from "../src/data/bimetallic";
@@ -167,18 +167,20 @@ function AddonCard({
   // Determine which data to use based on item
   const isCorona = item.id === "corona-dynamic";
   const isWebGuide = item.id === "webguide-dynamic";
-  const isChiller = item.id.includes("chiller") && item.isDynamic;
+  const isAirChiller = item.id === "chiller-air-dynamic";
+  const isWaterChiller = item.id === "chiller-water-dynamic";
+  const isChiller = (isAirChiller || isWaterChiller) && item.isDynamic;
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isHeatExchanger = item.id === "heat-exchanger-dynamic";
   const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
 
   const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : []))));
-  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isChiller ? CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : (isBimetallic ? SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {}) : {})))));
+  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isAirChiller ? AIR_CHILLER_PRICES : (isWaterChiller ? WATER_CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : (isBimetallic ? SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {}) : {}))))));
 
   // UI customization based on component type
-  const isOutputBased = isChiller || isMixerDryer || isHeatExchanger;
-  const selectorLabel = isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : "Max Roller");
-  const unit = (isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm");
+  const isOutputBased = isMixerDryer || isHeatExchanger;
+  const selectorLabel = isChiller ? "Machine Size" : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : "Max Roller"));
+  const unit = isChiller ? "mm" : ((isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm"));
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
@@ -224,8 +226,8 @@ function AddonCard({
           customName = `E+L Web Guide - ${selectedSize}mm`;
         }
       } else if (isChiller) {
-        // Example: Air Cooled Air Chiller Prasad make - 300 kg/hr
-        customName = `${item.name} ${selectedBrand} make`;
+        // Example: Air Cooled Air Chiller Prasad make - 1125mm
+        customName = `${item.name} ${selectedBrand} make - ${selectedSize}mm`;
       } else if (isMixerDryer) {
         // Example: Vertical Granule Mixer with Dryer Adroit make - 300 kg/hr
         customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;

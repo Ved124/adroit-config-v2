@@ -24,16 +24,30 @@ export interface ChillerAddon {
 
 export const CHILLER_BRANDS = ["Prasad", "Con Air"];
 
-// Placeholder prices based on kg/hr output
-export const CHILLER_PRICES: { [key: string]: number } = {
-  "100": 325000,
-  "200": 450000,
-  "300": 575000,
-  "400": 700000,
-  "500": 850000,
-  "600": 975000,
-  "800": 1250000,
-  "1000": 1500000,
+// Air Chiller prices based on machine size
+export const WATER_CHILLER_PRICES: { [key: string]: number } = {
+  "1125": 325000,
+  "1350": 325000,
+  "1450": 325000,
+  "1625": 325000,
+  "1870": 325000,
+  "1970": 325000,
+  "2125": 325000,
+  "2370": 325000,
+  "2650": 325000,
+};
+
+// Water Chiller prices based on machine size
+export const AIR_CHILLER_PRICES: { [key: string]: number } = {
+  "1125": 655000,
+  "1350": 790000,
+  "1450": 790000,
+  "1625": 985000,
+  "1870": 1085000,
+  "1970": 1085000,
+  "2125": 1250000,
+  "2370": 1250000,
+  "2650": 1250000,
 };
 
 export const CHILLER_ADDONS: ChillerAddon[] = [
@@ -43,7 +57,7 @@ export const CHILLER_ADDONS: ChillerAddon[] = [
     type: "air-chiller",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     image: "/images/addons/chiller/air-chiller.png",
-    cardDesc: "Select Brand and Output Capacity (kg/hr).",
+    cardDesc: "Select Brand and Machine Size.",
     price: 0,
     qty: 1,
     isDynamic: true,
@@ -59,7 +73,7 @@ export const CHILLER_ADDONS: ChillerAddon[] = [
     type: "water-chiller",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     image: "/images/addons/chiller/water-chiller.png",
-    cardDesc: "Select Brand and Output Capacity (kg/hr).",
+    cardDesc: "Select Brand and Machine Size.",
     price: 0,
     qty: 1,
     isDynamic: true,

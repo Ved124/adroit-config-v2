@@ -192,7 +192,7 @@ function generateFilter(item) {
   return `${numWord(qty)} No${qty > 1 ? "s" : ""}. ${type}.`;
 }
 
-function generateDieHead(item) {
+function generateDieHead(item, machineModel) {
   const qty = item.qty || 1;
   // diameter — prefer diameterMm field, else parse from techDesc or name
   let diam = item.diameterMm ? `${item.diameterMm} mm` : null;
@@ -229,10 +229,14 @@ function generateDieHead(item) {
   const isIbc = name.toLowerCase().includes("ibc") || (item.id || "").toLowerCase().includes("ibc");
   const ibcSuffix = isIbc ? " and IBC provision" : "";
 
+  const isRotationModel = machineModel && ((machineModel.code || "").toLowerCase().includes("dr") || (machineModel.label || "").toLowerCase().includes("dr"));
+  const isRotation = name.toLowerCase().includes("rotation") || (item.id || "").toLowerCase().includes("-dr") || (item.id || "").includes("dr-") || isRotationModel;
+  const rotationSuffix = isRotation ? " Die with Rotation." : "";
+
   return (
     `${numWord(qty)} Imported Canadian design ${surfaceStr}${layerStr}${distStr} Die` +
     (diam ? ` with lip diameter of ${diam}` : "") +
-    `, complete with die adapters and carriage${ibcSuffix}.`
+    `, complete with die adapters and carriage${ibcSuffix}.${rotationSuffix}`
   );
 }
 
@@ -292,6 +296,20 @@ function generateCollapsingFrame(item) {
   const rollerType =
     td(item.techDesc, "roller", "type") || "Segmented PBT";
   return `Collapsing Frame with ${rollerType} rollers, complete with side guides.`;
+}
+
+/**
+ * MAIN NIP — for Die Rotation models (1125 DR, 1350 DR) which have no oscillating haul-off.
+ * Produces: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with X HP AC Drive."
+ */
+function generateMainNip(item) {
+  // Prefer scopeDesc stored directly on item (from preset metadata)
+  if (item.scopeDesc) return item.scopeDesc;
+  // Derive motor HP from techDesc
+  const nipDriveRaw = td(item, "nip roller drive", "nip drive", "drive") || "";
+  const hpMatch = nipDriveRaw.match(/(\d+)\s*HP/i);
+  const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "AC";
+  return `Collapsing frame with Segmented PBT Roller, side guides, Main Nip with ${motorStr} Drive.`;
 }
 
 /**
@@ -381,7 +399,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
 
   const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
   const isIBC = (machineModel?.name || "").toLowerCase().includes("ibc") || (item.name || "").toLowerCase().includes("ibc");
-  
+
   const tensionStr = (hasLoadcell || isIBC) ? "automatic tension control through Loadcell" : "tension control through Torque";
 
   const qWord = (qty === 1 && (typeLabel.toLowerCase().startsWith("two") || typeLabel.toLowerCase().startsWith("back")))
@@ -453,11 +471,12 @@ function generateIBC(item) {
 const GENERATORS = {
   Extruder: generateExtruder,
   Filter: (item) => generateFilter(item),
-  "Die Head": (item) => generateDieHead(item),
+  "Die Head": (item, allSelected, machineModel) => generateDieHead(item, machineModel),
   "Air Ring": (item) => generateAirRing(item),
   "Bubble Cage": (item) => generateBubbleCage(item),
   "Collapsing Frame": (item) => generateCollapsingFrame(item),
   "Haul-Off": (item, allSelected, machineModel) => generateHaulOff(item, machineModel),
+  "Main Nip": (item) => generateMainNip(item),
   Winder: (item, allSelected, machineModel, selectedAddons) => generateWinder(item, machineModel, { selectedAddons }),
   "Tower / Platform": (item) => generateTower(item),
   "Electrical & Control Panel": (item) => generateElectricalPanel(item),

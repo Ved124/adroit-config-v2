@@ -438,6 +438,7 @@ function GeneralSpecsPage({ machine, perf, components, pageNum, total }) {
   const airRing = (components || []).find((c) => /air\s*ring/i.test(c.name));
   const cage = (components || []).find((c) => /cage|basket/i.test(c.name));
   const haulOff = (components || []).find((c) => /haul.?off/i.test(c.name));
+  const mainNip = (components || []).find((c) => /main\s*nip/i.test(c.name) || (c.category || "").toLowerCase().includes("main nip"));
   const winder = (components || []).find((c) => /winder/i.test(c.name));
 
   const typeLabel = {
@@ -457,7 +458,7 @@ function GeneralSpecsPage({ machine, perf, components, pageNum, total }) {
     ["Die", die ? die.name : (p.die_size || "—")],
     ["Air Ring", airRing ? airRing.name : "—"],
     ["Bubble Cage / Calibration Basket", cage ? cage.name : "—"],
-    ["Haul-Off", haulOff ? haulOff.name : "—"],
+    [haulOff ? "Haul-Off" : (mainNip ? "Main Nip" : "Haul-Off"), haulOff ? haulOff.name : (mainNip ? mainNip.name : "—")],
     ["Winder", winder ? winder.name : "—"],
     ["Max. Layflat Width", p.layflat_width ? `${p.layflat_width} mm` : "—"],
     ["Max. Output", p.max_output ? `${p.max_output} kg/hr (Indicative at standard conditions)` : "—"],
@@ -605,6 +606,10 @@ function ScopePage2({ components, electricals, pageNum, total }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 function PricingPage({ pricing, optionalItems, pageNum, total }) {
   const p = pricing || {};
+  // grandTotal comes directly from the pricing object (set when user clicks "Add to Proposal")
+  const grandTotal = (p.grandTotal != null && p.grandTotal > 0) ? p.grandTotal : null;
+  const grandTotalName = p.grandTotalName || "Total Price (Machine + Optional Equipment)";
+  const grandTotalWords = p.grandTotalWords || "";
   const opts = (optionalItems || []).filter((o) => o && o.name);
   const clean = (s) =>
     s ? String(s).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim() : "";
@@ -758,6 +763,50 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
           </tr>
         </tbody>
       </table>
+
+      {/* Grand Total block — table rows matching the basic/final price style */}
+      {grandTotal != null && (
+        <>
+          <SecBar>{grandTotalName}</SecBar>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "10pt",
+              fontFamily: F,
+              marginBottom: "14px",
+            }}
+          >
+            <tbody>
+              <tr>
+                <td style={{ ...TD, fontWeight: "bold", fontSize: "11pt", color: RED }}>
+                  {grandTotalName} (INR)
+                </td>
+                <td
+                  style={{
+                    ...TD,
+                    fontWeight: "bold",
+                    fontSize: "13pt",
+                    color: RED,
+                  }}
+                >
+                  Rs. {Number(grandTotal).toLocaleString("en-IN")}/-
+                </td>
+              </tr>
+              {grandTotalWords && (
+                <tr style={{ backgroundColor: "#fff5f5" }}>
+                  <td style={{ ...TD, fontStyle: "italic", color: RED, fontSize: "10pt" }}>
+                    Amount in Words
+                  </td>
+                  <td style={{ ...TD, fontStyle: "italic", color: RED, fontSize: "10pt" }}>
+                    {grandTotalWords}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </>
+      )}
 
       {/* Commercial terms */}
       <SecBar>Payment, Delivery & Commercial Notes</SecBar>

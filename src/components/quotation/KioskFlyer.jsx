@@ -33,7 +33,9 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
 
     // Data Logic
     const scope = Array.isArray(data?.scope) ? data.scope : [];
-    const optionals = Array.isArray(data?.optional_items) ? data.optional_items : [];
+    const optionals = Array.isArray(data?.optional_items)
+        ? data.optional_items.filter(o => o && o.id !== "grand-total-line")
+        : [];
 
     const topItems = scope.slice(0, 20);
 

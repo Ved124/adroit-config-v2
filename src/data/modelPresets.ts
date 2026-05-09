@@ -62,23 +62,22 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
 
-      // Haul-Off + Tower + Winder
+      // Main Nip + Tower + Winder (No Haul-Off — Die Rotation model)
       {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
+        category: "Main Nip",
+        id: "main-nip-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
           price: 1100000,
-          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          customName: "MAIN NIP - 1250 mm",
+          scopeDesc: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
-            "Construction": "The haul off will be shipped in assembled parts.",
-            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Hauloff Size": "1250 mm",
-            "Nip roller width": "1375 mm",
-            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
-            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+            "Idler rollers": "Adequate quantity as per layout.",
           }
         }
       },
@@ -133,21 +132,20 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
+        category: "Main Nip",
+        id: "main-nip-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "HORIZONTAL HAULOFF - 1350 mm",
+          customName: "MAIN NIP - 1350 mm",
+          scopeDesc: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
-            "Construction": "The haul off will be shipped in assembled parts.",
-            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Hauloff Size": "1350 mm",
-            "Nip roller width": "1475 mm",
-            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
-            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+            "Idler rollers": "Adequate quantity as per layout.",
           }
         }
       },

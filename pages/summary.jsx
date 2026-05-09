@@ -246,8 +246,16 @@ function buildProposalData({
     const isTrim = n.includes("trim");
     const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons";
     const isLoadcell = item.id === "addon-loadcell-tension";
-    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell;
+    const isGrandTotal = item.id === "grand-total-line"; // rendered below table, not inside it
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal;
   });
+
+  // Compute grand total for the pricing block (machine final + addons)
+  const machineFinal = discount > 0 ? afterDiscount : withMarkup;
+  const grandTotalAmount = machineFinal + (addonsTotal || 0);
+  // Only include if the user explicitly added the grand-total-line item
+  const grandTotalLineItem = selectedAddonsSafe.find(a => a.id === "grand-total-line");
+  const grandTotalForPdf = grandTotalLineItem ? grandTotalAmount : null;
 
   const optItems = realAddonsRaw
     .map(item => ({
@@ -543,7 +551,7 @@ function buildProposalData({
       // but some main components (like large extruders) also have prices.
       // We explicitly preserve core machine components in the technical annexure.
       const isCore = c.includes("extruder") || c.includes("die") || c.includes("ring") ||
-        c.includes("haul") || c.includes("winder") || c.includes("tower") ||
+        c.includes("haul") || c.includes("nip") || c.includes("winder") || c.includes("tower") ||
         c.includes("cage") || c.includes("basket") || c.includes("ibc") ||
         c.includes("trim") ||
         (item.name || "").toLowerCase().includes("extruder") ||
@@ -702,6 +710,9 @@ function buildProposalData({
       final_price_inr: Math.round(discount > 0 ? afterDiscount : withMarkup) || null,
       final_price_words: finalPriceWords ? finalPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
       currency: currency,
+      grandTotal: grandTotalForPdf,       // null if user hasn't clicked "Add to Proposal"
+      grandTotalName: grandTotalLineItem?.name || "Total Price (Machine + Optional Equipment)",
+      grandTotalWords: grandTotalForPdf ? fmtWords(grandTotalForPdf, currency) : "",
     },
 
     power_loads: (() => {
@@ -860,6 +871,9 @@ export default function SummaryPage() {
   const { withMarkup, afterDiscount, addonsTotal, isPackagePrice, currency, rate } = computePriceSummary();
   const machineHeading = getMachineHeading(machineType, customer, currentMachineModel);
 
+
+
+
   // Single source of truth — both preview and PDF download use this
   const proposalData = useMemo(() => {
     if (!isClient) return null;
@@ -898,7 +912,8 @@ export default function SummaryPage() {
     const isTrim = n.includes("trim");
     const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
     const isLoadcell = item.id === "addon-loadcell-tension";
-    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell;
+    const isGrandTotal = item.id === "grand-total-line"; // shown separately below table
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal;
   });
 
   const optItems = realAddonsRaw.map(item => {
@@ -1452,6 +1467,78 @@ export default function SummaryPage() {
               </tbody>
             </table>
           </div>
+
+          {/* ── GRAND TOTAL BAR ──────────────────────────────────────── */}
+          {(() => {
+            const machineFinal = discount > 0 ? afterDiscount : withMarkup;
+            const grandTotal = machineFinal + (addonsTotal || 0);
+            const existingLine = (selectedAddons || []).find(a => a.id === "grand-total-line");
+            const alreadyAdded = !!existingLine;
+            // Detect price drift so user can refresh
+            const isStale = alreadyAdded && existingLine.price !== grandTotal;
+
+            const handleGrandTotalBtn = () => {
+              if (alreadyAdded && !isStale) {
+                // Toggle off — user explicitly removing
+                removeAddon("grand-total-line");
+              } else {
+                // Add fresh OR refresh stale — addAddon handles replace internally (isDynamic)
+                addAddon("Optional Equipment", {
+                  id: "grand-total-line",
+                  name: "Total Price (Machine + Optional Equipment)",
+                  price: grandTotal,
+                  qty: 1,
+                  isCustom: true,
+                  isDynamic: true,
+                  cardDesc: "Combined grand total: machine final price plus all optional equipment.",
+                  image: "",
+                });
+              }
+            };
+
+            return (
+              <div className="mt-3 flex items-center gap-3 rounded-xl border-2 border-brand-blue/20 bg-gradient-to-r from-brand-blue/5 to-indigo-50 px-4 py-3">
+                <div className="flex-1">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-brand-blue/60 mb-0.5">
+                    Grand Total &nbsp;=&nbsp; Machine Final Price + Optional Addons
+                  </div>
+                  <div className="flex items-baseline gap-3 flex-wrap">
+                    <span className="text-xl font-extrabold text-brand-blue">
+                      {fmtPrice(grandTotal, currency)}
+                    </span>
+                    <span className="text-xs text-slate-400 italic">
+                      {fmtWords(grandTotal, currency)}
+                    </span>
+                  </div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">
+                    {fmtPrice(machineFinal, currency)} (machine)&nbsp;+&nbsp;{fmtPrice(addonsTotal || 0, currency)} (optional)
+                  </div>
+                </div>
+                <button
+                  onClick={handleGrandTotalBtn}
+                  title={
+                    isStale ? "Price changed — click to refresh in proposal"
+                    : alreadyAdded ? "Click to remove from proposal"
+                    : "Add grand total to proposal"
+                  }
+                  className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold shadow transition-all duration-200 ${
+                    isStale
+                      ? "bg-amber-100 text-amber-700 border-2 border-amber-400 hover:bg-amber-200"
+                      : alreadyAdded
+                        ? "bg-emerald-100 text-emerald-700 border-2 border-emerald-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
+                        : "bg-brand-blue text-white hover:bg-brand-dark shadow-brand-blue/30"
+                  }`}
+                >
+                  <span className="text-base leading-none">
+                    {isStale ? "↻" : alreadyAdded ? "✓" : "+"}
+                  </span>
+                  <span>
+                    {isStale ? "Refresh" : alreadyAdded ? "Added" : "Add to Proposal"}
+                  </span>
+                </button>
+              </div>
+            );
+          })()}
         </section>
 
         {/* ── SELECTED IMAGES ───────────────────────────────────────────── */}

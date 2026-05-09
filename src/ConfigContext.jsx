@@ -496,7 +496,21 @@ export function ConfigProvider({ children }) {
       const list = components[category] || [];
       const base = list.find((c) => c.id === id);
       if (!base) {
-        console.warn("Component not found for preset:", category, id);
+        // Allow preset-only components (e.g. "Main Nip" for DR models) that carry all
+        // their info in metadata.customName / metadata.techDesc without a registry entry.
+        if (metadata.customName) {
+          const mergedTechDesc = sanitizeTechDesc(category, metadata.techDesc || {});
+          nextSelected.push({
+            id,
+            category,
+            qty: qty ?? 1,
+            name: metadata.customName,
+            ...metadata,
+            techDesc: mergedTechDesc,
+          });
+        } else {
+          console.warn("Component not found for preset:", category, id);
+        }
         return;
       }
       // Deep merge techDesc if it exists in metadata
@@ -888,7 +902,8 @@ export function ConfigProvider({ children }) {
   function removeAddon(id) {
     setSelectedAddons((prev) => {
       const item = prev.find((p) => p.id === id);
-      if (item) {
+      // Skip toast for internal summary lines (grand-total-line) — button state is feedback enough
+      if (item && id !== "grand-total-line") {
         toast.push({
           title: "Add-on removed",
           description: `${item.name} removed`,
@@ -1084,7 +1099,8 @@ export function ConfigProvider({ children }) {
     (selectedAddons || []).forEach(item => {
       const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
       const isLoadcell = item.id === "addon-loadcell-tension";
-      const isHidden = isBimetallic || isLoadcell;
+      const isGrandTotal = item.id === "grand-total-line"; // display-only, must not add to price
+      const isHidden = isBimetallic || isLoadcell || isGrandTotal;
 
       const base = (item.price || 0) * (item.qty || 1);
       const m = item.markup || 0;
@@ -1092,7 +1108,7 @@ export function ConfigProvider({ children }) {
       const adjusted = base * (1 + m / 100) * (1 - d / 100);
 
       if (isHidden) {
-        hiddenUpgradesTotal += adjusted;
+        if (!isGrandTotal) hiddenUpgradesTotal += adjusted; // grand-total contributes nothing
       } else {
         visibleAddons.push(item);
       }
@@ -1391,7 +1407,7 @@ export function ConfigProvider({ children }) {
         },
         machine_details: machineDetails,
         scope: finalScope,
-        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension").map((a, idx) => {
+        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension" && a.id !== "grand-total-line").map((a, idx) => {
           const rawPrice = (a.price || 0) * (a.qty || 1);
           const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
           return {

@@ -500,8 +500,8 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
 //   "OPTIONAL EQUIPMENTS" heading (underlined)
 //   Table: SR. NO | DESCRIPTION | PRICE
 //   TOTAL Rs. row at bottom
-function CommercialScopePage({ price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal, currency = "INR" }) {
-    const opts = (optionalItems || []).filter(o => o && o.name);
+function CommercialScopePage({ price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal, currency = "INR", grandTotal = null, grandTotalName = "Total Price (Machine + Optional Equipment)", grandTotalWords = "" }) {
+    const opts = (optionalItems || []).filter(o => o && o.name && o.id !== "grand-total-line");
 
     // Strips currency symbols and trailing /- for clean numeric display in tables
     const cleanPrice = (val) => {
@@ -598,6 +598,23 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                     </tr>
                 </tbody>
             </table><br />
+
+            {/* Grand Total block — ❖ style matching pricing section */}
+            {grandTotal != null && (
+                <div style={{ marginTop: "10px", marginBottom: "6px" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
+                        <span style={{ fontSize: "14pt", color: RED }}>❖</span>
+                        <span style={{ fontWeight: "bold", fontSize: "12pt", fontFamily: F, color: RED }}>
+                            {grandTotalName.toUpperCase()}: Rs. {Number(grandTotal).toLocaleString("en-IN")}/-
+                        </span>
+                    </div>
+                    {grandTotalWords && (
+                        <div style={{ fontSize: "11pt", fontFamily: F, color: RED, paddingLeft: "28px", letterSpacing: "0.3px" }}>
+                            {grandTotalWords}
+                        </div>
+                    )}
+                </div>
+            )}
             <br />
 
             <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
@@ -1112,6 +1129,9 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                 optionalItems={optionalItems}
                 addonsTotal={pricing.addonsTotal || ""}
                 currency={pricing.currency || "INR"}
+                grandTotal={(pricing.grandTotal != null && pricing.grandTotal > 0) ? pricing.grandTotal : null}
+                grandTotalName={pricing.grandTotalName || "Total Price (Machine + Optional Equipment)"}
+                grandTotalWords={pricing.grandTotalWords || ""}
             />
 
             {/* Page 4 — Indicative Performance */}

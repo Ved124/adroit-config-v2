@@ -22,6 +22,7 @@ export interface WinderComponent {
 
 // Prices extracted from spreadsheet image
 export const MANUAL_BACK_TO_BACK_PRICES: Record<string, number> = {
+  "1000": 700000,
   "1250": 700000,
   "1350": 800000,
   "1500": 1000000,
@@ -35,6 +36,7 @@ export const MANUAL_BACK_TO_BACK_PRICES: Record<string, number> = {
 };
 
 export const SURFACE_WINDER_PRICES: Record<string, number> = {
+  "1000": 850000,
   "1250": 850000,
   "1350": 1000000,
   "1500": 1125000,

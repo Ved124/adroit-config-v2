@@ -230,7 +230,7 @@ function generateDieHead(item, machineModel) {
   const ibcSuffix = isIbc ? " and IBC provision" : "";
 
   const isRotationModel = machineModel && ((machineModel.code || "").toLowerCase().includes("dr") || (machineModel.label || "").toLowerCase().includes("dr"));
-  const isRotation = name.toLowerCase().includes("rotation") || (item.id || "").toLowerCase().includes("-dr") || (item.id || "").includes("dr-") || isRotationModel;
+  const isRotation = item.isRotationSelected || name.toLowerCase().includes("rotation") || (item.id || "").toLowerCase().includes("-dr") || (item.id || "").includes("dr-") || isRotationModel;
   const rotationSuffix = isRotation ? " Die with Rotation." : "";
 
   return (
@@ -349,7 +349,7 @@ function generateHaulOff(item, machineModel) {
 
   let motorStr = "AC";
   const hpMatch = motorRaw.match(/(\d+)\s*HP/i);
-  
+
   if (width > 2000) {
     motorStr = "5 HP AC";
   } else if (hpMatch) {
@@ -445,7 +445,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     ].filter(Boolean);
 
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-      parts.join(", ") + ". Post Extrusion Gear Motors will be Bonvario, Italy.";
+      parts.join(", ") + ". Post Extrusion Gear Motors will be Bonvario or Equivalent.";
   }
 
   if (isTwoSeparate) {
@@ -463,7 +463,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     ].filter(Boolean);
 
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-      parts.join(", ") + `. Post Extrusion Gear motor will be ${gearMotorMake}, Italy or Equivalent`;
+      parts.join(", ") + `. Post Extrusion Gear motor will be ${gearMotorMake}, Italy or Equivalent.`;
   }
 
   const changeover = variant.includes("auto")

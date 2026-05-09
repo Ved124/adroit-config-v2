@@ -19,6 +19,7 @@ export interface TowerComponent {
 }
 
 export const TOWER_PRICES: Record<string, number> = {
+  "1000": 1000000,
   "1250": 1000000,
   "1350": 1150000,
   "1500": 1300000,

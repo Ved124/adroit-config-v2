@@ -34,6 +34,7 @@ import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
 import { BIMETALLIC_BASE, SCREW_SIZES } from "./data/bimetallic";
 import { WINDER_ADDONS } from "./data/winderAddons";
+import { DIE_ROTATION_ADDON } from "./data/dieAddons";
 
 import { MODEL_PRESETS } from "./data/modelPresets";
 
@@ -98,6 +99,7 @@ export const ADDONS_DATA = {
   "Cooling System": CHILLER_ADDONS,
   "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
   // "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
+  "Die Addons": [DIE_ROTATION_ADDON],
   "Extruder Addons": [BIMETALLIC_BASE],
   "Winder Addons": WINDER_ADDONS,
   // "MDO Unit": MDO_ADDONS,
@@ -602,7 +604,9 @@ export function ConfigProvider({ children }) {
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1];
           
-          const minRange = Math.round((chosenSize * minRatio) / 10) * 10;
+          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
+          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - 125) : chosenSize;
+          const minRange = Math.round((maxFilmWidth * minRatio) / 10) * 10;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
           const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
@@ -612,17 +616,17 @@ export function ConfigProvider({ children }) {
           // Update item properties directly at the top level
           nextSelected[index] = {
             ...item,
-            name: `${item.name} - ${chosenSize} mm`,
+            name: `${item.name} - ${displaySize} mm`,
             size: chosenSize.toString(),
             segments: segments,
             price: newPrice,
             image: dynamicBCItem.image || item.image,
-            customName: `Motorised Bubble Cage - ${chosenSize} mm`,
+            customName: `Motorised Bubble Cage - ${displaySize} mm`,
             techDesc: sanitizeTechDesc("Bubble Cage", {
               ...(dynamicBCItem.techDesc || {}),
               ...(item.techDesc || {}),
               "Type": typeStr,
-              [label]: `${minRange} to ${chosenSize} mm`,
+              [label]: `${minRange} to ${maxFilmWidth} mm`,
             })
           };
         }
@@ -649,6 +653,8 @@ export function ConfigProvider({ children }) {
 
           const speed = (chosenSize >= 2370) ? "100 MPM" : "80 MPM";
 
+          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
+
           // Update item properties
           nextSelected[index] = {
             ...item, // Preserve metadata from preset
@@ -657,11 +663,11 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicHauloffItem.image || item.image, // Ensure image is preserved
-            customName: `HORIZONTAL HAULOFF - ${chosenSize} mm`,
+            customName: `HORIZONTAL HAULOFF - ${displaySize} mm`,
             techDesc: {
               ...(dynamicHauloffItem.techDesc || {}), // Start with base data
               ...(item.techDesc || {}), // Overlay existing overrides
-              "Nip roller width": `${chosenSize + 125} mm`,
+              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + 125} mm`,
               "Nip roller drive": `${hp} AC motor with variable frequency drive.`
             }
           };
@@ -680,6 +686,8 @@ export function ConfigProvider({ children }) {
           
           const dynamicTowerItem = TOWER_COMPONENTS.find(h => h.id === "tower-dynamic") || item;
 
+          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
+
           // Update item properties
           nextSelected[index] = {
             ...item, // Preserve metadata from preset
@@ -688,13 +696,13 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicTowerItem.image || item.image,
-            customName: `TOWER / PLATFORM - ${chosenSize} mm`,
+            customName: `TOWER / PLATFORM - ${displaySize} mm`,
             techDesc: {
               ...(dynamicTowerItem.techDesc || {}),
               ...(item.techDesc || {}),
-              "Tower Size": `${chosenSize} mm`,
+              "Tower Size": `${displaySize} mm`,
               "Staircase": "Staircase with hand rails.",
-              "Idler rollers": `Set of idler aluminium rollers of ${chosenSize + 125} mm face width.`,
+              "Idler rollers": `Set of idler aluminium rollers of ${(rollerNum > 500) ? rollerNum : (chosenSize + 125)} mm face width.`,
             }
           };
         }
@@ -736,20 +744,23 @@ export function ConfigProvider({ children }) {
           if (chosenSize >= 1500 && chosenSize <= 2000) nipHP = "3 HP";
           else if (chosenSize > 2000) nipHP = "5 HP";
 
+          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
+          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - 125) : chosenSize;
+
           // Update item properties
           nextSelected[index] = {
             ...item,
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicWinderItem.image || item.image,
-            customName: `${item.name} - ${chosenSize} mm`,
+            customName: `${item.name} - ${displaySize} mm`,
             techDesc: {
               ...(dynamicWinderItem.techDesc || {}),
               ...(item.techDesc || {}),
-              "Nip roller width": `${chosenSize + 125} mm`,
+              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + 125} mm`,
               "Nip roller drive": `${nipHP} AC motor with variable frequency drive.`,
               "Surface winder drive": `${nipHP} AC motor with variable frequency drive.`,
-              [stationLabel]: `Maximum web width of ${chosenSize} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
+              [stationLabel]: `Maximum web width of ${maxFilmWidth} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
             }
           };
         }
@@ -770,6 +781,9 @@ export function ConfigProvider({ children }) {
           const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
           const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
 
+          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
+          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - 125) : chosenSize;
+
           // Update item properties
           nextSelected[index] = {
             ...item,
@@ -778,11 +792,11 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicCFItem.image || item.image,
-            customName: `${item.name} - ${chosenSize} mm`,
+            customName: `${item.name} - ${displaySize} mm`,
             techDesc: {
               ...(dynamicCFItem.techDesc || {}),
               ...(item.techDesc || {}),
-              "Width Capability": `${chosenSize} mm layflat`
+              "Width Capability": `${maxFilmWidth} mm layflat`
             }
           };
         }
@@ -1096,8 +1110,39 @@ export function ConfigProvider({ children }) {
       out["Extruder Addons"] = extAddons;
     }
 
+    // --- DYNAMIC DIE ROTATION ADDON ---
+    const selectedDie = (selected || []).find(s => s.category === "Die Head");
+    if (selectedDie) {
+      const dieSize = selectedDie.diameterMm || selectedDie.size || "";
+      out["Die Addons"] = [{
+        ...DIE_ROTATION_ADDON,
+        name: `Die Rotation System for ${dieSize} mm Die`,
+        id: "die-rotation-addon",
+        metadata: { ...DIE_ROTATION_ADDON.metadata, size: String(dieSize) }
+      }];
+    }
+
     return out;
   }, [addons, machineType, selectedAddons, selected]);
+
+  // Conditional logic to inject "Die Rotation" statement into Die Head description
+  const processedSelected = useMemo(() => {
+    const isDieRotationSelected = selectedAddons.some(a => a.id === "die-rotation-addon");
+    
+    return selected.map(item => {
+      if (item.category === "Die Head" && isDieRotationSelected) {
+        return {
+          ...item,
+          isRotationSelected: true,
+          techDesc: {
+            ...item.techDesc,
+            "Die Rotation": "Provided"
+          }
+        };
+      }
+      return item;
+    });
+  }, [selected, selectedAddons]);
 
 
   // ---------------- MACHINE MODEL DETAILS (from CSV/TS) ----------------
@@ -1143,10 +1188,8 @@ export function ConfigProvider({ children }) {
     const visibleAddons = [];
 
     (selectedAddons || []).forEach(item => {
-      const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
-      const isLoadcell = item.id === "addon-loadcell-tension";
-      const isGrandTotal = item.id === "grand-total-line"; // display-only, must not add to price
-      const isHidden = isBimetallic || isLoadcell || isGrandTotal;
+      const isDieRotation = item.id === "die-rotation-addon";
+      const isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation;
 
       const base = (item.price || 0) * (item.qty || 1);
       const m = item.markup || 0;
@@ -1453,7 +1496,7 @@ export function ConfigProvider({ children }) {
         },
         machine_details: machineDetails,
         scope: finalScope,
-        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension" && a.id !== "grand-total-line").map((a, idx) => {
+        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension" && a.id !== "grand-total-line" && a.id !== "die-rotation-addon").map((a, idx) => {
           const rawPrice = (a.price || 0) * (a.qty || 1);
           const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
           return {
@@ -3035,7 +3078,8 @@ export function ConfigProvider({ children }) {
     resetToModelPreset,
 
     // selected items
-    selected,
+    selected: processedSelected,
+    rawSelected: selected,
     setSelected,
     selectedAddons,
     setSelectedAddons,

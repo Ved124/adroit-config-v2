@@ -244,10 +244,8 @@ function buildProposalData({
     const c = (item.category || "").toLowerCase();
     const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
     const isTrim = n.includes("trim");
-    const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons";
-    const isLoadcell = item.id === "addon-loadcell-tension";
-    const isGrandTotal = item.id === "grand-total-line"; // rendered below table, not inside it
-    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal;
+    const isDieRotation = item.id === "die-rotation-addon";
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;
   });
 
   // Compute grand total for the pricing block (machine final + addons)

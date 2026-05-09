@@ -22,6 +22,7 @@ export interface HauloffComponent {
 
 // Prices extracted from master list image
 export const HAULOFF_PRICES: Record<string, number> = {
+  "1000": 1100000,
   "1250": 1100000,
   "1350": 1150000,
   "1500": 1200000,

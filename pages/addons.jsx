@@ -11,6 +11,7 @@ import { AIR_CHILLER_PRICES, WATER_CHILLER_PRICES, CHILLER_BRANDS } from "../src
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
 import { SCREW_SIZES } from "../src/data/bimetallic";
+import { DIE_ROTATION_PRICES } from "../src/data/dieAddons";
 
 export default function AddonsPage() {
   const router = useRouter();
@@ -173,13 +174,14 @@ function AddonCard({
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isHeatExchanger = item.id === "heat-exchanger-dynamic";
   const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
+  const isDieRotation = item.id === "die-rotation-addon";
 
-  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : []))));
-  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isAirChiller ? AIR_CHILLER_PRICES : (isWaterChiller ? WATER_CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : (isBimetallic ? SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {}) : {}))))));
+  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : [])))));
+  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isAirChiller ? AIR_CHILLER_PRICES : (isWaterChiller ? WATER_CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : (isBimetallic ? SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {}) : (isDieRotation ? DIE_ROTATION_PRICES : {})))))));
 
   // UI customization based on component type
   const isOutputBased = isMixerDryer || isHeatExchanger;
-  const selectorLabel = isChiller ? "Machine Size" : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : "Max Roller"));
+  const selectorLabel = isChiller ? "Machine Size" : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller")));
   const unit = isChiller ? "mm" : ((isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm"));
 
   // Local state for dynamic config
@@ -237,16 +239,19 @@ function AddonCard({
       } else if (isBimetallic) {
         // Example: Bi-metallic Screw Barrel for Ext-1 - 45mm
         customName = `${item.name.split(' (')[0]} - ${selectedSize}mm`;
+      } else if (isDieRotation) {
+        // Example: Die Rotation System for 225 mm Die
+        customName = `Die Rotation System for ${selectedSize} mm Die`;
       }
 
       addAddon(category, item, {
-        brand: selectedBrand,
+        brand: isDieRotation ? undefined : selectedBrand,
         size: selectedSize,
         price: currentPrice,
         customName: customName,
         techDesc: {
           ...item.techDesc,
-          "Brand": selectedBrand,
+          ...(isDieRotation ? {} : { "Brand": selectedBrand }),
           [selectorLabel]: `${selectedSize} ${unit}`,
         }
       });
@@ -295,18 +300,20 @@ function AddonCard({
       {/* Dynamic Selectors */}
       {item.isDynamic && (
         <div className="mt-4 grid grid-cols-2 gap-2 p-2 bg-slate-50 rounded-lg border border-slate-100">
-          <div className="flex flex-col gap-1">
-            <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
-            <select
-              disabled={isSelected}
-              value={selectedBrand}
-              onChange={(e) => setSelectedBrand(e.target.value)}
-              className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60"
-            >
-              {brands.map(b => <option key={b} value={b}>{b}</option>)}
-            </select>
-          </div>
-          <div className="flex flex-col gap-1">
+          {!isDieRotation && (
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
+              <select
+                disabled={isSelected}
+                value={selectedBrand}
+                onChange={(e) => setSelectedBrand(e.target.value)}
+                className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60"
+              >
+                {brands.map(b => <option key={b} value={b}>{b}</option>)}
+              </select>
+            </div>
+          )}
+          <div className={`flex flex-col gap-1 ${isDieRotation ? "col-span-2" : ""}`}>
             <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
             <select
               disabled={isSelected}

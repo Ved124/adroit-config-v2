@@ -610,7 +610,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
   const grandTotal = (p.grandTotal != null && p.grandTotal > 0) ? p.grandTotal : null;
   const grandTotalName = p.grandTotalName || "Total Price (Machine + Optional Equipment)";
   const grandTotalWords = p.grandTotalWords || "";
-  const opts = (optionalItems || []).filter((o) => o && o.name);
+  const opts = (optionalItems || []).filter((o) => o && o.name && o.id !== "die-rotation-addon");
   const clean = (s) =>
     s ? String(s).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim() : "";
 

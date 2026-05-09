@@ -151,9 +151,8 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Design": "Dual Lip / Dual Ring cooling system.",
-      "Construction": "Multi-chamber CNC machined body.",
-      "Cooling": "Enhanced frost line control for high output.",
+      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+      "Blower": "One no. with inlet air filter.",
     },
     shortDesc: "Dual lip air ring for high capacity co-extruded films.",
   },

@@ -305,10 +305,20 @@ function generateCollapsingFrame(item) {
 function generateMainNip(item) {
   // Prefer scopeDesc stored directly on item (from preset metadata)
   if (item.scopeDesc) return item.scopeDesc;
-  // Derive motor HP from techDesc
+
+  // Derive width for dynamic HP calculation
+  const widthRaw = td(item, "nip roller width", "width") || "";
+  const widthNum = parseInt(widthRaw.match(/\d+/)?.[0] || "0");
+
+  let hp = "2 HP";
+  if (widthNum >= 1500 && widthNum <= 2000) hp = "3 HP";
+  else if (widthNum > 2000) hp = "5 HP";
+
+  // Derive motor HP from techDesc as fallback/override
   const nipDriveRaw = td(item, "nip roller drive", "nip drive", "drive") || "";
   const hpMatch = nipDriveRaw.match(/(\d+)\s*HP/i);
-  const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "AC";
+  const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : `${hp.replace(" HP", "")} HP AC`;
+
   return `Collapsing frame with Segmented PBT Roller, side guides, Main Nip with ${motorStr} Drive.`;
 }
 
@@ -333,8 +343,21 @@ function generateHaulOff(item, machineModel) {
   const motorRawFromTech = td(item, "nip drive", "main drive", "nip roller drive");
   const motorRaw = motorRawFromTech || (machineModel ? machineModel.mainNipDrive : "") || "";
 
+  // Dynamic HP calculation based on width if not explicitly found or if it needs enforcement
+  const widthRaw = td(item, "hauloff size", "nip roller width", "size") || (item.size ? `${item.size} mm` : "");
+  const width = parseInt(widthRaw.replace(/\D/g, '')) || 0;
+
+  let motorStr = "AC";
   const hpMatch = motorRaw.match(/(\d+)\s*HP/i);
-  const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "AC";
+  
+  if (width > 2000) {
+    motorStr = "5 HP AC";
+  } else if (hpMatch) {
+    motorStr = `${hpMatch[1]} HP AC`;
+  } else if (width > 0) {
+    if (width <= 1450) motorStr = "2 HP AC";
+    else motorStr = "3 HP AC";
+  }
 
   const prefix = isOscillating
     ? `One 360-degree rotation bottom supported Horizontal Oscillating Haul Off.`
@@ -393,6 +416,11 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     widthStr = `${item.size || item.currentSize} mm`;
   }
 
+  const widthNum = parseInt(widthStr) || 0;
+  let hpLabel = "2 HP";
+  if (widthNum >= 1500 && widthNum <= 2000) hpLabel = "3 HP";
+  else if (widthNum > 2000) hpLabel = "5 HP";
+
   const prefix = includeNipPrefix
     ? `One Secondary nip with edge slitting assembly and edge trimming assembly. `
     : "";
@@ -413,7 +441,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
       "digital length counter",
       "04 nos.- 3” Air shaft",
       "bow roller",
-      "2 HP AC Motor and Drive"
+      `${hpLabel} AC Motor and Drive`
     ].filter(Boolean);
 
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
@@ -423,7 +451,6 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   if (isTwoSeparate) {
     const mechanism = isAutomatic ? "Automatic" : "Manual";
     const airShaftLabel = isAutomatic ? "airshaft" : "Resource Air shaft";
-    const hpLabel = isAutomatic ? "3 HP" : "2 HP";
     const gearMotorMake = "Bonvario";
 
     const parts = [
@@ -436,7 +463,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     ].filter(Boolean);
 
     return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-      parts.join(", ") + `. Post Extrusion Gear motor will be ${gearMotorMake}, Italy.`;
+      parts.join(", ") + `. Post Extrusion Gear motor will be ${gearMotorMake}, Italy or Equivalent`;
   }
 
   const changeover = variant.includes("auto")

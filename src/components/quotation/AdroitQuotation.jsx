@@ -222,7 +222,7 @@ function CoverPage({ machine, customer }) {
     };
 
     const fullName = machine?.fullName || nameMap[type] || "THREE LAYER CO-EXTRUSION BLOWN FILM LINE";
-    const seriesName = machine?.series || seriesMap[type] || "Innoflex";
+    const seriesName = seriesMap[type] || "Innoflex";
     const modelCode = machine?.code || "";
     const company = (customer?.company || "").toUpperCase();
     const city = (customer?.city || "").toUpperCase();
@@ -605,7 +605,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                     <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
                         <span style={{ fontSize: "14pt", color: RED }}>❖</span>
                         <span style={{ fontWeight: "bold", fontSize: "12pt", fontFamily: F, color: RED }}>
-                            {grandTotalName.toUpperCase()}: Rs. {Number(grandTotal).toLocaleString("en-IN")}/-
+                            {grandTotalName.toUpperCase()}: {currency === "USD" ? "$" : "Rs."} {currency === "USD" ? Number(grandTotal).toLocaleString("en-US") : Number(grandTotal).toLocaleString("en-IN")}{currency === "USD" ? "" : "/-"}
                         </span>
                     </div>
                     {grandTotalWords && (
@@ -948,17 +948,17 @@ function TermsPage() {
         ["PRICES",
             "Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered. These are applicable as per rule. Prices are valid for 30 days from the date of quotation. "],
         ["PACKING & FORWARDING",
-            "Packing charges will be charged extra as applicable at time of dispatch."],
+            "Packing charges will be charged extra."],
         ["INSURANCE",
             "Transit insurance of the machine is to be cover by the buyer. In the event of any Insurance claim, the procedure would be done by the buyer."],
         ["TRANSPORTATION",
-            "Cost of transportation from our works to buyer's site will be borne by the customer."],
+            "Cost of the transport will be borne by the customer."],
         ["DELIVERY",
-            "04 Months from the date receipt of technically and commercially clear purchase order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment even a month after the machine will ready, then ADROIT EXTRUSION has right to sell it to another customer. In that case, you have to wait till another same machine will be ready by us. The agreed prices will change in case buyer fails to take delivery of the ordered machine within 30 days from the date of conveying readiness of the machine to the buyer."],
+            "04 Months from the date receipt of technically and commercially clear purchase order with minimum 40% irrevocable security deposit. Failure to lift the machinery against balance payment even a month after the machine will ready, then ADROIT EXTRUSION has right to sell it to another customer. In that case, you have to wait till another same machine will be ready by us. The agreed prices will change ( 0.25% per week ) in case buyer fails to take delivery of the ordered machine within 45 days from the date of conveying readiness of the machine to the buyer. "],
         ["PAYMENT TERMS",
-            "We require 40% of the Total value of order as irrevocable security deposit. Balance payment along with all incidental charges, Taxes & Duties are to be paid before delivery. The advance is non-interest bearing. In the event of cancellation of the order, advance will be adjusting against order cancellation charges. Offsetting or retention of payments based on any counterclaims whatsoever of the Buyer are not admissible. Once Machine Dispatched, It cannot be Returned at any Condition."],
+            "We require 40% of the Total value of order as irrevocable security deposit. Balance payment along with all incidental charges, Taxes & Duties are to be paid before delivery. The advance is non-interest bearing. In the event of cancellation of the order, advance will be adjusting against order cancellation charges. Offsetting or retention of payments based on any counterclaims whatsoever of the Buyer are not admissible. Once Machine Dispatched, It cannot be returned at any Condition."],
         ["JURISDICTION",
-            "All contracts of sale shall be subject to Ahmedabad jurisdiction only."],
+            "All Contract of sell Shall be Subject to Ahmadabad jurisdiction only."],
         ["PRE-DISPATCH TESTING",
             "We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre- designed standards to ensure faultless running of the complete line on installation at Customer end. For the wet trials, the buyer is required to arrange all the input raw materials or Seller will arrange the same at buyer cost."],
         ["ERECTION & COMMISSIONING",

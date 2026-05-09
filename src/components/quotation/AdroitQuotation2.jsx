@@ -648,7 +648,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
         <tbody>
           <tr>
             <td style={{ ...TD, fontWeight: "600", color: NAVY }}>
-              Basic Ex-Works Ahmedabad Price (INR)
+              Basic Ex-Works Ahmedabad Price ({p.currency || "INR"})
             </td>
             <td
               style={{
@@ -675,7 +675,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
             <>
               <tr>
                 <td style={{ ...TD, fontWeight: "600", color: RED }}>
-                  Final Price After Discount (INR)
+                  Final Price After Discount ({p.currency || "INR"})
                 </td>
                 <td
                   style={{
@@ -747,7 +747,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
               colSpan={2}
               style={{ ...TD, textAlign: "right", fontWeight: "bold", color: NAVY }}
             >
-              Total Rs.
+              Total {p.currency === "USD" ? "$" : "Rs."}
             </td>
             <td
               style={{
@@ -780,7 +780,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
             <tbody>
               <tr>
                 <td style={{ ...TD, fontWeight: "bold", fontSize: "11pt", color: RED }}>
-                  {grandTotalName} (INR)
+                  {grandTotalName} ({p.currency || "INR"})
                 </td>
                 <td
                   style={{
@@ -790,7 +790,7 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
                     color: RED,
                   }}
                 >
-                  Rs. {Number(grandTotal).toLocaleString("en-IN")}/-
+                  {p.currency === "USD" ? "$" : "Rs."} {p.currency === "USD" ? Number(grandTotal).toLocaleString("en-US") : Number(grandTotal).toLocaleString("en-IN")}{p.currency === "USD" ? "" : "/-"}
                 </td>
               </tr>
               {grandTotalWords && (

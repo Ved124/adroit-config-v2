@@ -47,7 +47,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
 
       // Air Ring (Missing)
       {
@@ -68,13 +68,13 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "main-nip-dynamic",
         qty: 1,
         metadata: {
-          size: "1250",
+          size: "1000",
           price: 1100000,
-          customName: "MAIN NIP - 1250 mm",
+          customName: "MAIN NIP - 1000 mm",
           scopeDesc: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1370 mm",
+            "Nip roller width": "1120 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
             "Idler rollers": "Adequate quantity as per layout.",
@@ -104,7 +104,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1350 DR": {
+  "INNOFLEX-1375 DR": {
     machineType: "3layer",
     basePrice: 6750000,
     components: [
@@ -119,7 +119,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -142,7 +142,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           scopeDesc: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1370 mm",
+            "Nip roller width": "1365 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
             "Idler rollers": "Adequate quantity as per layout.",
@@ -169,7 +169,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1350 HO": {
+  "INNOFLEX-1375 HO": {
     machineType: "3layer",
     basePrice: 7875000,
     components: [
@@ -184,7 +184,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -207,9 +207,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Hauloff Size": "1350 mm",
-            "Nip roller width": "1475 mm",
-            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Nip roller width": "1470 mm",
             "Collapsing Frames": "PBT rollers.",
             "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
@@ -235,7 +233,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1350-170": {
+  "INNOFLEX-1375-170": {
     machineType: "3layer",
     basePrice: 8551000,
     components: [
@@ -264,7 +262,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -276,9 +274,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Hauloff Size": "1350 mm",
-            "Nip roller width": "1475 mm",
-            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Nip roller width": "1470 mm",
             "Collapsing Frames": "PBT rollers.",
             "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
@@ -304,7 +300,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1350-180": {
+  "INNOFLEX-1375-180": {
     machineType: "3layer",
     basePrice: 8850000,
     components: [
@@ -332,7 +328,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1350 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -344,9 +340,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Hauloff Size": "1350 mm",
-            "Nip roller width": "1475 mm",
-            "Nip roller drive": "5 HP AC motor with variable frequency drive.",
+            "Nip roller width": "1470 mm",
             "Collapsing Frames": "PBT rollers.",
             "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
@@ -380,7 +374,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -436,7 +430,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-325", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -457,9 +451,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 1400000,
           customName: "HORIZONTAL HAULOFF - 1750 mm",
           techDesc: {
-            "Hauloff Size": "1750 mm",
-            "Main Nip": "3 HP",
-            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
@@ -484,14 +475,77 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1870": {
+  "INNOFLEX-1870-250": {
+    machineType: "3layer",
+    basePrice: 11645000,
+    components: [
+      { category: "Extruder", id: "ext-55-coex-long", qty: 2 },
+      { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
+      { category: "Die Head", id: "die-3layer-400", qty: 1 },
+      {
+        category: "Bubble Cage",
+        id: "bc-open-close-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1750",
+          price: 0,
+          customName: "Motorised Bubble Cage - 1750 mm",
+          techDesc: { "Type": "Motorized open-close operation.", "Cage Size": "1750 mm" }
+        }
+      },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1, metadata: { size: "1870" } },
+      {
+        category: "Air Ring",
+        id: "airring-dr-dynamic",
+        qty: 1,
+        metadata: {
+          size: "400",
+          price: 0,
+          customName: "400 mm Dual Lip Air Ring (15 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "400 mm", "Blower": "15 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1750",
+          price: 0,
+          customName: "HORIZONTAL HAULOFF - 1750 mm",
+          techDesc: {
+            "Oscillation": "360 degree oscillating mechanism.",
+            "Nip roller drive": "3 HP AC motor (Bonvario, Italy)",
+            "Max linespeed": "80 MPM"
+          }
+        }
+      },
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1870",
+          price: 0,
+          customName: "TOWER / PLATFORM - 1870 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1, metadata: { size: "1750" } },
+    ],
+
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+    ],
+  },
+  "INNOFLEX-1870-220": {
     machineType: "3layer",
     basePrice: 10651000,
     components: [
       { category: "Extruder", id: "ext-55-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-375", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -512,9 +566,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 1500000,
           customName: "HORIZONTAL HAULOFF - 1850 mm",
           techDesc: {
-            "Hauloff Size": "1850 mm",
-            "Main Nip": "3 HP",
-            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
@@ -547,7 +598,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-400", qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -568,9 +619,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 1800000,
           customName: "HORIZONTAL HAULOFF - 2000 mm",
           techDesc: {
-            "Hauloff Size": "2000 mm",
-            "Main Nip": "3 HP",
-            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
@@ -602,7 +650,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-65-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-450", qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -623,9 +671,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 2500000,
           customName: "HORIZONTAL HAULOFF - 2125 mm",
           techDesc: {
-            "Hauloff Size": "2125 mm",
-            "Main Nip": "3 HP",
-            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
@@ -658,7 +703,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-525", qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-slat-motorized", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -679,9 +724,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 2700000,
           customName: "HORIZONTAL HAULOFF - 2370 mm",
           techDesc: {
-            "Hauloff Size": "2370 mm",
-            "Main Nip": "5 HP",
-            "Line Speed": "80 MPM",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
@@ -714,7 +756,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-550", qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-heavy-duty", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -768,7 +810,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-45-aba", qty: 1 },
   //     { category: "Die Head", id: "die-aba-70-150", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -787,7 +829,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-45-aba", qty: 1 },
   //     { category: "Die Head", id: "die-aba-125-250", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -805,7 +847,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-55-aba", qty: 2 },
   //     { category: "Die Head", id: "die-aba-150-300", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -824,7 +866,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-65-aba", qty: 1 },
   //     { category: "Die Head", id: "die-aba-225-375", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -843,7 +885,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-35-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-50-100", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -861,7 +903,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-90-175", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -879,7 +921,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-55-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-150-275", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -897,7 +939,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-60-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-200-325", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -915,7 +957,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-75-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-300-475", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -933,7 +975,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-90-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-400-600", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -951,7 +993,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   //     { category: "Extruder", id: "ext-100-mono-short", qty: 1 },
   //     { category: "Die Head", id: "die-mono-450-700", qty: 1 },
   //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-wide", qty: 1 },
+  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
   //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
   //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
   //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
@@ -982,7 +1024,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "100 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1023,7 +1065,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "150 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1075,7 +1117,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1127,7 +1169,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1169,7 +1211,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1209,7 +1251,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "100 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1250,7 +1292,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1291,7 +1333,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1342,7 +1384,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-wooden", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1383,7 +1425,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1434,7 +1476,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "3000 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-mono", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1487,7 +1529,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1850",
           price: 1500000,
           customName: "HORIZONTAL HAULOFF - 1850 mm",
-          techDesc: { "Hauloff Size": "1850 mm", "Nip roller drive": "3 HP", "Line Speed": "80 MPM" }
+          techDesc: { "Line Speed": "80 MPM" }
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1850", price: 1650000 } },
@@ -1537,7 +1579,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1975",
           price: 1750000,
           customName: "HORIZONTAL HAULOFF - 1975 mm",
-          techDesc: { "Hauloff Size": "1975 mm", "Nip roller drive": "3 HP", "Line Speed": "80 MPM" }
+          techDesc: { "Line Speed": "80 MPM" }
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1975", price: 1750000 } },
@@ -1587,7 +1629,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2125",
           price: 2500000,
           customName: "HORIZONTAL HAULOFF - 2125 mm",
-          techDesc: { "Hauloff Size": "2125 mm", "Nip roller drive": "3 HP", "Line Speed": "80 MPM" }
+          techDesc: { "Line Speed": "80 MPM" }
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2125", price: 2000000 } },

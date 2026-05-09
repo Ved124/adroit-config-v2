@@ -15,10 +15,46 @@ export interface CollapsingFrameComponent {
   price: number;
   techDesc: TechSpecMap;
   shortDesc?: string;
+  isDynamic?: boolean;
 }
 
+// Map sizes for dynamic selection (matching haul-off/bubble cage standards)
+export const COLLAPSING_FRAME_PRICES: Record<string, number> = {
+  "1000": 0,
+  "1250": 0,
+  "1350": 0,
+  "1500": 0,
+  "1750": 0,
+  "1850": 0,
+  "2000": 0,
+  "2250": 0,
+  "2500": 0,
+  "2750": 0,
+  "3000": 0,
+};
+
 export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
-  // ---------------- BASIC MONO ----------------
+  // ---------------- DYNAMIC COLLAPSING FRAME ----------------
+  {
+    id: "cf-pbt-dynamic",
+    name: "Collapsing Frame – PBT Rollers",
+    style: "PBT",
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    image: "/images/Acessories/Gusset Board Assembly.jpeg",
+    cardDesc: "Select size and technical specifications will update automatically.",
+    price: 0,
+    isDynamic: true,
+    techDesc: {
+      "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
+      "Material": "PBT rollers for scratch-free handling.",
+      "Adjustment": "Manual width adjustment with locking system.",
+      "Width Capability": "TBD mm",
+      "Application": "Suitable for Lamination, Liquid Packaging and General Purpose films.",
+    },
+    shortDesc: "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
+  },
+
+  /* Commented out static components as per user request to move to dynamic selection
   {
     id: "cf-pbt-mono",
     name: "Collapsing Frame – PBT Rollers (Mono)",
@@ -37,29 +73,6 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     },
     shortDesc: "For monolayer blown film machines.",
   },
-
-  // ---------------- WIDE ABA / 3-LAYER ----------------
-  {
-    id: "cf-pbt-wide",
-    name: "Collapsing Frame – PBT Rollers",
-    style: "PBT",
-    machineTypes: ["aba", "3layer"],
-    usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750", "Innoflex-1125", "Innoflex-1350A", "Innoflex-1350B"],
-    image: "/images/Acessories/Gusset Board Assembly.jpeg",
-    cardDesc: "Collapsing frame with PBT rollers.",
-    price: 0,
-    techDesc: {
-      "Construction":
-        "PBT roller frame mounted before haul-off for layflat formation.",
-      "Material": "PBT rollers for scratch-free handling.",
-      "Adjustment": "Manual width adjustment with locking system.",
-      "Width Capability": "1000 to 1600 mm layflat.",
-      "Application": "Suitable for 3-layer lamination films.",
-    },
-    shortDesc: "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
-  },
-
-  // ---------------- MOTORIZED PREMIUM ----------------
   {
     id: "cf-slat-motorized",
     name: "Motorized Slat Collapsing Frame",
@@ -79,8 +92,6 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     },
     shortDesc: "Premium collapsing frame with motorized adjustment for wide blown film applications.",
   },
-
-  // ---------------- HEAVY DUTY AGRI & WIDE FILM ----------------
   {
     id: "cf-heavy-duty",
     name: "Heavy Duty Wide Width Collapsing System",
@@ -114,4 +125,5 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     },
     shortDesc: "Basic wooden board frame for narrow web machines.",
   },
+  */
 ];

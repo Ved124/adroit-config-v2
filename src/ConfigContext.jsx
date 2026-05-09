@@ -21,7 +21,7 @@ import { TOWER_COMPONENTS, TOWER_PRICES } from "../src/data/tower";
 import { WINDER_COMPONENTS, MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES } from "../src/data/winders";
 import { AIR_RING_COMPONENTS } from "../src/data/airRing";
 import { IBC_COMPONENTS } from "../src/data/ibc";
-import { COLLAPSING_FRAME_COMPONENTS } from "../src/data/collapsingFrame";
+import { COLLAPSING_FRAME_COMPONENTS, COLLAPSING_FRAME_PRICES } from "../src/data/collapsingFrame";
 import { CORONA_TREATER_COMPONENTS } from "../src/data/corona";
 import { TRIM_ADDONS } from "../src/data/trim";
 import { MATERIAL_HANDLING_ADDONS } from "../src/data/materialHandling";
@@ -634,13 +634,19 @@ export function ConfigProvider({ children }) {
         
         if (item.category === "Haul-Off" && (isHaulOffId || item.isDynamic)) {
           const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
-          // Find smallest size >= machineWidth, or fallback to smallest available
-          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          // Find smallest size >= machineWidth
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          // Respect preset size if it's larger
+          const presetSize = parseInt(item.metadata?.size || item.size) || 0;
+          const chosenSize = Math.max(minSize, presetSize);
           const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
           
           const dynamicHauloffItem = HAULOFF_COMPONENTS.find(h => h.id === "haul-horizontal-dynamic") || item;
 
-          const hp = (chosenSize >= 2370) ? "5 HP" : "3 HP";
+          let hp = "2 HP";
+          if (chosenSize >= 1500 && chosenSize <= 2000) hp = "3 HP";
+          else if (chosenSize > 2000) hp = "5 HP";
+
           const speed = (chosenSize >= 2370) ? "100 MPM" : "80 MPM";
 
           // Update item properties
@@ -655,10 +661,8 @@ export function ConfigProvider({ children }) {
             techDesc: {
               ...(dynamicHauloffItem.techDesc || {}), // Start with base data
               ...(item.techDesc || {}), // Overlay existing overrides
-              "Hauloff Size": `${chosenSize} mm`,
               "Nip roller width": `${chosenSize + 125} mm`,
-              "Nip Drive": `${hp} AC motor with variable frequency drive.`,
-              "Line Speed": speed
+              "Nip roller drive": `${hp} AC motor with variable frequency drive.`
             }
           };
         }
@@ -718,12 +722,19 @@ export function ConfigProvider({ children }) {
 
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
-          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          // Respect preset size if it's larger
+          const presetSize = parseInt(item.metadata?.size || item.size) || 0;
+          const chosenSize = Math.max(minSize, presetSize);
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
           const stationLabel = isAuto ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)";
 
           const dynamicWinderItem = WINDER_COMPONENTS.find(w => w.id === item.id) || item;
+
+          let nipHP = "2 HP";
+          if (chosenSize >= 1500 && chosenSize <= 2000) nipHP = "3 HP";
+          else if (chosenSize > 2000) nipHP = "5 HP";
 
           // Update item properties
           nextSelected[index] = {
@@ -736,7 +747,42 @@ export function ConfigProvider({ children }) {
               ...(dynamicWinderItem.techDesc || {}),
               ...(item.techDesc || {}),
               "Nip roller width": `${chosenSize + 125} mm`,
+              "Nip roller drive": `${nipHP} AC motor with variable frequency drive.`,
+              "Surface winder drive": `${nipHP} AC motor with variable frequency drive.`,
               [stationLabel]: `Maximum web width of ${chosenSize} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
+            }
+          };
+        }
+      });
+
+      // 4.9) DYNAMIC COLLAPSING FRAME LOGIC
+      nextSelected.forEach((item, index) => {
+        if (item.category === "Collapsing Frame" && (item.isDynamic || item.id.includes("dynamic"))) {
+          const availableSizes = Object.keys(COLLAPSING_FRAME_PRICES).map(Number).sort((a, b) => a - b);
+
+          
+          // Find smallest size >= machineWidth
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          // Respect preset size if it's larger
+          const presetSize = parseInt(item.metadata?.size || item.size) || 0;
+          const chosenSize = Math.max(minSize, presetSize);
+
+          const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
+          const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
+
+          // Update item properties
+          nextSelected[index] = {
+            ...item,
+            category: "Collapsing Frame",
+            qty: 1,
+            size: chosenSize.toString(),
+            price: newPrice,
+            image: dynamicCFItem.image || item.image,
+            customName: `${item.name} - ${chosenSize} mm`,
+            techDesc: {
+              ...(dynamicCFItem.techDesc || {}),
+              ...(item.techDesc || {}),
+              "Width Capability": `${chosenSize} mm layflat`
             }
           };
         }

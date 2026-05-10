@@ -245,6 +245,10 @@ function buildProposalData({
     const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
     const isTrim = n.includes("trim");
     const isDieRotation = item.id === "die-rotation-addon";
+    const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
+    const isLoadcell = item.id === "addon-loadcell-tension";
+    const isGrandTotal = item.id === "grand-total-line";
+
     return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;
   });
 
@@ -574,6 +578,9 @@ function buildProposalData({
     .concat(winderTowerScopeItems)
     .filter(Boolean);
 
+  // Sort annexure components as well
+  const sortedAnnexure = getSortedScope(annexureComponents);
+
   const hasSelectedTower = [...selectedScopeItems, ...winderTowerAddonsRaw].some(item => {
     const n = (item.name || "").toLowerCase();
     const c = (item.category || "").toLowerCase();
@@ -640,21 +647,30 @@ function buildProposalData({
 
   // Refine SORT_ORDER index logic to put panel/control at the absolute bottom
   function getSortedScope(items) {
-    const SORT_ORDER = [
-      "extruder", "die", "air ring", "basket", "cage", "haul", "idler", "nip",
-      "winder", "tower", "panel", "control"
-    ];
+    const getSortOrder = (item) => {
+      if (!item) return 99;
+      const n = String(item.name || "").toLowerCase();
+      const d = String(item.shortDesc || item.description || "").toLowerCase();
+      const combined = n + " " + d;
+
+      if (combined.includes("extruder")) return 1;
+      if (combined.includes("die")) return 2;
+      if (combined.includes("air ring")) return 3;
+      if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
+      if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
+      if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 6;
+      if (combined.includes("winder")) return 7;
+      if (combined.includes("tower")) return 8;
+      if (combined.includes("idler")) return 9;
+      if (combined.includes("panel") || combined.includes("control")) return 10;
+      return 90;
+    };
+
     return [...items].sort((a, b) => {
-      function getIdx(item) {
-        if (!item) return 99;
-        const n = String(item.name || "").toLowerCase();
-        const d = String(item.shortDesc || item.description || "").toLowerCase();
-        for (let i = 0; i < SORT_ORDER.length; i++) {
-          if (n.includes(SORT_ORDER[i]) || d.includes(SORT_ORDER[i])) return i;
-        }
-        return 99;
-      }
-      return getIdx(a) - getIdx(b);
+      const orderA = getSortOrder(a);
+      const orderB = getSortOrder(b);
+      if (orderA !== orderB) return orderA - orderB;
+      return (a.name || "").localeCompare(b.name || "");
     });
   }
 
@@ -690,7 +706,7 @@ function buildProposalData({
     },
 
     components: finalScope,
-    annexure_components: annexureComponents,
+    annexure_components: sortedAnnexure,
     optional_items: optItems,
     scope: finalScope,
 
@@ -911,7 +927,9 @@ export default function SummaryPage() {
     const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
     const isLoadcell = item.id === "addon-loadcell-tension";
     const isGrandTotal = item.id === "grand-total-line"; // shown separately below table
-    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal;
+    const isDieRotation = item.id === "die-rotation-addon";
+
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;
   });
 
   const optItems = realAddonsRaw.map(item => {

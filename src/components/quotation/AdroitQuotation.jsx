@@ -243,7 +243,8 @@ function CoverPage({ machine, customer }) {
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
-                marginBottom: "0",
+                marginBottom: "0px",
+                marginTop: "30px",
             }}>
                 <img
                     src={coverImg}
@@ -251,7 +252,7 @@ function CoverPage({ machine, customer }) {
                     crossOrigin="anonymous"
                     style={{
                         width: "100%",
-                        height: "700px",
+                        height: "1100px",
                         objectFit: "contain",
                         display: "block",
                     }}
@@ -1093,8 +1094,38 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
     const quot = data.quotation || {};
     const perf = data.indicative_performance || {};
     const electricals = data.electricals || {};
-    const allComponents = data.components || [];
-    const annexureComponents = data.annexure_components || allComponents;
+    const rawComponents = data.components || [];
+    const rawAnnexure = data.annexure_components || rawComponents;
+
+    const getSortOrder = (item) => {
+        if (!item) return 99;
+        const n = String(item.name || "").toLowerCase();
+        const d = String(item.shortDesc || item.description || "").toLowerCase();
+        const combined = n + " " + d;
+
+        if (combined.includes("extruder")) return 1;
+        if (combined.includes("die")) return 2;
+        if (combined.includes("air ring")) return 3;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
+        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 6;
+        if (combined.includes("winder")) return 7;
+        if (combined.includes("tower")) return 8;
+        if (combined.includes("idler")) return 9;
+        if (combined.includes("panel") || combined.includes("control")) return 10;
+        return 90;
+    };
+
+    const sortFn = (a, b) => {
+        const orderA = getSortOrder(a);
+        const orderB = getSortOrder(b);
+        if (orderA !== orderB) return orderA - orderB;
+        return (a.name || "").localeCompare(b.name || "");
+    };
+
+    const allComponents = [...rawComponents].sort(sortFn);
+    const annexureComponents = [...rawAnnexure].sort(sortFn);
+
     const optionalItems = data.optional_items || [];
     // All pricing comes from data.pricing (built by buildProposalData in summary.jsx)
     const pricing = data.pricing || {};

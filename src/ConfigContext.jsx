@@ -1188,7 +1188,11 @@ export function ConfigProvider({ children }) {
     const visibleAddons = [];
 
     (selectedAddons || []).forEach(item => {
+      const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
+      const isLoadcell = item.id === "addon-loadcell-tension";
+      const isGrandTotal = item.id === "grand-total-line";
       const isDieRotation = item.id === "die-rotation-addon";
+
       const isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation;
 
       const base = (item.price || 0) * (item.qty || 1);

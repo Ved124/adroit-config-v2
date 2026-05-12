@@ -229,8 +229,7 @@ function CoverPage({ machine, customer }) {
 
     // coverImage: passed as "/images/machines/3layer.png" etc. from buildProposalData()
     // The img tag has onError so broken paths just disappear — placeholder shows instead.
-    // const coverImg = machine?.coverImage || `/images/machines/3layer.png`;
-    const coverImg = `/images/machines/3layer.png`;
+    const coverImg = machine?.coverImage || `/images/machines/3layer.png`;
 
     return (
         <Page>
@@ -252,7 +251,7 @@ function CoverPage({ machine, customer }) {
                     crossOrigin="anonymous"
                     style={{
                         width: "100%",
-                        height: "1100px",
+                        height: "100%",
                         objectFit: "contain",
                         display: "block",
                     }}
@@ -652,7 +651,7 @@ function PerformancePage({ perf }) {
             <div style={{ marginBottom: "10px" }}>
                 <SpecRow label="Product to be made" value={p.product || "High Quality Blown Film"} />
                 <SpecRow label={`Max Output in kg/hr (${p.diameterMm || "die"})
-                                75% LL + 25% LD`} value={p.max_output || "—"} shaded />
+                                80% LL + 20% LD`} value={p.max_output || "—"} shaded />
                 <SpecRow label="Lay-flat Width(mm)" value={p.layflat_width || "—"} />
                 <SpecRow label="Film Thickness Range" value={p.thickness_range || "20 – 150 micron"} shaded />
                 <SpecRow label="Thickness Variation" value={"+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery."} />
@@ -1103,16 +1102,19 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
         const d = String(item.shortDesc || item.description || "").toLowerCase();
         const combined = n + " " + d;
 
-        if (combined.includes("extruder")) return 1;
-        if (combined.includes("die")) return 2;
-        if (combined.includes("air ring")) return 3;
-        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
-        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
-        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 6;
-        if (combined.includes("winder")) return 7;
-        if (combined.includes("tower")) return 8;
-        if (combined.includes("idler")) return 9;
-        if (combined.includes("panel") || combined.includes("control")) return 10;
+        if (n.includes("extruder")) return 1;
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+        if (n.includes("die")) return 3;
+        if (combined.includes("air ring") || combined.includes("airring")) return 4;
+        if (combined.includes("ibc")) return 5;
+        if (n.includes("tower") || n.includes("platform")) return 11;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
+        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
+        if (combined.includes("secondary nip")) return 9;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+        if (combined.includes("idler")) return 8;
+        if (combined.includes("winder")) return 10;
+        
         return 90;
     };
 

@@ -997,7 +997,7 @@ const DEFAULT_DATA = {
       image: null,
       tech_desc: {
         'Type of Winder': 'Two station surface winder with manual changeover.',
-        'Maximum Web Width': 'Up to 900–1125 mm depending on machine model.',
+        'Maximum Web Width': 'Up to 900–1120 mm depending on machine model.',
         'Roll Diameter': 'Up to 700 mm diameter or 400 kg roll weight (whichever is first).',
         'Winder Drive': '1–1.5 HP AC motor with variable frequency drive.',
         'Tension Control': 'Manual brake / torque control with simple mechanical adjustment.',

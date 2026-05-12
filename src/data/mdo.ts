@@ -54,7 +54,7 @@ export const MDO_ADDONS: MDOAddon[] = [
     name: "MDO Unit – Inline (Standard)",
     type: "inline",
     machineTypes: ["aba", "3layer"],
-    usedInModels: ["Innoflex-1125", "Innoflex-1350", "Innoflex-1625"],
+    usedInModels: ["Innoflex-1120", "Innoflex-1350", "Innoflex-1620"],
     image: "/images/addons/mdo/mdo-inline.png",
     cardDesc:
       "Inline MDO unit for ABA / 3-layer lamination and high dart FFS films.",
@@ -82,7 +82,7 @@ export const MDO_ADDONS: MDOAddon[] = [
     name: "MDO Unit – High Output / Wide Web",
     type: "high-output",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["Innoflex-1870", "Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
+    usedInModels: ["Innoflex-1870", "Innoflex-2120", "Innoflex-2370", "Innoflex-2620"],
     image: "/images/addons/mdo/mdo-high-output.png",
     cardDesc:
       "Heavy duty MDO unit for wide web multilayer film, designed for high line speeds.",

@@ -7,7 +7,7 @@ import { ConfigContext } from "../src/ConfigContext";
 import { motion } from "framer-motion";
 import { CORONA_PRICES, CORONA_BRANDS } from "../src/data/corona";
 import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
-import { AIR_CHILLER_PRICES, WATER_CHILLER_PRICES, CHILLER_BRANDS } from "../src/data/chiller";
+import { AIR_CHILLER_PRICES, WATER_CHILLER_PRICES, CHILLER_BRANDS, CONAIR_AIR_CHILLER_PRICES, CONAIR_WATER_CHILLER_PRICES } from "../src/data/chiller";
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
 import { SCREW_SIZES } from "../src/data/bimetallic";
@@ -177,16 +177,43 @@ function AddonCard({
   const isDieRotation = item.id === "die-rotation-addon";
 
   const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isMixerDryer ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : [])))));
-  const prices = isCorona ? CORONA_PRICES : (isWebGuide ? WEB_GUIDE_PRICES : (isAirChiller ? AIR_CHILLER_PRICES : (isWaterChiller ? WATER_CHILLER_PRICES : (isMixerDryer ? MIXER_DRYER_PRICES : (isHeatExchanger ? HEAT_EXCHANGER_PRICES : (isBimetallic ? SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {}) : (isDieRotation ? DIE_ROTATION_PRICES : {})))))));
-
-  // UI customization based on component type
-  const isOutputBased = isMixerDryer || isHeatExchanger;
-  const selectorLabel = isChiller ? "Machine Size" : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller")));
-  const unit = isChiller ? "mm" : ((isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm"));
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
+  const isConAir = selectedBrand === "Con Air";
+
+  const chillerPrices = isAirChiller
+    ? (isConAir ? CONAIR_AIR_CHILLER_PRICES : AIR_CHILLER_PRICES)
+    : (isConAir ? CONAIR_WATER_CHILLER_PRICES : WATER_CHILLER_PRICES);
+
+  let prices = {};
+  if (isCorona) prices = CORONA_PRICES;
+  else if (isWebGuide) prices = WEB_GUIDE_PRICES;
+  else if (isChiller) prices = chillerPrices;
+  else if (isMixerDryer) prices = MIXER_DRYER_PRICES;
+  else if (isHeatExchanger) prices = HEAT_EXCHANGER_PRICES;
+  else if (isBimetallic) {
+    prices = SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {});
+  } else if (isDieRotation) {
+    prices = DIE_ROTATION_PRICES;
+  }
+
+  // UI customization based on component type
+  const isOutputBased = isMixerDryer || isHeatExchanger;
+  const selectorLabel = isChiller ? (isConAir ? "Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller")));
+  const unit = isChiller ? (isConAir ? "" : "mm") : ((isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm"));
+
   const [selectedSize, setSelectedSize] = useState(item.metadata?.size || Object.keys(prices)[0] || "");
+
+  // Reset size if brand changes and current size is invalid
+  useEffect(() => {
+    if (!isSelected && isChiller) {
+      const validSizes = Object.keys(prices);
+      if (!validSizes.includes(selectedSize)) {
+        setSelectedSize(validSizes[0] || "");
+      }
+    }
+  }, [selectedBrand, prices, isChiller, isSelected, selectedSize]);
 
   // Sync if already selected
   useEffect(() => {
@@ -198,7 +225,7 @@ function AddonCard({
 
   // Handle case where brands might change if multiple dynamic items exist
   useEffect(() => {
-    if (!isSelected && item.isDynamic) {
+    if (!isSelected && item.isDynamic && !isChiller) {
       if (item.metadata?.size) {
         setSelectedSize(item.metadata.size);
       } else {
@@ -206,7 +233,7 @@ function AddonCard({
       }
       setSelectedBrand(brands[0] || "Adroit");
     }
-  }, [item.id, item.isDynamic, isSelected, item.metadata?.size]);
+  }, [item.id, item.isDynamic, isSelected, item.metadata?.size, isChiller]);
 
   const currentPrice = item.isDynamic
     ? prices[selectedSize] || 0
@@ -214,44 +241,44 @@ function AddonCard({
 
   const handleAdd = () => {
     if (item.isDynamic) {
-      let customName = `${item.name} (${selectedBrand}) - ${selectedSize}mm`;
+      let customName = `${item.name} (${selectedBrand})`;
 
       if (isCorona) {
-        // Example: Corona Treater Jain Electrotech make - 1350mm
-        customName = `${item.name} ${selectedBrand} make - ${selectedSize}mm`;
+        // Example: Corona Treater Jain Electrotech make
+        customName = `${item.name} ${selectedBrand} make`;
       } else if (isWebGuide) {
         if (selectedBrand === "Adroit") {
-          // Example: Digital Edge Guide Adroit make - 1350mm
-          customName = `Digital Edge Guide Adroit make - ${selectedSize}mm`;
+          // Example: Digital Edge Guide Adroit make
+          customName = `Digital Edge Guide Adroit make`;
         } else {
-          // Example: E+L Web Guide - 1350mm
-          customName = `E+L Web Guide - ${selectedSize}mm`;
+          // Example: E+L Web Guide
+          customName = `E+L Web Guide`;
         }
       } else if (isChiller) {
-        // Example: Air Cooled Air Chiller Prasad make - 1125mm
-        customName = `${item.name} ${selectedBrand} make - ${selectedSize}mm`;
+        // Example: Air Cooled Air Chiller Prasad make
+        customName = `${item.name} ${selectedBrand} make`;
       } else if (isMixerDryer) {
-        // Example: Vertical Granule Mixer with Dryer Adroit make - 300 kg/hr
-        customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;
+        // Example: Vertical Granule Mixer with Dryer Adroit make
+        customName = `${item.name} ${selectedBrand} make`;
       } else if (isHeatExchanger) {
-        // Example: Heat Exchanger Adroit make - 150 kg
-        customName = `${item.name} ${selectedBrand} make - ${selectedSize} kg`;
+        // Example: Heat Exchanger Adroit make
+        customName = `${item.name} ${selectedBrand} make`;
       } else if (isBimetallic) {
-        // Example: Bi-metallic Screw Barrel for Ext-1 - 45mm
-        customName = `${item.name.split(' (')[0]} - ${selectedSize}mm`;
+        // Example: Bi-metallic Screw Barrel Upgrade
+        customName = `${item.name.split(' (')[0]}`;
       } else if (isDieRotation) {
-        // Example: Die Rotation System for 225 mm Die
-        customName = `Die Rotation System for ${selectedSize} mm Die`;
+        // Example: Die Rotation System
+        customName = `Die Rotation System`;
       }
 
       addAddon(category, item, {
-        brand: isDieRotation ? undefined : selectedBrand,
+        brand: (isDieRotation || isBimetallic) ? undefined : selectedBrand,
         size: selectedSize,
         price: currentPrice,
         customName: customName,
         techDesc: {
           ...item.techDesc,
-          ...(isDieRotation ? {} : { "Brand": selectedBrand }),
+          ...((isDieRotation || isBimetallic) ? {} : { "Brand": selectedBrand }),
           [selectorLabel]: `${selectedSize} ${unit}`,
         }
       });
@@ -300,7 +327,7 @@ function AddonCard({
       {/* Dynamic Selectors */}
       {item.isDynamic && (
         <div className="mt-4 grid grid-cols-2 gap-2 p-2 bg-slate-50 rounded-lg border border-slate-100">
-          {!isDieRotation && (
+          {!isDieRotation && !isBimetallic && (
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
               <select
@@ -313,7 +340,7 @@ function AddonCard({
               </select>
             </div>
           )}
-          <div className={`flex flex-col gap-1 ${isDieRotation ? "col-span-2" : ""}`}>
+          <div className={`flex flex-col gap-1 ${(isDieRotation || isBimetallic) ? "col-span-2" : ""}`}>
             <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
             <select
               disabled={isSelected}

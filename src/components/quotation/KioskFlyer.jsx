@@ -48,7 +48,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
         <div ref={ref} id="kiosk-flyer-root" style={{
             width: "210mm", height: "296mm",
             background: "white",
-            color: C.DARK, 
+            color: C.DARK,
             fontFamily: '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
             position: "relative", overflow: "hidden", margin: 0, padding: 0
         }}>
@@ -79,13 +79,13 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
             }}>
 
                 {/* HERO SECTION - Professional Callout Box */}
-                <div style={{ 
+                <div style={{
                     background: "rgba(248, 250, 252, 0.9)", // slightly transparent slate-50
                     borderLeft: `4px solid ${C.RED}`,
-                    padding: "12px 18px", 
-                    display: "flex", 
-                    marginBottom: "15px", 
-                    alignItems: "center", 
+                    padding: "12px 18px",
+                    display: "flex",
+                    marginBottom: "15px",
+                    alignItems: "center",
                     flexShrink: 0,
                     boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
                 }}>
@@ -126,14 +126,14 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     {(() => {
                         const sosLimit = 14;
                         const sosItems = topItems.slice(0, sosLimit);
-                        const addonItems = optionals; 
-                        
+                        const addonItems = optionals;
+
                         // Assume SOS items take 2 lines on average due to text wrapping
                         const estimatedLines = (sosItems.length * 1.8) + (addonItems.length > 0 ? addonItems.length + 1 : 0);
                         const scale = estimatedLines > 30 ? Math.max(0.6, 1 - (estimatedLines - 30) * 0.02) : 1;
-                        
+
                         const fSizeSOS = `${11 * scale}px`;
-                        const fSizeAddons = `${10 * scale}px`; 
+                        const fSizeAddons = `${10 * scale}px`;
                         const padSOS = `${4 * scale}px 0`;
                         const padAddon = `${4 * scale}px 8px`;
                         const gap = `${8 * scale}px`;
@@ -163,7 +163,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                             {scope.length > sosLimit && <tr><td style={{ textAlign: "center", padding: "8px", fontSize: "10px", color: C.MUTED, fontStyle: "italic" }}>... additional components included in the standard specification ...</td></tr>}
                                         </tbody>
                                     </table>
-                                </div>
+                                </div><br />
 
                                 <div style={{ height: gap, flexShrink: 0 }} />
 
@@ -212,15 +212,34 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     justifyContent: "space-between",
                     alignItems: "flex-end",
                 }}>
-                    <div style={{ fontSize: "9.5px", color: C.MUTED, maxWidth: "60%", lineHeight: 1.6 }}>
+                    <div style={{ fontSize: "8.5px", color: C.MUTED, maxWidth: "60%", lineHeight: 1.6 }}>
                         <strong style={{ color: C.DARK, fontWeight: "800" }}>TERMS:</strong> Ex-Works Ahmedabad. Taxes extra as applicable. <br />
                         <strong style={{ color: C.DARK, fontWeight: "800" }}>OFFER:</strong> Budgetary Proposal. Validity: 30 Days.
                     </div>
                     <div style={{ textAlign: "right" }}>
-                        <span style={{ fontSize: "9px", fontWeight: "800", color: C.MUTED, textTransform: "uppercase", letterSpacing: "0.06em" }}>Basic Machine Price ({pricing.currency || 'INR'})</span>
-                        <div style={{ fontSize: "28px", fontWeight: "950", color: C.RED, lineHeight: 1, marginTop: "2px", letterSpacing: "-0.03em" }}>
-                            {pricing.final_price_text || formatCurrency(pricing.afterDiscount)}
-                        </div>
+                        {pricing.basicPrice && pricing.finalPrice && String(pricing.basicPrice).replace(/[^0-9]/g, '') !== String(pricing.finalPrice).replace(/[^0-9]/g, '') ? (
+                            <div style={{ display: "flex", alignItems: "flex-end", gap: "10px" }}>
+                                <div style={{ textAlign: "right" }}>
+                                    <span style={{ fontSize: "6.5px", fontWeight: "800", color: C.MUTED, textTransform: "uppercase", letterSpacing: "0.05em" }}>Basic Price</span>
+                                    <div style={{ fontSize: "11px", fontWeight: "700", color: C.SLATE, lineHeight: 1, marginTop: "1px", textDecoration: "line-through", opacity: 0.8 }}>
+                                        {pricing.basicPrice}
+                                    </div>
+                                </div>
+                                <div style={{ textAlign: "right" }}>
+                                    <span style={{ fontSize: "7.5px", fontWeight: "900", color: C.RED, textTransform: "uppercase", letterSpacing: "0.06em" }}>Final Price ({pricing.currency || 'INR'})</span>
+                                    <div style={{ fontSize: "18px", fontWeight: "950", color: C.RED, lineHeight: 1, marginTop: "1px", letterSpacing: "-0.02em" }}>
+                                        {pricing.finalPrice}
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div>
+                                <span style={{ fontSize: "7.5px", fontWeight: "900", color: C.RED, textTransform: "uppercase", letterSpacing: "0.06em" }}>Machine Price ({pricing.currency || 'INR'})</span>
+                                <div style={{ fontSize: "20px", fontWeight: "950", color: C.RED, lineHeight: 1, marginTop: "2px", letterSpacing: "-0.03em" }}>
+                                    {pricing.finalPrice || pricing.final_price_text || formatCurrency(pricing.afterDiscount, pricing.currency)}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

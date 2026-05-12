@@ -17,13 +17,13 @@ export type PresetConfig = {
 /**
  * MODEL_PRESETS:
  * Keys must match the label / code you set when selecting a model
- * (e.g. "INNOFLEX-1125").
+ * (e.g. "INNOFLEX-1120").
  */
 export const MODEL_PRESETS: Record<string, PresetConfig> = {
   // ---------------------------------------------------------
-  // Innoflex 3 Layer – INNOFLEX-1125
+  // Innoflex 3 Layer – INNOFLEX-1120
   // ---------------------------------------------------------
-  "INNOFLEX-1125": {
+  "INNOFLEX-1120": {
     machineType: "3layer",
     basePrice: 6125000,
     components: [
@@ -41,8 +41,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1000",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1125 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1125 mm" }
+          customName: "Motorised Bubble Cage - 1120 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1120 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -68,11 +68,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1000",
           price: 1100000,
-          customName: "MAIN NIP - 1125 mm",
+          customName: "MAIN NIP - 1120 mm",
           scopeDesc: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1125 mm",
+            "Nip roller width": "1120 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
             "Idler rollers": "Adequate quantity as per layout.",
@@ -86,7 +86,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1000",
           price: 1000000,
-          customName: "TOWER / PLATFORM - 1125 mm",
+          customName: "TOWER / PLATFORM - 1120 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
@@ -103,7 +103,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Addons", id: "die-rotation-addon", qty: 1, metadata: { price: 0 } },
     ],
   },
-  "INNOFLEX-1375 DR": {
+  "INNOFLEX-1370 DR": {
     machineType: "3layer",
     basePrice: 6750000,
     components: [
@@ -114,8 +114,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1375 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1375 mm" }
+          customName: "Motorised Bubble Cage - 1370 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -137,11 +137,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "MAIN NIP - 1375 mm",
+          customName: "MAIN NIP - 1370 mm",
           scopeDesc: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1375 mm",
+            "Nip roller width": "1370 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers.",
             "Idler rollers": "Adequate quantity as per layout.",
@@ -155,7 +155,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "TOWER / PLATFORM - 1375 mm",
+          customName: "TOWER / PLATFORM - 1370 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
@@ -169,7 +169,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Die Addons", id: "die-rotation-addon", qty: 1, metadata: { price: 0 } },
     ],
   },
-  "INNOFLEX-1375 HO": {
+  "INNOFLEX-1370 HO": {
     machineType: "3layer",
     basePrice: 7875000,
     components: [
@@ -180,8 +180,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1375 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1375 mm" }
+          customName: "Motorised Bubble Cage - 1370 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -203,11 +203,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "HORIZONTAL HAULOFF - 1375 mm",
+          customName: "HORIZONTAL HAULOFF - 1370 mm",
           techDesc: {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1375 mm",
+            "Nip roller width": "1370 mm",
             "Collapsing Frames": "PBT rollers.",
             "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
@@ -220,7 +220,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "TOWER / PLATFORM - 1375 mm",
+          customName: "TOWER / PLATFORM - 1370 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
@@ -233,7 +233,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1375-170": {
+  "INNOFLEX-1370-170": {
     machineType: "3layer",
     basePrice: 8551000,
     components: [
@@ -258,8 +258,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1375 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1375 mm" }
+          customName: "Motorised Bubble Cage - 1370 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -270,11 +270,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "HORIZONTAL HAULOFF - 1375 mm",
+          customName: "HORIZONTAL HAULOFF - 1370 mm",
           techDesc: {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1375 mm",
+            "Nip roller width": "1370 mm",
             "Collapsing Frames": "PBT rollers.",
             "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
@@ -287,7 +287,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "TOWER / PLATFORM - 1375 mm",
+          customName: "TOWER / PLATFORM - 1370 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
@@ -300,7 +300,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1375-180": {
+  "INNOFLEX-1370-180": {
     machineType: "3layer",
     basePrice: 8850000,
     components: [
@@ -324,8 +324,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1375 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1375 mm" }
+          customName: "Motorised Bubble Cage - 1370 mm",
+          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -336,11 +336,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "HORIZONTAL HAULOFF - 1375 mm",
+          customName: "HORIZONTAL HAULOFF - 1370 mm",
           techDesc: {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1375 mm",
+            "Nip roller width": "1370 mm",
             "Collapsing Frames": "PBT rollers.",
             "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
           }
@@ -353,7 +353,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1350",
           price: 1150000,
-          customName: "TOWER / PLATFORM - 1375 mm",
+          customName: "TOWER / PLATFORM - 1370 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
@@ -422,7 +422,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1625": {
+  "INNOFLEX-1620": {
     machineType: "3layer",
     basePrice: 10671000,
     components: [
@@ -449,7 +449,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1750",
           price: 1400000,
-          customName: "HORIZONTAL HAULOFF - 1625 mm",
+          customName: "HORIZONTAL HAULOFF - 1620 mm",
           techDesc: {
             "Oscillation": "360 degree oscillating mechanism."
           }
@@ -462,7 +462,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1750",
           price: 1500000,
-          customName: "TOWER / PLATFORM - 1625 mm",
+          customName: "TOWER / PLATFORM - 1620 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
         }
       },
@@ -643,9 +643,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-2125": {
+  "INNOFLEX-2120": {
     machineType: "3layer",
-    basePrice: 13750000,
+    basePrice: 13700000,
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-450", qty: 1 },
@@ -669,7 +669,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "2250",
           price: 2500000,
-          customName: "HORIZONTAL HAULOFF - 2125 mm",
+          customName: "HORIZONTAL HAULOFF - 2120 mm",
           techDesc: {
             "Oscillation": "360 degree oscillating mechanism."
           }
@@ -680,9 +680,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "tower-dynamic",
         qty: 1,
         metadata: {
-          size: "2125",
+          size: "2120",
           price: 2000000,
-          customName: "TOWER / PLATFORM - 2125 mm",
+          customName: "TOWER / PLATFORM - 2120 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "4-walk around platforms." }
         }
       },
@@ -748,7 +748,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-2650": {
+  "INNOFLEX-2620": {
     machineType: "3layer",
     basePrice: 21575000,
     components: [
@@ -775,9 +775,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "2750",
           price: 3200000,
-          customName: "HORIZONTAL HAULOFF - 2650 mm",
+          customName: "HORIZONTAL HAULOFF - 2620 mm",
           techDesc: {
-            "Hauloff Size": "2650 mm",
+            "Hauloff Size": "2620 mm",
             "Oscillation": "360 degree oscillating mechanism."
           }
         }
@@ -787,9 +787,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "tower-dynamic",
         qty: 1,
         metadata: {
-          size: "2650",
-          price: 2650000,
-          customName: "TOWER / PLATFORM - 2650 mm",
+          size: "2620",
+          price: 2620000,
+          customName: "TOWER / PLATFORM - 2620 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "4-walk around platforms." }
         }
       },
@@ -1552,7 +1552,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
     ],
   },
-  "INNOFLEX-1975 IBC": {
+  "INNOFLEX-1970 IBC": {
     machineType: "3layer",
     basePrice: 20850000,
     components: [
@@ -1576,25 +1576,25 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
-          size: "1975",
+          size: "1970",
           price: 1750000,
-          customName: "HORIZONTAL HAULOFF - 1975 mm",
+          customName: "HORIZONTAL HAULOFF - 1970 mm",
           techDesc: { "Line Speed": "80 MPM" }
         }
       },
-      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1975", price: 1750000 } },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1970", price: 1750000 } },
       {
         category: "Bubble Cage",
         id: "bc-up-down-dynamic",
         qty: 1,
         metadata: {
-          size: "1975",
+          size: "1970",
           price: 725000,
-          customName: "Motorised Bubble Cage - 1975 mm",
+          customName: "Motorised Bubble Cage - 1970 mm",
           techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
-      { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "1975", price: 3400000 } },
+      { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "1970", price: 3400000 } },
       { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [
@@ -1602,7 +1602,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
     ],
   },
-  "INNOFLEX-2125 IBC": {
+  "INNOFLEX-2120 IBC": {
     machineType: "3layer",
     basePrice: 22751000,
     components: [
@@ -1626,25 +1626,25 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
-          size: "2125",
+          size: "2120",
           price: 2500000,
-          customName: "HORIZONTAL HAULOFF - 2125 mm",
+          customName: "HORIZONTAL HAULOFF - 2120 mm",
           techDesc: { "Line Speed": "80 MPM" }
         }
       },
-      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2125", price: 2000000 } },
+      { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2120", price: 2000000 } },
       {
         category: "Bubble Cage",
         id: "bc-up-down-dynamic",
         qty: 1,
         metadata: {
-          size: "2125",
+          size: "2120",
           price: 800000,
-          customName: "Motorised Bubble Cage - 2125 mm",
+          customName: "Motorised Bubble Cage - 2120 mm",
           techDesc: { "Type": "Motorized Up-Down & Open-Close" }
         }
       },
-      { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2125", price: 4000000 } },
+      { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2120", price: 4000000 } },
       { category: "Trim Blower", id: "trim-blower-heavy", qty: 1, metadata: { price: 0 } },
     ],
     addons: [

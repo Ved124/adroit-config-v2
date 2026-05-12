@@ -55,7 +55,7 @@ export const ABA_MODELS = [
 
   //   dieHeaterKw: "6.7/8.8",
   //   airRingBlowerKw: "5",
-  //   nipRollSizeMm: 1125,
+  //   nipRollSizeMm: 1120,
 
   //   mainNipLineSpeed: "10–60 MPM",
   //   mainNipKw: "1.12",

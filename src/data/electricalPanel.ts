@@ -23,15 +23,15 @@ export interface ElectricalAddon {
 }
 
 export const PANEL_3LAYER_PRICES: Record<string, number> = {
-  "1125": 1100000,
+  "1120": 1100000,
   "1350": 1350000,
   "1450": 1450000,
-  "1625": 1650000,
+  "1620": 1650000,
   "1870": 1870000,
   "1970": 1970000,
-  "2125": 2125000,
+  "2120": 2120000,
   "2370": 2370000,
-  "2650": 2650000,
+  "2620": 2620000,
 };
 
 export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
@@ -70,7 +70,7 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     name: "AC Drive Control Panel – Standard",
     type: "ac-drive-panel",
     machineTypes: ["aba", "3layer"],
-    usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "Innoflex-1125", "Innoflex-1350"],
+    usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "Innoflex-1120", "Innoflex-1350"],
     image: "/images/addons/electrical/panel-acdrive.png",
     cardDesc:
       "Central AC drive panel with coordinated speed reference for co-ex lines.",
@@ -99,7 +99,7 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     name: "PLC + HMI Control Panel",
     type: "plc-hmi",
     machineTypes: ["aba", "3layer"],
-    usedInModels: ["Innoflex-1350", "Innoflex-1625", "Innoflex-1870"],
+    usedInModels: ["Innoflex-1350", "Innoflex-1620", "Innoflex-1870"],
     image: "/images/addons/electrical/panel-plc-hmi.png",
     cardDesc:
       "PLC based automation panel with touch screen HMI for recipe and line control.",
@@ -128,7 +128,7 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     name: "Advanced PLC + Drive Panel",
     type: "advanced-plc",
     machineTypes: ["3layer", "5layer"],
-    usedInModels: ["Innoflex-2125", "Innoflex-2370", "Innoflex-2625"],
+    usedInModels: ["Innoflex-2120", "Innoflex-2370", "Innoflex-2620"],
     image: "/images/addons/electrical/panel-advanced.png",
     cardDesc:
       "High-end PLC/drive panel for wide web industrial blown film lines with full integration.",

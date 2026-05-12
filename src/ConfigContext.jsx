@@ -553,13 +553,14 @@ export function ConfigProvider({ children }) {
 
     let machineWidth = 0;
     if (rollerNum > 0) {
+      const diff = (rollerNum === 1450) ? 100 : 120;
       if (isMonoOrAba) {
         setCustomRollerWidth(`${rollerNum} inch`);
         machineWidth = modelObj?.layflatWidthMm || modelObj?.widthMm || (rollerNum * 25);
         setCustomLayflat(`${machineWidth} mm`);
       } else {
         setCustomRollerWidth(`${rollerNum} mm`);
-        machineWidth = rollerNum - 125;
+        machineWidth = rollerNum - diff;
         setCustomLayflat(`${machineWidth} mm`);
       }
       
@@ -604,8 +605,9 @@ export function ConfigProvider({ children }) {
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1];
           
+          const diff = (rollerNum === 1450) ? 100 : 120;
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
-          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - 125) : chosenSize;
+          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
           const minRange = Math.round((maxFilmWidth * minRatio) / 10) * 10;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
@@ -667,7 +669,7 @@ export function ConfigProvider({ children }) {
             techDesc: {
               ...(dynamicHauloffItem.techDesc || {}), // Start with base data
               ...(item.techDesc || {}), // Overlay existing overrides
-              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + 125} mm`,
+              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
               "Nip roller drive": `${hp} AC motor with variable frequency drive.`
             }
           };
@@ -702,7 +704,7 @@ export function ConfigProvider({ children }) {
               ...(item.techDesc || {}),
               "Tower Size": `${displaySize} mm`,
               "Staircase": "Staircase with hand rails.",
-              "Idler rollers": `Set of idler aluminium rollers of ${(rollerNum > 500) ? rollerNum : (chosenSize + 125)} mm face width.`,
+              "Idler rollers": `Set of idler aluminium rollers of ${(rollerNum > 500) ? rollerNum : (chosenSize + ((rollerNum === 1450) ? 100 : 120))} mm face width.`,
             }
           };
         }
@@ -744,8 +746,9 @@ export function ConfigProvider({ children }) {
           if (chosenSize >= 1500 && chosenSize <= 2000) nipHP = "3 HP";
           else if (chosenSize > 2000) nipHP = "5 HP";
 
+          const diff = (rollerNum === 1450) ? 100 : 120;
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
-          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - 125) : chosenSize;
+          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
 
           // Update item properties
           nextSelected[index] = {
@@ -757,7 +760,7 @@ export function ConfigProvider({ children }) {
             techDesc: {
               ...(dynamicWinderItem.techDesc || {}),
               ...(item.techDesc || {}),
-              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + 125} mm`,
+              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
               "Nip roller drive": `${nipHP} AC motor with variable frequency drive.`,
               "Surface winder drive": `${nipHP} AC motor with variable frequency drive.`,
               [stationLabel]: `Maximum web width of ${maxFilmWidth} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
@@ -781,8 +784,9 @@ export function ConfigProvider({ children }) {
           const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
           const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
 
+          const diff = (rollerNum === 1450) ? 100 : 120;
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
-          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - 125) : chosenSize;
+          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
 
           // Update item properties
           nextSelected[index] = {
@@ -1461,17 +1465,31 @@ export function ConfigProvider({ children }) {
         { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
       ].filter(Boolean);
 
-      const SORT_ORDER = ["extruder", "die", "air ring", "basket", "cage", "haul", "idler", "nip", "winder", "tower", "panel", "control"];
-      const getIdx = (name) => {
-        const n = name.toLowerCase();
-        for (let i = 0; i < SORT_ORDER.length; i++) if (n.includes(SORT_ORDER[i])) return i;
-        return 99;
+      const getIdx = (item) => {
+        const n = String(item.name || "").toLowerCase();
+        const d = String(item.desc || item.description || "").toLowerCase();
+        const combined = n + " " + d;
+
+        if (n.includes("extruder")) return 1;
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+        if (n.includes("die")) return 3;
+        if (combined.includes("air ring") || combined.includes("airring")) return 4;
+        if (combined.includes("ibc")) return 5;
+        if (n.includes("tower") || n.includes("platform")) return 11;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
+        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
+        if (combined.includes("secondary nip")) return 9;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+        if (combined.includes("idler")) return 8;
+        if (combined.includes("winder")) return 10;
+        
+        return 90;
       };
 
       const manualExtraDesc = (overrides["manual_extra"] || "").trim();
       const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
       
-      const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a.name) - getIdx(b.name));
+      const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a) - getIdx(b));
       const finalScope = [...sortedScope, ...manualExtra].map(item => ({ ...item, description: item.desc }));
 
       return {
@@ -1514,6 +1532,9 @@ export function ConfigProvider({ children }) {
           };
         }),
         pricing: {
+          basicPrice: fmtPriceFull(withMarkup, currency),
+          finalPrice: fmtPriceFull(afterDiscount, currency),
+          discountAmount: Number(discount) || 0,
           basic_price_text: fmtPriceFull(withMarkup, currency),
           afterDiscount: afterDiscount,
           final_price_text: fmtPriceFull(afterDiscount, currency),
@@ -2497,11 +2518,27 @@ export function ConfigProvider({ children }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ pdfBase64: base64data, fullContextData: payload })
           });
-          const json = await res.json();
-          if (json.url) {
-            toast.dismiss(loadingToast);
-            if (setQrUrlState) setQrUrlState(json.url);
+
+          const data = await res.json();
+          
+          // Construct the Landing Page URL
+          // IMPORTANT: We extract the origin from data.url (the PDF link) because 
+          // the server has already calculated the correct network IP (e.g., 192.168.x.x).
+          // Using window.location.origin would incorrectly use "localhost" on the laptop.
+          const pdfUrl = data.url;
+          let origin = window.location.origin;
+          try {
+            const urlObj = new URL(pdfUrl);
+            origin = urlObj.origin;
+          } catch (e) {
+            console.error("URL parsing failed, falling back to window origin", e);
           }
+
+          const landingPageUrl = origin + "/proposal?pdf=" + encodeURIComponent(pdfUrl) + "&name=" + encodeURIComponent(robustData.customer.company || "Visitor");
+          
+          setQrUrlState(landingPageUrl);
+          toast.dismiss(loadingToast);
+
         } catch (e) { console.error(e); }
         finally {
           setTimeout(() => {

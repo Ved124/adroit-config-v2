@@ -135,7 +135,7 @@ export const MONO_MODELS = [
   //   airRingBlowerKw: "5",
 
   //   nipRollSizeMm: 1370,
-  //   nipRollSizeText: "1370 / 1625 mm",
+  //   nipRollSizeText: "1370 / 1620 mm",
 
   //   lineSpeed: "6–60 MPM",
   //   mainNipKw: "1.5",
@@ -206,7 +206,7 @@ export const MONO_MODELS = [
   //   dieHeaterKw: "18.7",
   //   airRingBlowerKw: "10",
 
-  //   nipRollSizeMm: 2650,
+  //   nipRollSizeMm: 2620,
   //   lineSpeed: "6–70 MPM",
   //   mainNipKw: "3",
 

@@ -15,7 +15,7 @@ export interface WinderAddon {
 export const WINDER_ADDONS: WinderAddon[] = [
   {
     id: "addon-loadcell-tension",
-    name: "Automatic Tension Control with Loadcell",
+    name: "Loadcell upgrade",
     category: "Winder Addons",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     image: "/images/winder/loadcell.png",

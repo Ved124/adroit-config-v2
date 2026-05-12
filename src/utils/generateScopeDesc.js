@@ -299,7 +299,7 @@ function generateCollapsingFrame(item) {
 }
 
 /**
- * MAIN NIP — for Die Rotation models (1125 DR, 1350 DR) which have no oscillating haul-off.
+ * MAIN NIP — for Die Rotation models (1120 DR, 1350 DR) which have no oscillating haul-off.
  * Produces: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with X HP AC Drive."
  */
 function generateMainNip(item) {

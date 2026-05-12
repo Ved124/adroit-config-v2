@@ -19,7 +19,7 @@ export const IBC_COMPONENTS: IBCSystem[] = [
     id: "ibc-system",
     name: "IBC System",
     machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["Innoflex-1625", "Innoflex-1870"],
+    usedInModels: ["Innoflex-1620", "Innoflex-1870"],
     image: "/images/parts/ibc_std.png",
     cardDesc: "Internal bubble cooling system with complete control.",
     price: 3000000,

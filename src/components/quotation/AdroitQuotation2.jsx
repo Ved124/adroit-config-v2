@@ -1207,16 +1207,19 @@ export const AdroitQuotation2 = memo(
         const d = String(item.shortDesc || item.description || "").toLowerCase();
         const combined = n + " " + d;
 
-        if (combined.includes("extruder")) return 1;
-        if (combined.includes("die")) return 2;
-        if (combined.includes("air ring")) return 3;
-        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
-        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
-        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 6;
-        if (combined.includes("winder")) return 7;
-        if (combined.includes("tower")) return 8;
-        if (combined.includes("idler")) return 9;
-        if (combined.includes("panel") || combined.includes("control")) return 10;
+        if (n.includes("extruder")) return 1;
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+        if (n.includes("die")) return 3;
+        if (combined.includes("air ring") || combined.includes("airring")) return 4;
+        if (combined.includes("ibc")) return 5;
+        if (n.includes("tower") || n.includes("platform")) return 11;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
+        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
+        if (combined.includes("secondary nip")) return 9;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+        if (combined.includes("idler")) return 8;
+        if (combined.includes("winder")) return 10;
+        
         return 90;
     };
 

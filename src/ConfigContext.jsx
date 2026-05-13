@@ -2522,16 +2522,29 @@ export function ConfigProvider({ children }) {
           const data = await res.json();
           
           // Construct the Landing Page URL
-          // IMPORTANT: We extract the origin from data.url (the PDF link) because 
-          // the server has already calculated the correct network IP (e.g., 192.168.x.x).
-          // Using window.location.origin would incorrectly use "localhost" on the laptop.
           const pdfUrl = data.url;
           let origin = window.location.origin;
-          try {
-            const urlObj = new URL(pdfUrl);
-            origin = urlObj.origin;
-          } catch (e) {
-            console.error("URL parsing failed, falling back to window origin", e);
+
+          // LOGIC:
+          // 1. If we are on Vercel (Cloud Mode), we MUST use window.location.origin 
+          //    because that is where the /proposal page is hosted. 
+          //    The pdfUrl origin (vercel-storage.com) does NOT host pages.
+          // 2. If we are in Local Mode (Offline WiFi), the pdfUrl origin is the laptop's IP.
+          //    In this case, window.location.origin might be "localhost", so we 
+          //    prefer the IP from pdfUrl so phones can connect.
+          
+          const isVercelBlob = pdfUrl.includes("vercel-storage.com");
+          
+          if (!isVercelBlob) {
+            try {
+              const urlObj = new URL(pdfUrl);
+              // Only use PDF origin if it's an IP address or not localhost
+              if (urlObj.hostname !== "localhost") {
+                origin = urlObj.origin;
+              }
+            } catch (e) {
+              console.error("URL parsing failed", e);
+            }
           }
 
           const landingPageUrl = origin + "/proposal?pdf=" + encodeURIComponent(pdfUrl) + "&name=" + encodeURIComponent(robustData.customer.company || "Visitor");

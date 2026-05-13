@@ -475,7 +475,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
-  "INNOFLEX-1870-290": {
+  "INNOFLEX-1870-250": {
     machineType: "3layer",
     basePrice: 11645000,
     components: [

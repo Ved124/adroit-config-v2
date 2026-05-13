@@ -54,11 +54,20 @@ export const CONAIR_AIR_CHILLER_PRICES: { [key: string]: number } = {
   "9 TR": 803450,
   "12 TR": 965785,
   "16 TR": 1204250,
+  "23 TR": 1516805,
+  "28 TR": 1857960,
 };
 
 export const CONAIR_WATER_CHILLER_PRICES: { [key: string]: number } = {
   "3 TR": 365690,
   "5 TR": 417565,
+  "8 TR": 536395,
+  "9 TR": 636285,
+  "10.5 TR": 731445,
+  "12 TR": 842700,
+  "13.5 TR": 885310,
+  "18 TR": 1083200,
+  "22 TR": 1203975,
 };
 
 export const CHILLER_ADDONS: ChillerAddon[] = [

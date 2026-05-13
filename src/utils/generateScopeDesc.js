@@ -159,11 +159,16 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
   const driveStr = driveList.some(d => d && d !== "?") ? driveList.join("/") : "";
 
   // Screen changer
+  const isLeverUpgrade = (selectedAddons || []).some(a => a.id === "addon-lever-screen-changer");
   const scRaw =
     td(firstItem, "screen changer") ||
     td(firstItem, "screen") ||
     "Candle type";
-  const scType = scRaw.split(",")[0].trim(); // e.g. "Candle type"
+  
+  let scType = scRaw.split(",")[0].trim(); // e.g. "Candle type"
+  if (isLeverUpgrade) {
+    scType = "Lever type";
+  }
 
   let desc =
     `${qtyWord} No${plural ? "s" : ""}. Extruder${plural ? "s" : ""}` +

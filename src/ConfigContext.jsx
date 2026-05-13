@@ -28,6 +28,7 @@ import { MATERIAL_HANDLING_ADDONS } from "../src/data/materialHandling";
 import { GAUGE_ADDONS } from "./data/gauge";
 import { WEB_GUIDE_ADDONS } from "./data/webGuide";
 import { CHILLER_ADDONS } from "./data/chiller";
+import { EXTRUDER_ADDONS } from "./data/extruderAddons";
 import { HEAT_EXCHANGER_ADDONS } from "./data/heatExchanger";
 import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
@@ -1079,8 +1080,18 @@ export function ConfigProvider({ children }) {
       }
     }
 
-    // --- DYNAMIC PER-EXTRUDER BIMETALLIC ADDONS ---
+    // --- DYNAMIC PER-EXTRUDER BIMETALLIC ADDONS + STATIC EXTRUDER ADDONS ---
     const extAddons = [];
+    
+    // Add static upgrades (like Lever Screen Changer)
+    if (EXTRUDER_ADDONS && EXTRUDER_ADDONS.length > 0) {
+      EXTRUDER_ADDONS.forEach(addon => {
+        if (!addon.supportedTypes || addon.supportedTypes.includes(machineType)) {
+          extAddons.push(addon);
+        }
+      });
+    }
+
     const selectedExtruders = (selected || []).filter(s => 
       s.category === "Extruder" || 
       (s.name || "").toLowerCase().includes("extruder") ||
@@ -1129,22 +1140,51 @@ export function ConfigProvider({ children }) {
     return out;
   }, [addons, machineType, selectedAddons, selected]);
 
-  // Conditional logic to inject "Die Rotation" statement into Die Head description
+  // Conditional logic for dynamic techDesc updates (Die Rotation, Screen Changer, etc.)
   const processedSelected = useMemo(() => {
     const isDieRotationSelected = selectedAddons.some(a => a.id === "die-rotation-addon");
+    const isLeverScreenChanger = selectedAddons.some(a => a.id === "addon-lever-screen-changer");
     
     return selected.map(item => {
-      if (item.category === "Die Head" && isDieRotationSelected) {
-        return {
-          ...item,
+      let updatedItem = { ...item };
+      const category = (item.category || "").toLowerCase();
+
+      // 1. Die Rotation Update
+      if (category.includes("die") && isDieRotationSelected) {
+        updatedItem = {
+          ...updatedItem,
           isRotationSelected: true,
           techDesc: {
-            ...item.techDesc,
+            ...updatedItem.techDesc,
             "Die Rotation": "Provided"
           }
         };
       }
-      return item;
+
+      // 2. Lever Screen Changer Update
+      if (category.includes("extruder") && isLeverScreenChanger) {
+        const currentSC = (updatedItem.techDesc || {})["Screen changer"] || (updatedItem.techDesc || {})["Screen Changer"] || "";
+        if (currentSC.toLowerCase().includes("candle")) {
+          updatedItem = {
+            ...updatedItem,
+            techDesc: {
+              ...updatedItem.techDesc,
+              "Screen changer": currentSC.replace(/candle/i, "Lever")
+            }
+          };
+        } else if (!currentSC) {
+          // Fallback if key missing
+          updatedItem = {
+            ...updatedItem,
+            techDesc: {
+              ...updatedItem.techDesc,
+              "Screen changer": "Lever type Manual Screen Changer"
+            }
+          };
+        }
+      }
+
+      return updatedItem;
     });
   }, [selected, selectedAddons]);
 
@@ -1196,8 +1236,9 @@ export function ConfigProvider({ children }) {
       const isLoadcell = item.id === "addon-loadcell-tension";
       const isGrandTotal = item.id === "grand-total-line";
       const isDieRotation = item.id === "die-rotation-addon";
+      const isLeverScreenChanger = item.id === "addon-lever-screen-changer";
 
-      const isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation;
+      const isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation || isLeverScreenChanger;
 
       const base = (item.price || 0) * (item.qty || 1);
       const m = item.markup || 0;
@@ -1362,11 +1403,10 @@ export function ConfigProvider({ children }) {
     const machineDetails = getMachineDetails(safeCustomer, machineType) || {};
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
-      // --- SCOPE OF SUPPLY (PROPOSAL STYLE) ---
       const overrides = scopeOverrides || {};
       let hasExtruder = false;
 
-      const selectedScopeItems = (selected || [])
+      const selectedScopeItems = (processedSelected || [])
         .filter(item => item && item.name)
         .flatMap(item => {
           const c = (item.category || "").toLowerCase();
@@ -1518,7 +1558,7 @@ export function ConfigProvider({ children }) {
         },
         machine_details: machineDetails,
         scope: finalScope,
-        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension" && a.id !== "grand-total-line" && a.id !== "die-rotation-addon").map((a, idx) => {
+        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension" && a.id !== "grand-total-line" && a.id !== "die-rotation-addon" && a.id !== "addon-lever-screen-changer").map((a, idx) => {
           const rawPrice = (a.price || 0) * (a.qty || 1);
           const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
           return {

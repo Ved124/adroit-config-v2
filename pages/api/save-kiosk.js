@@ -67,12 +67,15 @@ export default async function handler(req, res) {
 
     if (BLOB_TOKEN && VERCEL_ENV) {
       // === CLOUD MODE ===
-      const blob = await put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' });
-      await put(`data/${jsonName}`, jsonString, { 
-        access: 'public', 
-        contentType: 'application/octet-stream',
-        contentDisposition: `attachment; filename="${jsonName}"`
-      });
+      // Speed up by parallelizing the two uploads
+      const [blob] = await Promise.all([
+        put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' }),
+        put(`data/${jsonName}`, jsonString, { 
+          access: 'public', 
+          contentType: 'application/octet-stream',
+          contentDisposition: `attachment; filename="${jsonName}"`
+        })
+      ]);
       return res.status(200).json({ url: blob.url, mode: 'cloud' });
     } else {
       // === LOCAL OFFLINE MODE ===

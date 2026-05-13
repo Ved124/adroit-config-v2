@@ -2470,9 +2470,9 @@ export function ConfigProvider({ children }) {
       const pdfBlob = await html2pdf().from(element).set({
         margin: 0,
         filename: 'flyer.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        image: { type: 'jpeg', quality: 0.92 },
+        html2canvas: { scale: 1.8, useCORS: true, letterRendering: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
         pagebreak: { mode: 'avoid-all' }
       }).outputPdf('blob');
 
@@ -2513,33 +2513,32 @@ export function ConfigProvider({ children }) {
             }
           };
 
-          toast.loading("Step 2: Saving to Server...", { id: loadingToast });
-
           const res = await fetch('/api/save-kiosk', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ pdfBase64: base64data, fullContextData: payload })
           });
 
-          if (!res.ok) {
-            throw new Error("Server storage failed");
-          }
-
           const data = await res.json();
-          const pdfUrl = data.url;
-
-          if (!pdfUrl) {
-            throw new Error("No URL returned from server");
-          }
           
           // Construct the Landing Page URL
+          const pdfUrl = data.url;
           let origin = window.location.origin;
 
+          // LOGIC:
+          // 1. If we are on Vercel (Cloud Mode), we MUST use window.location.origin 
+          //    because that is where the /proposal page is hosted. 
+          //    The pdfUrl origin (vercel-storage.com) does NOT host pages.
+          // 2. If we are in Local Mode (Offline WiFi), the pdfUrl origin is the laptop's IP.
+          //    In this case, window.location.origin might be "localhost", so we 
+          //    prefer the IP from pdfUrl so phones can connect.
+          
           const isVercelBlob = pdfUrl.includes("vercel-storage.com");
           
           if (!isVercelBlob) {
             try {
               const urlObj = new URL(pdfUrl);
+              // Only use PDF origin if it's an IP address or not localhost
               if (urlObj.hostname !== "localhost") {
                 origin = urlObj.origin;
               }
@@ -2551,11 +2550,10 @@ export function ConfigProvider({ children }) {
           const landingPageUrl = origin + "/proposal?pdf=" + encodeURIComponent(pdfUrl) + "&name=" + encodeURIComponent(robustData.customer.company || "Visitor");
           
           setQrUrlState(landingPageUrl);
-          toast.success("QR Generated Successfully!", { id: loadingToast });
-        } catch (e) { 
-          console.error(e);
-          toast.error("Failed to generate QR. Please try again.", { id: loadingToast });
-        } finally {
+          toast.dismiss(loadingToast);
+
+        } catch (e) { console.error(e); }
+        finally {
           setTimeout(() => {
             root.unmount();
             if (document.body.contains(container)) document.body.removeChild(container);

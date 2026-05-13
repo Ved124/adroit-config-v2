@@ -80,7 +80,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
 
                 {/* HERO SECTION - Professional Callout Box */}
                 <div style={{
-                    background: "rgba(248, 250, 252, 0.9)", // slightly transparent slate-50
+                    background: "rgba(248, 250, 252, 0.9)",
                     borderLeft: `4px solid ${C.RED}`,
                     padding: "12px 18px",
                     display: "flex",
@@ -92,7 +92,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     <div style={{ flex: 1 }}>
                         <div style={{ display: "flex", gap: "40px", alignItems: "flex-start", marginBottom: "12px" }}>
                             <div>
-                                <p style={{ fontSize: "7px", fontWeight: "700", color: C.MUTED, letterSpacing: "0.05em", textTransform: "uppercase", margin: 0, lineHeight: 1 }}>Prepared For</p>
+                                <p style={{ fontSize: "7px", fontWeight: "700", color: C.MUTED, textTransform: "uppercase", margin: 0, lineHeight: 1 }}>Prepared For</p>
                                 <h1 style={{ fontSize: "20px", fontWeight: "900", color: C.DARK, margin: 0, textTransform: "uppercase", letterSpacing: "-0.02em", lineHeight: 1 }}>{companyDisplay}</h1>
                             </div>
                             <div style={{ flexShrink: 0 }}>
@@ -108,7 +108,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                             </div>
                             <div>
                                 <span style={{ display: "block", fontSize: "7px", fontWeight: "600", color: C.MUTED, textTransform: "uppercase", lineHeight: 1, marginBottom: 0 }}>Family</span>
-                                <strong style={{ fontSize: "11px", color: C.RED, fontWeight: "700", lineHeight: 1 }}>{(machine.family || "Extrusion").replace(/Unoflex |Duoflex |Innoflex /gi, "")}</strong>
+                                <strong style={{ fontSize: "11px", color: C.RED, fontWeight: "700", lineHeight: 1 }}>{(machine.family || "Extrusion").replace("Unoflex ", "").replace("Duoflex ", "").replace("Innoflex ", "")}</strong>
                             </div>
                             <div>
                                 <span style={{ display: "block", fontSize: "7px", fontWeight: "600", color: C.MUTED, textTransform: "uppercase", lineHeight: 1, marginBottom: 0 }}>Date</span>
@@ -124,24 +124,22 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                 {/* BODY CONTENT — clean typography and solid borders */}
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, paddingBottom: "4px", overflow: "hidden" }}>
                     {(() => {
-                        const sosLimit = 14;
+                        const sosLimit = 16;
                         const sosItems = topItems.slice(0, sosLimit);
                         const addonItems = optionals;
 
-                        // Assume SOS items take 2 lines on average due to text wrapping
-                        const estimatedLines = (sosItems.length * 1.8) + (addonItems.length > 0 ? addonItems.length + 1 : 0);
-                        const scale = estimatedLines > 30 ? Math.max(0.6, 1 - (estimatedLines - 30) * 0.02) : 1;
+                        const totalItemCount = sosItems.length + addonItems.length;
+                        const scale = totalItemCount > 25 ? Math.max(0.55, 1 - (totalItemCount - 25) * 0.015) : 1;
 
-                        const fSizeSOS = `${11 * scale}px`;
-                        const fSizeAddons = `${10 * scale}px`;
-                        const padSOS = `${4 * scale}px 0`;
-                        const padAddon = `${4 * scale}px 8px`;
-                        const gap = `${8 * scale}px`;
+                        const fSizeSOS = `${10.5 * scale}px`;
+                        const fSizeAddons = `${9.5 * scale}px`;
+                        const padSOS = `${3 * scale}px 0`;
+                        const padAddon = `${3 * scale}px 6px`;
 
                         return (
                             <>
                                 <div style={{ flexShrink: 0 }}>
-                                    <h3 style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: `1.5px solid ${C.DARK}`, paddingBottom: "4px", marginBottom: "8px", color: C.DARK }}>
+                                    <h3 style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: `1.5px solid ${C.DARK}`, paddingBottom: "2px", marginBottom: "4px", color: C.DARK }}>
                                         Standard Scope (Basic Machine)
                                     </h3>
                                     <table style={{ width: "100%", fontSize: fSizeSOS, borderCollapse: "collapse" }}>
@@ -149,66 +147,62 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                             {sosItems.map((item, i) => (
                                                 <tr key={i}>
                                                     <td style={{ padding: padSOS, verticalAlign: "top" }}>
-                                                        <div style={{ display: "flex", gap: "10px" }}>
-                                                            <span style={{ color: C.RED, fontWeight: "800", fontSize: "9px", minWidth: "18px", paddingTop: "2px" }}>
+                                                        <div style={{ display: "flex", gap: "8px" }}>
+                                                            <span style={{ color: C.RED, fontWeight: "800", fontSize: "8px", minWidth: "15px", paddingTop: "1px" }}>
                                                                 {String(i + 1).padStart(2, '0')}.
                                                             </span>
-                                                            <div style={{ color: C.DARK, lineHeight: "1.4", flex: 1, fontWeight: "450" }}>
+                                                            <div style={{ color: C.DARK, lineHeight: "1.3", flex: 1, fontWeight: "450" }}>
                                                                 {item.desc}
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             ))}
-                                            {scope.length > sosLimit && <tr><td style={{ textAlign: "center", padding: "8px", fontSize: "10px", color: C.MUTED, fontStyle: "italic" }}>... additional components included in the standard specification ...</td></tr>}
                                         </tbody>
                                     </table>
-                                </div><br />
-                                
-                                {/* NEW: Mid-Section Pricing (Machine Price) */}
-                                <div style={{ 
-                                    flexShrink: 0, 
-                                    padding: "8px 15px", 
-                                    background: "#fff", 
-                                    border: `1px solid ${C.BORDER}`, 
-                                    borderRadius: "8px", 
-                                    display: "flex", 
-                                    justifyContent: "space-between", 
+                                </div>
+
+                                {/* Tight Mid-Section Pricing */}
+                                <div style={{
+                                    flexShrink: 0,
+                                    padding: "4px 0",
+                                    display: "flex",
+                                    justifyContent: "space-between",
                                     alignItems: "center",
-                                    marginBottom: "10px"
+                                    margin: "6px 0"
                                 }}>
-                                    <div style={{ fontSize: "10px", fontWeight: "800", color: C.DARK, textTransform: "uppercase", letterSpacing: "0.05em" }}>Basic Machine Price</div>
+                                    <div style={{ fontSize: "10px", fontWeight: "800", color: C.DARK, textTransform: "uppercase" }}>Machine Pricing Details</div>
                                     <div style={{ textAlign: "right" }}>
                                         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                                             <div style={{ textAlign: "right" }}>
-                                                <span style={{ fontSize: "6px", fontWeight: "700", color: C.MUTED, textTransform: "uppercase" }}>Basic Price</span>
-                                                <div style={{ fontSize: "10px", fontWeight: "600", color: C.SLATE, textDecoration: pricing.basicPrice !== pricing.finalPrice ? "line-through" : "none", opacity: 0.7 }}>
+                                                <span style={{ fontSize: "8px", fontWeight: "700", color: C.MUTED, textTransform: "uppercase" }}>Basic Price</span>
+                                                <div style={{ fontSize: "12px", fontWeight: "600", color: C.SLATE, textDecoration: "none", opacity: 0.8, lineHeight: 1 }}>
                                                     {pricing.basicPrice || formatCurrency(pricing.withMarkup, pricing.currency)}
                                                 </div>
                                             </div>
-                                            <div style={{ textAlign: "right" }}>
-                                                <span style={{ fontSize: "6px", fontWeight: "800", color: C.RED, textTransform: "uppercase" }}>Final Machine Price</span>
-                                                <div style={{ fontSize: "16px", fontWeight: "900", color: C.RED, lineHeight: 1 }}>
-                                                    {pricing.finalPrice || formatCurrency(pricing.afterDiscount, pricing.currency)}
+                                            {pricing.basicPrice && pricing.finalPrice && pricing.basicPrice !== pricing.finalPrice && (
+                                                <div style={{ textAlign: "right" }}>
+                                                    <span style={{ fontSize: "8px", fontWeight: "800", color: C.RED, textTransform: "uppercase" }}>Final Price after Discount</span>
+                                                    <div style={{ fontSize: "12px", fontWeight: "900", color: C.RED, lineHeight: 1 }}>
+                                                        {pricing.finalPrice || formatCurrency(pricing.afterDiscount, pricing.currency)}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            )}
                                         </div>
                                     </div>
-                                </div>
-
-                                <div style={{ height: gap, flexShrink: 0 }} />
+                                </div><br />
 
                                 {addonItems.length > 0 && (
-                                    <div style={{ flexShrink: 0, paddingTop: "5px" }}>
-                                        <h3 style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", paddingBottom: "4px", marginBottom: "0", color: C.RED, borderBottom: `1.5px solid ${C.RED}` }}>
-                                            Optional Equipment (Selection Based)
+                                    <div style={{ flexShrink: 0 }}>
+                                        <h3 style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", paddingBottom: "2px", marginBottom: "0", color: C.RED, borderBottom: `1.5px solid ${C.RED}` }}>
+                                            Optional Equipment
                                         </h3>
                                         <table style={{ width: "100%", fontSize: fSizeAddons, borderCollapse: "collapse" }}>
                                             <thead>
                                                 <tr style={{ backgroundColor: C.RED_BG }}>
-                                                    <th style={{ textAlign: "left", padding: padAddon, color: C.RED, fontSize: "8.5px", fontWeight: "700", letterSpacing: "0.05em", textTransform: "uppercase" }}>Component</th>
-                                                    <th style={{ textAlign: "right", padding: padAddon, color: C.RED, fontSize: "8.5px", fontWeight: "700", letterSpacing: "0.05em", textTransform: "uppercase", width: "40px" }}>Qty</th>
-                                                    <th style={{ textAlign: "right", padding: padAddon, color: C.RED, fontSize: "8.5px", fontWeight: "700", letterSpacing: "0.05em", textTransform: "uppercase", width: "120px" }}>Price</th>
+                                                    <th style={{ textAlign: "left", padding: padAddon, color: C.RED, fontSize: "8px", fontWeight: "700", textTransform: "uppercase" }}>Component</th>
+                                                    <th style={{ textAlign: "right", padding: padAddon, color: C.RED, fontSize: "8px", fontWeight: "700", textTransform: "uppercase", width: "40px" }}>Qty</th>
+                                                    <th style={{ textAlign: "right", padding: padAddon, color: C.RED, fontSize: "8px", fontWeight: "700", textTransform: "uppercase", width: "100px" }}>Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -216,12 +210,12 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                                     <tr key={i} style={{ borderBottom: `1px solid ${C.BORDER}` }}>
                                                         <td style={{ padding: padAddon, fontWeight: "500", color: C.DARK }}>{item.name}</td>
                                                         <td style={{ padding: padAddon, textAlign: "right" }}>{item.qty || 1}</td>
-                                                        <td style={{ padding: padAddon, textAlign: "right", fontWeight: "600", color: C.DARK, whiteSpace: "nowrap" }}>{formatCurrency(item.price, pricing.currency)}</td>
+                                                        <td style={{ padding: padAddon, textAlign: "right", fontWeight: "600", color: C.DARK }}>{formatCurrency(item.price, pricing.currency)}</td>
                                                     </tr>
                                                 ))}
                                                 <tr style={{ backgroundColor: C.RED_BG }}>
-                                                    <td colSpan="2" style={{ padding: "10px", textAlign: "right", fontWeight: "800", color: C.RED, fontSize: "10px", letterSpacing: "0.05em", textTransform: "uppercase" }}>TOTAL OPTIONAL PRICE:</td>
-                                                    <td style={{ padding: "10px", textAlign: "right", fontWeight: "900", color: C.RED, fontSize: "15px", whiteSpace: "nowrap" }}>
+                                                    <td colSpan="2" style={{ padding: "6px 10px", textAlign: "right", fontWeight: "800", color: C.RED, fontSize: "8.5px", textTransform: "uppercase" }}>Optional Total:</td>
+                                                    <td style={{ padding: "6px 10px", textAlign: "right", fontWeight: "900", color: C.RED, fontSize: "12px" }}>
                                                         {formatCurrency(optionals.reduce((sum, it) => sum + (it.price || 0), 0), pricing.currency)}
                                                     </td>
                                                 </tr>
@@ -234,22 +228,22 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     })()}
                 </div>
 
-                {/* FOOTER — Clean, bold bottom line */}
+                {/* COMPACT FOOTER */}
                 <div style={{
-                    marginTop: "auto",
-                    borderTop: `1.5px solid ${C.DARK}`,
-                    paddingTop: "12px",
+                    marginTop: "8px",
+                    borderTop: `1.2px solid ${C.DARK}`,
+                    paddingTop: "6px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-end",
                 }}>
-                    <div style={{ fontSize: "8.5px", color: C.MUTED, maxWidth: "60%", lineHeight: 1.6 }}>
-                        <strong style={{ color: C.DARK, fontWeight: "800" }}>TERMS:</strong> Ex-Works Ahmedabad. Taxes extra as applicable. <br />
+                    <div style={{ fontSize: "7.5px", color: C.MUTED, maxWidth: "60%", lineHeight: 1.3 }}>
+                        <strong style={{ color: C.DARK, fontWeight: "800" }}>TERMS:</strong> Ex-Works Ahmedabad. Taxes extra. <br />
                         <strong style={{ color: C.DARK, fontWeight: "800" }}>OFFER:</strong> Budgetary Proposal. Validity: 30 Days.
                     </div>
                     <div style={{ textAlign: "right" }}>
-                        <span style={{ fontSize: "7.5px", fontWeight: "900", color: C.RED, textTransform: "uppercase", letterSpacing: "0.08em" }}>Grand Total Price ({pricing.currency || 'INR'})</span>
-                        <div style={{ fontSize: "22px", fontWeight: "950", color: C.RED, lineHeight: 1, marginTop: "2px", letterSpacing: "-0.03em" }}>
+                        <span style={{ fontSize: "6.5px", fontWeight: "900", color: C.RED, textTransform: "uppercase", letterSpacing: "0.05em" }}>Grand Total ({pricing.currency || 'INR'})</span>
+                        <div style={{ fontSize: "16px", fontWeight: "950", color: C.RED, lineHeight: 1, marginTop: "1px" }}>
                             {pricing.total_price_text || pricing.totalPriceText || formatCurrency((pricing.afterDiscount || 0) + (optionals.reduce((sum, it) => sum + (it.price * (it.qty || 1)), 0)), pricing.currency)}
                         </div>
                     </div>

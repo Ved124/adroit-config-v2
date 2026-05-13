@@ -51,8 +51,10 @@ export default async function handler(req, res) {
     const safeRef = String(quoteRef).replace(/[^a-z0-9]/gi, '_');
     const safeCompany = String(company).replace(/[^a-z0-9]/gi, '_');
     const safeCity = String(city).replace(/[^a-z0-9]/gi, '_');
-
-    const baseFileName = `${safeRef}_${safeCompany}_${safeCity}`;
+    
+    // Add a short timestamp to prevent caching issues
+    const ts = Date.now().toString().slice(-6);
+    const baseFileName = `${safeRef}_${safeCompany}_${safeCity}_${ts}`;
     const pdfName = `${baseFileName}.pdf`;
     const jsonName = `${baseFileName}.json`;
 

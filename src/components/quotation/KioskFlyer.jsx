@@ -179,26 +179,20 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                 }}>
                                     <div style={{ fontSize: "10px", fontWeight: "800", color: C.DARK, textTransform: "uppercase", letterSpacing: "0.05em" }}>Basic Machine Price</div>
                                     <div style={{ textAlign: "right" }}>
-                                        {pricing.basicPrice && pricing.finalPrice && String(pricing.basicPrice).replace(/[^0-9]/g, '') !== String(pricing.finalPrice).replace(/[^0-9]/g, '') ? (
-                                            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                                                <div style={{ textAlign: "right" }}>
-                                                    <span style={{ fontSize: "6px", fontWeight: "700", color: C.MUTED, textTransform: "uppercase" }}>Basic</span>
-                                                    <div style={{ fontSize: "10px", fontWeight: "600", color: C.SLATE, textDecoration: "line-through", opacity: 0.7 }}>
-                                                        {pricing.basicPrice}
-                                                    </div>
-                                                </div>
-                                                <div style={{ textAlign: "right" }}>
-                                                    <span style={{ fontSize: "6px", fontWeight: "800", color: C.RED, textTransform: "uppercase" }}>Final Machine Price</span>
-                                                    <div style={{ fontSize: "16px", fontWeight: "900", color: C.RED, lineHeight: 1 }}>
-                                                        {pricing.finalPrice}
-                                                    </div>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+                                            <div style={{ textAlign: "right" }}>
+                                                <span style={{ fontSize: "6px", fontWeight: "700", color: C.MUTED, textTransform: "uppercase" }}>Basic Price</span>
+                                                <div style={{ fontSize: "10px", fontWeight: "600", color: C.SLATE, textDecoration: pricing.basicPrice !== pricing.finalPrice ? "line-through" : "none", opacity: 0.7 }}>
+                                                    {pricing.basicPrice || formatCurrency(pricing.withMarkup, pricing.currency)}
                                                 </div>
                                             </div>
-                                        ) : (
-                                            <div style={{ fontSize: "16px", fontWeight: "900", color: C.RED }}>
-                                                {pricing.finalPrice || pricing.final_price_text || formatCurrency(pricing.afterDiscount, pricing.currency)}
+                                            <div style={{ textAlign: "right" }}>
+                                                <span style={{ fontSize: "6px", fontWeight: "800", color: C.RED, textTransform: "uppercase" }}>Final Machine Price</span>
+                                                <div style={{ fontSize: "16px", fontWeight: "900", color: C.RED, lineHeight: 1 }}>
+                                                    {pricing.finalPrice || formatCurrency(pricing.afterDiscount, pricing.currency)}
+                                                </div>
                                             </div>
-                                        )}
+                                        </div>
                                     </div>
                                 </div>
 

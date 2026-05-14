@@ -227,15 +227,15 @@ function CoverPage({ machine, customer }) {
     const company = (customer?.company || "").toUpperCase();
     const city = (customer?.city || "").toUpperCase();
 
-    // coverImage: passed as "/images/machines/3layer.png" etc. from buildProposalData()
+    // coverImage: passed as "/images/machines/5 layer.png" etc. from buildProposalData()
     // The img tag has onError so broken paths just disappear — placeholder shows instead.
-    const coverImg = machine?.coverImage || `/images/machines/3layer.png`;
+    const coverImg = machine?.coverImage || `/images/machines/5 layer.png`;
 
     return (
         <Page>
             {/* ── Machine photo box ──────────────────────────────────────── */}
             <div style={{
-                width: "100%",
+                width: "98%",
                 height: "650px",
                 boxSizing: "border-box",
                 display: "flex",
@@ -276,7 +276,7 @@ function CoverPage({ machine, customer }) {
                 }}>
                     [Machine Image]
                 </div>
-            </div>
+            </div><br />
 
             {/* ── Blue rule ──────────────────────────────────────────────── */}
             {/* <div style={{ height: "2px", backgroundColor: BLUE, margin: "12px 0 16px 0" }} /> <br /> */}
@@ -1114,7 +1114,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
         if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
         if (combined.includes("idler")) return 8;
         if (combined.includes("winder")) return 10;
-        
+
         return 90;
     };
 

@@ -21,7 +21,7 @@ const formatCurrency = (val, currency = "INR") => {
 
 const SafeImage = ({ src, style }) => (
     <img
-        src={src || "/images/machines/3layer.png"}
+        src={src || "/images/machines/5 layer.png"}
         style={{ ...style, display: "block" }}
         alt="" crossOrigin="anonymous" onError={(e) => { e.target.style.opacity = 0; }}
     />

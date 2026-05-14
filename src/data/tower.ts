@@ -39,7 +39,7 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
     isDynamic: true,
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     usedInModels: [],
-    image: "/images/parts/tower.png",
+    image: "/images/machines/5 layer.png",
     cardDesc: "Heavy duty MS structure with service platform and safety rails.",
     price: 1000000,
     techDesc: {

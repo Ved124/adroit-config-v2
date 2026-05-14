@@ -232,30 +232,30 @@ export default function MachineTypePage() {
             <div className="bg-white rounded-2xl p-6 flex items-center justify-center h-72 shadow-soft border border-slate-100">
               {activeFamily === "mono" && (
                 <img
-                  src="/images/machines/3layer.png"
+                  src="/images/machines/5 layer.png"
                   alt="Unoflex Monolayer"
                   className="max-h-60 w-auto object-contain"
                 />
               )}
               {activeFamily === "aba" && (
                 <img
-                  src="/images/machines/3layer.png"
+                  src="/images/machines/5 layer.png"
                   alt="Duoflex ABA/AB"
                   className="max-h-60 w-auto object-contain"
                 />
               )}
               {activeFamily === "3layer" && (
                 <img
-                  src="/images/machines/3layer.png"
+                  src="/images/machines/5 layer.png"
                   alt="Innoflex 3 Layer"
                   className="max-h-60 w-auto object-contain"
                 />
               )}
               {activeFamily === "5layer" && (
                 <img
-                  src="/images/machines/3layer.png"
+                  src="/images/machines/5 layer.png"
                   alt="Innoflex 5 Layer"
-                  className="max-h-60 w-auto object-contain opacity-50"
+                  className="max-h-60 w-auto object-contain"
                 />
               )}
             </div>

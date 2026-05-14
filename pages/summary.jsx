@@ -696,7 +696,7 @@ function buildProposalData({
       code: machineCode,
       title_line: `${displayType} ${machineCode}`,
       layflat_width: layflatWidth || "",
-      coverImage: `/images/machines/${machineType || "3layer"}.png`,
+      coverImage: `/images/machines/5 layer.png`,
     },
     indicative_performance: {
       product: displayProduct,

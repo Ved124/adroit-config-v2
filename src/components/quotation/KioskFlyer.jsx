@@ -116,8 +116,8 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                             </div>
                         </div>
                     </div>
-                    <div style={{ width: "120px", height: "90px", background: "white", padding: "6px", border: `1px solid ${C.BORDER}`, borderRadius: "6px", boxShadow: "0 2px 4px rgba(0,0,0,0.05)" }}>
-                        <SafeImage src={machineDetails.machineImagePath} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                    <div style={{ width: "120px", height: "90px", background: "white", padding: "6px", border: `1px solid ${C.BORDER}`, borderRadius: "6px", boxShadow: "0 2px 4px rgba(0,0,0,0.05)", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <SafeImage src={machineDetails.machineImagePath} style={{ maxWidth: "100%", maxHeight: "100%", width: "auto", height: "auto", objectFit: "contain" }} />
                     </div>
                 </div>
 

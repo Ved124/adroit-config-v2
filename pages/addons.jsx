@@ -7,7 +7,7 @@ import { ConfigContext } from "../src/ConfigContext";
 import { motion } from "framer-motion";
 import { CORONA_PRICES, CORONA_BRANDS } from "../src/data/corona";
 import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
-import { AIR_CHILLER_PRICES, WATER_CHILLER_PRICES, CHILLER_BRANDS, CONAIR_AIR_CHILLER_PRICES, CONAIR_WATER_CHILLER_PRICES } from "../src/data/chiller";
+import { PRASAD_AIR_CHILLER_PRICES, PRASAD_WATER_CHILLER_PRICES, CHILLER_BRANDS, CONAIR_AIR_CHILLER_PRICES, CONAIR_WATER_CHILLER_PRICES } from "../src/data/chiller";
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
 import { SCREW_SIZES } from "../src/data/bimetallic";
@@ -183,8 +183,8 @@ function AddonCard({
   const isConAir = selectedBrand === "Con Air";
 
   const chillerPrices = isAirChiller
-    ? (isConAir ? CONAIR_AIR_CHILLER_PRICES : AIR_CHILLER_PRICES)
-    : (isConAir ? CONAIR_WATER_CHILLER_PRICES : WATER_CHILLER_PRICES);
+    ? (isConAir ? CONAIR_AIR_CHILLER_PRICES : PRASAD_AIR_CHILLER_PRICES)
+    : (isConAir ? CONAIR_WATER_CHILLER_PRICES : PRASAD_WATER_CHILLER_PRICES);
 
   let prices = {};
   if (isCorona) prices = CORONA_PRICES;
@@ -200,8 +200,10 @@ function AddonCard({
 
   // UI customization based on component type
   const isOutputBased = isMixerDryer || isHeatExchanger;
-  const selectorLabel = isChiller ? (isConAir ? "Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller")));
-  const unit = isChiller ? (isConAir ? "" : "mm") : ((isHeatExchanger || isMixerDryer) ? "kg" : (isOutputBased ? "kg/hr" : "mm"));
+  const isCapacityBased = isChiller && Object.keys(prices).length > 0 && Object.keys(prices)[0].includes("TR");
+  const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller Width")));
+  const unit = isHeatExchanger || isMixerDryer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
+  const formatSize = (s) => (s && s.includes("TR")) ? s : `${s} ${unit}`;
 
   const [selectedSize, setSelectedSize] = useState(item.metadata?.size || Object.keys(prices)[0] || "");
 
@@ -279,7 +281,7 @@ function AddonCard({
         techDesc: {
           ...item.techDesc,
           ...((isDieRotation || isBimetallic) ? {} : { "Brand": selectedBrand }),
-          [selectorLabel]: `${selectedSize} ${unit}`,
+          [selectorLabel]: formatSize(selectedSize),
         }
       });
     } else {
@@ -348,7 +350,7 @@ function AddonCard({
               onChange={(e) => setSelectedSize(e.target.value)}
               className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60"
             >
-              {Object.keys(prices).map(s => <option key={s} value={s}>{s} {unit}</option>)}
+              {Object.keys(prices).map(s => <option key={s} value={s}>{formatSize(s)}</option>)}
             </select>
           </div>
         </div>

@@ -25,7 +25,7 @@ export interface ChillerAddon {
 export const CHILLER_BRANDS = ["Prasad", "Con Air"];
 
 // Air Chiller prices based on machine size
-export const WATER_CHILLER_PRICES: { [key: string]: number } = {
+export const PRASAD_WATER_CHILLER_PRICES: { [key: string]: number } = {
   "1120": 325000,
   "1350": 325000,
   "1450": 325000,
@@ -38,16 +38,14 @@ export const WATER_CHILLER_PRICES: { [key: string]: number } = {
 };
 
 // Water Chiller prices based on machine size
-export const AIR_CHILLER_PRICES: { [key: string]: number } = {
-  "1120": 655000,
-  "1350": 790000,
-  "1450": 790000,
-  "1620": 985000,
-  "1870": 1085000,
-  "1970": 1085000,
-  "2120": 1250000,
-  "2370": 1250000,
-  "2620": 1250000,
+export const PRASAD_AIR_CHILLER_PRICES: { [key: string]: number } = {
+  "18 TR": 530145,
+  "27 TR": 597465,
+  "41 TR": 765000,
+  "54 TR": 908820,
+  "60 TR": 1018300,
+  "69 TR": 1093950,
+  "80 TR": 1304325,
 };
 
 export const CONAIR_AIR_CHILLER_PRICES: { [key: string]: number } = {

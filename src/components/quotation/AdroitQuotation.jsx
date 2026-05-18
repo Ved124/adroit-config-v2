@@ -699,15 +699,16 @@ function ComponentPage({ item }) {
         <Page>
             {/* Name bar */}
             <div style={{
-                textAlign: "center",
+                display: "inline-block",
                 fontWeight: "bold",
                 fontSize: "11pt",
                 fontFamily: F,
                 color: BLUE,
                 // borderTop: `1.5px solid ${BLUE}`,
-                borderBottom: `1.5px solid ${BLUE}`,
-                padding: "5px 0",
-                marginBottom: "10px",
+                borderBottom: `3px solid #0099ffff`,
+                borderRight: `3px solid #0099ffff`,
+                padding: "5px 15px 5px 0",
+                marginBottom: "15px",
                 letterSpacing: "0.3px",
             }}>
                 {item.name || ""}
@@ -715,14 +716,14 @@ function ComponentPage({ item }) {
 
             {/* Image — top, centred */}
             <div style={{
-                border: `1px solid ${LIGHT_BDR}`,
-                backgroundColor: "#fcfcfcff",
+                // border: `1px solid ${LIGHT_BDR}`,
+                // backgroundColor: "#fcfcfcff",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 height: "280px",
                 boxSizing: "border-box",
-                marginBottom: "12px",
+                marginBottom: "15px",
                 overflow: "hidden",
             }}>
                 {item.image

@@ -25,10 +25,10 @@ export interface MaterialHandlingAddon {
 
 // Prices for Mixer Dryer: 100, 200, 300, 500 kg/hr (placeholder values)
 export const MIXER_DRYER_PRICES: Record<string, number> = {
-  "100": 175000,
+  "100": 165000,
   "200": 250000,
-  "300": 325000,
-  "500": 450000,
+  "300": 310000,
+  "500": 375000,
 };
 
 export const MIXER_DRYER_BRANDS = ["Adroit"];
@@ -61,10 +61,11 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     isDynamic: true,
     qty: 1,
     techDesc: {
-      "Make": "Adroit",
-      "Features": "Combined mixing and drying in a single vertical unit.",
-      "Construction": "Durable fabricated drum with insulation.",
-      "Heating": "Electric heater with thermostat control.",
+      "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
+      "Switch Gear": "SCHNEIDER",
+      "Temp. Controller": "MULTISPAN",
+      "Material of Construction": "MS Painted",
+      "Drive": "Through belt and Pulley",
     },
   },
 ];

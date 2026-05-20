@@ -1236,11 +1236,11 @@ function MaterialHandlingDetailsPage({ data, pricing }) {
                     )}
                 </div>
 
-                {/* <div style={{ borderTop: `1.5px solid ${BLUE}`, margin: "15px 0 10px 0" }} />
-
-                <div style={{ fontSize: "10.5pt", fontFamily: F, color: BLUE, fontWeight: "bold", textAlign: "center" }}>
-                    Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
-                </div> */}
+                <div style={{ marginTop: "20px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
+                    <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
+                        Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
+                    </span>
+                </div>
             </div>
         </Page>
     );

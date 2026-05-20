@@ -67,6 +67,11 @@ export const COMPANY = {
 
 const STORAGE_KEY = "adroit_configurator_v4";
 
+// Module-level cache for heavy client-side libraries to avoid ChunkLoadErrors in Next.js dev server hot-reloads
+let html2pdfModule = null;
+let html2canvasModule = null;
+let jsPDFModule = null;
+
 // 💡 Base components – extend this as you like
 // Machine types we use in "supported"
 export const MACHINE_TYPE_KEYS = ["mono", "aba", "3layer", "5layer"];
@@ -113,6 +118,29 @@ export const ADDONS_DATA = {
 
 export function ConfigProvider({ children }) {
   const toast = useToast();
+
+  useEffect(() => {
+    // Preload heavy client-side libraries to prevent ChunkLoadErrors during hot-reload/dev session
+    if (typeof window !== "undefined") {
+      if (!html2pdfModule) {
+        import("html2pdf.js").then((mod) => {
+          html2pdfModule = mod.default;
+        }).catch(() => {});
+      }
+
+      if (!html2canvasModule) {
+        import("html2canvas").then((mod) => {
+          html2canvasModule = mod.default;
+        }).catch(() => {});
+      }
+
+      if (!jsPDFModule) {
+        import("jspdf").then((mod) => {
+          jsPDFModule = mod.default;
+        }).catch(() => {});
+      }
+    }
+  }, []);
 
   const [customer, setCustomer] = useState({
     quotationRef: "Loading...", // Temporary initial state
@@ -163,15 +191,17 @@ export function ConfigProvider({ children }) {
 
     // If the configuration now differs from the imported one, reset the date to today (null)
     if (currentSnapshot !== lastImportedSnapshotRef.current) {
-      setQuotationDate(null);
-      lastImportedSnapshotRef.current = null; // Clear to prevent recursive loops
-      
-      toast.push({
-        title: "Date updated",
-        description: "Configuration changed; date updated to today.",
-        variant: "info",
-        durationMs: 1500,
-      });
+      setTimeout(() => {
+        setQuotationDate(null);
+        lastImportedSnapshotRef.current = null; // Clear to prevent recursive loops
+        
+        toast.push({
+          title: "Date updated",
+          description: "Configuration changed; date updated to today.",
+          variant: "info",
+          durationMs: 1500,
+        });
+      }, 0);
     }
   }, [
     customer, machineType, selected, selectedAddons, discount, markup,
@@ -376,9 +406,6 @@ export function ConfigProvider({ children }) {
     
     setCustomer(prev => {
       const reg = prev.region || "DOM";
-      // Extract roller width number or use "MW" placeholder
-      const rollerMatched = String(customRollerWidth).match(/\d+/);
-      const roller = rollerMatched ? rollerMatched[0] : "MW";
       
       // Auto-sync for AE/ standard, legacy AET/ or initial state
       const isInitial = prev.quotationRef === "Loading..." || prev.quotationRef?.startsWith("AET/");
@@ -391,18 +418,28 @@ export function ConfigProvider({ children }) {
         if (seq.length > 2) seq = seq.slice(-2);
         else seq = seq.padStart(2, '0');
         
-        let prefix = "";
-        if (machineType === "mono") prefix = "U";
-        else if (machineType === "aba") prefix = "D";
+        let newRef = prev.quotationRef;
+        if (machineType === "material-handling") {
+          newRef = `AE/${reg}/MIX/${seq}`;
+        } else {
+          // Extract roller width number or use "MW" placeholder
+          const rollerMatched = String(customRollerWidth).match(/\d+/);
+          const roller = rollerMatched ? rollerMatched[0] : "MW";
+          
+          let prefix = "";
+          if (machineType === "mono") prefix = "U";
+          else if (machineType === "aba") prefix = "D";
 
-        const newRef = `AE/${reg}/${prefix}${roller}/${seq}`;
+          newRef = `AE/${reg}/${prefix}${roller}/${seq}`;
+        }
+
         if (newRef !== prev.quotationRef) {
           return { ...prev, quotationRef: newRef, ref: newRef };
         }
       }
       return prev;
     });
-  }, [customer.region, customRollerWidth, machineType]);
+  }, [customer.region, customRollerWidth, machineType, selectedAddons]);
 
   // Helper to strip unwanted fields from techDesc
   function sanitizeTechDesc(category, techDesc) {
@@ -1230,6 +1267,7 @@ export function ConfigProvider({ children }) {
     // 2. Split Optional Addons into Visible and Hidden (e.g. Bimetallic Upgrades, Loadcell)
     let hiddenUpgradesTotal = 0;
     const visibleAddons = [];
+    let materialHandlingBasicTotal = 0;
 
     (selectedAddons || []).forEach(item => {
       const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
@@ -1238,6 +1276,7 @@ export function ConfigProvider({ children }) {
       const isDieRotation = item.id === "die-rotation-addon";
       const isLeverScreenChanger = item.id === "addon-lever-screen-changer";
 
+      const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
       const isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation || isLeverScreenChanger;
 
       const base = (item.price || 0) * (item.qty || 1);
@@ -1245,12 +1284,18 @@ export function ConfigProvider({ children }) {
       const d = item.discount || 0;
       const adjusted = base * (1 + m / 100) * (1 - d / 100);
 
-      if (isHidden) {
+      if (machineType === "material-handling" && isMixer) {
+        materialHandlingBasicTotal += adjusted;
+      } else if (isHidden) {
         if (!isGrandTotal) hiddenUpgradesTotal += adjusted; // grand-total contributes nothing
       } else {
         visibleAddons.push(item);
       }
     });
+
+    if (machineType === "material-handling") {
+      basicTotal = materialHandlingBasicTotal;
+    }
 
     const addonsTotal = visibleAddons.reduce(
       (sum, item) => {
@@ -1552,13 +1597,27 @@ export function ConfigProvider({ children }) {
           subject: safeCustomer.subject || "Proposal for Blown Film Extrusion Line",
         },
         machine: {
+          type: machineType || "",           // e.g. "material-handling", "mono", "aba" etc.
           model: machineDetails.label || safeCustomer.machineModel || "BLOWN FILM LINE",
           family: safeCustomer.machineFamily || machineType || "",
           modelCode: machineDetails.code || safeCustomer.machineModelCode || safeCustomer.machineModel || "",
         },
         machine_details: machineDetails,
         scope: finalScope,
-        optional_items: (selectedAddons || []).filter(a => !a.id?.startsWith("bimetallic-upgrade-") && a.id !== "addon-loadcell-tension" && a.id !== "grand-total-line" && a.id !== "die-rotation-addon" && a.id !== "addon-lever-screen-changer").map((a, idx) => {
+        optional_items: (selectedAddons || []).filter(a => {
+          if (!a) return false;
+          const isBimetallic = a.id?.startsWith("bimetallic-upgrade-");
+          const isLoadcell = a.id === "addon-loadcell-tension";
+          const isGrandTotal = a.id === "grand-total-line";
+          const isDieRotation = a.id === "die-rotation-addon";
+          const isLeverScreenChanger = a.id === "addon-lever-screen-changer";
+          const isMixer = a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic";
+          
+          if (machineType === "material-handling" && isMixer) {
+            return false;
+          }
+          return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger;
+        }).map((a, idx) => {
           const rawPrice = (a.price || 0) * (a.qty || 1);
           const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
           return {
@@ -1571,6 +1630,25 @@ export function ConfigProvider({ children }) {
             discount: a.discount || 0,
           };
         }),
+        material_handling_mixers: (() => {
+          const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+          return mixerAddons.map(a => ({
+            id: a.id || "",
+            name: a.customName || a.name || "",
+            qty: a.qty || 1,
+            image: a.image || "",
+            shortDesc: a.shortDesc || a.cardDesc || "",
+            techDesc: a.techDesc || {},
+            metadata: a.metadata || {},
+            price: a.price || 0,
+            size: a.size || a.metadata?.size || "",
+          }));
+        })(),
+        // Keep backward-compat single field (first mixer)
+        material_handling_mixer: (() => {
+          const a = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+          return a ? { id: a.id, name: a.customName || a.name, qty: a.qty || 1, image: a.image, metadata: a.metadata || {}, price: a.price || 0, size: a.size || a.metadata?.size || "" } : null;
+        })(),
         pricing: {
           basicPrice: fmtPriceFull(withMarkup, currency),
           finalPrice: fmtPriceFull(afterDiscount, currency),
@@ -2034,8 +2112,8 @@ export function ConfigProvider({ children }) {
   async function exportPdfOnly() {
     try {
       // dynamic imports (keep bundle small)
-      const html2canvas = (await import("html2canvas")).default;
-      const { default: jsPDF } = await import("jspdf");
+      const html2canvas = html2canvasModule || (await import("html2canvas")).default;
+      const jsPDF = jsPDFModule || (await import("jspdf")).default;
 
       const safeCustomer = customer || {};
       const safeName = (safeCustomer.name || "customer").replace(/\s+/g, "_");
@@ -2395,7 +2473,7 @@ export function ConfigProvider({ children }) {
     const loadingToast = toast.push({ title: "Generating Pro PDF...", variant: "loading", persist: true });
 
     try {
-      const html2pdf = (await import("html2pdf.js")).default;
+      const html2pdf = html2pdfModule || (await import("html2pdf.js")).default;
       const contextData = buildWordContext();
 
       // Render a hidden container for the PDF generator
@@ -2477,7 +2555,7 @@ export function ConfigProvider({ children }) {
         }
       };
 
-      const html2pdf = (await import("html2pdf.js")).default;
+      const html2pdf = html2pdfModule || (await import("html2pdf.js")).default;
 
       const container = document.createElement("div");
       container.style.position = "fixed";
@@ -2626,6 +2704,7 @@ export function ConfigProvider({ children }) {
       const toMachineTypeKey = (family) => {
         if (!family) return null;
         const f = String(family).toLowerCase();
+        if (f === "material-handling" || f.includes("material") || f.includes("mixer") || f.includes("hopper")) return "material-handling";
         if (f.includes("unoflex") || f.includes("mono")) return "mono";
         if (f.includes("duoflex") || f.includes("aba") || f.includes("a/b")) return "aba";
         if (f.includes("innoflex 3")) return "3layer";
@@ -2975,7 +3054,7 @@ export function ConfigProvider({ children }) {
     const loadingToast = toast.push({ title: "Generating PDF...", variant: "loading", persist: true });
 
     try {
-      const html2pdf = (await import("html2pdf.js")).default;
+      const html2pdf = html2pdfModule || (await import("html2pdf.js")).default;
       const contextData = buildWordContext();
 
       const container = document.createElement("div");

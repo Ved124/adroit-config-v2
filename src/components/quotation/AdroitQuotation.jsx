@@ -216,15 +216,23 @@ function CoverPage({ machine, customer }) {
         aba: "DUOFLEX SERIES - ABA / AB CO-EXTRUSION BLOWN FILM LINE",
         "3layer": "INNOFLEX SERIES - THREE LAYER CO-EXTRUSION BLOWN FILM LINE",
         "5layer": "INNOFLEX SERIES - FIVE LAYER CO-EXTRUSION BLOWN FILM LINE",
+        "material-handling": "",
     };
     const seriesMap = {
         mono: "Unoflex", aba: "Duoflex", "3layer": "Innoflex", "5layer": "Innoflex",
+        "material-handling": "Adroit",
     };
 
-    const fullName = machine?.fullName || nameMap[type] || "THREE LAYER CO-EXTRUSION BLOWN FILM LINE";
-    const seriesName = seriesMap[type] || "Innoflex";
-    const modelCode = machine?.code || "";
+    // For material-handling, pull mixer info from machine object
+    const isMixer = type === "material-handling";
+    const mixerFullName = machine?.fullName || (isMixer ? "VERTICAL GRANULE MIXER" : "");
+    const mixerModelCode = machine?.code || "";
+
+    const fullName = isMixer ? mixerFullName : (machine?.fullName || nameMap[type] || "THREE LAYER CO-EXTRUSION BLOWN FILM LINE");
+    const seriesName = isMixer ? "Adroit" : (seriesMap[type] || "Innoflex");
+    const modelCode = isMixer ? mixerModelCode : (machine?.code || "");
     const company = (customer?.company || "").toUpperCase();
+    const customerName = (customer?.name || "").toUpperCase();
     const city = (customer?.city || "").toUpperCase();
 
     // coverImage: passed as "/images/machines/5 layer.png" etc. from buildProposalData()
@@ -307,11 +315,14 @@ function CoverPage({ machine, customer }) {
                     lineHeight: "1.4",
                     marginBottom: "8px",
                 }}>
-                    AE <em style={{ fontStyle: "italic", color: "red" }}>{seriesName}</em>{" "}
-                    {fullName}
+                    {isMixer ? (
+                        <span>{fullName}</span>
+                    ) : (
+                        <span>AE <em style={{ fontStyle: "italic", color: "red" }}>{seriesName}</em>{" "}{fullName}</span>
+                    )}
                 </div>
 
-                {/* MODEL code — layflat_width is baked in, e.g. "2370_50*65*75*65*50" */}
+                {/* MODEL code */}
                 {modelCode && (
                     <div style={{
                         fontSize: "12pt",
@@ -321,7 +332,7 @@ function CoverPage({ machine, customer }) {
                         letterSpacing: "0.5px",
                         marginBottom: "12px",
                     }}>
-                        MODEL : {seriesName}_{modelCode}
+                        {isMixer ? `MODEL : ${modelCode}` : `MODEL : ${seriesName}_${modelCode}`}
                     </div>
                 )}
 
@@ -337,7 +348,20 @@ function CoverPage({ machine, customer }) {
                     FOR
                 </div>
 
-                {/* Customer */}
+                {/* Customer name (person) */}
+                {customerName && (
+                    <div style={{
+                        fontSize: "13pt",
+                        fontWeight: "bold",
+                        fontFamily: F,
+                        color: INK,
+                        marginBottom: "4px",
+                    }}>
+                        {customerName}
+                    </div>
+                )}
+
+                {/* Customer company */}
                 {company && (
                     <div style={{
                         fontSize: "13pt",
@@ -1078,9 +1102,146 @@ function WarrantyPage() {
     );
 }
 
+// Material Handling Details Page
+function MaterialHandlingDetailsPage({ data, pricing }) {
+    const mixer = data?.material_handling_mixer;
+    const mixers = data?.material_handling_mixers || (mixer ? [mixer] : []);
+    const isDryer = mixer?.id === "mixer-dryer-dynamic" || mixer?.name?.toLowerCase().includes("dryer");
+
+    // Format a number based on selected currency
+    const fmtPrice = (num) => {
+        if (!num) return "—";
+        const isUSD = (pricing?.currency || data?.pricing?.currency) === "USD";
+        if (isUSD) {
+            const rate = pricing?.rate || data?.pricing?.rate || 84;
+            const converted = num / rate;
+            return "$ " + Math.round(converted).toLocaleString("en-US");
+        }
+        return "Rs. " + Math.round(num).toLocaleString("en-IN") + "/-";
+    };
+
+    return (
+        <Page>
+            {/* Ref & Date bar */}
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                borderBottom: `2.5px solid ${BLUE}`,
+                paddingBottom: "6px",
+                marginBottom: "14px",
+                marginTop: "6px",
+            }}>
+                <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: BLUE }}>
+                    Ref.: {data.quotation?.refNo || "DRAFT"}
+                </div>
+                <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: DIM }}>
+                    Date: {data.quotation?.date || ""}
+                </div>
+            </div>
+
+            <div style={{ padding: "10px 10px 0 10px" }}>
+                <div style={{
+                    fontWeight: "bold",
+                    fontSize: "12pt",
+                    fontFamily: F,
+                    color: BLUE,
+                    marginBottom: "14px",
+                    borderBottom: `2.5px solid ${BLUE}`,
+                    paddingBottom: "4px",
+                    width: "40%",
+                }}>
+                    GENERAL INFORMATION:
+                </div>
+
+                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                    Vertical Mixer is for mixing Plastic granules, Master batch etc.
+                </div>
+
+                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
+                    The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry.
+                </div>
+
+                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                    The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min.
+                </div>
+
+                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                    The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
+                </div>
+
+                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
+                    Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
+                </div>
+
+                <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 20px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+                    <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
+                    <li><b>Switch Gear:</b> SCHNEIDER</li>
+                    <li><b>Temp. Controller:</b> MULTISPAN</li>
+                    <li><b>Material:</b> MS painted.</li>
+                    <li><b>Drive:</b> Through belt and Pulley.</li>
+                </ul>
+
+                <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
+                    Important:
+                </div>
+                <ol style={{ paddingLeft: "20px", margin: "0 0 25px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+                    <li>Power supply--*: Three Phase (Wire/Terminal No. 1,2 & 3) and Neutral (Wire No. 4)</li>
+                    <li>The screw rotation should be clockwise if you stand in front of tray.</li>
+                    <li>Mixing time has set to 15 min. It can change from timer.</li>
+                </ol>
+
+                {/* Per-mixer pricing breakdown */}
+                <div style={{ margin: "10px 0 20px 0", fontSize: "10.5pt", fontFamily: F, color: INK, lineHeight: "2.2" }}>
+                    {mixers.map((m, i) => {
+                        const cap = m.size || m.metadata?.size || "";
+                        const isMD = m.id === "mixer-dryer-dynamic";
+                        const label = isMD ? "Vertical Granule Mixer with Dryer" : "Vertical Granule Mixer";
+                        const capLabel = cap ? `${cap} kg ` : "";
+                        const itemPrice = (m.price || 0) * (m.qty || 1);
+                        return (
+                            <div key={i} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <span style={{ color: BLUE, flexShrink: 0 }}>❖</span>
+                                <span>
+                                    Basic Price of {label}
+                                    {m.qty > 1 ? ` × ${m.qty}` : ""} - {capLabel}:{" "}
+                                    <b>{fmtPrice(itemPrice)}</b>
+                                </span>
+                            </div>
+                        );
+                    })}
+
+                    {/* Grand Total */}
+                    {pricing?.basicPrice && (
+                        <>
+                            <div style={{ borderTop: `1px dashed ${BLUE}`, margin: "6px 0 4px 0" }} />
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                <span style={{ color: BLUE, flexShrink: 0 }}>❖</span>
+                                <span style={{ fontWeight: "bold" }}>
+                                    Grand Total:{" "}
+                                    <b style={{ color: "#c00", fontSize: "11pt" }}>{pricing.basicPrice}</b>
+                                </span>
+                            </div>
+                            {pricing.basicPriceWords && (
+                                <div style={{ fontSize: "9.5pt", color: DIM, fontStyle: "italic", marginLeft: "20px" }}>
+                                    {pricing.basicPriceWords}
+                                </div>
+                            )}
+                        </>
+                    )}
+                </div>
+
+                {/* <div style={{ borderTop: `1.5px solid ${BLUE}`, margin: "15px 0 10px 0" }} />
+
+                <div style={{ fontSize: "10.5pt", fontFamily: F, color: BLUE, fontWeight: "bold", textAlign: "center" }}>
+                    Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
+                </div> */}
+            </div>
+        </Page>
+    );
+}
+
 // ─── ROOT EXPORT ──────────────────────────────────────────────────────────────
 export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }, ref) {
-    // Never use SAMPLE_DATA — if data is empty/missing we render nothing meaningful
     if (!data || Object.keys(data).length === 0) {
         return (
             <div ref={ref} style={{ padding: "40px", textAlign: "center", color: "#999", fontFamily: F }}>
@@ -1139,54 +1300,67 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
             id="adroit-quotation-root"
             style={{ backgroundColor: "#ffffff", padding: "0", margin: "0", display: "block" }}
         >
-            {/* Page 1 — Cover */}
-            <CoverPage machine={machine} customer={customer} />
+            {machine.type === "material-handling" ? (
+                <>
+                    <CoverPage machine={machine} customer={customer} />
+                    <MaterialHandlingDetailsPage data={data} pricing={pricing} />
+                    {/* Page 3 — Terms & Conditions */}
+                    <TermsPage />
+                    {/* Page 4 — Warranty */}
+                    <WarrantyPage />
+                </>
+            ) : (
+                <>
+                    {/* Page 1 — Cover */}
+                    <CoverPage machine={machine} customer={customer} />
 
-            {/* Page 2 — Scope of Supply: basic components only (Sr No | Item — desc | Qty) */}
-            <ScopePage
-                components={allComponents}
-                refNo={quot.refNo}
-                date={quot.date}
-                price={pricing.basicPrice || ""}
-                basicInWords={pricing.basicPriceWords || ""}
-                discountedPrice={pricing.discountedPrice || ""}
-                discountedWords={pricing.discountedWords || ""}
-                currency={pricing.currency || "INR"}
-            />
+                    {/* Page 2 — Scope of Supply: basic components only (Sr No | Item — desc | Qty) */}
+                    <ScopePage
+                        components={allComponents}
+                        refNo={quot.refNo}
+                        date={quot.date}
+                        price={pricing.basicPrice || ""}
+                        basicInWords={pricing.basicPriceWords || ""}
+                        discountedPrice={pricing.discountedPrice || ""}
+                        discountedWords={pricing.discountedWords || ""}
+                        currency={pricing.currency || "INR"}
+                    />
 
-            {/* Page 3 — Commercial Scope: pricing block + optional addons table with total */}
-            <CommercialScopePage
-                price={pricing.basicPrice || ""}
-                basicInWords={pricing.basicPriceWords || ""}
-                discountedPrice={pricing.discountedPrice || ""}
-                discountedWords={pricing.discountedWords || ""}
-                optionalItems={optionalItems}
-                addonsTotal={pricing.addonsTotal || ""}
-                currency={pricing.currency || "INR"}
-                grandTotal={(pricing.grandTotal != null && pricing.grandTotal > 0) ? pricing.grandTotal : null}
-                grandTotalName={pricing.grandTotalName || "Total Price (Machine + Optional Equipment)"}
-                grandTotalWords={pricing.grandTotalWords || ""}
-            />
+                    {/* Page 3 — Commercial Scope: pricing block + optional addons table with total */}
+                    <CommercialScopePage
+                        price={pricing.basicPrice || ""}
+                        basicInWords={pricing.basicPriceWords || ""}
+                        discountedPrice={pricing.discountedPrice || ""}
+                        discountedWords={pricing.discountedWords || ""}
+                        optionalItems={optionalItems}
+                        addonsTotal={pricing.addonsTotal || ""}
+                        currency={pricing.currency || "INR"}
+                        grandTotal={(pricing.grandTotal != null && pricing.grandTotal > 0) ? pricing.grandTotal : null}
+                        grandTotalName={pricing.grandTotalName || "Total Price (Machine + Optional Equipment)"}
+                        grandTotalWords={pricing.grandTotalWords || ""}
+                    />
 
-            {/* Page 4 — Indicative Performance */}
-            <PerformancePage perf={perf} />
+                    {/* Page 4 — Indicative Performance */}
+                    <PerformancePage perf={perf} />
 
-            {/* Pages 4+ — One page per selected component */}
-            {annexureComponents.map((item, i) => (
-                <ComponentPage key={item.id || item.name || i} item={item} />
-            ))}
+                    {/* Pages 4+ — One page per selected component */}
+                    {annexureComponents.map((item, i) => (
+                        <ComponentPage key={item.id || item.name || i} item={item} />
+                    ))}
 
-            {/* Electricals / Tower / Exclusions */}
-            <ElectricalsPage electricals={electricals} />
+                    {/* Electricals / Tower / Exclusions */}
+                    <ElectricalsPage electricals={electricals} />
 
-            {/* Optional Equipment + Utilities */}
-            <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} />
+                    {/* Optional Equipment + Utilities */}
+                    <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} />
 
-            {/* Terms & Conditions */}
-            <TermsPage />
+                    {/* Terms & Conditions */}
+                    <TermsPage />
 
-            {/* Warranty + General Conditions */}
-            <WarrantyPage />
+                    {/* Warranty + General Conditions */}
+                    <WarrantyPage />
+                </>
+            )}
         </div>
     );
 }));

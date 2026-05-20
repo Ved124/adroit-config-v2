@@ -33,7 +33,7 @@ export const HEAT_EXCHANGER_ADDONS: HeatExchangerAddon[] = [
     name: "Heat Exchanger",
     type: "heat-exchanger",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/addons/chiller/heat-exchanger.png",
+    image: "/images/Acessories/Heat Exchanger.JPG",
     cardDesc: "Select Capacity (kg).",
     price: 0,
     qty: 1,

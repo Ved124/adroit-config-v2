@@ -207,9 +207,18 @@ function AddonCard({
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
   const formatSize = (s) => (s && s.includes("TR")) ? s : `${s} ${unit}`;
 
-  const [selectedSize, setSelectedSize] = useState(item.metadata?.size || Object.keys(prices)[0] || "");
 
-  // Reset size if brand changes and current size is invalid
+  const [selectedSize, setSelectedSize] = useState(
+    line?.size || line?.metadata?.size || item.metadata?.size || Object.keys(prices)[0] || ""
+  );
+
+  // The EFFECTIVE size shown in UI: always prefer the saved value when selected
+  // This avoids the race condition where useEffects fire in the wrong order
+  const effectiveSize = isSelected
+    ? (line?.size || line?.metadata?.size || selectedSize)
+    : selectedSize;
+
+  // Reset size if brand changes and the current chiller size becomes invalid
   useEffect(() => {
     if (!isSelected && isChiller) {
       const validSizes = Object.keys(prices);
@@ -219,29 +228,30 @@ function AddonCard({
     }
   }, [selectedBrand, prices, isChiller, isSelected, selectedSize]);
 
-  // Sync if already selected
+  // Sync local state when the saved addon changes (e.g. after localStorage loads)
   useEffect(() => {
-    if (isSelected && item.isDynamic && line.metadata) {
-      if (line.metadata.brand) setSelectedBrand(line.metadata.brand);
-      if (line.metadata.size) setSelectedSize(line.metadata.size);
+    if (isSelected && item.isDynamic && line) {
+      const savedSize = line.size || line.metadata?.size;
+      const savedBrand = line.brand || line.metadata?.brand;
+      if (savedSize && savedSize !== selectedSize) setSelectedSize(savedSize);
+      if (savedBrand && savedBrand !== selectedBrand) setSelectedBrand(savedBrand);
     }
-  }, [isSelected, item.isDynamic, line?.metadata]);
+  }, [isSelected, item.isDynamic, line?.size, line?.brand, line?.metadata]);
 
-  // Handle case where brands might change if multiple dynamic items exist
+  // Reset brand/size for unselected non-chiller items only when item identity changes
   useEffect(() => {
     if (!isSelected && item.isDynamic && !isChiller) {
-      if (item.metadata?.size) {
-        setSelectedSize(item.metadata.size);
-      } else {
-        setSelectedSize(Object.keys(prices)[0] || "");
-      }
       setSelectedBrand(brands[0] || "Adroit");
+      setSelectedSize(item.metadata?.size || Object.keys(prices)[0] || "");
     }
-  }, [item.id, item.isDynamic, isSelected, item.metadata?.size, isChiller]);
+    // Only reset when item.id changes (user switches item), not when isSelected changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.id]);
 
   const currentPrice = item.isDynamic
-    ? prices[selectedSize] || 0
+    ? prices[effectiveSize] || 0
     : item.price || 0;
+
 
   const handleAdd = () => {
     if (item.isDynamic) {
@@ -262,8 +272,8 @@ function AddonCard({
         // Example: Air Cooled Air Chiller Prasad make
         customName = `${item.name} ${selectedBrand} make`;
       } else if (isMixerDryer || isMixer) {
-        // Example: Vertical Granule Mixer with Dryer Adroit make
-        customName = `${item.name} ${selectedBrand} make`;
+        // Include capacity in name: e.g. "300 kg Vertical Granule Mixer with Dryer (Adroit make)"
+        customName = `${selectedSize} kg ${item.name} (${selectedBrand} make)`;
       } else if (isHeatExchanger) {
         // Example: Heat Exchanger Adroit make
         customName = `${item.name} ${selectedBrand} make`;
@@ -348,7 +358,7 @@ function AddonCard({
             <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
             <select
               disabled={isSelected}
-              value={selectedSize}
+              value={effectiveSize}
               onChange={(e) => setSelectedSize(e.target.value)}
               className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60"
             >
@@ -360,29 +370,18 @@ function AddonCard({
 
       <div className="mt-auto flex items-center justify-between gap-2 pt-3 border-t border-slate-100 min-h-[50px]">
         <div className="flex gap-2">
-          {/* {!item.isDynamic && (
-            <button
-              type="button"
-              onClick={() =>
-                openModal({
-                  category,
-                  item,
-                })
-              }
-              className="px-3 py-1.5 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-            >
-              Details
-            </button>
-          )} */}
-          {item.isDynamic && isSelected && (
-            <button
-              type="button"
-              onClick={() => removeAddon(item.id)}
-              className="px-3 py-1.5 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-            >
-              Change
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() =>
+              openModal({
+                category,
+                item,
+              })
+            }
+            className="px-3 py-1.5 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+          >
+            Specs
+          </button>
         </div>
 
         <div className="flex items-center gap-2">

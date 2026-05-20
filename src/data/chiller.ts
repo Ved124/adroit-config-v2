@@ -26,26 +26,26 @@ export const CHILLER_BRANDS = ["Prasad", "Con Air"];
 
 // Air Chiller prices based on machine size
 export const PRASAD_WATER_CHILLER_PRICES: { [key: string]: number } = {
-  "1120": 325000,
-  "1350": 325000,
-  "1450": 325000,
-  "1620": 325000,
-  "1870": 325000,
-  "1970": 325000,
-  "2120": 325000,
-  "2370": 325000,
-  "2620": 325000,
+  "3 TR": 365690,
+  "5 TR": 417565,
+  "8 TR": 536395,
+  "9 TR": 636285,
+  "10.5 TR": 731445,
+  "12 TR": 842700,
+  "13.5 TR": 885310,
+  "18 TR": 1083200,
+  "22 TR": 1203975,
 };
 
 // Water Chiller prices based on machine size
 export const PRASAD_AIR_CHILLER_PRICES: { [key: string]: number } = {
-  "18 TR": 530145,
-  "27 TR": 597465,
-  "41 TR": 765000,
-  "54 TR": 908820,
-  "60 TR": 1018300,
-  "69 TR": 1093950,
-  "80 TR": 1304325,
+  "PBF 15L": 530145,
+  "PBF 20L": 597465,
+  "PBF 30L": 765000,
+  "PBF 40L": 908820,
+  "PBF 50L": 1018300,
+  "PBF 60L": 1093950,
+  "PBF 80L": 1304325,
 };
 
 export const CONAIR_AIR_CHILLER_PRICES: { [key: string]: number } = {

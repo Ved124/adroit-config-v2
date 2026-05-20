@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { ConfigContext } from "../src/ConfigContext";
 import { motion } from "framer-motion";
+import { MATERIAL_HANDLING_ADDONS, MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
+import { useEffect as ReactUseEffect } from "react";
 
 function getModelLabel(model, index) {
   if (!model) return `Model ${index + 1}`;
@@ -84,6 +86,12 @@ export default function MachineTypePage() {
     setMarkup,
     setDiscount,
     setScopeOverrides,
+    addAddon,
+    removeAddon,
+    selectedAddons,
+    setAddonQty,
+    openModal,
+    showPrices,
   } = useContext(ConfigContext);
 
   const [modalModel, setModalModel] = useState(null);
@@ -93,6 +101,7 @@ export default function MachineTypePage() {
     { key: "aba", label: "Duoflex ABA / AB" },
     { key: "3layer", label: "Innoflex 3 Layer" },
     { key: "5layer", label: "Innoflex 5 Layer (coming soon)", disabled: true },
+    { key: "material-handling", label: "Material Handling" },
   ];
 
   const activeFamily = machineType || "mono";
@@ -226,205 +235,233 @@ export default function MachineTypePage() {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 mb-6">
-          {/* Left: main machine image + customise button */}
-          <div className="md:w-1/3 w-full">
-            <div className="bg-white rounded-2xl p-6 flex items-center justify-center h-72 shadow-soft border border-slate-100">
-              {activeFamily === "mono" && (
-                <img
-                  src="/images/machines/5 layer.png"
-                  alt="Unoflex Monolayer"
-                  className="max-h-60 w-auto object-contain"
+        {activeFamily === "material-handling" ? (
+          <div className="w-full mb-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold text-brand-blue">Material Handling Equipment</h2>
+              <button
+                onClick={() => router.push("/summary")}
+                className="px-6 py-2 rounded-xl bg-brand-blue text-white text-sm font-bold shadow-md hover:bg-brand-dark transition-all"
+              >
+                Go to Summary →
+              </button>
+            </div>
+            <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {MATERIAL_HANDLING_ADDONS.filter(item => item.type !== "hopper-loader").map(item => (
+                <MaterialHandlingCard
+                  key={item.id}
+                  item={item}
+                  selectedAddons={selectedAddons}
+                  addAddon={addAddon}
+                  removeAddon={removeAddon}
+                  setAddonQty={setAddonQty}
+                  openModal={openModal}
+                  showPrices={showPrices}
                 />
-              )}
-              {activeFamily === "aba" && (
-                <img
-                  src="/images/machines/5 layer.png"
-                  alt="Duoflex ABA/AB"
-                  className="max-h-60 w-auto object-contain"
-                />
-              )}
-              {activeFamily === "3layer" && (
-                <img
-                  src="/images/machines/5 layer.png"
-                  alt="Innoflex 3 Layer"
-                  className="max-h-60 w-auto object-contain"
-                />
-              )}
-              {activeFamily === "5layer" && (
-                <img
-                  src="/images/machines/5 layer.png"
-                  alt="Innoflex 5 Layer"
-                  className="max-h-60 w-auto object-contain"
-                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col md:flex-row gap-8 mb-6">
+            {/* Left: main machine image + customise button */}
+            <div className="md:w-1/3 w-full">
+              <div className="bg-white rounded-2xl p-6 flex items-center justify-center h-72 shadow-soft border border-slate-100">
+                {activeFamily === "mono" && (
+                  <img
+                    src="/images/machines/5 layer.png"
+                    alt="Unoflex Monolayer"
+                    className="max-h-60 w-auto object-contain"
+                  />
+                )}
+                {activeFamily === "aba" && (
+                  <img
+                    src="/images/machines/5 layer.png"
+                    alt="Duoflex ABA/AB"
+                    className="max-h-60 w-auto object-contain"
+                  />
+                )}
+                {activeFamily === "3layer" && (
+                  <img
+                    src="/images/machines/5 layer.png"
+                    alt="Innoflex 3 Layer"
+                    className="max-h-60 w-auto object-contain"
+                  />
+                )}
+                {activeFamily === "5layer" && (
+                  <img
+                    src="/images/machines/5 layer.png"
+                    alt="Innoflex 5 Layer"
+                    className="max-h-60 w-auto object-contain"
+                  />
+                )}
+              </div>
+              <button
+                onClick={handleCustomiseYourself}
+                className="mt-4 w-full rounded-xl bg-white border-2 border-dashed border-slate-300 text-slate-600 hover:border-brand-blue hover:text-brand-blue text-sm font-medium py-3 transition-colors duration-200"
+              >
+                Customize this family yourself
+              </button>
+            </div>
+
+            {/* Right: list of models */}
+            <div className="flex-1">
+              <h2 className="text-xl font-bold mb-4 text-brand-blue">
+                Available Models ({machineModels.length})
+              </h2>
+
+              {machineModels.length === 0 ? (
+                <div className="text-sm text-slate-500 italic">
+                  No CSV models loaded for this family yet.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4">
+                  {/* 1. Standard Models */}
+                  {activeFamily === "3layer" && (
+                    <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-2 mb-1">
+                      Standard Models
+                    </h3>
+                  )}
+
+                  {machineModels
+                    .filter((m) => !m.isIbc)
+                    .map((model, index) => {
+                      // Find actual index in original array for handleSelectModel
+                      const originalIndex = machineModels.findIndex((m) => m.code === model.code);
+                      const label = getModelLabel(model, originalIndex);
+                      const highlights = getModelHighlights(model);
+                      const isActive = originalIndex === machineModelIndex;
+
+                      return (
+                        <motion.div
+                          whileHover={{ scale: 1.01 }}
+                          key={model.code || index}
+                          className={[
+                            "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
+                            isActive
+                              ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
+                              : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
+                          ].join(" ")}
+                          onClick={() => handleSelectModel(model, originalIndex)}
+                        >
+                          <div className="flex items-center justify-between gap-4">
+                            <div>
+                              <div className="font-bold text-base mb-2 text-slate-800 group-hover:text-brand-blue transition-colors">
+                                {label}
+                              </div>
+                              <div className="text-xs text-slate-500 space-y-1.5">
+                                {highlights.map((line, i) => (
+                                  <div key={i} className="flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
+                                    {line}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex flex-col gap-2 shrink-0">
+                              <button
+                                type="button"
+                                className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleSelectModel(model, originalIndex);
+                                }}
+                              >
+                                Select
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setModalModel({ model, label });
+                                }}
+                                className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+                              >
+                                Details
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+
+                  {/* 2. IBC Models Section */}
+                  {activeFamily === "3layer" && machineModels.some(m => m.isIbc) && (
+                    <>
+                      <h3 className="text-sm font-semibold text-brand-blue uppercase tracking-wider mt-8 mb-1 border-b border-brand-blue/20 pb-2">
+                        IBC Models
+                      </h3>
+                      {machineModels
+                        .filter((m) => m.isIbc)
+                        .map((model, index) => {
+                          const originalIndex = machineModels.findIndex((m) => m.code === model.code);
+                          const label = getModelLabel(model, originalIndex);
+                          const highlights = getModelHighlights(model);
+                          const isActive = originalIndex === machineModelIndex;
+
+                          return (
+                            <motion.div
+                              whileHover={{ scale: 1.01 }}
+                              key={model.code || index}
+                              className={[
+                                "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
+                                isActive
+                                  ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
+                                  : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
+                              ].join(" ")}
+                              onClick={() => handleSelectModel(model, originalIndex)}
+                            >
+                              <div className="flex items-center justify-between gap-4">
+                                <div>
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <div className="font-bold text-base text-slate-800 group-hover:text-brand-blue transition-colors">
+                                      {label}
+                                    </div>
+                                    <span className="px-2 py-0.5 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-tight">
+                                      IBC Line
+                                    </span>
+                                  </div>
+                                  <div className="text-xs text-slate-500 space-y-1.5">
+                                    {highlights.map((line, i) => (
+                                      <div key={i} className="flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
+                                        {line}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                                <div className="flex flex-col gap-2 shrink-0">
+                                  <button
+                                    type="button"
+                                    className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleSelectModel(model, originalIndex);
+                                    }}
+                                  >
+                                    Select
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setModalModel({ model, label });
+                                    }}
+                                    className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+                                  >
+                                    Details
+                                  </button>
+                                </div>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                    </>
+                  )}
+                </div>
               )}
             </div>
-            <button
-              onClick={handleCustomiseYourself}
-              className="mt-4 w-full rounded-xl bg-white border-2 border-dashed border-slate-300 text-slate-600 hover:border-brand-blue hover:text-brand-blue text-sm font-medium py-3 transition-colors duration-200"
-            >
-              Customize this family yourself
-            </button>
           </div>
-
-          {/* Right: list of models */}
-          <div className="flex-1">
-            <h2 className="text-xl font-bold mb-4 text-brand-blue">
-              Available Models ({machineModels.length})
-            </h2>
-
-            {machineModels.length === 0 ? (
-              <div className="text-sm text-slate-500 italic">
-                No CSV models loaded for this family yet.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4">
-                {/* 1. Standard Models */}
-                {activeFamily === "3layer" && (
-                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-2 mb-1">
-                    Standard Models
-                  </h3>
-                )}
-                
-                {machineModels
-                  .filter((m) => !m.isIbc)
-                  .map((model, index) => {
-                    // Find actual index in original array for handleSelectModel
-                    const originalIndex = machineModels.findIndex((m) => m.code === model.code);
-                    const label = getModelLabel(model, originalIndex);
-                    const highlights = getModelHighlights(model);
-                    const isActive = originalIndex === machineModelIndex;
-
-                    return (
-                      <motion.div
-                        whileHover={{ scale: 1.01 }}
-                        key={model.code || index}
-                        className={[
-                          "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
-                          isActive
-                            ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
-                            : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
-                        ].join(" ")}
-                        onClick={() => handleSelectModel(model, originalIndex)}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div>
-                            <div className="font-bold text-base mb-2 text-slate-800 group-hover:text-brand-blue transition-colors">
-                              {label}
-                            </div>
-                            <div className="text-xs text-slate-500 space-y-1.5">
-                              {highlights.map((line, i) => (
-                                <div key={i} className="flex items-center gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
-                                  {line}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-2 shrink-0">
-                            <button
-                              type="button"
-                              className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleSelectModel(model, originalIndex);
-                              }}
-                            >
-                              Select
-                            </button>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setModalModel({ model, label });
-                              }}
-                              className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-                            >
-                              Details
-                            </button>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-
-                {/* 2. IBC Models Section */}
-                {activeFamily === "3layer" && machineModels.some(m => m.isIbc) && (
-                  <>
-                    <h3 className="text-sm font-semibold text-brand-blue uppercase tracking-wider mt-8 mb-1 border-b border-brand-blue/20 pb-2">
-                      IBC Models
-                    </h3>
-                    {machineModels
-                      .filter((m) => m.isIbc)
-                      .map((model, index) => {
-                        const originalIndex = machineModels.findIndex((m) => m.code === model.code);
-                        const label = getModelLabel(model, originalIndex);
-                        const highlights = getModelHighlights(model);
-                        const isActive = originalIndex === machineModelIndex;
-
-                        return (
-                          <motion.div
-                            whileHover={{ scale: 1.01 }}
-                            key={model.code || index}
-                            className={[
-                              "rounded-xl border p-5 cursor-pointer transition-all duration-200 shadow-sm group",
-                              isActive
-                                ? "border-brand-blue bg-blue-50/50 ring-1 ring-brand-blue"
-                                : "border-slate-200 bg-white hover:border-brand-blue/50 hover:shadow-md",
-                            ].join(" ")}
-                            onClick={() => handleSelectModel(model, originalIndex)}
-                          >
-                            <div className="flex items-center justify-between gap-4">
-                              <div>
-                                <div className="flex items-center gap-2 mb-2">
-                                  <div className="font-bold text-base text-slate-800 group-hover:text-brand-blue transition-colors">
-                                    {label}
-                                  </div>
-                                  <span className="px-2 py-0.5 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-tight">
-                                    IBC Line
-                                  </span>
-                                </div>
-                                <div className="text-xs text-slate-500 space-y-1.5">
-                                  {highlights.map((line, i) => (
-                                    <div key={i} className="flex items-center gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-brand-blue/50"></span>
-                                      {line}
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                              <div className="flex flex-col gap-2 shrink-0">
-                                <button
-                                  type="button"
-                                  className="px-4 py-2 rounded-lg text-xs font-medium bg-brand-blue text-white shadow-sm hover:bg-brand-dark transition-colors"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleSelectModel(model, originalIndex);
-                                  }}
-                                >
-                                  Select
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setModalModel({ model, label });
-                                  }}
-                                  className="px-4 py-2 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-                                >
-                                  Details
-                                </button>
-                              </div>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </motion.main>
 
       {/* DETAILS MODAL for model CSV data - KEEPING DARK THEME AS REQUESTED */}
@@ -489,5 +526,130 @@ export default function MachineTypePage() {
         </div>
       )}
     </div>
+  );
+}
+
+function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, setAddonQty, openModal, showPrices }) {
+  const line = selectedAddons?.find((x) => x.id === item.id) || null;
+  const isSelected = !!line;
+  const qty = line?.qty || 0;
+
+  const isMixerDryer = item.id === "mixer-dryer-dynamic";
+  const isMixer = item.id === "mixer-dynamic";
+
+  const brands = MIXER_DRYER_BRANDS;
+  const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
+
+  let prices = {};
+  if (isMixerDryer) prices = MIXER_DRYER_PRICES;
+  else if (isMixer) prices = MIXER_PRICES;
+
+  const isOutputBased = isMixerDryer || isMixer;
+  const selectorLabel = isOutputBased ? "Output" : "";
+  const unit = "kg/hr";
+  const formatSize = (s) => `${s} ${unit}`;
+
+  const [selectedSize, setSelectedSize] = useState(item.metadata?.size || Object.keys(prices)[0] || "");
+
+  // Sync if already selected
+  ReactUseEffect(() => {
+    if (isSelected && item.isDynamic) {
+      const savedBrand = line.brand || line.metadata?.brand;
+      const savedSize = line.size || line.metadata?.size;
+      if (savedBrand) setSelectedBrand(savedBrand);
+      if (savedSize) setSelectedSize(savedSize);
+    }
+  }, [isSelected, item.isDynamic, line?.brand, line?.size, line?.metadata]);
+
+  ReactUseEffect(() => {
+    if (!isSelected && item.isDynamic) {
+      if (item.metadata?.size) {
+        setSelectedSize(item.metadata.size);
+      } else {
+        setSelectedSize(Object.keys(prices)[0] || "");
+      }
+      setSelectedBrand(brands[0] || "Adroit");
+    }
+  }, [item.id, item.isDynamic, isSelected, item.metadata?.size]);
+
+  const currentPrice = item.isDynamic ? prices[selectedSize] || 0 : item.price || 0;
+
+  const handleAdd = () => {
+    if (item.isDynamic) {
+      const customName = `${item.name} ${selectedBrand} make`;
+      addAddon("Material Handling", item, {
+        brand: selectedBrand,
+        size: selectedSize,
+        price: currentPrice,
+        customName: customName,
+        techDesc: {
+          ...item.techDesc,
+          "Brand": selectedBrand,
+          [selectorLabel]: formatSize(selectedSize),
+        }
+      });
+    } else {
+      addAddon("Material Handling", item);
+    }
+  };
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.01 }}
+      className={`rounded-xl border p-4 bg-white transition-all duration-200 flex flex-col shadow-sm hover:shadow-md ${isSelected
+        ? "border-brand-blue ring-1 ring-brand-blue bg-blue-50/30"
+        : "border-slate-200"
+        }`}
+    >
+      <div className="flex gap-4">
+        <div className="w-20 h-20 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
+          {item.image ? (
+            <img src={item.image} alt={item.name} className="w-full h-full object-contain p-1" />
+          ) : (
+            <span className="text-[10px] text-slate-400 font-medium">No image</span>
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-bold text-slate-800 truncate" title={item.name}>{item.name}</div>
+          {showPrices && (
+            <div className="text-xs font-bold text-emerald-600 mt-1">₹{currentPrice.toLocaleString("en-IN")}</div>
+          )}
+          <div className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">{item.cardDesc || item.shortDesc || item.desc || ""}</div>
+        </div>
+      </div>
+
+      {item.isDynamic && (
+        <div className="mt-4 grid grid-cols-2 gap-2 p-2 bg-slate-50 rounded-lg border border-slate-100">
+          <div className="flex flex-col gap-1">
+            <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
+            <select disabled={isSelected} value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60">
+              {brands.map(b => <option key={b} value={b}>{b}</option>)}
+            </select>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
+            <select disabled={isSelected} value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)} className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60">
+              {Object.keys(prices).map(s => <option key={s} value={s}>{formatSize(s)}</option>)}
+            </select>
+          </div>
+        </div>
+      )}
+
+      <div className="mt-auto flex items-center justify-between gap-2 pt-3 border-t border-slate-100 min-h-[50px]">
+        <div className="flex gap-2">
+          <button type="button" onClick={() => openModal({ category: "Material Handling", item })} className="px-3 py-1.5 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">Specs</button>
+        </div>
+        <div className="flex items-center gap-2">
+          {isSelected && !item.isDynamic && (
+            <div className="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden">
+              <button type="button" onClick={() => setAddonQty(item.id, Math.max(1, (qty || 1) - 1))} className="w-7 h-7 flex items-center justify-center text-slate-600 hover:bg-slate-50 text-xs font-bold">−</button>
+              <div className="text-xs w-6 text-center font-medium text-slate-800 border-x border-slate-200 h-7 flex items-center justify-center">{qty}</div>
+              <button type="button" onClick={() => setAddonQty(item.id, (qty || 1) + 1)} className="w-7 h-7 flex items-center justify-center text-slate-600 hover:bg-slate-50 text-xs font-bold">+</button>
+            </div>
+          )}
+          <button type="button" onClick={() => isSelected ? removeAddon(item.id) : handleAdd()} className={`px-4 py-1.5 rounded-lg text-[11px] font-bold shadow-sm transition-colors ${isSelected ? "bg-red-50 text-red-600 hover:bg-red-100 border border-red-100" : "bg-brand-blue text-white hover:bg-brand-dark"}`}>{isSelected ? "Remove" : "Add"}</button>
+        </div>
+      </div>
+    </motion.div>
   );
 }

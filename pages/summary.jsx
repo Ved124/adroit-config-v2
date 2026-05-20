@@ -26,6 +26,10 @@ const PDFDownloadLink = dynamic(
 );
 import { MasterQuotationPDF } from '../src/components/quotation/ProfessionalPDF/MasterQuotationPDF';
 
+// Module-level cache for heavy client-side libraries to avoid ChunkLoadErrors in Next.js dev server hot-reloads
+let html2canvasModule = null;
+let jsPDFModule = null;
+
 // ─── FORMAT HELPERS ───────────────────────────────────────────────────────────
 
 /** Format a price based on currency (INR/USD) */
@@ -248,6 +252,11 @@ function buildProposalData({
     const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
     const isLoadcell = item.id === "addon-loadcell-tension";
     const isGrandTotal = item.id === "grand-total-line";
+    const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
+
+    if (machineType === "material-handling" && isMixer) {
+      return false;
+    }
 
     return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;
   });
@@ -685,33 +694,127 @@ function buildProposalData({
       state: customer?.state || "", gst: customer?.gst || "",
     },
     quotation: {
-      refNo: customer?.quotationRef || customer?.ref || "DRAFT",
+      refNo: (() => {
+        const rawRef = customer?.quotationRef || customer?.ref;
+        if (rawRef && !rawRef.startsWith("AET/") && rawRef !== "Loading...") {
+          return rawRef;
+        }
+        if (machineType === "material-handling") {
+          const region = customer?.region || "DOM";
+          return `AE/${region}/MIX/01`;
+        }
+        return `AE/${customer?.region || 'DOM'}/${(customRollerWidth || '').replace(/[^\d]/g, '') || '0000'}/01`;
+      })(),
       date: quotationDate || new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" }),
     },
-    machine: {
-      type: machineType || "3layer",
-      family: m.family || displaySeries,
-      series: displaySeries,
-      fullName: displayType,
-      code: machineCode,
-      title_line: `${displayType} ${machineCode}`,
-      layflat_width: layflatWidth || "",
-      coverImage: `/images/machines/5 layer.png`,
-    },
-    indicative_performance: {
-      product: displayProduct,
-      max_output: maxOutput,
-      layflat_width: layflatWidth,
-      die_size: dieSize,
-      thickness_range: thicknessRange,
-      thickness_variation: thicknessVariation,
-      raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
-    },
+    machine: (() => {
+      const baseMachine = {
+        type: machineType || "3layer",
+        family: m.family || displaySeries,
+        series: displaySeries,
+        fullName: displayType,
+        code: machineCode,
+        title_line: `${displayType} ${machineCode}`,
+        layflat_width: layflatWidth || "",
+        coverImage: (() => {
+          if (machineType === "material-handling") {
+            const mixerAddon = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+            return mixerAddon?.image || "/images/Acessories/Vertical Granule Mixer with Dryer.JPG";
+          }
+          return `/images/machines/5 layer.png`;
+        })(),
+      };
+
+      if (machineType === "material-handling") {
+        const allMixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+
+        // Generate a model code for each selected mixer, join with " | "
+        const allCodes = allMixerAddons.map(a => {
+          const isMD = a.id === "mixer-dryer-dynamic";
+          const sz = a.size || a.metadata?.size || "";
+          const prefix = isMD ? "VMD" : "VM";
+          return sz ? `${prefix}-${sz}` : prefix;
+        });
+        const mixerCode = allCodes.join(" | ");
+
+        // Build display name: if both types selected, show "VERTICAL GRANULE MIXER", else specific name
+        const hasWithDryer = allMixerAddons.some(a => a.id === "mixer-dryer-dynamic");
+        const hasWithoutDryer = allMixerAddons.some(a => a.id === "mixer-dynamic");
+        const mixerName = (hasWithDryer && hasWithoutDryer)
+          ? "VERTICAL GRANULE MIXER"
+          : hasWithDryer
+            ? "VERTICAL GRANULE MIXER WITH DRYER"
+            : "VERTICAL GRANULE MIXER";
+
+        return {
+          ...baseMachine,
+          fullName: mixerName,
+          code: mixerCode,
+          title_line: `${mixerName} | ${mixerCode}`,
+        };
+      }
+
+      return baseMachine;
+    })(),
+    indicative_performance: (() => {
+      if (machineType === "material-handling") {
+        const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+        const capacityList = mixerAddons.map(a => {
+          const sz = a.size || a.metadata?.size || "";
+          const isMD = a.id === "mixer-dryer-dynamic";
+          return sz ? `${sz} kg ${isMD ? "(with Dryer)" : "(Mixer)"}` : (a.customName || a.name || "");
+        }).join(", ");
+        return {
+          product: "Plastic Granules / Master Batch",
+          max_output: capacityList || "—",
+          layflat_width: "—",
+          die_size: "—",
+          thickness_range: "—",
+          thickness_variation: "—",
+          raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
+        };
+      }
+      return {
+        product: displayProduct,
+        max_output: maxOutput,
+        layflat_width: layflatWidth,
+        die_size: dieSize,
+        thickness_range: thicknessRange,
+        thickness_variation: thicknessVariation,
+        raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
+      };
+    })(),
 
     components: finalScope,
     annexure_components: sortedAnnexure,
     optional_items: optItems,
     scope: finalScope,
+    material_handling_mixers: (() => {
+      const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+      return mixerAddons.map(a => ({
+        id: a.id || "",
+        name: a.customName || a.name || "",
+        qty: a.qty || 1,
+        image: a.image || "",
+        metadata: a.metadata || {},
+        price: a.price || 0,
+        size: a.size || a.metadata?.size || "",
+      }));
+    })(),
+    material_handling_mixer: (() => {
+      const a = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+      return a ? {
+        id: a.id || "",
+        name: a.customName || a.name || "",
+        qty: a.qty || 1,
+        image: a.image || "",
+        shortDesc: a.shortDesc || a.cardDesc || "",
+        techDesc: a.techDesc || {},
+        metadata: a.metadata || {},
+        price: a.price || 0,
+        size: a.size || a.metadata?.size || "",
+      } : null;
+    })(),
 
     pricing: {
       basicPrice: basicPriceStr,
@@ -728,6 +831,7 @@ function buildProposalData({
       final_price_inr: Math.round(discount > 0 ? afterDiscount : withMarkup) || null,
       final_price_words: finalPriceWords ? finalPriceWords.replace(/^\(/, '').replace(/\)$/, '') : '',
       currency: currency,
+      rate: rate,
       grandTotal: grandTotalForPdf,       // null if user hasn't clicked "Add to Proposal"
       grandTotalName: grandTotalLineItem?.name || "Total Price (Machine + Optional Equipment)",
       grandTotalWords: grandTotalForPdf ? fmtWords(grandTotalForPdf, currency) : "",
@@ -845,7 +949,21 @@ export default function SummaryPage() {
   } = useContext(ConfigContext);
 
   const [isClient, setIsClient] = useState(false);
-  useEffect(() => { setIsClient(true); }, []);
+  useEffect(() => {
+    setIsClient(true);
+    if (typeof window !== "undefined") {
+      if (!html2canvasModule) {
+        import("html2canvas").then((mod) => {
+          html2canvasModule = mod.default;
+        }).catch(() => {});
+      }
+      if (!jsPDFModule) {
+        import("jspdf").then((mod) => {
+          jsPDFModule = mod.jsPDF || mod.default;
+        }).catch(() => {});
+      }
+    }
+  }, []);
   const [qrUrl, setQrUrl] = useState(null);
   const [showPdfPreview, setShowPdfPreview] = useState(false);
 
@@ -932,6 +1050,11 @@ export default function SummaryPage() {
     const isLoadcell = item.id === "addon-loadcell-tension";
     const isGrandTotal = item.id === "grand-total-line"; // shown separately below table
     const isDieRotation = item.id === "die-rotation-addon";
+    const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
+
+    if (machineType === "material-handling" && isMixer) {
+      return false;
+    }
 
     return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;
   });
@@ -1085,15 +1208,7 @@ export default function SummaryPage() {
               <span className="text-slate-600 whitespace-nowrap">Quotation Ref No.:</span>
               <input
                 type="text"
-                value={
-                  // If user has already typed a custom ref, or we have a saved non-default one, use it.
-                  // Otherwise, show the dynamic AE/[REG]/[ROLLER]/01 format.
-                  (customer?.quotationRef && !customer.quotationRef.startsWith("AET/") && customer.quotationRef !== "Loading...")
-                    ? customer.quotationRef
-                    : (customer?.ref && !customer.ref.startsWith("AET/"))
-                      ? customer.ref
-                      : `AE/${customer?.region || 'DOM'}/${(customRollerWidth || '').replace(/[^\d]/g, '') || '0000'}/01`
-                }
+                value={proposalData?.quotation?.refNo || ""}
                 onChange={handleQuotationRefChange}
                 className="h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue font-mono font-bold"
                 placeholder="e.g. AE/DOM/1350/01"
@@ -1103,72 +1218,76 @@ export default function SummaryPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-slate-500 mb-1">Target Output (kg/hr)</label>
-                <input
-                  type="text"
-                  value={customOutput || ""}
-                  onChange={e => setCustomOutput(e.target.value)}
-                  placeholder={
-                    currentMachineModel?.["Max. Output (kg/hr)"] ||
-                    currentMachineModel?.["OUTPUT"] ||
-                    "e.g. 350 kg/hr"
-                  }
-                  className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                />
-              </div>
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-slate-500 mb-1">
-                  Max. Roller Width ({machineType === 'mono' || machineType === 'aba' ? 'inch' : 'mm'})
-                </label>
-                <input
-                  type="text"
-                  value={customRollerWidth || ""}
-                  onChange={e => {
-                    const val = e.target.value;
-                    setCustomRollerWidth(val);
-                    const num = parseInt(val.replace(/[^\d]/g, ''), 10);
-                    if (!isNaN(num)) {
-                      if (machineType === 'mono' || machineType === 'aba') {
-                        setCustomLayflat(`${num * 25} mm`);
-                      } else {
-                        setCustomLayflat(`${num - 125} mm`);
-                      }
-                      // Also sync the Ref if it follows the AE/REG/ROLLER/ pattern
-                      setCustomer(prev => {
-                        const currentRef = prev.quotationRef || prev.ref || "";
-                        if (!currentRef || currentRef.startsWith("AE/") || currentRef.startsWith("AET/")) {
-                          const region = prev.region || "DOM";
-                          let prefix = "";
-                          if (machineType === "mono") prefix = "U";
-                          else if (machineType === "aba") prefix = "D";
-                          const newRef = `AE/${region}/${prefix}${num}/01`;
-                          return { ...prev, quotationRef: newRef, ref: newRef };
-                        }
-                        return prev;
-                      });
+            {machineType !== "material-handling" && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="flex-1">
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Target Output (kg/hr)</label>
+                  <input
+                    type="text"
+                    value={customOutput || ""}
+                    onChange={e => setCustomOutput(e.target.value)}
+                    placeholder={
+                      currentMachineModel?.["Max. Output (kg/hr)"] ||
+                      currentMachineModel?.["OUTPUT"] ||
+                      "e.g. 350 kg/hr"
                     }
-                  }}
-                  placeholder="e.g. 1350 mm"
-                  className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                />
+                    className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-medium text-slate-500 mb-1">
+                    Max. Roller Width ({machineType === 'mono' || machineType === 'aba' ? 'inch' : 'mm'})
+                  </label>
+                  <input
+                    type="text"
+                    value={customRollerWidth || ""}
+                    onChange={e => {
+                      const val = e.target.value;
+                      setCustomRollerWidth(val);
+                      const num = parseInt(val.replace(/[^\d]/g, ''), 10);
+                      if (!isNaN(num)) {
+                        if (machineType === 'mono' || machineType === 'aba') {
+                          setCustomLayflat(`${num * 25} mm`);
+                        } else {
+                          setCustomLayflat(`${num - 125} mm`);
+                        }
+                        // Also sync the Ref if it follows the AE/REG/ROLLER/ pattern
+                        setCustomer(prev => {
+                          const currentRef = prev.quotationRef || prev.ref || "";
+                          if (!currentRef || currentRef.startsWith("AE/") || currentRef.startsWith("AET/")) {
+                            const region = prev.region || "DOM";
+                            let prefix = "";
+                            if (machineType === "mono") prefix = "U";
+                            else if (machineType === "aba") prefix = "D";
+                            const newRef = `AE/${region}/${prefix}${num}/01`;
+                            return { ...prev, quotationRef: newRef, ref: newRef };
+                          }
+                          return prev;
+                        });
+                      }
+                    }}
+                    placeholder="e.g. 1350 mm"
+                    className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Max. Layflat Width (mm)</label>
+                  <input
+                    type="text"
+                    value={customLayflat || ""}
+                    onChange={e => setCustomLayflat(e.target.value)}
+                    placeholder="e.g. 1225 mm"
+                    className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                  />
+                </div>
               </div>
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-slate-500 mb-1">Max. Layflat Width (mm)</label>
-                <input
-                  type="text"
-                  value={customLayflat || ""}
-                  onChange={e => setCustomLayflat(e.target.value)}
-                  placeholder="e.g. 1225 mm"
-                  className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                />
-              </div>
-            </div>
+            )}
 
-            <p className="text-sm text-slate-600">{machineHeading || "Configured machine"}</p>
+            {machineType !== "material-handling" && (
+              <p className="text-sm text-slate-600 mt-4">{machineHeading || "Configured machine"}</p>
+            )}
 
-            {proposalData?.machine?.code && (
+            {machineType !== "material-handling" && proposalData?.machine?.code && (
               <p className="text-xs text-slate-400 font-mono">
                 Proposal model code: <strong className="text-slate-600">{proposalData.machine.code}</strong>
               </p>
@@ -1176,12 +1295,13 @@ export default function SummaryPage() {
           </div>
 
           {/* ── SCOPE OF SUPPLY EDITOR ─────────────────────────────────── */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-brand-blue">Scope of Supply</h3>
-              <span className="text-xs text-slate-400">Auto-generated • edit to override</span>
-            </div>
-            <div className="rounded-xl border border-slate-200 overflow-hidden">
+          {machineType !== "material-handling" && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-brand-blue">Scope of Supply</h3>
+                <span className="text-xs text-slate-400">Auto-generated • edit to override</span>
+              </div>
+              <div className="rounded-xl border border-slate-200 overflow-hidden">
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="bg-brand-blue text-white">
@@ -1287,6 +1407,7 @@ export default function SummaryPage() {
               </table>
             </div>
           </div>
+          )}
 
           {/* Export buttons */}
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:justify-end mt-2">
@@ -1341,22 +1462,35 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {selected.length === 0 ? (
-                  <tr><td colSpan={2} className="px-3 py-3 text-center text-slate-400">No basic components selected.</td></tr>
-                ) : (
-                  selected.map((item, idx) => (
-                    <tr key={item.id || idx} className="border-t border-slate-100">
-                      <td className="px-3 py-2 align-top text-slate-900">{item.name}</td>
-                      <td className="px-3 py-2 align-top text-right text-slate-900">{item.qty || 1}</td>
-                    </tr>
-                  ))
-                )}
+                {machineType === "material-handling"
+                  ? (() => {
+                      const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+                      if (mixerAddons.length === 0) {
+                        return <tr><td colSpan={2} className="px-3 py-3 text-center text-slate-400">No mixer selected.</td></tr>;
+                      }
+                      return mixerAddons.map((a, i) => (
+                        <tr key={a.id + i} className="border-t border-slate-100">
+                          <td className="px-3 py-2 align-top text-slate-900">{a.customName || a.name}</td>
+                          <td className="px-3 py-2 align-top text-right text-slate-900">{a.qty || 1}</td>
+                        </tr>
+                      ));
+                    })()
+                  : selected.length === 0
+                    ? <tr><td colSpan={2} className="px-3 py-3 text-center text-slate-400">No basic components selected.</td></tr>
+                    : selected.map((item, idx) => (
+                        <tr key={item.id || idx} className="border-t border-slate-100">
+                          <td className="px-3 py-2 align-top text-slate-900">{item.name}</td>
+                          <td className="px-3 py-2 align-top text-right text-slate-900">{item.qty || 1}</td>
+                        </tr>
+                      ))
+                }
               </tbody>
             </table>
           </div>
         </section>
 
         {/* ── OPTIONAL EQUIPMENTS TABLE ─────────────────────────────────── */}
+        {machineType !== "material-handling" && (
         <section className="glass-card p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-brand-blue">Optional Equipments</h3>
@@ -1560,6 +1694,7 @@ export default function SummaryPage() {
             );
           })()}
         </section>
+        )}
 
         {/* ── SELECTED IMAGES ───────────────────────────────────────────── */}
         <section className="glass-card p-6 mb-8">
@@ -1626,8 +1761,8 @@ export default function SummaryPage() {
                     : new Promise(res => { img.onload = res; img.onerror = res; })
                 ));
                 await new Promise(r => setTimeout(r, 200));
-                const html2canvas = (await import("html2canvas")).default;
-                const { jsPDF } = await import("jspdf");
+                const html2canvas = html2canvasModule || (await import("html2canvas")).default;
+                const jsPDF = jsPDFModule || (await import("jspdf")).default;
                 const PAGE_W_PX = 794, PAGE_H_PX = 1123;
                 const A4_W_MM = 210, A4_H_MM = 297;
                 const pageDivs = Array.from(el.children || []).filter(

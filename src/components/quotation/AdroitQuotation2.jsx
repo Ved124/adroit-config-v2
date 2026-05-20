@@ -391,37 +391,39 @@ function CoverPage({ customer, machine, quotation, annexIndex, pageNum, total })
       </div>
 
       {/* Annexure index table */}
-      <div style={{ border: `1.5px solid ${INK}` }}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: "9.5pt",
-            fontFamily: F,
-          }}
-        >
-          <thead>
-            <tr>
-              <th style={{ ...TH, width: "22%", textAlign: "left" }}>Annexure</th>
-              <th style={{ ...TH, textAlign: "left" }}>Description</th>
-              <th style={{ ...TH, width: "12%", textAlign: "center" }}>Page No.</th>
-            </tr>
-          </thead>
-          <tbody>
-            {annexIndex.map((row, i) => (
-              <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : LIGHT }}>
-                <td style={{ ...TD, fontWeight: "bold", color: NAVY }}>
-                  Annexure – {row.num}
-                </td>
-                <td style={TD}>{row.label}</td>
-                <td style={{ ...TD, textAlign: "center", fontWeight: "bold" }}>
-                  {row.page}
-                </td>
+      {annexIndex && annexIndex.length > 0 && (
+        <div style={{ border: `1.5px solid ${INK}` }}>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "9.5pt",
+              fontFamily: F,
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ ...TH, width: "22%", textAlign: "left" }}>Annexure</th>
+                <th style={{ ...TH, textAlign: "left" }}>Description</th>
+                <th style={{ ...TH, width: "12%", textAlign: "center" }}>Page No.</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {annexIndex.map((row, i) => (
+                <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : LIGHT }}>
+                  <td style={{ ...TD, fontWeight: "bold", color: NAVY }}>
+                    Annexure – {row.num}
+                  </td>
+                  <td style={TD}>{row.label}</td>
+                  <td style={{ ...TD, textAlign: "center", fontWeight: "bold" }}>
+                    {row.page}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </Page2>
   );
 }
@@ -1177,6 +1179,110 @@ function WarrantyPage2({ pageNum, total }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// Material Handling Details Page 2
+function MaterialHandlingDetailsPage2({ data, pricing, pageNum, total }) {
+  const mixer = data?.material_handling_mixer;
+  const isDryer = mixer?.id === "mixer-dryer-dynamic" || mixer?.name?.toLowerCase().includes("dryer");
+
+  return (
+    <Page2 pageNum={pageNum} total={total}>
+      {/* Ref & Date bar */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          borderBottom: `2px solid ${NAVY}`,
+          paddingBottom: "6px",
+          marginBottom: "14px",
+          marginTop: "6px",
+        }}
+      >
+        <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: NAVY }}>
+          Ref.: {data.quotation?.refNo || "DRAFT"}
+        </div>
+        <div style={{ fontWeight: "bold", fontSize: "10pt", fontFamily: F, color: DIM }}>
+          Date: {data.quotation?.date || ""}
+        </div>
+      </div>
+
+      <div style={{ padding: "10px 10px 0 10px" }}>
+        <div style={{
+          fontWeight: "bold",
+          fontSize: "12pt",
+          fontFamily: F,
+          color: NAVY,
+          marginBottom: "14px",
+          borderBottom: `2.5px solid ${NAVY}`,
+          paddingBottom: "4px",
+          width: "40%",
+        }}>
+          GENERAL INFORMATION:
+        </div>
+
+        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+          Vertical Mixer is for mixing Plastic granules, Master batch etc.
+        </div>
+
+        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
+          The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry.
+        </div>
+
+        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+          The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min.
+        </div>
+
+        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+          The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
+        </div>
+
+        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
+          Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
+        </div>
+
+        <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 20px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+          <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
+          <li><b>Switch Gear:</b> SCHNEIDER</li>
+          <li><b>Temp. Controller:</b> MULTISPAN</li>
+          <li><b>Material:</b> MS painted.</li>
+          <li><b>Drive:</b> Through belt and Pulley.</li>
+        </ul>
+
+        <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
+          Important:
+        </div>
+        <ol style={{ paddingLeft: "20px", margin: "0 0 25px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+          <li>Power supply--*: Three Phase (Wire/Terminal No. 1,2 & 3) and Neutral (Wire No. 4)</li>
+          <li>The screw rotation should be clockwise if you stand in front of tray.</li>
+          <li>Mixing time has set to 15 min. It can change from timer.</li>
+        </ol>
+
+        {pricing?.basicPrice && (
+          <div style={{ margin: "25px 0 20px 0", fontSize: "10.5pt", fontFamily: F, color: INK, lineHeight: "2" }}>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <span style={{ color: NAVY }}>\u2756</span>
+              <span>
+                Grand Total Price of {isDryer ? "Vertical Granule Mixer with Dryer" : "Vertical Granule Mixer"}:{" "}
+                <b style={{ color: "#c00", fontSize: "11pt" }}>{pricing.basicPrice}</b>
+              </span>
+            </div>
+            {pricing.basicPriceWords && (
+              <div style={{ fontSize: "9.5pt", color: DIM, fontStyle: "italic", marginLeft: "20px", marginTop: "2px" }}>
+                {pricing.basicPriceWords}
+              </div>
+            )}
+          </div>
+        )}
+
+        <div style={{ borderTop: `1.5px solid ${NAVY}`, margin: "15px 0 10px 0" }} />
+
+        <div style={{ fontSize: "10.5pt", fontFamily: F, color: NAVY, fontWeight: "bold", textAlign: "center" }}>
+          Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
+        </div>
+      </div>
+    </Page2>
+  );
+}
+
 // ROOT EXPORT
 // ═══════════════════════════════════════════════════════════════════════════════
 export const AdroitQuotation2 = memo(
@@ -1256,14 +1362,37 @@ export const AdroitQuotation2 = memo(
         id="adroit-quotation-2-root"
         style={{ backgroundColor: "#fff", padding: 0, margin: 0, display: "block" }}
       >
-        <CoverPage
-          customer={customer}
-          machine={machine}
-          quotation={quot}
-          annexIndex={annexIndex}
-          pageNum={1}
-          total={total}
-        />
+        {machine.type === "material-handling" ? (
+            <>
+                <CoverPage
+                  customer={customer}
+                  machine={machine}
+                  quotation={quot}
+                  annexIndex={[]}
+                  pageNum={1}
+                  total={4}
+                />
+                <MaterialHandlingDetailsPage2
+                  data={data}
+                  pricing={pricing}
+                  pageNum={2}
+                  total={4}
+                />
+                {/* Page 3+ — Terms & Conditions */}
+                <TermsPage2 startPage={3} total={4} />
+                {/* Page 4+ — Warranty */}
+                <WarrantyPage2 pageNum={4} total={4} />
+            </>
+        ) : (
+            <>
+                <CoverPage
+                  customer={customer}
+                  machine={machine}
+                  quotation={quot}
+                  annexIndex={annexIndex}
+                  pageNum={1}
+                  total={total}
+                />
         <GeneralSpecsPage
           machine={machine}
           perf={perf}
@@ -1293,6 +1422,8 @@ export const AdroitQuotation2 = memo(
         ))}
         <TermsPage2 startPage={annex5Page} total={total} />
         <WarrantyPage2 pageNum={annex5Page + 2} total={total} />
+            </>
+        )}
       </div>
     );
   })

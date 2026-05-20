@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import { numberToWords } from "../../../utils/numberToWords";
 
 // COLORS - Modernized Professional Palette
 const C = {
@@ -153,24 +154,28 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                 {isDryer ? "Vertical Granule Mixer with Dryer" : "Vertical Granule Mixer"}
                             </h2>
 
-                            {/* Description */}
-                            <p style={{ fontSize: "10px", color: C.SLATE, lineHeight: "1.65", marginBottom: "12px", textAlign: "justify", flexShrink: 0 }}>
+                            <div style={{ fontSize: "11px", color: C.SLATE, lineHeight: "1.5", marginBottom: "12px", textAlign: "justify", flexShrink: 0 }}>
                                 {isDryer
-                                    ? "High-efficiency vertical granule mixer with integrated dryer unit. Removes moisture from plastic granules using a heater and blower system before processing. Ideal for hygroscopic materials requiring pre-drying. Cycle time is approximately 30–35 minutes for 300 kg capacity."
-                                    : "High-efficiency vertical granule mixer for plastic granules and masterbatch. A rotating screw inside the drum lifts and drops material for thorough, consistent mixing with minimal energy consumption. ABB motors from 1HP to 3HP — the most power-efficient solution in the industry."
+                                    ? "Vertical Mixer is for mixing Plastic granules, Master batch etc. The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry. The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min. The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air. Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material."
+                                    : "Vertical Mixer is for mixing Plastic granules, Master batch etc. The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in industry. The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Generally For 100 kg, it is around 8-10 min, for 200 kg, it is around 15-20 min, For 300 kg, it is around 20-25 min and for 500 kg, it is around 35-40 min. The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air. Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material."
                                 }
-                            </p>
+                            </div>
 
                             {/* Key Specs */}
-                            <table style={{ width: "100%", fontSize: "9.5px", borderCollapse: "collapse", marginBottom: "14px", flexShrink: 0 }}>
+                            <table style={{ width: "100%", fontSize: "11px", borderCollapse: "collapse", marginBottom: "14px", flexShrink: 0 }}>
                                 <tbody>
-                                    {[
+                                    {(isDryer ? [
                                         ["Motor", "ABB (1 HP for 50–100 kg  ·  2 HP for 150–300 kg)"],
                                         ["Switch Gear", "Schneider"],
                                         ["Temp. Controller", "Multispan"],
                                         ["Construction", "MS Painted"],
                                         ["Drive", "Belt & Pulley"],
-                                    ].map(([label, val], i) => (
+                                    ] : [
+                                        ["Motor", "ABB (1 HP for 50–100 kg  ·  2 HP for 150–300 kg)"],
+                                        ["Starter", "DOL Starter"],
+                                        ["Construction", "MS Painted"],
+                                        ["Drive", "Belt & Pulley"],
+                                    ]).map(([label, val], i) => (
                                         <tr key={i} style={{ borderBottom: `1px solid ${C.BORDER}` }}>
                                             <td style={{ padding: "4px 10px 4px 0", fontWeight: "700", color: C.DARK, width: "120px", whiteSpace: "nowrap" }}>{label}</td>
                                             <td style={{ padding: "4px 0", color: C.SLATE }}>{val}</td>
@@ -180,47 +185,79 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                             </table>
 
                             {/* Configuration & Pricing table */}
-                            {mixers.length > 0 && (
-                                <div style={{ flexShrink: 0, marginBottom: "12px" }}>
-                                    <h3 style={{
-                                        fontSize: "10px", fontWeight: "800", textTransform: "uppercase",
-                                        color: C.DARK, borderBottom: `1.5px solid ${C.DARK}`,
-                                        paddingBottom: "3px", marginBottom: "6px"
-                                    }}>
-                                        Configuration &amp; Pricing
-                                    </h3>
-                                    <table style={{ width: "100%", fontSize: "10px", borderCollapse: "collapse" }}>
-                                        <thead>
-                                            <tr style={{ backgroundColor: C.BG_GRAY }}>
-                                                <th style={{ textAlign: "left", padding: "5px 8px 5px 0", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Item</th>
-                                                <th style={{ textAlign: "center", padding: "5px 8px", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Capacity</th>
-                                                <th style={{ textAlign: "center", padding: "5px 8px", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Qty</th>
-                                                <th style={{ textAlign: "right", padding: "5px 0", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Unit Price</th>
-                                                <th style={{ textAlign: "right", padding: "5px 0", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {mixers.map((m, i) => {
-                                                const cap = m.size || m.metadata?.size || "—";
-                                                const isMD = m.id === "mixer-dryer-dynamic";
-                                                const label = isMD ? "Mixer with Dryer" : "Vertical Mixer";
-                                                const unitPrice = m.price || 0;
-                                                const qty = m.qty || 1;
-                                                const total = unitPrice * qty;
-                                                return (
-                                                    <tr key={i} style={{ borderBottom: `1px solid ${C.BORDER}` }}>
-                                                        <td style={{ padding: "5px 8px 5px 0", color: C.DARK, fontWeight: "600" }}>{label}</td>
-                                                        <td style={{ padding: "5px 8px", textAlign: "center", color: C.SLATE }}>{cap} kg</td>
-                                                        <td style={{ padding: "5px 8px", textAlign: "center", color: C.SLATE }}>{qty}</td>
-                                                        <td style={{ padding: "5px 0", textAlign: "right", color: C.SLATE }}>{formatCurrency(unitPrice, pricing.currency)}</td>
-                                                        <td style={{ padding: "5px 0", textAlign: "right", fontWeight: "700", color: C.DARK }}>{formatCurrency(total, pricing.currency)}</td>
-                                                    </tr>
-                                                );
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
+                            {mixers.length > 0 && (() => {
+                                // basic_price_inr is already in display currency (INR or USD)
+                                const totalBasicDisplay = pricing.basic_price_inr || 0;
+                                const totalRaw = mixers.reduce((s, m) => s + (m.price || 0) * (m.qty || 1), 0);
+                                return (
+                                    <div style={{ flexShrink: 0, marginBottom: "12px" }}>
+                                        <h3 style={{
+                                            fontSize: "10px", fontWeight: "800", textTransform: "uppercase",
+                                            color: C.DARK, borderBottom: `1.5px solid ${C.DARK}`,
+                                            paddingBottom: "3px", marginBottom: "6px"
+                                        }}>
+                                            Configuration &amp; Pricing
+                                        </h3>
+                                        <table style={{ width: "100%", fontSize: "10px", borderCollapse: "collapse" }}>
+                                            <thead>
+                                                <tr style={{ backgroundColor: C.BG_GRAY }}>
+                                                    <th style={{ textAlign: "left", padding: "5px 8px 5px 0", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Item</th>
+                                                    <th style={{ textAlign: "center", padding: "5px 8px", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Capacity</th>
+                                                    <th style={{ textAlign: "center", padding: "5px 8px", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Qty</th>
+                                                    <th style={{ textAlign: "right", padding: "5px 0", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Unit Price</th>
+                                                    <th style={{ textAlign: "right", padding: "5px 0", color: C.MUTED, fontWeight: "700", textTransform: "uppercase", fontSize: "8px" }}>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {mixers.map((m, i) => {
+                                                    const cap = m.size || m.metadata?.size || "—";
+                                                    const isMD = m.id === "mixer-dryer-dynamic";
+                                                    const label = isMD ? "Mixer with Dryer" : "Vertical Mixer";
+                                                    const qty = m.qty || 1;
+                                                    // Prorate display total for this mixer (basic_price_inr already in display currency)
+                                                    const rawItemTotal = (m.price || 0) * qty;
+                                                    const proportion = totalRaw > 0 ? rawItemTotal / totalRaw : 1 / mixers.length;
+                                                    const mixerDisplayTotal = mixers.length === 1
+                                                        ? totalBasicDisplay   // single mixer: use exact value
+                                                        : Math.round(totalBasicDisplay * proportion);
+                                                    const mixerDisplayUnit = qty > 1 ? Math.round(mixerDisplayTotal / qty) : mixerDisplayTotal;
+                                                    
+                                                    // Generate display words
+                                                    let displayWords = "";
+                                                    if (mixers.length === 1) {
+                                                        displayWords = pricing.basicPriceWords || "";
+                                                    } else {
+                                                        const isUSD = pricing.currency === "USD";
+                                                        try {
+                                                            const w = numberToWords(mixerDisplayTotal, isUSD ? "US" : "IN");
+                                                            displayWords = w ? (isUSD ? `(${w} Dollars Only)`.toUpperCase() : `(INR ${w} Only)`.toUpperCase()) : "";
+                                                        } catch { displayWords = ""; }
+                                                    }
+
+                                                    return (
+                                                        <React.Fragment key={i}>
+                                                            <tr style={{ borderBottom: displayWords ? "none" : `1px solid ${C.BORDER}` }}>
+                                                                <td style={{ padding: "5px 8px 5px 0", color: C.DARK, fontWeight: "600" }}>{label}</td>
+                                                                <td style={{ padding: "5px 8px", textAlign: "center", color: C.SLATE }}>{cap} kg</td>
+                                                                <td style={{ padding: "5px 8px", textAlign: "center", color: C.SLATE }}>{qty}</td>
+                                                                <td style={{ padding: "5px 0", textAlign: "right", color: C.SLATE }}>{formatCurrency(mixerDisplayUnit, pricing.currency)}</td>
+                                                                <td style={{ padding: "5px 0", textAlign: "right", fontWeight: "700", color: C.DARK }}>{formatCurrency(mixerDisplayTotal, pricing.currency)}</td>
+                                                            </tr>
+                                                            {displayWords && (
+                                                                <tr style={{ borderBottom: `1px solid ${C.BORDER}` }}>
+                                                                    <td colSpan={5} style={{ padding: "0 0 5px 0", fontSize: "8px", fontStyle: "italic", color: C.MUTED, textAlign: "right" }}>
+                                                                        {displayWords}
+                                                                    </td>
+                                                                </tr>
+                                                            )}
+                                                        </React.Fragment>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                );
+                            })()}
 
                         </div>
 
@@ -324,8 +361,8 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     )}
                 </div>
 
-                {/* ── GRAND TOTAL (material-handling only) — outside body, always visible ── */}
-                {isMaterialHandling && (
+                {/* ── PRICING (material-handling only) — outside body, always visible ── */}
+                {isMaterialHandling && pricing.finalPrice && pricing.finalPrice !== pricing.basicPrice && (
                     <div style={{
                         flexShrink: 0,
                         borderTop: `2px solid ${C.RED}`,
@@ -341,15 +378,15 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                                 </div>
                             </div>
                             <div style={{ textAlign: "right" }}>
-                                <div style={{ fontSize: "8px", fontWeight: "700", color: C.MUTED, textTransform: "uppercase", marginBottom: "3px", letterSpacing: "0.05em" }}>
-                                    Grand Total ({pricing.currency || "INR"})
+                                <div style={{ fontSize: "8px", fontWeight: "800", color: C.RED, textTransform: "uppercase", marginBottom: "3px", letterSpacing: "0.05em" }}>
+                                    Final Price After Discount ({pricing.currency || "INR"})
                                 </div>
                                 <div style={{ fontSize: "22px", fontWeight: "900", color: C.RED, lineHeight: 1 }}>
-                                    {pricing.basicPrice || formatCurrency(pricing.withMarkup, pricing.currency)}
+                                    {pricing.finalPrice}
                                 </div>
-                                {pricing.basicPriceWords && (
+                                {pricing.finalPriceWords && (
                                     <div style={{ fontSize: "8px", color: C.MUTED, fontStyle: "italic", marginTop: "3px", maxWidth: "230px", textAlign: "right" }}>
-                                        {pricing.basicPriceWords}
+                                        {pricing.finalPriceWords}
                                     </div>
                                 )}
                             </div>
@@ -365,11 +402,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     justifyContent: "space-between", alignItems: "flex-end",
                 }}>
                     <div style={{ fontSize: "7.5px", color: C.MUTED, maxWidth: "60%", lineHeight: 1.3 }}>
-                        {isMaterialHandling ? (
-                            <strong style={{ color: C.DARK, fontWeight: "800" }}>
-                                Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
-                            </strong>
-                        ) : (
+                        {!isMaterialHandling && (
                             <>
                                 <strong style={{ color: C.DARK, fontWeight: "800" }}>TERMS:</strong> Ex-Works Ahmedabad. Taxes extra.<br />
                                 <strong style={{ color: C.DARK, fontWeight: "800" }}>OFFER:</strong> Budgetary Proposal. Validity: 30 Days.

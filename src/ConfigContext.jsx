@@ -36,7 +36,7 @@ import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
 import { BIMETALLIC_BASE, SCREW_SIZES } from "./data/bimetallic";
 import { WINDER_ADDONS } from "./data/winderAddons";
 import { DIE_ROTATION_ADDON } from "./data/dieAddons";
-
+import { EPC_COMPONENTS } from "./data/epc";
 import { MODEL_PRESETS } from "./data/modelPresets";
 
 import { Modal } from "../components/ui/Modal"; // ← keep your existing Modal
@@ -109,6 +109,7 @@ export const ADDONS_DATA = {
   "Extruder Addons": [BIMETALLIC_BASE],
   "Winder Addons": WINDER_ADDONS,
   // "MDO Unit": MDO_ADDONS,
+  "EPC": EPC_COMPONENTS,
 };
 
 
@@ -125,19 +126,19 @@ export function ConfigProvider({ children }) {
       if (!html2pdfModule) {
         import("html2pdf.js").then((mod) => {
           html2pdfModule = mod.default;
-        }).catch(() => {});
+        }).catch(() => { });
       }
 
       if (!html2canvasModule) {
         import("html2canvas").then((mod) => {
           html2canvasModule = mod.default;
-        }).catch(() => {});
+        }).catch(() => { });
       }
 
       if (!jsPDFModule) {
         import("jspdf").then((mod) => {
           jsPDFModule = mod.default;
-        }).catch(() => {});
+        }).catch(() => { });
       }
     }
   }, []);
@@ -163,11 +164,11 @@ export function ConfigProvider({ children }) {
   const [quoteTemplate, setQuoteTemplate] = useState("v2");
   const [showPricingFields, setShowPricingFields] = useState(false);
   const [presetBasePrice, setPresetBasePrice] = useState(0); // ← NEW: stores fixed price from modelPreset
-  
+
   // --- Export Conversion States ---
   const [conversionRate, setConversionRate] = useState(84);
   const [quotationDate, setQuotationDate] = useState(null); // null = "Use Today"
-  
+
   // Ref to store the snapshot of the configuration immediately after an import.
   // This allows us to detect if "anything" has changed.
   const lastImportedSnapshotRef = useRef(null);
@@ -179,7 +180,7 @@ export function ConfigProvider({ children }) {
     const currentSnapshot = JSON.stringify({
       customer, machineType, selected, selectedAddons, discount, markup,
       customOutput, customLayflat, customRollerWidth, scopeOverrides,
-      quoteTemplate, showPricingFields, showPrices, showAddonPricing, 
+      quoteTemplate, showPricingFields, showPrices, showAddonPricing,
       showMarkupField, showDiscountField, conversionRate, presetBasePrice
     });
 
@@ -194,7 +195,7 @@ export function ConfigProvider({ children }) {
       setTimeout(() => {
         setQuotationDate(null);
         lastImportedSnapshotRef.current = null; // Clear to prevent recursive loops
-        
+
         toast.push({
           title: "Date updated",
           description: "Configuration changed; date updated to today.",
@@ -250,8 +251,8 @@ export function ConfigProvider({ children }) {
     }
     // Fallback: search by label/code if index is stale or missing
     if (selectedMachineModelLabel) {
-      return machineModels.find(m => 
-        m.label === selectedMachineModelLabel || 
+      return machineModels.find(m =>
+        m.label === selectedMachineModelLabel ||
         m.code === selectedMachineModelLabel
       );
     }
@@ -277,7 +278,7 @@ export function ConfigProvider({ children }) {
     if (savedData && savedData.customer && savedData.customer.quotationRef) {
       // 1. Existing data found?
       let cust = { ...savedData.customer };
-      
+
       // Upgrade legacy formats (AET/ -> AE/)
       if (cust.quotationRef.startsWith("AET/")) {
         const parts = cust.quotationRef.split('/');
@@ -298,7 +299,7 @@ export function ConfigProvider({ children }) {
       setCustomer(cust);
       if (typeof savedData.machineType === "string") setMachineTypeState(savedData.machineType);
       else setMachineTypeState("mono");
-      
+
       if (Array.isArray(savedData.selected)) {
         setSelected(savedData.selected.map(syncComponentWithBase));
       }
@@ -399,33 +400,40 @@ export function ConfigProvider({ children }) {
       }
     }
   }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice, conversionRate, scopeOverrides, quoteTemplate, showMarkupField, showDiscountField, showAddonPricing, showPricingFields, showPrices]);
-  
+
   // Real-time synchronization for Quotation Reference
   useEffect(() => {
     if (customer.isImported) return; // Don't overwrite if imported
-    
+
     setCustomer(prev => {
       const reg = prev.region || "DOM";
-      
+
       // Auto-sync for AE/ standard, legacy AET/ or initial state
       const isInitial = prev.quotationRef === "Loading..." || prev.quotationRef?.startsWith("AET/");
       const isStandard = prev.quotationRef?.startsWith("AE/");
-      
+
       if (isInitial || isStandard) {
         // Upgrade legacy format and normalize sequence (ensure 2 digits)
         const parts = (prev.quotationRef || "").split('/');
         let seq = parts.pop() || "01";
         if (seq.length > 2) seq = seq.slice(-2);
         else seq = seq.padStart(2, '0');
-        
+
         let newRef = prev.quotationRef;
         if (machineType === "material-handling") {
-          newRef = `AE/${reg}/MIX/${seq}`;
+          const hasMixerDryer = selectedAddons?.some(x => x.id === "mixer-dryer-dynamic");
+          const hasMixerWithoutDryer = selectedAddons?.some(x => x.id === "mixer-dynamic");
+
+          let mixPrefix = "MIX";
+          if (hasMixerDryer) mixPrefix = "MIXD";
+          else if (hasMixerWithoutDryer) mixPrefix = "MIXWD";
+
+          newRef = `AE/${reg}/${mixPrefix}/${seq}`;
         } else {
           // Extract roller width number or use "MW" placeholder
           const rollerMatched = String(customRollerWidth).match(/\d+/);
           const roller = rollerMatched ? rollerMatched[0] : "MW";
-          
+
           let prefix = "";
           if (machineType === "mono") prefix = "U";
           else if (machineType === "aba") prefix = "D";
@@ -468,12 +476,12 @@ export function ConfigProvider({ children }) {
     if (!row || !row.category) return row;
     const list = COMPONENTS_DATA[row.category] || [];
     const base = list.find(c => c.id === row.id) || list.find(c => c.name === row.name);
-    
+
     if (!base) return row; // fallback to existing row data if not found in library
 
     // Deep merge techDesc: prioritize base data but keep overrides from row
     const mergedTechDesc = sanitizeTechDesc(row.category, { ...(base.techDesc || {}), ...(row.techDesc || {}) });
-    
+
     return {
       ...base,
       ...row,
@@ -567,9 +575,9 @@ export function ConfigProvider({ children }) {
         console.warn("Add-on not found for preset:", category, id);
         return;
       }
-      nextAddons.push({ 
-        ...base, 
-        category, 
+      nextAddons.push({
+        ...base,
+        category,
         qty: qty ?? 1,
         price: isPackage ? 0 : base.price,
         isIncluded: isPackage
@@ -584,7 +592,7 @@ export function ConfigProvider({ children }) {
 
     const modelObj = models.find(m => m.code === modelLabel);
     const isMonoOrAba = preset.machineType === "mono" || preset.machineType === "aba";
-    
+
     // Extract Roller Width from label (e.g., "32" from "MONOLAYER - 32\"")
     const rollerMatch = String(modelLabel).match(/\d+/);
     const rollerNum = rollerMatch ? parseInt(rollerMatch[0], 10) : 0;
@@ -601,7 +609,7 @@ export function ConfigProvider({ children }) {
         machineWidth = rollerNum - diff;
         setCustomLayflat(`${machineWidth} mm`);
       }
-      
+
       // Update Quotation Ref to follow new format automatically
       setCustomer(prev => {
         const region = prev.region || "DOM";
@@ -642,7 +650,7 @@ export function ConfigProvider({ children }) {
           // Find smallest size >= machineWidth
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1];
-          
+
           const diff = (rollerNum === 1450) ? 100 : 120;
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
           const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
@@ -675,7 +683,7 @@ export function ConfigProvider({ children }) {
       // 4.6) DYNAMIC HAULOFF LOGIC
       nextSelected.forEach((item, index) => {
         const isHaulOffId = ["haul-horizontal-standard", "haul-horizontal-heavy", "haul-oscillating", "haul-horizontal-dynamic"].includes(item.id);
-        
+
         if (item.category === "Haul-Off" && (isHaulOffId || item.isDynamic)) {
           const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
@@ -684,7 +692,7 @@ export function ConfigProvider({ children }) {
           const presetSize = parseInt(item.metadata?.size || item.size) || 0;
           const chosenSize = Math.max(minSize, presetSize);
           const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
-          
+
           const dynamicHauloffItem = HAULOFF_COMPONENTS.find(h => h.id === "haul-horizontal-dynamic") || item;
 
           let hp = "2 HP";
@@ -717,13 +725,13 @@ export function ConfigProvider({ children }) {
       // 4.7) DYNAMIC TOWER LOGIC
       nextSelected.forEach((item, index) => {
         const isTowerId = ["tower_std", "tower_h", "tower-dynamic"].includes(item.id);
-        
+
         if (item.category === "Tower / Platform" && (isTowerId || item.isDynamic)) {
           const availableSizes = Object.keys(TOWER_PRICES).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth, or fallback to smallest available
           const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
           const newPrice = TOWER_PRICES[chosenSize.toString()] || 0;
-          
+
           const dynamicTowerItem = TOWER_COMPONENTS.find(h => h.id === "tower-dynamic") || item;
 
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
@@ -812,7 +820,7 @@ export function ConfigProvider({ children }) {
         if (item.category === "Collapsing Frame" && (item.isDynamic || item.id.includes("dynamic"))) {
           const availableSizes = Object.keys(COLLAPSING_FRAME_PRICES).map(Number).sort((a, b) => a - b);
 
-          
+
           // Find smallest size >= machineWidth
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
           // Respect preset size if it's larger
@@ -898,7 +906,7 @@ export function ConfigProvider({ children }) {
   function addComponent(category, item, metadata = null) {
     setSelected((prev) => {
       const foundIndex = prev.findIndex((p) => p.id === item.id);
-      
+
       // For non-dynamic items, handle as duplicate
       if (foundIndex !== -1 && !item.isDynamic) {
         const now = Date.now();
@@ -927,13 +935,13 @@ export function ConfigProvider({ children }) {
 
       const mergedTechDesc = sanitizeTechDesc(category, { ...(item.techDesc || {}), ...(metadata?.techDesc || {}) });
       const newItem = { ...item, category, qty: 1, ...metadata, techDesc: mergedTechDesc };
-      
+
       if (foundIndex !== -1) {
         const newArr = [...prev];
         newArr[foundIndex] = newItem;
         return newArr;
       }
-      
+
       return [...prev, newItem];
     });
   }
@@ -964,7 +972,7 @@ export function ConfigProvider({ children }) {
   function addAddon(category, item, metadata = null) {
     setSelectedAddons((prev) => {
       const foundIndex = prev.findIndex((p) => p.id === item.id);
-      
+
       // For non-dynamic items, handle as duplicate
       if (foundIndex !== -1 && !item.isDynamic) {
         const now = Date.now();
@@ -990,13 +998,13 @@ export function ConfigProvider({ children }) {
       });
 
       const newItem = { ...item, category, qty: metadata?.qty || item.qty || 1, ...metadata };
-      
+
       if (foundIndex !== -1) {
         const newArr = [...prev];
         newArr[foundIndex] = newItem;
         return newArr;
       }
-      
+
       return [...prev, newItem];
     });
   }
@@ -1119,7 +1127,7 @@ export function ConfigProvider({ children }) {
 
     // --- DYNAMIC PER-EXTRUDER BIMETALLIC ADDONS + STATIC EXTRUDER ADDONS ---
     const extAddons = [];
-    
+
     // Add static upgrades (like Lever Screen Changer)
     if (EXTRUDER_ADDONS && EXTRUDER_ADDONS.length > 0) {
       EXTRUDER_ADDONS.forEach(addon => {
@@ -1129,12 +1137,12 @@ export function ConfigProvider({ children }) {
       });
     }
 
-    const selectedExtruders = (selected || []).filter(s => 
-      s.category === "Extruder" || 
+    const selectedExtruders = (selected || []).filter(s =>
+      s.category === "Extruder" ||
       (s.name || "").toLowerCase().includes("extruder") ||
       (s.id || "").includes("ext-")
     );
-    
+
     let flatIdx = 0;
     selectedExtruders.forEach((ext) => {
       const q = ext.qty || 1;
@@ -1181,7 +1189,7 @@ export function ConfigProvider({ children }) {
   const processedSelected = useMemo(() => {
     const isDieRotationSelected = selectedAddons.some(a => a.id === "die-rotation-addon");
     const isLeverScreenChanger = selectedAddons.some(a => a.id === "addon-lever-screen-changer");
-    
+
     return selected.map(item => {
       let updatedItem = { ...item };
       const category = (item.category || "").toLowerCase();
@@ -1261,7 +1269,7 @@ export function ConfigProvider({ children }) {
 
     // If a preset base price is active, use it instead of sum of parts
     if (presetBasePrice > 0) {
-       basicTotal = presetBasePrice;
+      basicTotal = presetBasePrice;
     }
 
     // 2. Split Optional Addons into Visible and Hidden (e.g. Bimetallic Upgrades, Loadcell)
@@ -1448,223 +1456,225 @@ export function ConfigProvider({ children }) {
     const machineDetails = getMachineDetails(safeCustomer, machineType) || {};
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
-      const overrides = scopeOverrides || {};
-      let hasExtruder = false;
+    const overrides = scopeOverrides || {};
+    let hasExtruder = false;
 
-      const selectedScopeItems = (processedSelected || [])
-        .filter(item => item && item.name)
-        .flatMap(item => {
-          const c = (item.category || "").toLowerCase();
-          const nameLc = (item.name || "").toLowerCase();
-          const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
-          
-          const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
-          if (isControl) return [];
-          if (c.includes("collapsing frame") || c.includes("filter")) return [];
-
-          const key = item.id || item.name;
-          const customDesc = overrides[key];
-
-          // Check for combined Winder + Secondary Nip
-          const isCombinedWinder = c.includes("winder") && (nameLc.includes("secondary") || nameLc.includes("nip"));
-
-          if (isCombinedWinder && !customDesc) {
-            const nipDesc = generateSecondaryNip(item, currentMachineModel);
-            const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
-
-            return [
-              {
-                id: `${item.id}-nip`,
-                name: "Secondary Nip Assembly",
-                qty: 1,
-                desc: nipDesc,
-              },
-              {
-                id: `${item.id}-winder`,
-                name: item.name.replace(/Secondary Nip & /i, ""),
-                qty: item.qty || 1,
-                desc: winderDesc,
-              }
-            ];
-          }
-
-          const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
-          const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
-
-          if (isExtruder) {
-            if (hasExtruder) return [];
-            hasExtruder = true;
-          }
-
-          return [{
-            id: item.id || "",
-            name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
-            qty: isExtruder ? 1 : (item.qty || 1),
-            category: item.category || "",
-            desc: finalDesc
-          }];
-        });
-
-      const winderTowerAddonsRaw = (selectedAddons || []).filter(item => {
-        if (!item || !item.name) return false;
-        const n = item.name.toLowerCase();
+    const selectedScopeItems = (processedSelected || [])
+      .filter(item => item && item.name)
+      .flatMap(item => {
         const c = (item.category || "").toLowerCase();
-        return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel") && item.id !== "addon-loadcell-tension";
-      });
+        const nameLc = (item.name || "").toLowerCase();
+        const isExtruder = c.includes("extruder") || nameLc.includes("extruder") || (item.id || "").includes("ext-");
 
-      const winderTowerScopeItems = winderTowerAddonsRaw.flatMap(item => {
+        const isControl = c.includes("panel") || nameLc.includes("panel") || c.includes("control") || nameLc.includes("control");
+        if (isControl) return [];
+        if (c.includes("collapsing frame") || c.includes("filter")) return [];
+
         const key = item.id || item.name;
         const customDesc = overrides[key];
-        const nameLc = (item.name || "").toLowerCase();
-        const isWinder = (item.category || "").toLowerCase().includes("winder") || nameLc.includes("winder");
-        const isCombinedWinder = isWinder && (nameLc.includes("secondary") || nameLc.includes("nip"));
+
+        // Check for combined Winder + Secondary Nip
+        const isCombinedWinder = c.includes("winder") && (nameLc.includes("secondary") || nameLc.includes("nip"));
 
         if (isCombinedWinder && !customDesc) {
           const nipDesc = generateSecondaryNip(item, currentMachineModel);
           const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
+
           return [
-            { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
-            { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
+            {
+              id: `${item.id}-nip`,
+              name: "Secondary Nip Assembly",
+              qty: 1,
+              desc: nipDesc,
+            },
+            {
+              id: `${item.id}-winder`,
+              name: item.name.replace(/Secondary Nip & /i, ""),
+              qty: item.qty || 1,
+              desc: winderDesc,
+            }
           ];
         }
 
-        const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
+        const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
         const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
-        const isExtruder = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
-        const qtySuffix = (isExtruder && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
 
-        return { 
-            id: item.id || "", 
-            name: (item.name || "") + qtySuffix, 
-            qty: item.qty || 1, 
-            category: item.category || "",
-            desc: (finalDesc || "") + qtySuffix 
-        };
+        if (isExtruder) {
+          if (hasExtruder) return [];
+          hasExtruder = true;
+        }
+
+        return [{
+          id: item.id || "",
+          name: isExtruder ? "Extruders" : (item.customName || item.name || ""),
+          qty: isExtruder ? 1 : (item.qty || 1),
+          category: item.category || "",
+          desc: finalDesc
+        }];
       });
 
-      const hasSelectedTower = [...selectedScopeItems, ...winderTowerScopeItems].some(item => (item.name || "").toLowerCase().includes("tower"));
+    const winderTowerAddonsRaw = (selectedAddons || []).filter(item => {
+      if (!item || !item.name) return false;
+      const n = item.name.toLowerCase();
+      const c = (item.category || "").toLowerCase();
+      return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel") && item.id !== "addon-loadcell-tension";
+    });
 
-      const staticItems = [
-        { name: "Idler Rollers", qty: 1, desc: "Aluminum Idler rollers as per layout drawing." },
-        !hasSelectedTower && { name: "Tower Structure", qty: 1, desc: "Tower Structure to support bubble stabilizing basket, haul-off, etc." },
-        { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
-      ].filter(Boolean);
+    const winderTowerScopeItems = winderTowerAddonsRaw.flatMap(item => {
+      const key = item.id || item.name;
+      const customDesc = overrides[key];
+      const nameLc = (item.name || "").toLowerCase();
+      const isWinder = (item.category || "").toLowerCase().includes("winder") || nameLc.includes("winder");
+      const isCombinedWinder = isWinder && (nameLc.includes("secondary") || nameLc.includes("nip"));
 
-      const getIdx = (item) => {
-        const n = String(item.name || "").toLowerCase();
-        const d = String(item.desc || item.description || "").toLowerCase();
-        const combined = n + " " + d;
+      if (isCombinedWinder && !customDesc) {
+        const nipDesc = generateSecondaryNip(item, currentMachineModel);
+        const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
+        return [
+          { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
+          { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
+        ];
+      }
 
-        if (n.includes("extruder")) return 1;
-        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
-        if (n.includes("die")) return 3;
-        if (combined.includes("air ring") || combined.includes("airring")) return 4;
-        if (combined.includes("ibc")) return 5;
-        if (n.includes("tower") || n.includes("platform")) return 11;
-        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
-        if (combined.includes("secondary nip")) return 9;
-        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
-        if (combined.includes("idler")) return 8;
-        if (combined.includes("winder")) return 10;
-        
-        return 90;
-      };
-
-      const manualExtraDesc = (overrides["manual_extra"] || "").trim();
-      const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
-      
-      const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a) - getIdx(b));
-      const finalScope = [...sortedScope, ...manualExtra].map(item => ({ ...item, description: item.desc }));
+      const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
+      const finalDesc = customDesc !== undefined ? customDesc : autoDesc;
+      const isExtruder = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
+      const qtySuffix = (isExtruder && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
 
       return {
-        company: COMPANY,
-        customer: {
-          company_name: safeCustomer.company || "-",
-          contact_name: safeCustomer.name || "-",
-          address: safeCustomer.address || "-",
-          city: safeCustomer.city || "-",
-          state: safeCustomer.state || "",
-          country: safeCustomer.country || "",
-          phone: safeCustomer.phone || "-",
-          email: safeCustomer.email || "-",
-          gst: safeCustomer.gst || "-",
-        },
-        quotation: {
-          ref_no: qRef,
-          refNo: qRef,
-          date: qDate,
-          subject: safeCustomer.subject || "Proposal for Blown Film Extrusion Line",
-        },
-        machine: {
-          type: machineType || "",           // e.g. "material-handling", "mono", "aba" etc.
-          model: machineDetails.label || safeCustomer.machineModel || "BLOWN FILM LINE",
-          family: safeCustomer.machineFamily || machineType || "",
-          modelCode: machineDetails.code || safeCustomer.machineModelCode || safeCustomer.machineModel || "",
-        },
-        machine_details: machineDetails,
-        scope: finalScope,
-        optional_items: (selectedAddons || []).filter(a => {
-          if (!a) return false;
-          const isBimetallic = a.id?.startsWith("bimetallic-upgrade-");
-          const isLoadcell = a.id === "addon-loadcell-tension";
-          const isGrandTotal = a.id === "grand-total-line";
-          const isDieRotation = a.id === "die-rotation-addon";
-          const isLeverScreenChanger = a.id === "addon-lever-screen-changer";
-          const isMixer = a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic";
-          
-          if (machineType === "material-handling" && isMixer) {
-            return false;
-          }
-          return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger;
-        }).map((a, idx) => {
-          const rawPrice = (a.price || 0) * (a.qty || 1);
-          const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
-          return {
-            item_no: idx + 1,
-            name: a.customName || a.name,
-            category: a.category || "",
-            qty: a.qty || 1,
-            price: convertedPrice,
-            markup: a.markup || 0,
-            discount: a.discount || 0,
-          };
-        }),
-        material_handling_mixers: (() => {
-          const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
-          return mixerAddons.map(a => ({
-            id: a.id || "",
-            name: a.customName || a.name || "",
-            qty: a.qty || 1,
-            image: a.image || "",
-            shortDesc: a.shortDesc || a.cardDesc || "",
-            techDesc: a.techDesc || {},
-            metadata: a.metadata || {},
-            price: a.price || 0,
-            size: a.size || a.metadata?.size || "",
-          }));
-        })(),
-        // Keep backward-compat single field (first mixer)
-        material_handling_mixer: (() => {
-          const a = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
-          return a ? { id: a.id, name: a.customName || a.name, qty: a.qty || 1, image: a.image, metadata: a.metadata || {}, price: a.price || 0, size: a.size || a.metadata?.size || "" } : null;
-        })(),
-        pricing: {
-          basicPrice: fmtPriceFull(withMarkup, currency),
-          finalPrice: fmtPriceFull(afterDiscount, currency),
-          discountAmount: Number(discount) || 0,
-          basic_price_text: fmtPriceFull(withMarkup, currency),
-          afterDiscount: afterDiscount,
-          final_price_text: fmtPriceFull(afterDiscount, currency),
-          final_price_in_words: fmtWordsFull(afterDiscount, currency),
-          currency: currency,
-          rate: rate,
-          markup_percent: markup,
-          discount_percent: discount,
-          addons_total: addonsTotal,
-          total_price: afterDiscount + addonsTotal,
-          total_price_text: fmtPriceFull(afterDiscount + addonsTotal, currency),
-        },
+        id: item.id || "",
+        name: (item.name || "") + qtySuffix,
+        qty: item.qty || 1,
+        category: item.category || "",
+        desc: (finalDesc || "") + qtySuffix
+      };
+    });
+
+    const hasSelectedTower = [...selectedScopeItems, ...winderTowerScopeItems].some(item => (item.name || "").toLowerCase().includes("tower"));
+
+    const staticItems = [
+      { name: "Idler Rollers", qty: 1, desc: "Aluminum Idler rollers as per layout drawing." },
+      !hasSelectedTower && { name: "Tower Structure", qty: 1, desc: "Tower Structure to support bubble stabilizing basket, haul-off, etc." },
+      { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
+    ].filter(Boolean);
+
+    const getIdx = (item) => {
+      const n = String(item.name || "").toLowerCase();
+      const d = String(item.desc || item.description || "").toLowerCase();
+      const combined = n + " " + d;
+
+      if (n.includes("extruder")) return 1;
+      if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+      if (n.includes("die")) return 3;
+      if (combined.includes("air ring") || combined.includes("airring")) return 4;
+      if (combined.includes("ibc")) return 5;
+      if (n.includes("tower") || n.includes("platform")) return 11;
+      if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
+      if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
+      if (combined.includes("secondary nip")) return 9;
+      if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+      if (combined.includes("idler")) return 8;
+      if (combined.includes("winder")) return 10;
+
+      return 90;
+    };
+
+    const manualExtraDesc = (overrides["manual_extra"] || "").trim();
+    const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
+
+    const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a) - getIdx(b));
+    const finalScope = [...sortedScope, ...manualExtra].map(item => ({ ...item, description: item.desc }));
+
+    return {
+      company: COMPANY,
+      customer: {
+        company_name: safeCustomer.company || "-",
+        contact_name: safeCustomer.name || "-",
+        address: safeCustomer.address || "-",
+        city: safeCustomer.city || "-",
+        state: safeCustomer.state || "",
+        country: safeCustomer.country || "",
+        phone: safeCustomer.phone || "-",
+        email: safeCustomer.email || "-",
+        gst: safeCustomer.gst || "-",
+      },
+      quotation: {
+        ref_no: qRef,
+        refNo: qRef,
+        date: qDate,
+        subject: safeCustomer.subject || "Proposal for Blown Film Extrusion Line",
+      },
+      machine: {
+        type: machineType || "",           // e.g. "material-handling", "mono", "aba" etc.
+        model: machineDetails.label || safeCustomer.machineModel || "BLOWN FILM LINE",
+        family: safeCustomer.machineFamily || machineType || "",
+        modelCode: machineDetails.code || safeCustomer.machineModelCode || safeCustomer.machineModel || "",
+      },
+      machine_details: machineDetails,
+      scope: finalScope,
+      optional_items: (selectedAddons || []).filter(a => {
+        if (!a) return false;
+        const isBimetallic = a.id?.startsWith("bimetallic-upgrade-");
+        const isLoadcell = a.id === "addon-loadcell-tension";
+        const isGrandTotal = a.id === "grand-total-line";
+        const isDieRotation = a.id === "die-rotation-addon";
+        const isLeverScreenChanger = a.id === "addon-lever-screen-changer";
+        const isMixer = a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic";
+
+        if (machineType === "material-handling" && isMixer) {
+          return false;
+        }
+        return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger;
+      }).map((a, idx) => {
+        const rawPrice = (a.price || 0) * (a.qty || 1);
+        const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
+        return {
+          item_no: idx + 1,
+          name: a.customName || a.name,
+          category: a.category || "",
+          qty: a.qty || 1,
+          price: convertedPrice,
+          markup: a.markup || 0,
+          discount: a.discount || 0,
+        };
+      }),
+      material_handling_mixers: (() => {
+        const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+        return mixerAddons.map(a => ({
+          id: a.id || "",
+          name: a.customName || a.name || "",
+          qty: a.qty || 1,
+          image: a.image || "",
+          shortDesc: a.shortDesc || a.cardDesc || "",
+          techDesc: a.techDesc || {},
+          metadata: a.metadata || {},
+          price: a.price || 0,
+          size: a.size || a.metadata?.size || "",
+        }));
+      })(),
+      // Keep backward-compat single field (first mixer)
+      material_handling_mixer: (() => {
+        const a = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+        return a ? { id: a.id, name: a.customName || a.name, qty: a.qty || 1, image: a.image, metadata: a.metadata || {}, price: a.price || 0, size: a.size || a.metadata?.size || "" } : null;
+      })(),
+      pricing: {
+        basicPrice: fmtPriceFull(withMarkup, currency),
+        basicPriceWords: "(" + fmtWordsFull(withMarkup, currency).toUpperCase() + ")",
+        finalPrice: fmtPriceFull(afterDiscount, currency),
+        discountAmount: Number(discount) || 0,
+        basic_price_text: fmtPriceFull(withMarkup, currency),
+        basic_price_inr: Math.round(withMarkup), // note: this is in display currency despite the 'inr' name
+        afterDiscount: afterDiscount,
+        final_price_text: fmtPriceFull(afterDiscount, currency),
+        final_price_in_words: fmtWordsFull(afterDiscount, currency),
+        currency: currency,
+        rate: rate,
+        markup_percent: markup,
+        discount_percent: discount,
+        addons_total: addonsTotal,
+        total_price: afterDiscount + addonsTotal,
+        total_price_text: fmtPriceFull(afterDiscount + addonsTotal, currency),
+      },
 
       // Performance (you can tweak more later)
       indicative_performance: {
@@ -2638,7 +2648,7 @@ export function ConfigProvider({ children }) {
           });
 
           const data = await res.json();
-          
+
           // Construct the Landing Page URL
           const pdfUrl = data.url;
           let origin = window.location.origin;
@@ -2650,9 +2660,9 @@ export function ConfigProvider({ children }) {
           // 2. If we are in Local Mode (Offline WiFi), the pdfUrl origin is the laptop's IP.
           //    In this case, window.location.origin might be "localhost", so we 
           //    prefer the IP from pdfUrl so phones can connect.
-          
+
           const isVercelBlob = pdfUrl.includes("vercel-storage.com");
-          
+
           if (!isVercelBlob) {
             try {
               const urlObj = new URL(pdfUrl);
@@ -2666,7 +2676,7 @@ export function ConfigProvider({ children }) {
           }
 
           const landingPageUrl = origin + "/proposal?pdf=" + encodeURIComponent(pdfUrl) + "&name=" + encodeURIComponent(robustData.customer.company || "Visitor");
-          
+
           setQrUrlState(landingPageUrl);
           toast.dismiss(loadingToast);
 
@@ -2798,7 +2808,7 @@ export function ConfigProvider({ children }) {
         if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
         if (typeof r.customRollerWidth === "string") setCustomRollerWidth(r.customRollerWidth);
         if (typeof r.presetBasePrice === "number") setPresetBasePrice(r.presetBasePrice);
-        
+
         // Export Conversion Fields
         if (typeof r.conversionRate === "number") setConversionRate(r.conversionRate);
         if (typeof r.showMarkupField === "boolean") setShowMarkupField(r.showMarkupField);
@@ -2806,12 +2816,12 @@ export function ConfigProvider({ children }) {
         if (typeof r.showAddonPricing === "boolean") setShowAddonPricing(r.showAddonPricing);
         if (typeof r.showPrices === "boolean") setShowPrices(r.showPrices);
         if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
-        
+
         // Smart Date Tracking: Load the date from JSON
         if (r.quotationDate) setQuotationDate(r.quotationDate);
 
         // Reset the "Import Snapshot" so that any subsequent changes trigger a date update
-        lastImportedSnapshotRef.current = null; 
+        lastImportedSnapshotRef.current = null;
 
         toast.push({
           title: "Configuration imported ✓",

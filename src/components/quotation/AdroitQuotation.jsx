@@ -1,4 +1,5 @@
 import React, { forwardRef, memo } from "react";
+import { numberToWords } from "../../../utils/numberToWords";
 
 // ─── LETTERHEAD BASE64 ────────────────────────────────────────────────────────
 // Replace with your actual base64 string: data:image/png;base64,/9j/4AAQ...
@@ -288,7 +289,6 @@ function CoverPage({ machine, customer }) {
 
             {/* ── Blue rule ──────────────────────────────────────────────── */}
             {/* <div style={{ height: "2px", backgroundColor: BLUE, margin: "12px 0 16px 0" }} /> <br /> */}
-
             {/* ── Proposal text block ────────────────────────────────────── */}
             <div style={{ textAlign: "center" }}>
 
@@ -640,12 +640,6 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                 </div>
             )}
             <br />
-            
-            <div style={{ marginTop: "4px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
-                <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
-                    Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
-                </span>
-            </div>
 
             <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
             {[
@@ -793,7 +787,7 @@ function ElectricalsPage({ electricals }) {
                 <SpecRow label="Temperature Controllers" value="Fuji or equivalent make with +/- 1 deg. accuracy." shaded />
                 <SpecRow label="Drives" value="Delta or equivalent variable frequency drives." />
                 <SpecRow label="Haul-Off" value="PLC based operation." shaded />
-                <SpecRow label="Total connected Load" value="108 KW." />
+                <SpecRow label="Total connected Load" value={e.totalConnectedLoad ? `${e.totalConnectedLoad}.` : "108 KW."} />
                 <SpecRow label="Power Supply" value="415 V, 50 Hz, with N" shaded />
                 <SpecRow label="Voltage Fluctuation" value="+ /- 5%" noBorder />
             </div><br />
@@ -1114,17 +1108,35 @@ function MaterialHandlingDetailsPage({ data, pricing }) {
     const mixers = data?.material_handling_mixers || (mixer ? [mixer] : []);
     const isDryer = mixer?.id === "mixer-dryer-dynamic" || mixer?.name?.toLowerCase().includes("dryer");
 
-    // Format a number based on selected currency
-    const fmtPrice = (num) => {
-        if (!num) return "—";
-        const isUSD = (pricing?.currency || data?.pricing?.currency) === "USD";
+    const isUSD = (pricing?.currency || data?.pricing?.currency) === "USD";
+    const rate = pricing?.rate || data?.pricing?.rate || 84;
+    // Markup % applied globally — use this to mark up each mixer's raw INR price
+    const markupPct = data?._restore?.markup_percent || 0;
+
+    // Format a raw INR number based on selected currency
+    const fmtPrice = (rawInrNum) => {
+        if (!rawInrNum) return "—";
         if (isUSD) {
-            const rate = pricing?.rate || data?.pricing?.rate || 84;
-            const converted = num / rate;
+            const converted = rawInrNum / rate;
             return "$ " + Math.round(converted).toLocaleString("en-US");
         }
-        return "Rs. " + Math.round(num).toLocaleString("en-IN") + "/-";
+        return "Rs. " + Math.round(rawInrNum).toLocaleString("en-IN") + "/-";
     };
+
+    // Format raw INR number in words (handles USD conversion internally)
+    const fmtWords = (rawInrNum) => {
+        if (!rawInrNum) return "";
+        try {
+            const displayNum = isUSD ? Math.round(rawInrNum / rate) : Math.round(rawInrNum);
+            const system = isUSD ? "US" : "IN";
+            const w = numberToWords(displayNum, system);
+            if (!w) return "";
+            return isUSD ? `(${w} Dollars Only)`.toUpperCase() : `(INR ${w} Only)`.toUpperCase();
+        } catch { return ""; }
+    };
+
+    // No proration needed — apply markup % directly on each mixer's raw INR price
+    // (basic_price_inr can be in USD when currency=USD, so we avoid it here)
 
     return (
         <Page>
@@ -1159,87 +1171,144 @@ function MaterialHandlingDetailsPage({ data, pricing }) {
                     GENERAL INFORMATION:
                 </div>
 
-                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
-                    Vertical Mixer is for mixing Plastic granules, Master batch etc.
-                </div>
-
-                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
-                    The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry.
-                </div>
-
-                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
-                    The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min.
-                </div>
-
-                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
-                    The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
-                </div>
-
-                <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
-                    Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
-                </div>
-
-                <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 20px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
-                    <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
-                    <li><b>Switch Gear:</b> SCHNEIDER</li>
-                    <li><b>Temp. Controller:</b> MULTISPAN</li>
-                    <li><b>Material:</b> MS painted.</li>
-                    <li><b>Drive:</b> Through belt and Pulley.</li>
-                </ul>
-
-                <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
-                    Important:
-                </div>
-                <ol style={{ paddingLeft: "20px", margin: "0 0 25px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
-                    <li>Power supply--*: Three Phase (Wire/Terminal No. 1,2 & 3) and Neutral (Wire No. 4)</li>
-                    <li>The screw rotation should be clockwise if you stand in front of tray.</li>
-                    <li>Mixing time has set to 15 min. It can change from timer.</li>
-                </ol>
+                {isDryer ? (
+                    <>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                            Vertical Mixer is for mixing Plastic granules, Master batch etc.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
+                            The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                            The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                            The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
+                            Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
+                        </div>
+                        <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+                            <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
+                            <li><b>Switch Gear:</b> SCHNEIDER</li>
+                            <li><b>Temp. Controller:</b> MULTISPAN</li>
+                            <li><b>Material:</b> MS painted.</li>
+                            <li><b>Drive:</b> Through belt and Pulley.</li>
+                        </ul>
+                        <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
+                            Important:
+                        </div>
+                        <ol style={{ paddingLeft: "20px", margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+                            <li>Power supply--*: Three Phase (Wire/Terminal No. 1,2 & 3) and Neutral (Wire No. 4)</li>
+                            <li>The screw rotation should be clockwise if you stand in front of tray.</li>
+                            <li>Mixing time has set to 15 min. It can change from timer.</li>
+                        </ol>
+                    </>
+                ) : (
+                    <>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                            Vertical Mixer is for mixing Plastic granules, Master batch etc.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
+                            The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in industry.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                            The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Generally For 100 kg, it is around 8-10 min, for 200 kg, it is around 15-20 min, For 300 kg, it is around 20-25 min and for 500 kg, it is around 35-40 min.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+                            The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
+                        </div>
+                        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
+                            Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
+                        </div>
+                        <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+                            <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
+                            <li><b>Starter:</b> DOL starter</li>
+                            <li><b>Material:</b> MS painted.</li>
+                            <li><b>Drive:</b> Through belt and Pulley.</li>
+                        </ul>
+                        <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
+                            Important:
+                        </div>
+                        <ol style={{ paddingLeft: "20px", margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+                            <li>Power supply: Three Phase</li>
+                            <li>The screw rotation should be clockwise if you stand in front of tray.</li>
+                        </ol>
+                    </>
+                )}
 
                 {/* Per-mixer pricing breakdown */}
-                <div style={{ margin: "10px 0 20px 0", fontSize: "10.5pt", fontFamily: F, color: INK, lineHeight: "2.2" }}>
+                <div style={{ margin: "10px 0 10px 0", fontSize: "10.5pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
                     {mixers.map((m, i) => {
                         const cap = m.size || m.metadata?.size || "";
                         const isMD = m.id === "mixer-dryer-dynamic";
                         const label = isMD ? "Vertical Granule Mixer with Dryer" : "Vertical Granule Mixer";
                         const capLabel = cap ? `${cap} kg ` : "";
-                        const itemPrice = (m.price || 0) * (m.qty || 1);
+
+                        // For a single mixer: use pricing.basicPrice directly — exactly matches the summary page
+                        // For multiple mixers: prorate basic_price_inr (already in display currency)
+                        let displayPrice, displayWords;
+                        if (mixers.length === 1) {
+                            displayPrice = pricing.basicPrice;
+                            displayWords = pricing.basicPriceWords;
+                        } else {
+                            const totalRaw = mixers.reduce((s, mx) => s + (mx.price || 0) * (mx.qty || 1), 0);
+                            const rawItemPrice = (m.price || 0) * (m.qty || 1);
+                            const proportion = totalRaw > 0 ? rawItemPrice / totalRaw : 1 / mixers.length;
+                            // basic_price_inr is already in display currency (INR or USD)
+                            const proratedDisplay = Math.round((pricing.basic_price_inr || 0) * proportion);
+                            displayPrice = isUSD
+                                ? "$ " + proratedDisplay.toLocaleString("en-US")
+                                : "Rs. " + proratedDisplay.toLocaleString("en-IN") + "/-";
+                            try {
+                                const w = numberToWords(proratedDisplay, isUSD ? "US" : "IN");
+                                displayWords = w ? (isUSD ? `(${w} Dollars Only)`.toUpperCase() : `(INR ${w} Only)`.toUpperCase()) : "";
+                            } catch { displayWords = ""; }
+                        }
+
                         return (
-                            <div key={i} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                                <span style={{ color: BLUE, flexShrink: 0 }}>❖</span>
-                                <span>
-                                    Basic Price of {label}
-                                    {m.qty > 1 ? ` × ${m.qty}` : ""} - {capLabel}:{" "}
-                                    <b>{fmtPrice(itemPrice)}</b>
-                                </span>
+                            <div key={i} style={{ marginBottom: "6px" }}>
+                                <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                                    <span style={{ color: BLUE, flexShrink: 0 }}>❖</span>
+                                    <span>
+                                        Basic Price of {label}
+                                        {m.qty > 1 ? ` × ${m.qty}` : ""} - {capLabel}:{" "}
+                                        <b style={{ color: "#c00" }}>{displayPrice}</b>
+                                    </span>
+                                </div>
+                                {displayWords && (
+                                    <div style={{ fontSize: "9.5pt", color: DIM, fontStyle: "italic", marginLeft: "24px" }}>
+                                        {displayWords}
+                                    </div>
+                                )}
                             </div>
                         );
                     })}
 
-                    {/* Grand Total */}
-                    {pricing?.basicPrice && (
+                    {/* Final Price After Discount — only shown when discount is applied */}
+                    {pricing?.discountedPrice && pricing.discountedPrice !== pricing.basicPrice && (
                         <>
-                            <div style={{ borderTop: `1px dashed ${BLUE}`, margin: "6px 0 4px 0" }} />
+                            <div style={{ borderTop: `1px dashed ${BLUE}`, margin: "8px 0 6px 0" }} />
                             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                                <span style={{ color: BLUE, flexShrink: 0 }}>❖</span>
-                                <span style={{ fontWeight: "bold" }}>
-                                    Grand Total:{" "}
-                                    <b style={{ color: "#c00", fontSize: "11pt" }}>{pricing.basicPrice}</b>
+                                <span style={{ color: "#c00", flexShrink: 0 }}>❖</span>
+                                <span style={{ fontWeight: "bold", color: "#c00" }}>
+                                    Final Price After Discount:{" "}
+                                    <b style={{ fontSize: "11pt" }}>{pricing.discountedPrice}</b>
                                 </span>
                             </div>
-                            {pricing.basicPriceWords && (
-                                <div style={{ fontSize: "9.5pt", color: DIM, fontStyle: "italic", marginLeft: "20px" }}>
-                                    {pricing.basicPriceWords}
+                            {pricing.discountedWords && (
+                                <div style={{ fontSize: "9.5pt", color: DIM, fontStyle: "italic", marginLeft: "24px" }}>
+                                    {pricing.discountedWords}
                                 </div>
                             )}
                         </>
                     )}
                 </div>
 
-                <div style={{ marginTop: "20px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
-                    <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
-                        Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
-                    </span>
+                <div style={{ borderTop: `1.5px solid ${BLUE}`, margin: "15px 0 10px 0" }} />
+
+                <div style={{ fontSize: "10.5pt", fontFamily: F, color: BLUE, fontWeight: "bold", textAlign: "center" }}>
+                    Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
                 </div>
             </div>
         </Page>
@@ -1355,6 +1424,12 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
 
                     {/* Optional Equipment + Utilities */}
                     <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} />
+
+                    {/* Terms & Conditions */}
+                    <TermsPage />
+
+                    {/* Warranty + General Conditions */}
+                    <WarrantyPage />
                 </>
             )}
         </div>

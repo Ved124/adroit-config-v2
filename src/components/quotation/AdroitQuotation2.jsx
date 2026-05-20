@@ -616,6 +616,15 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
   const clean = (s) =>
     s ? String(s).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim() : "";
 
+  const commercialRows = [
+    ["Validity", "30 days from date of issue of this quotation."],
+    ["Taxes", "GST, TCS, and all applicable statutory levies will be charged extra at prevailing rates."],
+    ["Packing & Insurance", "Packing charges and transit insurance will be borne by the customer."],
+    ["Freight", "Transportation from our works to buyer's site is at customer's cost."],
+    ["Delivery", "4 (Four) months from receipt of technically & commercially clear Purchase Order with advance."],
+    ["Payment Terms", "40% irrevocable security deposit with order. Balance payment + all charges before dispatch. Advance is non-interest bearing."],
+    ["Jurisdiction", "Ahmedabad, Gujarat jurisdiction only."],
+  ];
 
   return (
     <Page2 pageNum={pageNum} total={total}>
@@ -802,11 +811,33 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
       )}
 
       {/* Commercial terms */}
-      <div style={{ marginTop: "20px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
-          <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
-              Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
+      <SecBar>Payment, Delivery & Commercial Notes</SecBar>
+      {commercialRows.map(([label, text], i) => (
+        <div
+          key={i}
+          style={{
+            display: "flex",
+            gap: "10px",
+            marginBottom: "5px",
+            fontSize: "9pt",
+            fontFamily: F,
+            color: INK,
+            lineHeight: "1.55",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: "bold",
+              color: NAVY,
+              flexShrink: 0,
+              minWidth: "118px",
+            }}
+          >
+            {label}:
           </span>
-      </div>
+          <span>{text}</span>
+        </div>
+      ))}
     </Page2>
   );
 }
@@ -1188,45 +1219,74 @@ function MaterialHandlingDetailsPage2({ data, pricing, pageNum, total }) {
           GENERAL INFORMATION:
         </div>
 
-        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
-          Vertical Mixer is for mixing Plastic granules, Master batch etc.
-        </div>
-
-        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
-          The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry.
-        </div>
-
-        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
-          The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min.
-        </div>
-
-        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
-          The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
-        </div>
-
-        <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
-          Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
-        </div>
-
-        <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 20px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
-          <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
-          <li><b>Switch Gear:</b> SCHNEIDER</li>
-          <li><b>Temp. Controller:</b> MULTISPAN</li>
-          <li><b>Material:</b> MS painted.</li>
-          <li><b>Drive:</b> Through belt and Pulley.</li>
-        </ul>
-
-        <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
-          Important:
-        </div>
-        <ol style={{ paddingLeft: "20px", margin: "0 0 25px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
-          <li>Power supply--*: Three Phase (Wire/Terminal No. 1,2 & 3) and Neutral (Wire No. 4)</li>
-          <li>The screw rotation should be clockwise if you stand in front of tray.</li>
-          <li>Mixing time has set to 15 min. It can change from timer.</li>
-        </ol>
+        {isDryer ? (
+          <>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+              Vertical Mixer is for mixing Plastic granules, Master batch etc.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
+              The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in Industry.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+              The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Heater Chamber is provided inside the drum which is connected to the Heater and Blower to remove the moisture from the material. Cycle time depends upon the amount of moisture inside the material. Generally For 100 kg, it is around 10-15 min, for 200 kg, it is around 20-25 min, For 300 kg, it is around 30-35 min and for 500 kg, it is around 50 min.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+              The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
+              Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
+            </div>
+            <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+              <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
+              <li><b>Switch Gear:</b> SCHNEIDER</li>
+              <li><b>Temp. Controller:</b> MULTISPAN</li>
+              <li><b>Material:</b> MS painted.</li>
+              <li><b>Drive:</b> Through belt and Pulley.</li>
+            </ul>
+            <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
+              Important:
+            </div>
+            <ol style={{ paddingLeft: "20px", margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+              <li>Power supply--*: Three Phase (Wire/Terminal No. 1,2 & 3) and Neutral (Wire No. 4)</li>
+              <li>The screw rotation should be clockwise if you stand in front of tray.</li>
+              <li>Mixing time has set to 15 min. It can change from timer.</li>
+            </ol>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+              Vertical Mixer is for mixing Plastic granules, Master batch etc.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px", fontWeight: "bold" }}>
+              The mixer operates only with 1HP, 2HP & 3HP motor. Most power efficient in industry.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+              The working principle of vertical mixing machine is inside the mixer drum screw is surrounded by barrel. Screw shaft is connected with motor on top and fixed in bearing at bottom for smooth rotation. The Screw rotates and lifts the material and drop it from the top. Generally For 100 kg, it is around 8-10 min, for 200 kg, it is around 15-20 min, For 300 kg, it is around 20-25 min and for 500 kg, it is around 35-40 min.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "12px" }}>
+              The material lifts from the tray and also lifts from inside barrel as well makes it more efficient mixing. Material will also pass from the shutter above the tray which is then again lifted by the screw. Shutter with hinge provided at bottom of the screw to clean the material easily with air.
+            </div>
+            <div style={{ fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.6", textAlign: "justify", marginBottom: "20px" }}>
+              Tray height is very convenient to load the material. Mixer has outlet shutter from where one can easily fill the drum with mix material.
+            </div>
+            <ul style={{ listStyleType: "none", padding: 0, margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+              <li><b>Motor:</b> ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)</li>
+              <li><b>Starter:</b> DOL starter</li>
+              <li><b>Material:</b> MS painted.</li>
+              <li><b>Drive:</b> Through belt and Pulley.</li>
+            </ul>
+            <div style={{ fontWeight: "bold", textDecoration: "underline", fontSize: "10pt", fontFamily: F, color: INK, marginBottom: "8px" }}>
+              Important:
+            </div>
+            <ol style={{ paddingLeft: "20px", margin: "0 0 15px 0", fontSize: "10pt", fontFamily: F, color: INK, lineHeight: "1.8" }}>
+              <li>Power supply: Three Phase</li>
+              <li>The screw rotation should be clockwise if you stand in front of tray.</li>
+            </ol>
+          </>
+        )}
 
         {pricing?.basicPrice && (
-          <div style={{ margin: "25px 0 20px 0", fontSize: "10.5pt", fontFamily: F, color: INK, lineHeight: "2" }}>
+          <div style={{ margin: "15px 0 15px 0", fontSize: "10.5pt", fontFamily: F, color: INK, lineHeight: "2" }}>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
               <span style={{ color: NAVY }}>\u2756</span>
               <span>
@@ -1242,10 +1302,10 @@ function MaterialHandlingDetailsPage2({ data, pricing, pageNum, total }) {
           </div>
         )}
 
-        <div style={{ marginTop: "20px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
-          <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
-              Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
-          </span>
+        <div style={{ borderTop: `1.5px solid ${NAVY}`, margin: "15px 0 10px 0" }} />
+
+        <div style={{ fontSize: "10.5pt", fontFamily: F, color: NAVY, fontWeight: "bold", textAlign: "center" }}>
+          Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
         </div>
       </div>
     </Page2>
@@ -1306,12 +1366,14 @@ export const AdroitQuotation2 = memo(
     };
 
     const components = [...(data.components || [])].sort(sortFn);
-    const annexureComponents = [...(data.annexure_components || data.components || [])].sort(sortFn);
+    const annexureComponents = [...(data.annexure_components || components)].sort(sortFn);
 
     const optItems = data.optional_items || [];
     const pricing = data.pricing || {};
     const electricals = data.electricals || {};
-    const total = 6 + annexureComponents.length;
+
+    // Page count: Cover(1) + Specs(1) + Scope(1) + Pricing(1) + Components(N) + T&C 1+2+Warranty(3)
+    const total = 7 + annexureComponents.length;
     const annex4Page = 5;
     const annex5Page = annex4Page + annexureComponents.length;
 
@@ -1319,6 +1381,8 @@ export const AdroitQuotation2 = memo(
       { num: 1, label: "General Specifications, Machine Output & Gauge Variation", page: 2 },
       { num: 2, label: "Standard Scope of Supply", page: 3 },
       { num: 3, label: "Price", page: 4 },
+      { num: 4, label: "Technical Specifications (One Page Per Component)", page: annex4Page },
+      { num: 5, label: "Terms & Conditions + Warranty", page: annex5Page },
     ];
 
     return (
@@ -1335,15 +1399,14 @@ export const AdroitQuotation2 = memo(
                   quotation={quot}
                   annexIndex={[]}
                   pageNum={1}
-                  total={3}
+                  total={2}
                 />
                 <MaterialHandlingDetailsPage2
                   data={data}
                   pricing={pricing}
                   pageNum={2}
-                  total={3}
+                  total={2}
                 />
-                <PricingPage pricing={pricing} optionalItems={optItems} pageNum={3} total={3} />
             </>
         ) : (
             <>
@@ -1382,12 +1445,8 @@ export const AdroitQuotation2 = memo(
             total={total}
           />
         ))}
-        <OptionalAndUtilitiesPage2
-          optionalItems={optItems}
-          powerLoads={data.power_loads || []}
-          pageNum={annex5Page}
-          total={total}
-        />
+        <TermsPage2 startPage={annex5Page} total={total} />
+        <WarrantyPage2 pageNum={annex5Page + 2} total={total} />
             </>
         )}
       </div>

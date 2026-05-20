@@ -884,6 +884,10 @@ function buildProposalData({
       return loads;
     })(),
 
+    electricals: {
+      totalConnectedLoad: m?.totalConnectedLoad || null,
+    },
+
     _restore: {
       schema: "adroit_v2",
       customer,
@@ -1623,7 +1627,7 @@ export default function SummaryPage() {
           </div>
 
           {/* ── GRAND TOTAL BAR ──────────────────────────────────────── */}
-          {(() => {
+          {machineType !== "material-handling" && (() => {
             const machineFinal = discount > 0 ? afterDiscount : withMarkup;
             const grandTotal = machineFinal + (addonsTotal || 0);
             const existingLine = (selectedAddons || []).find(a => a.id === "grand-total-line");

@@ -513,6 +513,9 @@ const ElectricalsPage = ({ electricals, optionalAddons, letterheadB64 }) => {
     ['Temp. controllers', e.temp_controllers || 'Fuji or equivalent type.'],
     ['Drives', e.drives || 'Delta or equivalent variable frequency drives.'],
     ['Hauloff', e.hauloff || 'PLC based operation.'],
+    ...(e.totalConnectedLoad ? [['Total Connected Load', `${e.totalConnectedLoad}.`]] : []),
+    ['Power Supply', '415 V, 50 Hz, with N'],
+    ['Voltage Fluctuation', '+ /- 5%'],
   ];
 
   return (

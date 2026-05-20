@@ -537,6 +537,11 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isMixer = item.id === "mixer-dynamic";
 
+  const otherMixerSelected = (isMixerDryer && selectedAddons?.some(x => x.id === "mixer-dynamic")) || 
+                             (isMixer && selectedAddons?.some(x => x.id === "mixer-dryer-dynamic"));
+
+  const isDisabled = otherMixerSelected && !isSelected;
+
   const brands = MIXER_DRYER_BRANDS;
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
 
@@ -575,6 +580,12 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
   const currentPrice = item.isDynamic ? prices[selectedSize] || 0 : item.price || 0;
 
   const handleAdd = () => {
+    if (isMixerDryer) {
+      removeAddon("mixer-dynamic");
+    } else if (isMixer) {
+      removeAddon("mixer-dryer-dynamic");
+    }
+
     if (item.isDynamic) {
       const customName = `${item.name} ${selectedBrand} make`;
       addAddon("Material Handling", item, {
@@ -622,13 +633,13 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
         <div className="mt-4 grid grid-cols-2 gap-2 p-2 bg-slate-50 rounded-lg border border-slate-100">
           <div className="flex flex-col gap-1">
             <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
-            <select disabled={isSelected} value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60">
+            <select disabled={isSelected || isDisabled} value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60">
               {brands.map(b => <option key={b} value={b}>{b}</option>)}
             </select>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
-            <select disabled={isSelected} value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)} className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60">
+            <select disabled={isSelected || isDisabled} value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)} className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60">
               {Object.keys(prices).map(s => <option key={s} value={s}>{formatSize(s)}</option>)}
             </select>
           </div>
@@ -647,7 +658,7 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
               <button type="button" onClick={() => setAddonQty(item.id, (qty || 1) + 1)} className="w-7 h-7 flex items-center justify-center text-slate-600 hover:bg-slate-50 text-xs font-bold">+</button>
             </div>
           )}
-          <button type="button" onClick={() => isSelected ? removeAddon(item.id) : handleAdd()} className={`px-4 py-1.5 rounded-lg text-[11px] font-bold shadow-sm transition-colors ${isSelected ? "bg-red-50 text-red-600 hover:bg-red-100 border border-red-100" : "bg-brand-blue text-white hover:bg-brand-dark"}`}>{isSelected ? "Remove" : "Add"}</button>
+          <button disabled={isDisabled} type="button" onClick={() => isSelected ? removeAddon(item.id) : handleAdd()} className={`px-4 py-1.5 rounded-lg text-[11px] font-bold shadow-sm transition-colors ${isSelected ? "bg-red-50 text-red-600 hover:bg-red-100 border border-red-100" : isDisabled ? "bg-slate-200 text-slate-400 cursor-not-allowed" : "bg-brand-blue text-white hover:bg-brand-dark"}`}>{isSelected ? "Remove" : "Add"}</button>
         </div>
       </div>
     </motion.div>

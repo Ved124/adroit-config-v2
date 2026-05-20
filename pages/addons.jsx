@@ -12,6 +12,7 @@ import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatEx
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
 import { SCREW_SIZES } from "../src/data/bimetallic";
 import { DIE_ROTATION_PRICES } from "../src/data/dieAddons";
+import { EPC_COMPONENTS, EPC_BRANDS, EPC_PRICES } from "../src/data/epc";
 
 export default function AddonsPage() {
   const router = useRouter();
@@ -176,8 +177,9 @@ function AddonCard({
   const isHeatExchanger = item.id === "heat-exchanger-dynamic";
   const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
   const isDieRotation = item.id === "die-rotation-addon";
+  const isEpC = item.id === "epc-dynamic";
 
-  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : [])))));
+  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : (isEpC ? EPC_BRANDS : []))))));
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
@@ -199,6 +201,9 @@ function AddonCard({
   } else if (isDieRotation) {
     prices = DIE_ROTATION_PRICES;
   }
+  else if (isEpC) {
+    prices = EPC_PRICES;
+  }
 
   // UI customization based on component type
   const isOutputBased = isMixerDryer || isMixer || isHeatExchanger;
@@ -206,6 +211,8 @@ function AddonCard({
   const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller Width")));
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
   const formatSize = (s) => (s && s.includes("TR")) ? s : `${s} ${unit}`;
+  // EPC: price is keyed by brand — use selectedBrand as the effective size key
+  const epcPrice = isEpC ? (EPC_PRICES[selectedBrand] || 0) : null;
 
 
   const [selectedSize, setSelectedSize] = useState(
@@ -249,7 +256,7 @@ function AddonCard({
   }, [item.id]);
 
   const currentPrice = item.isDynamic
-    ? prices[effectiveSize] || 0
+    ? (isEpC ? (epcPrice || 0) : (prices[effectiveSize] || 0))
     : item.price || 0;
 
 
@@ -284,16 +291,20 @@ function AddonCard({
         // Example: Die Rotation System
         customName = `Die Rotation System`;
       }
+      else if (isEpC) {
+        // EPC: brand-only, no size
+        customName = `Extrusion Process Control With Trio Loader (${selectedBrand})`;
+      }
 
       addAddon(category, item, {
         brand: (isDieRotation || isBimetallic) ? undefined : selectedBrand,
-        size: selectedSize,
-        price: currentPrice,
+        size: isEpC ? undefined : selectedSize,
+        price: isEpC ? epcPrice : currentPrice,
         customName: customName,
         techDesc: {
           ...item.techDesc,
           ...((isDieRotation || isBimetallic) ? {} : { "Brand": selectedBrand }),
-          [selectorLabel]: formatSize(selectedSize),
+          ...(isEpC ? {} : { [selectorLabel]: formatSize(selectedSize) }),
         }
       });
     } else {
@@ -342,7 +353,7 @@ function AddonCard({
       {item.isDynamic && (
         <div className="mt-4 grid grid-cols-2 gap-2 p-2 bg-slate-50 rounded-lg border border-slate-100">
           {!isDieRotation && !isBimetallic && (
-            <div className="flex flex-col gap-1">
+            <div className={`flex flex-col gap-1 ${isEpC ? "col-span-2" : ""}`}>
               <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
               <select
                 disabled={isSelected}
@@ -354,17 +365,19 @@ function AddonCard({
               </select>
             </div>
           )}
-          <div className={`flex flex-col gap-1 ${(isDieRotation || isBimetallic) ? "col-span-2" : ""}`}>
-            <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
-            <select
-              disabled={isSelected}
-              value={effectiveSize}
-              onChange={(e) => setSelectedSize(e.target.value)}
-              className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60"
-            >
-              {Object.keys(prices).map(s => <option key={s} value={s}>{formatSize(s)}</option>)}
-            </select>
-          </div>
+          {!isEpC && (
+            <div className={`flex flex-col gap-1 ${(isDieRotation || isBimetallic) ? "col-span-2" : ""}`}>
+              <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
+              <select
+                disabled={isSelected}
+                value={effectiveSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
+                className="bg-white border border-slate-200 rounded px-2 py-1 text-[11px] text-slate-800 focus:ring-1 focus:ring-brand-blue outline-none disabled:opacity-60"
+              >
+                {Object.keys(prices).map(s => <option key={s} value={s}>{formatSize(s)}</option>)}
+              </select>
+            </div>
+          )}
         </div>
       )}
 

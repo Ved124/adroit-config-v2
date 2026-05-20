@@ -288,7 +288,7 @@ export const THREE_LAYER_MODELS = [
     controlPanel: "PID TEMP. CONTROLLER",
     totalConnectedLoad: "195 KW",
     overallDimensions: "15 m L x 8 m W x 12 m H",
-    outputKgHr: "200–240 & 260-290 KG/HR",
+    outputKgHr: "200–240 KG/HR",
     tensionControl: "TORQUE",
     powerConsumption: "0.38 kW/KG/HR",
   },

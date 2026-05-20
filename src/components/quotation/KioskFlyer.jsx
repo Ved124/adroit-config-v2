@@ -365,7 +365,11 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
                     justifyContent: "space-between", alignItems: "flex-end",
                 }}>
                     <div style={{ fontSize: "7.5px", color: C.MUTED, maxWidth: "60%", lineHeight: 1.3 }}>
-                        {!isMaterialHandling && (
+                        {isMaterialHandling ? (
+                            <strong style={{ color: C.DARK, fontWeight: "800" }}>
+                                Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
+                            </strong>
+                        ) : (
                             <>
                                 <strong style={{ color: C.DARK, fontWeight: "800" }}>TERMS:</strong> Ex-Works Ahmedabad. Taxes extra.<br />
                                 <strong style={{ color: C.DARK, fontWeight: "800" }}>OFFER:</strong> Budgetary Proposal. Validity: 30 Days.

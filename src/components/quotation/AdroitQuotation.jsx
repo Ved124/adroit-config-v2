@@ -640,6 +640,12 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
                 </div>
             )}
             <br />
+            
+            <div style={{ marginTop: "4px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
+                <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
+                    Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
+                </span>
+            </div>
 
             <SectionTitle>ITEMS NOT INCLUDED IN THIS QUOTATION</SectionTitle>
             {[
@@ -1304,10 +1310,6 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                 <>
                     <CoverPage machine={machine} customer={customer} />
                     <MaterialHandlingDetailsPage data={data} pricing={pricing} />
-                    {/* Page 3 — Terms & Conditions */}
-                    <TermsPage />
-                    {/* Page 4 — Warranty */}
-                    <WarrantyPage />
                 </>
             ) : (
                 <>
@@ -1353,12 +1355,6 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
 
                     {/* Optional Equipment + Utilities */}
                     <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} />
-
-                    {/* Terms & Conditions */}
-                    <TermsPage />
-
-                    {/* Warranty + General Conditions */}
-                    <WarrantyPage />
                 </>
             )}
         </div>

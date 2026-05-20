@@ -616,15 +616,6 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
   const clean = (s) =>
     s ? String(s).replace(/^Rs\.\s*/, "").replace(/\/-$/, "").trim() : "";
 
-  const commercialRows = [
-    ["Validity", "30 days from date of issue of this quotation."],
-    ["Taxes", "GST, TCS, and all applicable statutory levies will be charged extra at prevailing rates."],
-    ["Packing & Insurance", "Packing charges and transit insurance will be borne by the customer."],
-    ["Freight", "Transportation from our works to buyer's site is at customer's cost."],
-    ["Delivery", "4 (Four) months from receipt of technically & commercially clear Purchase Order with advance."],
-    ["Payment Terms", "40% irrevocable security deposit with order. Balance payment + all charges before dispatch. Advance is non-interest bearing."],
-    ["Jurisdiction", "Ahmedabad, Gujarat jurisdiction only."],
-  ];
 
   return (
     <Page2 pageNum={pageNum} total={total}>
@@ -811,33 +802,11 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
       )}
 
       {/* Commercial terms */}
-      <SecBar>Payment, Delivery & Commercial Notes</SecBar>
-      {commercialRows.map(([label, text], i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            gap: "10px",
-            marginBottom: "5px",
-            fontSize: "9pt",
-            fontFamily: F,
-            color: INK,
-            lineHeight: "1.55",
-          }}
-        >
-          <span
-            style={{
-              fontWeight: "bold",
-              color: NAVY,
-              flexShrink: 0,
-              minWidth: "118px",
-            }}
-          >
-            {label}:
+      <div style={{ marginTop: "20px", marginBottom: "16px", padding: "12px", border: "1px dashed #64748b", backgroundColor: "#f8fafc", borderRadius: "4px" }}>
+          <span style={{ fontWeight: "bold", fontSize: "11pt", fontFamily: F, color: INK }}>
+              Prices are Ex-works, Unpacked. GST @ 18% extra. Delivery time: 03 weeks.
           </span>
-          <span>{text}</span>
-        </div>
-      ))}
+      </div>
     </Page2>
   );
 }
@@ -1337,14 +1306,12 @@ export const AdroitQuotation2 = memo(
     };
 
     const components = [...(data.components || [])].sort(sortFn);
-    const annexureComponents = [...(data.annexure_components || components)].sort(sortFn);
+    const annexureComponents = [...(data.annexure_components || data.components || [])].sort(sortFn);
 
     const optItems = data.optional_items || [];
     const pricing = data.pricing || {};
     const electricals = data.electricals || {};
-
-    // Page count: Cover(1) + Specs(1) + Scope(1) + Pricing(1) + Components(N) + T&C 1+2+Warranty(3)
-    const total = 7 + annexureComponents.length;
+    const total = 6 + annexureComponents.length;
     const annex4Page = 5;
     const annex5Page = annex4Page + annexureComponents.length;
 
@@ -1352,8 +1319,6 @@ export const AdroitQuotation2 = memo(
       { num: 1, label: "General Specifications, Machine Output & Gauge Variation", page: 2 },
       { num: 2, label: "Standard Scope of Supply", page: 3 },
       { num: 3, label: "Price", page: 4 },
-      { num: 4, label: "Technical Specifications (One Page Per Component)", page: annex4Page },
-      { num: 5, label: "Terms & Conditions + Warranty", page: annex5Page },
     ];
 
     return (
@@ -1370,18 +1335,15 @@ export const AdroitQuotation2 = memo(
                   quotation={quot}
                   annexIndex={[]}
                   pageNum={1}
-                  total={4}
+                  total={3}
                 />
                 <MaterialHandlingDetailsPage2
                   data={data}
                   pricing={pricing}
                   pageNum={2}
-                  total={4}
+                  total={3}
                 />
-                {/* Page 3+ — Terms & Conditions */}
-                <TermsPage2 startPage={3} total={4} />
-                {/* Page 4+ — Warranty */}
-                <WarrantyPage2 pageNum={4} total={4} />
+                <PricingPage pricing={pricing} optionalItems={optItems} pageNum={3} total={3} />
             </>
         ) : (
             <>
@@ -1420,8 +1382,12 @@ export const AdroitQuotation2 = memo(
             total={total}
           />
         ))}
-        <TermsPage2 startPage={annex5Page} total={total} />
-        <WarrantyPage2 pageNum={annex5Page + 2} total={total} />
+        <OptionalAndUtilitiesPage2
+          optionalItems={optItems}
+          powerLoads={data.power_loads || []}
+          pageNum={annex5Page}
+          total={total}
+        />
             </>
         )}
       </div>

@@ -215,15 +215,24 @@ function ComponentCard({
         }`}
     >
       <div className="flex gap-4">
-        <div className="w-20 h-20 rounded-2xl bg-slate-50 flex items-center justify-center overflow-hidden border border-slate-100 flex-shrink-0">
+        <div className="w-20 h-20 rounded-2xl bg-slate-50 flex items-center justify-center overflow-hidden border border-slate-100 flex-shrink-0 relative">
           {item.image ? (
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-full object-contain p-2"
-            />
+            <>
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-contain p-2"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  if (e.target.nextSibling) {
+                    e.target.nextSibling.style.display = 'block';
+                  }
+                }}
+              />
+              <span style={{ display: 'none' }} className="text-[10px] text-slate-400 font-bold uppercase text-center px-1">No Image</span>
+            </>
           ) : (
-            <span className="text-[10px] text-slate-400 font-bold uppercase">No Image</span>
+            <span className="text-[10px] text-slate-400 font-bold uppercase text-center px-1">No Image</span>
           )}
         </div>
         <div className="flex-1 min-w-0">

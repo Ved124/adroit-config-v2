@@ -212,8 +212,8 @@ export function ConfigProvider({ children }) {
     quotationDate // included so we only check if a date is present
   ]);
 
-  const [components] = useState(COMPONENTS_DATA);
-  const [addons] = useState(ADDONS_DATA);
+  const components = COMPONENTS_DATA;
+  const addons = ADDONS_DATA;
 
   const [modalItem, setModalItem] = useState(null);
 
@@ -223,7 +223,7 @@ export function ConfigProvider({ children }) {
   // human-readable label like "AE-1350 (50/50/50)"
   const [selectedMachineModelLabel, setSelectedMachineModelLabel] = useState("");
 
-  // true = “Customise yourself” (show all components for that family)
+  // true = “Customise yourself” (show all components for that family) 
   const [customMode, setCustomMode] = useState(false);
 
   const duplicateToastRef = useRef({});

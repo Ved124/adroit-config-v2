@@ -613,11 +613,24 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
         }`}
     >
       <div className="flex gap-4">
-        <div className="w-20 h-20 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
+        <div className="w-20 h-20 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0 relative">
           {item.image ? (
-            <img src={item.image} alt={item.name} className="w-full h-full object-contain p-1" />
+            <>
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-contain p-1"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  if (e.target.nextSibling) {
+                    e.target.nextSibling.style.display = 'block';
+                  }
+                }}
+              />
+              <span style={{ display: 'none' }} className="text-[10px] text-slate-400 font-medium text-center px-1">No image</span>
+            </>
           ) : (
-            <span className="text-[10px] text-slate-400 font-medium">No image</span>
+            <span className="text-[10px] text-slate-400 font-medium text-center px-1">No image</span>
           )}
         </div>
         <div className="flex-1 min-w-0">

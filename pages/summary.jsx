@@ -1709,11 +1709,27 @@ export default function SummaryPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[...selected, ...selectedAddons].map((item, idx) => (
               <div key={`${item.id || idx}-img`} className="rounded-2xl border border-slate-200 bg-white overflow-hidden hover:shadow-md transition-shadow">
-                <div className="h-40 bg-slate-50 flex items-center justify-center">
-                  {item.image
-                    ? <img src={item.image} alt={item.name} className="max-h-full max-w-full object-contain" />
-                    : <span className="text-xs text-slate-400">No image</span>
-                  }
+                <div className="h-40 bg-slate-50 flex items-center justify-center relative">
+                  {item.image ? (
+                    <>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="max-h-full max-w-full object-contain"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          if (e.target.nextSibling) {
+                            e.target.nextSibling.style.display = 'flex';
+                          }
+                        }}
+                      />
+                      <div style={{ display: 'none' }} className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">
+                        No image
+                      </div>
+                    </>
+                  ) : (
+                    <span className="text-xs text-slate-400">No image</span>
+                  )}
                 </div>
                 <div className="px-3 py-2 text-center text-xs">
                   <div className="font-semibold text-slate-900">

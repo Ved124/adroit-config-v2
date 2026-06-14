@@ -114,6 +114,7 @@ function buildPriceTables(): any[] {
     airRingModule, bubbleCagesModule, windersModule, diesModule,
     coronaModule, webGuideModule, hauloffsModule, gaugeModule,
     chillerModule, heatExchangerModule, towerModule, collapsingFrameModule,
+    materialHandlingModule,
   ]
   for (const mod of sources) all.push(...extractPriceTables(mod))
   const seen = new Set<string>()
@@ -168,6 +169,22 @@ function buildModels(): any[] {
       outputKgHr: m.outputKgHr ? String(m.outputKgHr) : null,
       description: m.family || '3 Layer',
       specs: m,
+      isActive: true
+    })
+  }
+
+  // Also add material handling (mixers) as standalone machine models
+  const mhComponents = materialHandlingModule.MATERIAL_HANDLING_ADDONS || [];
+  for (let i = 0; i < mhComponents.length; i++) {
+    const c = mhComponents[i] as any;
+    all.push({
+      code: c.id, 
+      label: c.name || c.id, 
+      type: 'Material Handling',
+      widthMm: null,
+      outputKgHr: null,
+      description: c.cardDesc || 'Material Handling Equipment',
+      specs: c,
       isActive: true
     })
   }

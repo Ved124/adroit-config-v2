@@ -2708,6 +2708,33 @@ export function ConfigProvider({ children }) {
 
   // ---------------- IMPORT JSON ----------------
 
+  // NEW: Automatically load from URL parameter if present
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const loadUrl = params.get('loadUrl');
+    if (loadUrl) {
+      const fetchAndApply = async () => {
+        const loadingToast = toast.push({ title: "Loading configuration...", variant: "loading", persist: true });
+        try {
+          const res = await fetch(loadUrl);
+          const text = await res.text();
+          const file = new File([text], "CRM_Quote.json", { type: "application/json" });
+          const fakeEvent = { target: { files: [file], value: "" } };
+          await importJsonFile(fakeEvent);
+          toast.dismiss(loadingToast);
+        } catch (e) {
+          console.error("Failed to load from URL", e);
+          toast.dismiss(loadingToast);
+          toast.push({ title: "Error", description: "Failed to load Quote from CRM", variant: "error" });
+        }
+      };
+      fetchAndApply();
+      // Clear URL parameter so it doesn't trigger again on refresh
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   // -------------------------------------------------------------
   // 5. Upload to API
 

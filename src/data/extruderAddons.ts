@@ -5,6 +5,7 @@ export interface ExtruderAddon {
   name: string;
   category: string;
   price: number;
+  image?: string;
   cardDesc?: string;
   description: string;
   supportedTypes: string[];

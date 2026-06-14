@@ -1143,28 +1143,31 @@ export function ConfigProvider({ children }) {
       (s.id || "").includes("ext-")
     );
 
-    let flatIdx = 0;
+    let totalExtruders = 0;
+    let sizes = [];
     selectedExtruders.forEach((ext) => {
       const q = ext.qty || 1;
       for (let i = 0; i < q; i++) {
-        const currentNum = flatIdx + 1;
-        const bimetallicItem = {
-          ...BIMETALLIC_BASE,
-          id: `bimetallic-upgrade-${ext.id}-${currentNum}`, // Unique ID for each physical unit
-          name: `Bi-metallic Screw Barrel for Ext-${currentNum} (${ext.sizeMm || ext.size || ext.extruder || "45"} mm)`,
-          cardDesc: `Upgrade Extruder ${currentNum} to premium wear-resistant Bi-metallic screw and barrel.`,
-          metadata: {
-            ...BIMETALLIC_BASE.metadata,
-            targetExtruderIndex: flatIdx,
-            targetExtruderId: ext.id,
-            subIdx: i,
-            size: String(ext.sizeMm || ext.size || ext.extruder || "45").split('/')[i] || String(ext.sizeMm || ext.size || ext.extruder || "45"),
-          }
-        };
-        extAddons.push(bimetallicItem);
-        flatIdx++;
+        totalExtruders++;
+        sizes.push(String(ext.sizeMm || ext.size || ext.extruder || "45").split('/')[i] || String(ext.sizeMm || ext.size || ext.extruder || "45"));
       }
     });
+
+    if (totalExtruders > 0) {
+      const bimetallicItem = {
+        ...BIMETALLIC_BASE,
+        id: `bimetallic-upgrade-all`,
+        name: `Bi-metallic Screw Barrel (All Extruders)`,
+        cardDesc: `Upgrade all ${totalExtruders} Extruders (${sizes.join(', ')} mm) to premium wear-resistant Bi-metallic screw and barrel.`,
+        qty: totalExtruders,
+        isDynamic: false,
+        metadata: {
+          ...BIMETALLIC_BASE.metadata,
+          sizes: sizes
+        }
+      };
+      extAddons.push(bimetallicItem);
+    }
 
     if (extAddons.length > 0) {
       out["Extruder Addons"] = extAddons;
@@ -1185,10 +1188,10 @@ export function ConfigProvider({ children }) {
     return out;
   }, [addons, machineType, selectedAddons, selected]);
 
-  // Conditional logic for dynamic techDesc updates (Die Rotation, Screen Changer, etc.)
   const processedSelected = useMemo(() => {
     const isDieRotationSelected = selectedAddons.some(a => a.id === "die-rotation-addon");
     const isLeverScreenChanger = selectedAddons.some(a => a.id === "addon-lever-screen-changer");
+    const isBimetallicSelected = selectedAddons.some(a => a.id?.startsWith("bimetallic-upgrade-"));
 
     return selected.map(item => {
       let updatedItem = { ...item };
@@ -1206,25 +1209,33 @@ export function ConfigProvider({ children }) {
         };
       }
 
-      // 2. Lever Screen Changer Update
-      if (category.includes("extruder") && isLeverScreenChanger) {
-        const currentSC = (updatedItem.techDesc || {})["Screen changer"] || (updatedItem.techDesc || {})["Screen Changer"] || "";
-        if (currentSC.toLowerCase().includes("candle")) {
+      // 2. Extruder Updates (Screen Changer and Bimetallic)
+      if (category.includes("extruder")) {
+        let newTechDesc = { ...updatedItem.techDesc };
+        let modified = false;
+
+        // Screen Changer
+        if (isLeverScreenChanger) {
+          const currentSC = newTechDesc["Screen changer"] || newTechDesc["Screen Changer"] || "";
+          if (currentSC.toLowerCase().includes("candle")) {
+            newTechDesc["Screen changer"] = currentSC.replace(/candle/i, "Lever");
+            modified = true;
+          } else if (!currentSC) {
+            newTechDesc["Screen changer"] = "Lever type Manual Screen Changer";
+            modified = true;
+          }
+        }
+
+        // Bimetallic
+        if (isBimetallicSelected) {
+          newTechDesc["Material"] = "Bi-metallic screw";
+          modified = true;
+        }
+
+        if (modified) {
           updatedItem = {
             ...updatedItem,
-            techDesc: {
-              ...updatedItem.techDesc,
-              "Screen changer": currentSC.replace(/candle/i, "Lever")
-            }
-          };
-        } else if (!currentSC) {
-          // Fallback if key missing
-          updatedItem = {
-            ...updatedItem,
-            techDesc: {
-              ...updatedItem.techDesc,
-              "Screen changer": "Lever type Manual Screen Changer"
-            }
+            techDesc: newTechDesc
           };
         }
       }

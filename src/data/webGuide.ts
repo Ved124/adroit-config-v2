@@ -42,7 +42,7 @@ export const WEB_GUIDE_ADDONS: WebGuideAddon[] = [
     name: "Web Guide",
     type: "standard-epc",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/addons/webguide/webguide-standard.png",
+    image: "/images/Acessories/e+l_webguide.jpg",
     cardDesc: "Digital Edge Positioning Control (EPC) system.",
     price: 0,
     qty: 1,

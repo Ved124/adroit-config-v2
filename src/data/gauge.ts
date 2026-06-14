@@ -98,30 +98,7 @@ export const GAUGE_ADDONS: GaugeControlAddon[] = [
     shortDesc: "Imported automatic thickness control system with high precision for multilayer extrusion lines producing industrial films.",
   },
 
-  // --------------------------------------
-  // LOADCELL TENSION CONTROL
-  // --------------------------------------
-  {
-    id: "tension-loadcell",
-    name: "Loadcell Based Tension Control",
-    type: "tension-loadcell",
-    machineTypes: ["aba", "3layer", "5layer"],
-    usedInModels: ["Innoflex-1120", "Innoflex-1620", "Innoflex-2120"],
-    image: "/images/addons/gauge/loadcell-tension.png",
-    cardDesc:
-      "Closed loop tension control using loadcell feedback from winder section.",
-    price: 0,
-    qty: 1,
-    techDesc: {
-      "Control Type": "Closed loop tension control with feedback",
-      "Sensor": "Dual loadcell integrated with winder control",
-      "Loop": "Automatic torque/dancer correction",
-      "Application":
-        "High performance rolls with uniform winding tension",
-      "Benefits": "Reduced gauge bands and improved roll geometry",
-    },
-    shortDesc: "Loadcell based tension control system for consistent web tension and improved roll quality in multilayer extrusion lines.",
-  },
+
 
   // --------------------------------------
   // DANCER SYSTEM FOR WEB TENSION

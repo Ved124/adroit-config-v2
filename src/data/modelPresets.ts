@@ -1549,7 +1549,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
     ],
   },
   "INNOFLEX-1970 IBC": {
@@ -1599,7 +1599,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
     ],
   },
   "INNOFLEX-2120 IBC": {
@@ -1698,7 +1698,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
     ],
   },
   "INNOFLEX-2370 IBC (75/75/75)": {
@@ -1747,7 +1747,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-base", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
     ],
   },
 };

@@ -3,6 +3,9 @@ import path from 'path';
 import { put } from '@vercel/blob';
 import os from 'os'; // Use OS to check network interfaces
 
+const CRM_ENABLED = !!(process.env.CRM_WEBHOOK_URL && process.env.CRM_WEBHOOK_SECRET);
+if (CRM_ENABLED) console.log('CRM integration: enabled');
+
 export const config = {
   api: {
     bodyParser: {
@@ -78,6 +81,102 @@ export default async function handler(req, res) {
           contentDisposition: `attachment; filename="${jsonName}"`
         })
       ]);
+
+      // ── Enhanced CRM Webhook ────────────────────────────────
+      if (process.env.CRM_WEBHOOK_URL && process.env.CRM_WEBHOOK_SECRET) {
+        try {
+          // Extract machine details from fullContextData
+          const machineData = {
+            type: fullContextData?.machineType ||
+                  fullContextData?.machine?.type ||
+                  fullContextData?.selectedMachine?.machineType || '',
+            code: fullContextData?.selectedMachine?.code ||
+                  fullContextData?.machine?.code ||
+                  fullContextData?.quotation?.modelCode || '',
+            label: fullContextData?.selectedMachine?.label ||
+                   fullContextData?.machine?.label || '',
+            widthMm: fullContextData?.selectedMachine?.widthMm ||
+                     fullContextData?.machine?.widthMm || 0,
+            outputKgHr: fullContextData?.selectedMachine?.outputKgHr ||
+                        fullContextData?.machine?.outputKgHr || '',
+          }
+
+          const quotationData = {
+            refNo: fullContextData?.quotation?.refNo ||
+                   fullContextData?.quotation?.ref_no ||
+                   fullContextData?.customer?.ref || quoteRef,
+            totalPrice: fullContextData?.quotation?.totalPrice ||
+                        fullContextData?.pricing?.total || 0,
+            basePrice: fullContextData?.quotation?.basePrice ||
+                       fullContextData?.pricing?.base || 0,
+            addonTotal: fullContextData?.quotation?.addonTotal ||
+                        fullContextData?.pricing?.addons || 0,
+            date: new Date().toISOString(),
+          }
+
+          const webhookPayload = {
+            quoteData: {
+              customer: {
+                name:    fullContextData?.customer?.name || '',
+                company: fullContextData?.customer?.company ||
+                         fullContextData?.customer?.company_name || '',
+                phone:   fullContextData?.customer?.phone ||
+                         fullContextData?.customer?.mobile || '',
+                email:   fullContextData?.customer?.email || '',
+                city:    fullContextData?.customer?.city || '',
+                state:   fullContextData?.customer?.state || '',
+                address: fullContextData?.customer?.address || '',
+                region:  fullContextData?.customer?.region || 'DOM',
+              },
+              machine: machineData,
+              components: fullContextData?.components ||
+                          fullContextData?.selectedComponents || [],
+              addons: fullContextData?.addons ||
+                      fullContextData?.selectedAddons || [],
+              quotation: quotationData,
+            },
+            pdfUrl: `downloads/${pdfName}`,
+            jsonUrl: `data/${jsonName}`,
+            timestamp: new Date().toISOString(),
+          }
+
+          const crmResponse = await fetch(
+            `${process.env.CRM_WEBHOOK_URL}/api/quotes/webhook`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-webhook-secret': process.env.CRM_WEBHOOK_SECRET,
+              },
+              body: JSON.stringify(webhookPayload),
+              signal: AbortSignal.timeout(5000), // 5 second timeout
+            }
+          )
+
+          if (crmResponse.ok) {
+            const crmResult = await crmResponse.json()
+            console.log('CRM webhook success:', crmResult)
+            // Return CRM IDs alongside blob URLs for frontend use
+            return res.status(200).json({
+              url: blob.url,
+              mode: 'cloud',
+              crm: {
+                contactId: crmResult.contact?.id,
+                leadId: crmResult.lead?.id,
+                quoteId: crmResult.quote?.id,
+                quoteNumber: crmResult.quote?.quoteNumber,
+                isNewContact: crmResult.contact?.isNew,
+                isNewLead: crmResult.lead?.isNew,
+              }
+            })
+          }
+        } catch (webhookErr) {
+          // Silent fail — never break quote generation
+          console.log('CRM webhook failed (silent):', webhookErr.message)
+        }
+      }
+
+      // Default return if no webhook or webhook failed
       return res.status(200).json({ url: blob.url, mode: 'cloud' });
     } else {
       // === LOCAL OFFLINE MODE ===

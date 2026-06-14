@@ -18,7 +18,7 @@ export const WINDER_ADDONS: WinderAddon[] = [
     name: "Loadcell upgrade",
     category: "Winder Addons",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/winder/loadcell.png",
+    image: "/images/Acessories/loadcell.png",
     cardDesc: "Upgrade winder tension control from torque to loadcell-based feedback for precise tension management.",
     price: 150000,
     techDesc: {

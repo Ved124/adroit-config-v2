@@ -183,11 +183,20 @@ function AddonCard({
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
-  const isConAir = selectedBrand === "Con Air";
+  const isConAir = selectedBrand === "Conair" || selectedBrand === "Con Air";
 
   const chillerPrices = isAirChiller
     ? (isConAir ? CONAIR_AIR_CHILLER_PRICES : PRASAD_AIR_CHILLER_PRICES)
     : (isConAir ? CONAIR_WATER_CHILLER_PRICES : PRASAD_WATER_CHILLER_PRICES);
+
+  let displayImage = item.image;
+  if (isChiller) {
+    if (selectedBrand === "Prasad") {
+      displayImage = isAirChiller ? "/images/Acessories/prasad_air_chiller.png" : "/images/Acessories/prasad_water_chiller.png";
+    } else if (isConAir) {
+      displayImage = isAirChiller ? "/images/Acessories/conair_air_chiller.png" : "/images/Acessories/conair_water_chiller.png";
+    }
+  }
 
   let prices = {};
   if (isCorona) prices = CORONA_PRICES;
@@ -301,6 +310,7 @@ function AddonCard({
         size: isEpC ? undefined : selectedSize,
         price: isEpC ? epcPrice : currentPrice,
         customName: customName,
+        image: displayImage,
         techDesc: {
           ...item.techDesc,
           ...((isDieRotation || isBimetallic) ? {} : { "Brand": selectedBrand }),
@@ -322,10 +332,10 @@ function AddonCard({
     >
       <div className="flex gap-4">
         <div className="w-20 h-20 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0 relative">
-          {item.image ? (
+          {displayImage ? (
             <>
               <img
-                src={item.image}
+                src={displayImage}
                 alt={item.name}
                 className="w-full h-full object-contain p-1"
                 onError={(e) => {

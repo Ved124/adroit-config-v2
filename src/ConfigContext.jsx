@@ -167,7 +167,7 @@ export function ConfigProvider({ children }) {
   const [presetBasePrice, setPresetBasePrice] = useState(0); // ← NEW: stores fixed price from modelPreset
 
   // --- Export Conversion States ---
-  const [conversionRate, setConversionRate] = useState(84);
+  const [conversionRate, setConversionRate] = useState(94);
   const [quotationDate, setQuotationDate] = useState(null); // null = "Use Today"
 
   // Ref to store the snapshot of the configuration immediately after an import.
@@ -1348,7 +1348,7 @@ export function ConfigProvider({ children }) {
 
     if (isExport) {
       currency = 'USD';
-      rate = conversionRate || 84; // Fallback to 84 to avoid div zero
+      rate = conversionRate || 94; // Fallback to 94 to avoid div zero
     }
 
     return {
@@ -3300,7 +3300,7 @@ export function ConfigProvider({ children }) {
     setShowPricingFields(false);
     setCustomOutput("");
     setCustomLayflat("");
-    setConversionRate(84);
+    setConversionRate(94);
 
     toast.push({
       title: "New Quotation Started",

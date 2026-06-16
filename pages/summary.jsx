@@ -166,7 +166,7 @@ function buildProposalData({
   quoteTemplate = process.env.NODE_ENV === "development" ? "v2" : "classic", showPricingFields = false,
   showMarkupField = false, showDiscountField = false, showPrices = false,
   showAddonPricing = false,
-  conversionRate = 84,
+  conversionRate = 94,
   presetBasePrice = 0,
   currency = "INR",
   rate = 1,
@@ -1184,8 +1184,8 @@ export default function SummaryPage() {
                   <input
                     type="number" step="0.01"
                     value={conversionRate ?? ""}
-                    onChange={e => setConversionRate(e.target.value === "" ? 90 : parseFloat(e.target.value) || 0)}
-                    placeholder="e.g. 84"
+                    onChange={e => setConversionRate(e.target.value === "" ? 94 : parseFloat(e.target.value) || 0)}
+                    placeholder="e.g. 94"
                     className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
                   />
                   <p className="text-xs text-slate-400 mt-1">Base rate for USD conversion</p>

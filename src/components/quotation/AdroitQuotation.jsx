@@ -348,8 +348,8 @@ function CoverPage({ machine, customer }) {
                     FOR
                 </div>
 
-                {/* Customer name (person) */}
-                {customerName && (
+                {/* Customer company or name */}
+                {(company || customerName) && (
                     <div style={{
                         fontSize: "13pt",
                         fontWeight: "bold",
@@ -357,20 +357,7 @@ function CoverPage({ machine, customer }) {
                         color: INK,
                         marginBottom: "4px",
                     }}>
-                        {customerName}
-                    </div>
-                )}
-
-                {/* Customer company */}
-                {company && (
-                    <div style={{
-                        fontSize: "13pt",
-                        fontWeight: "bold",
-                        fontStyle: "italic",
-                        fontFamily: F,
-                        color: INK,
-                    }}>
-                        M/s. {company}{city ? `, ${city}` : ""}
+                        M/s. {company || customerName}{city ? `, ${city}` : ""}
                     </div>
                 )}
             </div>

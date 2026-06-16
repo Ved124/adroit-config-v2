@@ -933,6 +933,7 @@ export default function SummaryPage() {
     machineType, currentMachineModel, selectedMachineModelLabel,
     machineModelIndex, customMode,
     generateKioskQR,
+    saveLeadWithBase64Pdf,
     customOutput, setCustomOutput,
     customLayflat, setCustomLayflat,
     customRollerWidth, setCustomRollerWidth,
@@ -1804,6 +1805,17 @@ export default function SummaryPage() {
                   if (i > 0) pdf.addPage();
                   pdf.addImage(imgData, "JPEG", 0, 0, A4_W_MM, A4_H_MM);
                 }
+                
+                // Save lead in the background
+                try {
+                  const base64Pdf = pdf.output("datauristring");
+                  // Optional: Can add toast/loading indicator if desired, but user clicks 'download', we can just await it or not block download.
+                  // Awaiting ensures lead is saved but may delay download slightly.
+                  await saveLeadWithBase64Pdf(base64Pdf);
+                } catch (e) {
+                  console.error("Failed to save lead", e);
+                }
+
                 pdf.save(`Proposal for ${customer.company}_${customer?.quotationRef || "Draft"}.pdf`);
                 setShowPdfPreview(false);
               }}

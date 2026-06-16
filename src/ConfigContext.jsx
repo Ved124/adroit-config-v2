@@ -2709,6 +2709,59 @@ export function ConfigProvider({ children }) {
 
   // ---------------- IMPORT JSON ----------------
 
+  async function saveLeadWithBase64Pdf(base64data) {
+    try {
+      const data = buildWordContext();
+      const robustData = {
+        ...data,
+        customer: {
+          ...data.customer,
+          company: customer.company || data.customer.company_name || "",
+          city: customer.city || ""
+        }
+      };
+      const payload = {
+        schema: "adroit_quotation_v1",
+        generated_at: new Date().toISOString(),
+        ...robustData,
+        _restore: {
+          schema: "adroit_v2",
+          machineType,
+          customer,
+          selected: selected,
+          selectedAddons: selectedAddons,
+          markup_percent: markup,
+          discount_percent: discount,
+          machineModelIndex,
+          selectedMachineModelLabel,
+          customMode,
+          customOutput,
+          customLayflat,
+          customRollerWidth,
+          scopeOverrides,
+          conversionRate,
+          quoteTemplate,
+          showPricingFields,
+          showMarkupField,
+          showDiscountField,
+          showAddonPricing,
+          showPrices,
+          presetBasePrice,
+          quotationDate: quotationDate || new Date().toLocaleDateString("en-IN")
+        }
+      };
+
+      const res = await fetch('/api/save-kiosk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pdfBase64: base64data, fullContextData: payload })
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("saveLeadWithBase64Pdf error:", err);
+    }
+  }
+
   // NEW: Automatically load from URL parameter if present
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -3345,6 +3398,7 @@ export function ConfigProvider({ children }) {
     importJsonFile,
     resetAll,
     generateKioskQR,
+    saveLeadWithBase64Pdf,
     buildWordContext,
     updateAddonPricing,
   };

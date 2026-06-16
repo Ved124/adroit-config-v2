@@ -163,7 +163,7 @@ function buildProposalData({
   withMarkup = 0, afterDiscount = 0, addonsTotal = 0, discount = 0, markup = 0,
   machineModelIndex = null, customMode = false, scopeOverrides = {},
   // Add UI persistence flags
-  quoteTemplate = "v2", showPricingFields = false,
+  quoteTemplate = process.env.NODE_ENV === "development" ? "v2" : "classic", showPricingFields = false,
   showMarkupField = false, showDiscountField = false, showPrices = false,
   showAddonPricing = false,
   conversionRate = 84,
@@ -1765,7 +1765,9 @@ export default function SummaryPage() {
             </span>
             {/* Template toggle */}
             <div style={{ display: "flex", alignItems: "center", gap: "6px", backgroundColor: "#334155", borderRadius: "8px", padding: "3px" }}>
-              {[{ k: "classic", label: "📄 Adroit Classic" }, { k: "v2", label: "✨ New Style" }].map(({ k, label }) => (
+              {[{ k: "classic", label: "📄 Adroit Classic" }, { k: "v2", label: "✨ New Style" }]
+                .filter(opt => opt.k !== "v2" || process.env.NODE_ENV === "development")
+                .map(({ k, label }) => (
                 <button key={k} onClick={() => setQuoteTemplate(k)}
                   style={{ backgroundColor: quoteTemplate === k ? "#2563eb" : "transparent", color: "#fff", border: "none", borderRadius: "6px", padding: "5px 12px", fontWeight: quoteTemplate === k ? 700 : 400, cursor: "pointer", fontSize: "12px", transition: "background 0.2s" }}
                 >{label}</button>

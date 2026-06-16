@@ -161,7 +161,8 @@ export function ConfigProvider({ children }) {
   const [customLayflat, setCustomLayflat] = useState("");
   const [customRollerWidth, setCustomRollerWidth] = useState("");
   const [scopeOverrides, setScopeOverrides] = useState({});
-  const [quoteTemplate, setQuoteTemplate] = useState("v2");
+  const defaultTemplate = process.env.NODE_ENV === "development" ? "v2" : "classic";
+  const [quoteTemplate, setQuoteTemplate] = useState(defaultTemplate);
   const [showPricingFields, setShowPricingFields] = useState(false);
   const [presetBasePrice, setPresetBasePrice] = useState(0); // ← NEW: stores fixed price from modelPreset
 
@@ -3242,7 +3243,7 @@ export function ConfigProvider({ children }) {
     setCustomMode(false);
     setDiscount(0);
     setMarkup(0);
-    setQuoteTemplate("v2");
+    setQuoteTemplate(process.env.NODE_ENV === "development" ? "v2" : "classic");
     setShowPricingFields(false);
     setCustomOutput("");
     setCustomLayflat("");

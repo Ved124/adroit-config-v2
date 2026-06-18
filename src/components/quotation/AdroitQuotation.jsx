@@ -349,7 +349,7 @@ function CoverPage({ machine, customer }) {
                 </div>
 
                 {/* Customer company or name */}
-                {(company || customerName) && (
+                {company && (
                     <div style={{
                         fontSize: "13pt",
                         fontWeight: "bold",
@@ -357,7 +357,7 @@ function CoverPage({ machine, customer }) {
                         color: INK,
                         marginBottom: "4px",
                     }}>
-                        M/s. {company || customerName}{city ? `, ${city}` : ""}
+                        M/s. {company}{city ? `, ${city}` : ""}
                     </div>
                 )}
             </div>
@@ -762,7 +762,7 @@ function ComponentPage({ item }) {
 }
 
 // ─── ELECTRICALS + TOWER + ITEMS NOT INCLUDED ─────────────────────────────────
-function ElectricalsPage({ electricals }) {
+function ElectricalsPage({ electricals, machineType }) {
     const e = electricals || {};
     return (
         <Page>
@@ -774,7 +774,7 @@ function ElectricalsPage({ electricals }) {
                 <SpecRow label="Temperature Controllers" value="Fuji or equivalent make with +/- 1 deg. accuracy." shaded />
                 <SpecRow label="Drives" value="Delta or equivalent variable frequency drives." />
                 <SpecRow label="Haul-Off" value="PLC based operation." shaded />
-                <SpecRow label="Total connected Load" value={e.totalConnectedLoad ? `${e.totalConnectedLoad}.` : "108 KW."} />
+                <SpecRow label="Total connected Load" value={e.totalConnectedLoad ? `${e.totalConnectedLoad} KW.` : "108 KW."} />
                 <SpecRow label="Power Supply" value="415 V, 50 Hz, with N" shaded />
                 <SpecRow label="Voltage Fluctuation" value="+ /- 5%" noBorder />
             </div><br />
@@ -790,7 +790,7 @@ function ElectricalsPage({ electricals }) {
                 <SpecRow label="Max. non-carbonate hardness" value="2 Degrees dH" />
                 <SpecRow label="Filter (max.)" value="40 microns" shaded />
                 <SpecRow label="General Criteria" value="Free from corrosion substances and foreign particles." noBorder />
-                <SpecRow label="Water requirement" value="30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade." noBorder shaded />
+                <SpecRow label="Water requirement" value={machineType === 'aba' ? "30 LPM X 2 extruders = Total 60 LPM at 25 Degree centigrade." : "30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade."} noBorder shaded />
             </div><br />
 
             <SectionTitle>
@@ -808,7 +808,7 @@ function ElectricalsPage({ electricals }) {
 }
 
 // ─── OPTIONAL EQUIPMENT + UTILITIES ──────────────────────────────────────────
-function OptionalAndUtilitiesPage({ optionalItems, powerLoads }) {
+function OptionalAndUtilitiesPage({ optionalItems, powerLoads, machineType }) {
     const opts = optionalItems || [];
     const loads = powerLoads || [];
     let totalH = 0, totalM = 0;
@@ -853,41 +853,42 @@ function OptionalAndUtilitiesPage({ optionalItems, powerLoads }) {
 
             {/* ── Compressed Air Equipment Table ─────────────────────── */}
 
-
-            <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", fontSize: "8pt", fontFamily: F }}>
-                <thead>
-                    <tr>
-                        <th style={{ ...TH, width: "30px" }}>SR.<br />NO.</th>
-                        <th style={{ ...TH, textAlign: "left" }}>EQUIPMENTS</th>
-                        <th style={{ ...TH, width: "46px" }}>QTY.</th>
-                        <th style={{ ...TH, width: "90px" }}>PRESSURE<br />(BAR)</th>
-                        <th style={{ ...TH, width: "110px" }}>TOTAL AMT. OF<br />AIR M3/HR</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {[
-                        { name: "AT DIE DURING STARTUP & OPERATION", qty: 1, pressure: "5-7 BAR", air: "8.5" },
-                        { name: "OSC. HAULOFF", qty: 1, pressure: "5-7 BAR", air: "1.7" },
-                        { name: "SURFACE WINDER WITH ADD. NIP", qty: 1, pressure: "5-7 BAR", air: "5.1" },
-                    ].map((row, i) => (
-                        <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : GRAY_BG }}>
-                            <td style={{ ...TD, textAlign: "center" }}>{i + 1}</td>
-                            <td style={{ ...TD }}>{row.name}</td>
-                            <td style={{ ...TD, textAlign: "center" }}>{row.qty}</td>
-                            <td style={{ ...TD, textAlign: "center" }}>{row.pressure}</td>
-                            <td style={{ ...TD, textAlign: "center" }}>{row.air}</td>
+            {machineType !== "aba" && (
+                <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", fontSize: "8pt", fontFamily: F }}>
+                    <thead>
+                        <tr>
+                            <th style={{ ...TH, width: "30px" }}>SR.<br />NO.</th>
+                            <th style={{ ...TH, textAlign: "left" }}>EQUIPMENTS</th>
+                            <th style={{ ...TH, width: "46px" }}>QTY.</th>
+                            <th style={{ ...TH, width: "90px" }}>PRESSURE<br />(BAR)</th>
+                            <th style={{ ...TH, width: "110px" }}>TOTAL AMT. OF<br />AIR M3/HR</th>
                         </tr>
-                    ))}
-                    <tr style={{ backgroundColor: BLUE_LIGHT }}>
-                        <td colSpan={4} style={{ ...TD, textAlign: "right", fontWeight: "bold", color: INK, border: `1px solid ${BDR}` }}>
-                            TOTAL
-                        </td>
-                        <td style={{ ...TD, textAlign: "center", fontWeight: "bold", color: INK, border: `1px solid ${BDR}` }}>
-                            15.3
-                        </td>
-                    </tr>
-                </tbody>
-            </table><br />
+                    </thead>
+                    <tbody>
+                        {[
+                            { name: "AT DIE DURING STARTUP & OPERATION", qty: 1, pressure: "5-7 BAR", air: "8.5" },
+                            { name: "OSC. HAULOFF", qty: 1, pressure: "5-7 BAR", air: "1.7" },
+                            { name: "SURFACE WINDER WITH ADD. NIP", qty: 1, pressure: "5-7 BAR", air: "5.1" },
+                        ].map((row, i) => (
+                            <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#fff" : GRAY_BG }}>
+                                <td style={{ ...TD, textAlign: "center" }}>{i + 1}</td>
+                                <td style={{ ...TD }}>{row.name}</td>
+                                <td style={{ ...TD, textAlign: "center" }}>{row.qty}</td>
+                                <td style={{ ...TD, textAlign: "center" }}>{row.pressure}</td>
+                                <td style={{ ...TD, textAlign: "center" }}>{row.air}</td>
+                            </tr>
+                        ))}
+                        <tr style={{ backgroundColor: BLUE_LIGHT }}>
+                            <td colSpan={4} style={{ ...TD, textAlign: "right", fontWeight: "bold", color: INK, border: `1px solid ${BDR}` }}>
+                                TOTAL
+                            </td>
+                            <td style={{ ...TD, textAlign: "center", fontWeight: "bold", color: INK, border: `1px solid ${BDR}` }}>
+                                15.3
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            )}<br />
 
             <SectionTitle>UTILITIES REQUIRED</SectionTitle>
 
@@ -1407,10 +1408,10 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                     ))}
 
                     {/* Electricals / Tower / Exclusions */}
-                    <ElectricalsPage electricals={electricals} />
+                    <ElectricalsPage electricals={electricals} machineType={machine?.type} />
 
                     {/* Optional Equipment + Utilities */}
-                    <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} />
+                    <OptionalAndUtilitiesPage optionalItems={optionalItems} powerLoads={data.power_loads || []} machineType={machine?.type} />
 
                     {/* Terms & Conditions */}
                     <TermsPage />

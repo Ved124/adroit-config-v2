@@ -142,8 +142,10 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
   const bimetallicAddons = (selectedAddons || []).filter(a => a.id.startsWith("bimetallic-upgrade-"));
   const numBimetallic = bimetallicAddons.reduce((sum, a) => sum + (a.qty || 1), 0);
 
+  const isAba = machineModel && machineModel.machineType === "aba";
+
   let materialLine = material.toLowerCase().includes("nitro")
-    ? "Imported Nitro Alloy screw & barrel"
+    ? (isAba ? "Nitro Alloy screw & barrel" : "Imported Nitro Alloy screw & barrel")
     : material;
 
   if (numBimetallic > 0) {
@@ -152,7 +154,8 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
     } else {
       // Mixed case
       const nitroCount = totalQty - numBimetallic;
-      materialLine = `${numWord(numBimetallic)} with Bi-metallic screw & barrel, ${numWord(nitroCount)} with Imported Nitro Alloy screw & barrel`;
+      const nitroText = isAba ? "Nitro Alloy screw & barrel" : "Imported Nitro Alloy screw & barrel";
+      materialLine = `${numWord(numBimetallic)} with Bi-metallic screw & barrel, ${numWord(nitroCount)} with ${nitroText}`;
     }
   }
 
@@ -216,7 +219,7 @@ function generateDieHead(item, machineModel) {
   if (name.toLowerCase().includes("three layer") || item.dieFamily === "3layer") {
     layerStr = "Three Layer ";
   } else if (name.toLowerCase().includes("aba") || item.dieFamily === "aba") {
-    layerStr = "ABA / AB Co-extrusion ";
+    layerStr = "Three Layer ";
   } else if (
     name.toLowerCase().includes("mono") ||
     item.dieFamily === "mono"
@@ -239,9 +242,9 @@ function generateDieHead(item, machineModel) {
   const rotationSuffix = isRotation ? " Die with Rotation." : "";
 
   return (
-    `${numWord(qty)} Imported Canadian design ${surfaceStr}${layerStr}${distStr} Die` +
+    `${numWord(qty)} ${surfaceStr}${layerStr}${distStr} Die` +
     (diam ? ` with lip diameter of ${diam}` : "") +
-    `, complete with die adapters and carriage${ibcSuffix}.${rotationSuffix}`
+    ` complete with die adapters and carriage${ibcSuffix}.${rotationSuffix}`
   );
 }
 
@@ -407,7 +410,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   } else if (isAutomatic) {
     typeLabel = "Automatic Surface Winder";
   } else if (variant.includes("semi") || nameLc.includes("surface")) {
-    typeLabel = "Semi-Automatic Surface Winder";
+    typeLabel = "Surface Winder";
   }
 
   const widthRaw =
@@ -426,7 +429,8 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   if (widthNum >= 1500 && widthNum <= 2000) hpLabel = "3 HP";
   else if (widthNum > 2000) hpLabel = "5 HP";
 
-  const prefix = includeNipPrefix
+  const isAba = machineModel && machineModel.machineType === "aba";
+  const prefix = (includeNipPrefix && !isAba)
     ? `One Secondary nip with edge slitting assembly and edge trimming assembly. `
     : "";
 

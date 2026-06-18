@@ -650,7 +650,8 @@ export function ConfigProvider({ children }) {
 
           // Find smallest size >= machineWidth
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
-          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1];
+          const presetSize = parseInt(item.size) || 0;
+          const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1]);
 
           const diff = (rollerNum === 1450) ? 100 : 120;
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
@@ -673,9 +674,9 @@ export function ConfigProvider({ children }) {
             customName: `Motorised Bubble Cage - ${displaySize} mm`,
             techDesc: sanitizeTechDesc("Bubble Cage", {
               ...(dynamicBCItem.techDesc || {}),
-              ...(item.techDesc || {}),
               "Type": typeStr,
               [label]: `${minRange} to ${maxFilmWidth} mm`,
+              ...(item.techDesc || {}),
             })
           };
         }
@@ -689,9 +690,9 @@ export function ConfigProvider({ children }) {
           const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
-          // Respect preset size if it's larger
-          const presetSize = parseInt(item.metadata?.size || item.size) || 0;
-          const chosenSize = Math.max(minSize, presetSize);
+          // Respect preset size
+          const presetSize = parseInt(item.size) || 0;
+          const chosenSize = presetSize > 0 ? presetSize : minSize;
           const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
 
           const dynamicHauloffItem = HAULOFF_COMPONENTS.find(h => h.id === "haul-horizontal-dynamic") || item;
@@ -715,9 +716,9 @@ export function ConfigProvider({ children }) {
             customName: `HORIZONTAL HAULOFF - ${displaySize} mm`,
             techDesc: {
               ...(dynamicHauloffItem.techDesc || {}), // Start with base data
-              ...(item.techDesc || {}), // Overlay existing overrides
               "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
-              "Nip roller drive": `${hp} AC motor with variable frequency drive.`
+              "Nip roller drive": `${hp} AC motor with variable frequency drive.`,
+              ...(item.techDesc || {}) // Overlay existing overrides
             }
           };
         }
@@ -730,7 +731,8 @@ export function ConfigProvider({ children }) {
         if (item.category === "Tower / Platform" && (isTowerId || item.isDynamic)) {
           const availableSizes = Object.keys(TOWER_PRICES).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth, or fallback to smallest available
-          const chosenSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const presetSize = parseInt(item.size) || 0;
+          const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[0]);
           const newPrice = TOWER_PRICES[chosenSize.toString()] || 0;
 
           const dynamicTowerItem = TOWER_COMPONENTS.find(h => h.id === "tower-dynamic") || item;
@@ -748,10 +750,10 @@ export function ConfigProvider({ children }) {
             customName: `TOWER / PLATFORM - ${displaySize} mm`,
             techDesc: {
               ...(dynamicTowerItem.techDesc || {}),
-              ...(item.techDesc || {}),
               "Tower Size": `${displaySize} mm`,
               "Staircase": "Staircase with hand rails.",
               "Idler rollers": `Set of idler aluminium rollers of ${(rollerNum > 500) ? rollerNum : (chosenSize + ((rollerNum === 1450) ? 100 : 120))} mm face width.`,
+              ...(item.techDesc || {})
             }
           };
         }
@@ -780,9 +782,9 @@ export function ConfigProvider({ children }) {
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
-          // Respect preset size if it's larger
-          const presetSize = parseInt(item.metadata?.size || item.size) || 0;
-          const chosenSize = Math.max(minSize, presetSize);
+          // Respect preset size
+          const presetSize = parseInt(item.size) || 0;
+          const chosenSize = presetSize > 0 ? presetSize : minSize;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
           const stationLabel = isAuto ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)";
@@ -806,11 +808,11 @@ export function ConfigProvider({ children }) {
             customName: `${item.name} - ${displaySize} mm`,
             techDesc: {
               ...(dynamicWinderItem.techDesc || {}),
-              ...(item.techDesc || {}),
               "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
               "Nip roller drive": `${nipHP} AC motor with variable frequency drive.`,
               "Surface winder drive": `${nipHP} AC motor with variable frequency drive.`,
-              [stationLabel]: `Maximum web width of ${maxFilmWidth} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`
+              [stationLabel]: `Maximum web width of ${maxFilmWidth} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`,
+              ...(item.techDesc || {})
             }
           };
         }
@@ -824,9 +826,9 @@ export function ConfigProvider({ children }) {
 
           // Find smallest size >= machineWidth
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
-          // Respect preset size if it's larger
-          const presetSize = parseInt(item.metadata?.size || item.size) || 0;
-          const chosenSize = Math.max(minSize, presetSize);
+          // Respect preset size
+          const presetSize = parseInt(item.size) || 0;
+          const chosenSize = presetSize > 0 ? presetSize : minSize;
 
           const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
           const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
@@ -834,6 +836,10 @@ export function ConfigProvider({ children }) {
           const diff = (rollerNum === 1450) ? 100 : 120;
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
           const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
+
+          const actualLayflat = (machineType === "aba" && currentMachineModel?.layflatWidthMm) 
+            ? currentMachineModel.layflatWidthMm 
+            : maxFilmWidth;
 
           // Update item properties
           nextSelected[index] = {
@@ -846,8 +852,8 @@ export function ConfigProvider({ children }) {
             customName: `${item.name} - ${displaySize} mm`,
             techDesc: {
               ...(dynamicCFItem.techDesc || {}),
-              ...(item.techDesc || {}),
-              "Width Capability": `${maxFilmWidth} mm layflat`
+              "Width Capability": `${actualLayflat} mm layflat`,
+              ...(item.techDesc || {})
             }
           };
         }
@@ -1492,20 +1498,54 @@ export function ConfigProvider({ children }) {
           const nipDesc = generateSecondaryNip(item, currentMachineModel);
           const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
-          return [
-            {
-              id: `${item.id}-nip`,
-              name: "Secondary Nip Assembly",
-              qty: 1,
-              desc: nipDesc,
-            },
-            {
-              id: `${item.id}-winder`,
-              name: item.name.replace(/Secondary Nip & /i, ""),
-              qty: item.qty || 1,
-              desc: winderDesc,
+          if (machineType === "aba") {
+            let nipWidth = 0;
+            if (currentMachineModel && currentMachineModel.layflatWidthMm) {
+              nipWidth = currentMachineModel.layflatWidthMm + 50;
+            } else if (currentMachineModel && currentMachineModel.widthMm) {
+              nipWidth = currentMachineModel.widthMm + 50;
+            } else {
+              nipWidth = (parseInt(item.size) || 0) + 50; // fallback
             }
-          ];
+            
+            let hp = "2 HP";
+            if (nipWidth >= 1500 && nipWidth <= 2000) hp = "3 HP";
+            else if (nipWidth > 2000) hp = "5 HP";
+            
+            const nipWidthStr = nipWidth > 50 ? ` of ${nipWidth} mm width` : "";
+            const cfDesc = `Collapsing frame with PBT rollers, side guides, Main Nip${nipWidthStr} with ${hp} AC Drive.`;
+
+            return [
+              {
+                id: `${item.id}-cf`,
+                name: "Collapsing Frame",
+                qty: 1,
+                category: "Collapsing Frame",
+                desc: cfDesc,
+              },
+              {
+                id: `${item.id}-winder`,
+                name: item.name.replace(/Secondary Nip & /i, ""),
+                qty: item.qty || 1,
+                desc: winderDesc,
+              }
+            ];
+          } else {
+            return [
+              {
+                id: `${item.id}-nip`,
+                name: "Secondary Nip Assembly",
+                qty: 1,
+                desc: nipDesc,
+              },
+              {
+                id: `${item.id}-winder`,
+                name: item.name.replace(/Secondary Nip & /i, ""),
+                qty: item.qty || 1,
+                desc: winderDesc,
+              }
+            ];
+          }
         }
 
         const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
@@ -1542,10 +1582,28 @@ export function ConfigProvider({ children }) {
       if (isCombinedWinder && !customDesc) {
         const nipDesc = generateSecondaryNip(item, currentMachineModel);
         const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
-        return [
-          { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
-          { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
-        ];
+        if (machineType === "aba") {
+          return [
+            {
+              id: `${item.id}-cf`,
+              name: "Collapsing Frame",
+              qty: 1,
+              category: "Collapsing Frame",
+              desc: "if there is hauloff then hauloff will come with collapsing frame",
+            },
+            {
+              id: `${item.id}-winder`,
+              name: item.name.replace(/Secondary Nip & /i, ""),
+              qty: item.qty || 1,
+              desc: winderDesc,
+            }
+          ];
+        } else {
+          return [
+            { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
+            { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
+          ];
+        }
       }
 
       const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
@@ -1582,10 +1640,9 @@ export function ConfigProvider({ children }) {
       if (combined.includes("ibc")) return 5;
       if (n.includes("tower") || n.includes("platform")) return 11;
       if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-      if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
-      if (combined.includes("secondary nip")) return 9;
-      if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+      if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
       if (combined.includes("idler")) return 8;
+      if (combined.includes("secondary nip")) return 9;
       if (combined.includes("winder")) return 10;
 
       return 90;
@@ -1594,7 +1651,38 @@ export function ConfigProvider({ children }) {
     const manualExtraDesc = (overrides["manual_extra"] || "").trim();
     const manualExtra = manualExtraDesc ? [{ name: "Additional Item", qty: 1, desc: manualExtraDesc }] : [];
 
-    const sortedScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems].sort((a, b) => getIdx(a) - getIdx(b));
+    let preCombineScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems];
+
+    const hauloffIdx = preCombineScope.findIndex(item => {
+      const category = (item.category || "").toLowerCase();
+      if (category.includes("haul")) return true;
+      const combined = (String(item.name || "") + " " + String(item.desc || item.description || "")).toLowerCase();
+      return combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+    });
+
+    const collapsingIdx = preCombineScope.findIndex(item => {
+      const category = (item.category || "").toLowerCase();
+      if (category.includes("collapsing")) return true;
+      const combined = (String(item.name || "") + " " + String(item.desc || item.description || "")).toLowerCase();
+      const isCollapsing = combined.includes("collapsing frame") || combined.includes("collapsing");
+      const isHaulOff = category.includes("haul") || combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+      return isCollapsing && !isHaulOff;
+    });
+
+    if (hauloffIdx !== -1 && collapsingIdx !== -1) {
+      const cfItem = preCombineScope[collapsingIdx];
+      const hoItem = preCombineScope[hauloffIdx];
+      
+      preCombineScope[hauloffIdx] = {
+        ...hoItem,
+        name: "Haul-Off and Collapsing Frame",
+        desc: `${cfItem.desc || cfItem.description || ""}\n${hoItem.desc || hoItem.description || ""}`,
+        techDesc: { ...cfItem.techDesc, ...hoItem.techDesc }
+      };
+      preCombineScope.splice(collapsingIdx, 1);
+    }
+
+    const sortedScope = [...preCombineScope].sort((a, b) => getIdx(a) - getIdx(b));
     const finalScope = [...sortedScope, ...manualExtra].map(item => ({ ...item, description: item.desc }));
 
     return {

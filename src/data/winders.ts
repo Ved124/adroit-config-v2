@@ -22,6 +22,8 @@ export interface WinderComponent {
 
 // Prices extracted from spreadsheet image
 export const MANUAL_BACK_TO_BACK_PRICES: Record<string, number> = {
+  "850": 500000,
+  "950": 600000,
   "1000": 700000,
   "1250": 700000,
   "1350": 800000,
@@ -89,6 +91,27 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
       "Tension control ": "Through torque.", // Note the space to distinguish from Nip tension
       "Length counter meter": "Provided",
       "Trim Suction Blower": "Provided",
+    },
+  },
+
+  {
+    id: "winder-single-surface-only-dynamic",
+    name: "Single Surface Winder",
+    variant: "surface-manual",
+    machineTypes: ["mono", "aba"],
+    image: "/images/winder/Back to Back Winder.JPG.jpeg",
+    cardDesc: "Single Surface Winder. Select size to add.",
+    price: 0,
+    isDynamic: true,
+    techDesc: {
+      "Surface Winder (02 No.)": "TBD",
+      "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
+      "Surface winder drive": "1 HP AC motor with variable frequency drive.",
+      "Tension control": "Through Torque mode.",
+      "Winder Type": "Single Surface type.",
+      "Main Nip rollers": "2 nos.Mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+      "Nip roller width": "TBD",
+      "Nip roller drive": "1 HP AC motor with variable frequency drive.",
     },
   },
 

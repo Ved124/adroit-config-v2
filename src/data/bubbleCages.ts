@@ -24,6 +24,7 @@ export interface BubbleCageComponent {
 }
 
 export const MANUAL_BC_PRICES: Record<string, number> = {
+  "850": 25000,
   "1000": 35000,
   "1250": 55000,
   "1350": 70000,
@@ -38,6 +39,7 @@ export const MANUAL_BC_PRICES: Record<string, number> = {
 };
 
 export const OPEN_CLOSE_BC_PRICES: Record<string, number> = {
+  "850": 150000,
   "1000": 175000,
   "1250": 250000,
   "1350": 250000,
@@ -52,6 +54,7 @@ export const OPEN_CLOSE_BC_PRICES: Record<string, number> = {
 };
 
 export const UP_DOWN_BC_PRICES: Record<string, number> = {
+  "850": 300000,
   "1000": 350000,
   "1250": 450000,
   "1500": 550000,
@@ -71,7 +74,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     name: "Manual Bubble Cage",
     variant: "manual",
     segments: 6,
-    machineTypes: ["mono", "aba"],
+    machineTypes: ["mono"],
     image: "/images/Bubble Cage/Manual Cage.JPG",
     cardDesc: "Select size to add manual bubble cage.",
     price: 0,
@@ -82,6 +85,22 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
       "Bubble diameter range": "750 to 1250 mm"
     },
     shortDesc: "Universal manual bubble cage with adjustable diameter."
+  },
+  {
+    id: "bc-manual-dynamic-aba",
+    name: "Manual Bubble Cage",
+    variant: "manual",
+    segments: 6,
+    machineTypes: ["aba"],
+    image: "/images/Bubble Cage/Manual Cage.JPG",
+    cardDesc: "Select size to add manual bubble cage.",
+    price: 0,
+    isDynamic: true,
+    techDesc: {
+      "Type": "Arms to support the bubble.",
+      "Actuation of ring": "Manual open-close operation.",
+    },
+    shortDesc: "Universal manual bubble cage with adjustable diameter for ABA."
   },
   {
     id: "bc-open-close-dynamic",

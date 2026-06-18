@@ -513,7 +513,7 @@ const ElectricalsPage = ({ electricals, optionalAddons, letterheadB64 }) => {
     ['Temp. controllers', e.temp_controllers || 'Fuji or equivalent type.'],
     ['Drives', e.drives || 'Delta or equivalent variable frequency drives.'],
     ['Hauloff', e.hauloff || 'PLC based operation.'],
-    ...(e.totalConnectedLoad ? [['Total Connected Load', `${e.totalConnectedLoad}.`]] : []),
+    ...(e.totalConnectedLoad ? [['Total Connected Load', `${e.totalConnectedLoad} KW.`]] : []),
     ['Power Supply', '415 V, 50 Hz, with N'],
     ['Voltage Fluctuation', '+ /- 5%'],
   ];
@@ -672,7 +672,7 @@ const UtilitiesPage = ({ utilities, letterheadB64 }) => {
 // =============================================================================
 // PAGE: WATER + COMPRESSED AIR + ENVIRONMENT
 // =============================================================================
-const SiteServicesPage = ({ siteServices, letterheadB64 }) => {
+const SiteServicesPage = ({ siteServices, letterheadB64, machineType }) => {
   const s = siteServices || {};
   const w = s.water || {};
   const airTable = s.air_table || [];
@@ -689,7 +689,7 @@ const SiteServicesPage = ({ siteServices, letterheadB64 }) => {
     ['Max. non-carbonate hardness', w.nc_hardness || '2 Degrees dH'],
     ['Filter to max.', w.filter || '40 microns'],
     ['General criteria', w.general || 'Free from corrosion substances and any foreign particles.'],
-    ['Water requirement', w.requirement || '30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade'],
+    ['Water requirement', w.requirement || (machineType === 'aba' ? '30 LPM X 2 extruders = Total 60 LPM at 25 Degree centigrade' : '30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade')],
   ];
 
   const envRows = [
@@ -1233,7 +1233,7 @@ export const MasterQuotationPDF = ({ data }) => {
       <UtilitiesPage utilities={utilities} letterheadB64={letterheadB64} />
 
       {/* Water + Air + Environment */}
-      <SiteServicesPage siteServices={siteServices} letterheadB64={letterheadB64} />
+      <SiteServicesPage siteServices={siteServices} letterheadB64={letterheadB64} machineType={machine?.type} />
 
       {/* Electricals + Tower + Optional Equipment */}
       {showElec && (

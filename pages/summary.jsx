@@ -217,7 +217,7 @@ function buildProposalData({
   const layflatWidth = customLayflat?.trim() ||
     m["Layflat Width (mm)"] || m["Lay Flat Width"] || m["WIDTH"] || m["Width"] || m["layflat"] || "";
   const dieSize = m["Die Size"] || m["DIE"] || m["Die"] || "";
-  const thicknessRange = m.thickness || m["Thichness Range (micron)"] || m["Thickness Range (micron)"] || m["THICKNESS"] || "20 – 150 micron";
+  const thicknessRange = m.thicknessRange || m.thickness || m["Thichness Range (micron)"] || m["Thickness Range (micron)"] || m["THICKNESS"] || "20 – 150 micron";
   const thicknessVariation = m.variation || m["Thickness Variation"] || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.";
 
   function autoScopeDesc(item) {
@@ -434,8 +434,21 @@ function buildProposalData({
       if (isControl) return [];
 
       // Hide internal components whose text is merged into parent items
+      // Only hide collapsing frame if a combined winder or haul-off exists
       if (c.includes("collapsing frame") || c.includes("filter")) {
-        return [];
+        if (c.includes("filter")) return [];
+
+        const hasCombinedWinderOrHaulOff = (selected || []).some(s => {
+          if (!s) return false;
+          const sC = (s.category || "").toLowerCase();
+          const sN = (s.name || "").toLowerCase();
+          const isHO = sC.includes("haul") || sN.includes("haul");
+          const isCombinedW = sC.includes("winder") && (sN.includes("secondary") || sN.includes("nip"));
+          return isHO || isCombinedW;
+        });
+        if (hasCombinedWinderOrHaulOff) {
+          return [];
+        }
       }
 
       const key = item.id || item.name;
@@ -450,28 +463,70 @@ function buildProposalData({
         const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
         const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
-        return [
-          {
-            id: `${item.id}-nip`,
-            name: "Secondary Nip Assembly",
-            qty: 1,
-            image: item.image,
-            shortDesc: nipDesc,
-            scopeDesc: nipDesc,
-            techDesc: techDescFilled,
-            _autoDesc: nipDesc,
-          },
-          {
-            id: `${item.id}-winder`,
-            name: item.name.replace(/Secondary Nip & /i, ""),
-            qty: item.qty || 1,
-            image: item.image,
-            shortDesc: winderDesc,
-            scopeDesc: winderDesc,
-            techDesc: techDescFilled,
-            _autoDesc: winderDesc,
+        if (machineType === "aba") {
+          let nipWidth = 0;
+          if (currentMachineModel && currentMachineModel.layflatWidthMm) {
+            nipWidth = currentMachineModel.layflatWidthMm + 50;
+          } else if (currentMachineModel && currentMachineModel.widthMm) {
+            nipWidth = currentMachineModel.widthMm + 50;
+          } else {
+            nipWidth = (parseInt(item.size) || 0) + 50; // fallback
           }
-        ];
+          
+          let hp = "2 HP";
+          if (nipWidth >= 1500 && nipWidth <= 2000) hp = "3 HP";
+          else if (nipWidth > 2000) hp = "5 HP";
+          
+          const nipWidthStr = nipWidth > 50 ? ` of ${nipWidth} mm width` : "";
+          const cfDesc = `Collapsing frame with PBT rollers, side guides, Main Nip${nipWidthStr} with ${hp} AC Drive.`;
+
+          return [
+            {
+              id: `${item.id}-cf`,
+              name: "Collapsing Frame",
+              qty: 1,
+              image: item.image,
+              category: "Collapsing Frame",
+              shortDesc: cfDesc,
+              scopeDesc: cfDesc,
+              techDesc: techDescFilled,
+              _autoDesc: cfDesc,
+            },
+            {
+              id: `${item.id}-winder`,
+              name: item.name.replace(/Secondary Nip & /i, ""),
+              qty: item.qty || 1,
+              image: item.image,
+              shortDesc: winderDesc,
+              scopeDesc: winderDesc,
+              techDesc: techDescFilled,
+              _autoDesc: winderDesc,
+            }
+          ];
+        } else {
+          return [
+            {
+              id: `${item.id}-nip`,
+              name: "Secondary Nip Assembly",
+              qty: 1,
+              image: item.image,
+              shortDesc: nipDesc,
+              scopeDesc: nipDesc,
+              techDesc: techDescFilled,
+              _autoDesc: nipDesc,
+            },
+            {
+              id: `${item.id}-winder`,
+              name: item.name.replace(/Secondary Nip & /i, ""),
+              qty: item.qty || 1,
+              image: item.image,
+              shortDesc: winderDesc,
+              scopeDesc: winderDesc,
+              techDesc: techDescFilled,
+              _autoDesc: winderDesc,
+            }
+          ];
+        }
       }
 
       const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons);
@@ -500,35 +555,61 @@ function buildProposalData({
     const customDesc = overrides[key];
     const nameLc = (item.name || "").toLowerCase();
     const isWinder = (item.category || "").toLowerCase().includes("winder") || nameLc.includes("winder");
-    const isCombinedWinder = isWinder && (nameLc.includes("secondary") || nameLc.includes("nip"));
+    const isCombinedWinder = isWinder && (nameLc.includes("secondary") || nameLc.includes("main") || nameLc.includes("nip"));
 
-    if (isCombinedWinder && !customDesc) {
+    if (isCombinedWinder && !customDesc && !item.scopeDesc) {
       const nipDesc = generateSecondaryNip(item, currentMachineModel);
       const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
       const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
-      return [
-        {
-          id: `${item.id}-nip`,
-          name: "Secondary Nip Assembly",
-          qty: 1,
-          image: item.image,
-          shortDesc: nipDesc,
-          scopeDesc: nipDesc,
-          techDesc: techDescFilled,
-          _autoDesc: nipDesc,
-        },
-        {
-          id: `${item.id}-winder`,
-          name: (item.name || "").replace(/Secondary Nip & /i, ""),
-          qty: item.qty || 1,
-          image: item.image,
-          shortDesc: winderDesc,
-          scopeDesc: winderDesc,
-          techDesc: techDescFilled,
-          _autoDesc: winderDesc,
-        }
-      ];
+      if (machineType === "aba") {
+        return [
+          {
+            id: `${item.id}-cf`,
+            name: "Collapsing Frame",
+            qty: 1,
+            image: item.image,
+            category: "Collapsing Frame",
+            shortDesc: "if there is hauloff then hauloff will come with collapsing frame",
+            scopeDesc: "if there is hauloff then hauloff will come with collapsing frame",
+            techDesc: techDescFilled,
+            _autoDesc: "if there is hauloff then hauloff will come with collapsing frame",
+          },
+          {
+            id: `${item.id}-winder`,
+            name: (item.name || "").replace(/Secondary Nip & /i, ""),
+            qty: item.qty || 1,
+            image: item.image,
+            shortDesc: winderDesc,
+            scopeDesc: winderDesc,
+            techDesc: techDescFilled,
+            _autoDesc: winderDesc,
+          }
+        ];
+      } else {
+        return [
+          {
+            id: `${item.id}-nip`,
+            name: "Secondary Nip Assembly",
+            qty: 1,
+            image: item.image,
+            shortDesc: nipDesc,
+            scopeDesc: nipDesc,
+            techDesc: techDescFilled,
+            _autoDesc: nipDesc,
+          },
+          {
+            id: `${item.id}-winder`,
+            name: (item.name || "").replace(/Secondary Nip & /i, ""),
+            qty: item.qty || 1,
+            image: item.image,
+            shortDesc: winderDesc,
+            scopeDesc: winderDesc,
+            techDesc: techDescFilled,
+            _autoDesc: winderDesc,
+          }
+        ];
+      }
     }
 
     const autoDesc = generateScopeDesc(item, selected, currentMachineModel, selectedAddons) || item.shortDesc || item.cardDesc;
@@ -605,7 +686,7 @@ function buildProposalData({
       techDesc: {},
       _autoDesc: "Aluminum Idler rollers as per layout drawing."
     },
-    !hasSelectedTower && {
+    machineType !== "aba" && !hasSelectedTower && {
       id: "auto_tower", name: "Tower Structure", qty: 1, image: "",
       shortDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.",
       scopeDesc: autoScopeDesc({ name: "Tower Structure", shortDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc." }),
@@ -613,11 +694,11 @@ function buildProposalData({
       _autoDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc."
     },
     {
-      id: "auto_control", name: "Control Panel", qty: 1, image: "",
-      shortDesc: "Complete extrusion controls on main panel with Cold start protection and with Touch Panel.",
-      scopeDesc: autoScopeDesc({ name: "Control Panel", shortDesc: "Complete extrusion controls on main panel with Cold start protection and with Touch Panel." }),
+      id: "auto_control", name: "Extrusion Control Line", qty: 1, image: "",
+      shortDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel.",
+      scopeDesc: autoScopeDesc({ name: "Extrusion Control Line", shortDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel." }),
       techDesc: {},
-      _autoDesc: "Complete extrusion controls on main panel with Cold start protection and with Touch Panel."
+      _autoDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel."
     }
   ].filter(Boolean);
 
@@ -644,7 +725,39 @@ function buildProposalData({
     _isExtra: true,
   };
 
-  const finalScope = getSortedScope([...selectedScopeItems, ...winderTowerScopeItems, ...staticItems])
+  let preCombineScope = [...selectedScopeItems, ...winderTowerScopeItems, ...staticItems];
+
+  const hauloffIdx = preCombineScope.findIndex(item => {
+    const category = (item.category || "").toLowerCase();
+    if (category.includes("haul")) return true;
+    const combined = (String(item.name || "") + " " + String(item.shortDesc || item.description || "")).toLowerCase();
+    return combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+  });
+
+  const collapsingIdx = preCombineScope.findIndex(item => {
+    const category = (item.category || "").toLowerCase();
+    if (category.includes("collapsing")) return true;
+    const combined = (String(item.name || "") + " " + String(item.shortDesc || item.description || "")).toLowerCase();
+    const isCollapsing = combined.includes("collapsing frame") || combined.includes("collapsing");
+    const isHaulOff = category.includes("haul") || combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+    return isCollapsing && !isHaulOff;
+  });
+
+  if (hauloffIdx !== -1 && collapsingIdx !== -1) {
+    const cfItem = preCombineScope[collapsingIdx];
+    const hoItem = preCombineScope[hauloffIdx];
+
+    preCombineScope[hauloffIdx] = {
+      ...hoItem,
+      name: "Haul-Off and Collapsing Frame",
+      shortDesc: `${cfItem.shortDesc}\n${hoItem.shortDesc}`,
+      scopeDesc: `${cfItem.scopeDesc || cfItem.shortDesc}\n${hoItem.scopeDesc || hoItem.shortDesc}`,
+      techDesc: { ...cfItem.techDesc, ...hoItem.techDesc }
+    };
+    preCombineScope.splice(collapsingIdx, 1);
+  }
+
+  const finalScope = getSortedScope(preCombineScope)
     .concat(extraScopeItems)
     .concat(manualExtra.shortDesc ? [manualExtra] : [])
     .map((item, i) => ({
@@ -667,14 +780,13 @@ function buildProposalData({
       if (n.includes("die")) return 3;
       if (combined.includes("air ring") || combined.includes("airring")) return 4;
       if (combined.includes("ibc")) return 5;
-      if (n.includes("tower") || n.includes("platform")) return 11;
       if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-      if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
-      if (combined.includes("secondary nip")) return 9;
-      if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+      if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 7;
       if (combined.includes("idler")) return 8;
+      if (combined.includes("secondary nip")) return 9;
       if (combined.includes("winder")) return 10;
-      
+      if (n.includes("tower") || n.includes("platform")) return 11;
+
       return 90;
     };
 
@@ -721,6 +833,10 @@ function buildProposalData({
             const mixerAddon = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
             return mixerAddon?.image || "/images/Acessories/Vertical Granule Mixer with Dryer.JPG";
           }
+          if (machineType === "mono") return "/images/machines/mono.jpg";
+          if (machineType === "aba") return "/images/machines/aba.png";
+          if (machineType === "3layer") return "/images/machines/3layer.png";
+          if (machineType === "5layer") return "/images/machines/5 layer.png";
           return `/images/machines/5 layer.png`;
         })(),
       };
@@ -885,7 +1001,10 @@ function buildProposalData({
     })(),
 
     electricals: {
-      totalConnectedLoad: m?.totalConnectedLoad || null,
+      totalConnectedLoad: m?.totalConnectedLoadKw || m?.totalConnectedLoad || null,
+      tower_desc: machineType === "aba"
+        ? "Tower structure with idler rollers to support and mount bubble cage, collapsing frame,\nHauloff etc. Beams will be provided at Bubble Cage for lifting the die parts."
+        : undefined,
     },
 
     _restore: {
@@ -960,12 +1079,12 @@ export default function SummaryPage() {
       if (!html2canvasModule) {
         import("html2canvas").then((mod) => {
           html2canvasModule = mod.default;
-        }).catch(() => {});
+        }).catch(() => { });
       }
       if (!jsPDFModule) {
         import("jspdf").then((mod) => {
           jsPDFModule = mod.jsPDF || mod.default;
-        }).catch(() => {});
+        }).catch(() => { });
       }
     }
   }, []);
@@ -1307,111 +1426,111 @@ export default function SummaryPage() {
                 <span className="text-xs text-slate-400">Auto-generated • edit to override</span>
               </div>
               <div className="rounded-xl border border-slate-200 overflow-hidden">
-              <table className="w-full text-sm border-collapse">
-                <thead>
-                  <tr className="bg-brand-blue text-white">
-                    <th className="w-12 py-2 px-3 text-center font-semibold text-xs tracking-wide">ITEM #</th>
-                    <th className="py-2 px-3 text-left font-semibold text-xs tracking-wide">ITEM DESCRIPTION</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(proposalData?.scope || []).map((item, i) => {
-                    const key = item.id || item.name;
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="bg-brand-blue text-white">
+                      <th className="w-12 py-2 px-3 text-center font-semibold text-xs tracking-wide">ITEM #</th>
+                      <th className="py-2 px-3 text-left font-semibold text-xs tracking-wide">ITEM DESCRIPTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(proposalData?.scope || []).map((item, i) => {
+                      const key = item.id || item.name;
 
-                    if (["auto_idler", "auto_secnip", "auto_tower", "auto_control"].includes(item.id)) {
-                      return (
-                        <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
-                          <td className="py-2 px-3 text-center font-bold text-slate-400 align-top">
-                            {i + 1}
-                          </td>
-                          <td className="py-2 px-3 text-xs text-slate-600 align-top italic">
-                            {item._autoDesc}
-                            <span className="ml-2 text-slate-300 not-italic">(static)</span>
-                          </td>
-                        </tr>
-                      );
-                    }
+                      if (["auto_idler", "auto_secnip", "auto_tower", "auto_control"].includes(item.id)) {
+                        return (
+                          <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                            <td className="py-2 px-3 text-center font-bold text-slate-400 align-top">
+                              {i + 1}
+                            </td>
+                            <td className="py-2 px-3 text-xs text-slate-600 align-top italic">
+                              {item._autoDesc}
+                              <span className="ml-2 text-slate-300 not-italic">(static)</span>
+                            </td>
+                          </tr>
+                        );
+                      }
 
-                    if (item._isExtra) {
-                      const val = scopeOverrides[key] !== undefined ? scopeOverrides[key] : "";
+                      if (item._isExtra) {
+                        const val = scopeOverrides[key] !== undefined ? scopeOverrides[key] : "";
+                        return (
+                          <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                            <td className="py-2 px-3 text-center font-bold text-slate-300 align-top">
+                              {i + 1}
+                            </td>
+                            <td className="py-1 px-2 align-top">
+                              <textarea
+                                rows={3}
+                                value={val}
+                                onChange={e => setScopeOverrides(prev => ({ ...prev, [key]: e.target.value }))}
+                                placeholder="Type additional scope item description..."
+                                className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-y leading-relaxed placeholder-slate-300"
+                                style={{ minHeight: "52px" }}
+                              />
+                            </td>
+                          </tr>
+                        );
+                      }
+
+                      const currentVal = scopeOverrides[key] !== undefined
+                        ? scopeOverrides[key]
+                        : (item._autoDesc || "");
+                      const hasOverride = scopeOverrides[key] !== undefined;
+
                       return (
-                        <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
-                          <td className="py-2 px-3 text-center font-bold text-slate-300 align-top">
+                        <tr key={key || i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                          <td className="py-2 px-3 text-center font-bold text-brand-blue align-top">
                             {i + 1}
                           </td>
                           <td className="py-1 px-2 align-top">
+                            <div className="text-xs font-semibold text-slate-500 mb-0.5">{item.name}</div>
                             <textarea
                               rows={3}
-                              value={val}
+                              value={currentVal}
                               onChange={e => setScopeOverrides(prev => ({ ...prev, [key]: e.target.value }))}
-                              placeholder="Type additional scope item description..."
-                              className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-y leading-relaxed placeholder-slate-300"
+                              placeholder={item._autoDesc || "Type description for proposal..."}
+                              className="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue resize-y leading-relaxed"
                               style={{ minHeight: "52px" }}
                             />
+                            {hasOverride && (
+                              <button
+                                onClick={() => setScopeOverrides(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                })}
+                                className="text-xs text-slate-400 hover:text-red-400 mt-0.5 transition-colors"
+                              >
+                                ↩ Reset to default
+                              </button>
+                            )}
                           </td>
                         </tr>
                       );
-                    }
+                    })}
 
-                    const currentVal = scopeOverrides[key] !== undefined
-                      ? scopeOverrides[key]
-                      : (item._autoDesc || "");
-                    const hasOverride = scopeOverrides[key] !== undefined;
-
-                    return (
-                      <tr key={key || i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
-                        <td className="py-2 px-3 text-center font-bold text-brand-blue align-top">
-                          {i + 1}
+                    {/* Always append a manual extra row for the editor if it's not already in proposalData.scope */}
+                    {!proposalData?.scope?.some(x => x.id === "manual_extra") && (
+                      <tr key="manual_extra" className={proposalData?.scope?.length % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                        <td className="py-2 px-3 text-center font-bold text-slate-300 align-top">
+                          {(proposalData?.scope?.length || 0) + 1}
                         </td>
                         <td className="py-1 px-2 align-top">
-                          <div className="text-xs font-semibold text-slate-500 mb-0.5">{item.name}</div>
                           <textarea
                             rows={3}
-                            value={currentVal}
-                            onChange={e => setScopeOverrides(prev => ({ ...prev, [key]: e.target.value }))}
-                            placeholder={item._autoDesc || "Type description for proposal..."}
-                            className="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue resize-y leading-relaxed"
+                            value={scopeOverrides["manual_extra"] || ""}
+                            onChange={e => setScopeOverrides(prev => ({ ...prev, "manual_extra": e.target.value }))}
+                            placeholder="Type additional scope item description..."
+                            className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-y leading-relaxed placeholder-slate-300"
                             style={{ minHeight: "52px" }}
                           />
-                          {hasOverride && (
-                            <button
-                              onClick={() => setScopeOverrides(prev => {
-                                const next = { ...prev };
-                                delete next[key];
-                                return next;
-                              })}
-                              className="text-xs text-slate-400 hover:text-red-400 mt-0.5 transition-colors"
-                            >
-                              ↩ Reset to default
-                            </button>
-                          )}
                         </td>
                       </tr>
-                    );
-                  })}
-
-                  {/* Always append a manual extra row for the editor if it's not already in proposalData.scope */}
-                  {!proposalData?.scope?.some(x => x.id === "manual_extra") && (
-                    <tr key="manual_extra" className={proposalData?.scope?.length % 2 === 0 ? "bg-white" : "bg-slate-50"}>
-                      <td className="py-2 px-3 text-center font-bold text-slate-300 align-top">
-                        {(proposalData?.scope?.length || 0) + 1}
-                      </td>
-                      <td className="py-1 px-2 align-top">
-                        <textarea
-                          rows={3}
-                          value={scopeOverrides["manual_extra"] || ""}
-                          onChange={e => setScopeOverrides(prev => ({ ...prev, "manual_extra": e.target.value }))}
-                          placeholder="Type additional scope item description..."
-                          className="w-full rounded-lg border border-dashed border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-y leading-relaxed placeholder-slate-300"
-                          style={{ minHeight: "52px" }}
-                        />
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
           )}
 
           {/* Export buttons */}
@@ -1469,25 +1588,25 @@ export default function SummaryPage() {
               <tbody>
                 {machineType === "material-handling"
                   ? (() => {
-                      const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
-                      if (mixerAddons.length === 0) {
-                        return <tr><td colSpan={2} className="px-3 py-3 text-center text-slate-400">No mixer selected.</td></tr>;
-                      }
-                      return mixerAddons.map((a, i) => (
-                        <tr key={a.id + i} className="border-t border-slate-100">
-                          <td className="px-3 py-2 align-top text-slate-900">{a.customName || a.name}</td>
-                          <td className="px-3 py-2 align-top text-right text-slate-900">{a.qty || 1}</td>
-                        </tr>
-                      ));
-                    })()
+                    const mixerAddons = (selectedAddons || []).filter(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
+                    if (mixerAddons.length === 0) {
+                      return <tr><td colSpan={2} className="px-3 py-3 text-center text-slate-400">No mixer selected.</td></tr>;
+                    }
+                    return mixerAddons.map((a, i) => (
+                      <tr key={a.id + i} className="border-t border-slate-100">
+                        <td className="px-3 py-2 align-top text-slate-900">{a.customName || a.name}</td>
+                        <td className="px-3 py-2 align-top text-right text-slate-900">{a.qty || 1}</td>
+                      </tr>
+                    ));
+                  })()
                   : selected.length === 0
                     ? <tr><td colSpan={2} className="px-3 py-3 text-center text-slate-400">No basic components selected.</td></tr>
                     : selected.map((item, idx) => (
-                        <tr key={item.id || idx} className="border-t border-slate-100">
-                          <td className="px-3 py-2 align-top text-slate-900">{item.name}</td>
-                          <td className="px-3 py-2 align-top text-right text-slate-900">{item.qty || 1}</td>
-                        </tr>
-                      ))
+                      <tr key={item.id || idx} className="border-t border-slate-100">
+                        <td className="px-3 py-2 align-top text-slate-900">{item.name}</td>
+                        <td className="px-3 py-2 align-top text-right text-slate-900">{item.qty || 1}</td>
+                      </tr>
+                    ))
                 }
               </tbody>
             </table>
@@ -1496,209 +1615,208 @@ export default function SummaryPage() {
 
         {/* ── OPTIONAL EQUIPMENTS TABLE ─────────────────────────────────── */}
         {machineType !== "material-handling" && (
-        <section className="glass-card p-6 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-brand-blue">Optional Equipments</h3>
-            <button
-              onClick={() => setShowAddonPricing(!showAddonPricing)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${showAddonPricing
-                ? " text-amber-700 shadow-inner"
-                : " text-slate-200 hover:bg-slate-100"
-                }`}
-            >
-              {showAddonPricing ? <FaEyeSlash className="text-sm" /> : <FaEye className="text-sm" />}
-              {/* {showAddonPricing ? "Hide Internal Pricing" : "View Internal Pricing"} */}
-            </button>
-          </div>
-          <div className="overflow-x-auto rounded-xl border border-slate-200">
-            <table className="w-full text-xs">
-              <thead className="bg-slate-50">
-                <tr>
-                  <th className="px-3 py-2 text-left font-semibold text-slate-700">Component</th>
-                  <th className="px-3 py-2 text-right font-semibold w-16 text-slate-700">Qty</th>
-                  {showAddonPricing && (
-                    <>
-                      <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Markup %</th>
-                      <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Disc %</th>
-                    </>
-                  )}
-                  <th className="px-3 py-2 text-right font-semibold w-32 text-slate-700">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {optItems.length === 0 && (
-                  <tr><td colSpan={showAddonPricing ? 5 : 3} className="px-3 py-3 text-center text-slate-400">No optional equipments selected.</td></tr>
-                )}
-
-                {optItems.map((addon, idx) => (
-                  <tr key={addon.id || idx} className="border-t border-slate-100 group">
-                    <td className="px-3 py-2 align-top text-slate-900 group-hover:text-brand-blue transition-colors flex items-center gap-2">
-                      <button
-                        onClick={() => removeAddon(addon.id)}
-                        className="text-slate-300 hover:text-red-500 transition-colors"
-                        title="Remove item"
-                      >
-                        ×
-                      </button>
-                      <span>{addon.customName || addon.name}</span>
-                    </td>
-                    <td className="px-3 py-2 align-top text-right text-slate-900 font-medium">{addon.qty || 1}</td>
+          <section className="glass-card p-6 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-semibold text-brand-blue">Optional Equipments</h3>
+              <button
+                onClick={() => setShowAddonPricing(!showAddonPricing)}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${showAddonPricing
+                  ? " text-amber-700 shadow-inner"
+                  : " text-slate-200 hover:bg-slate-100"
+                  }`}
+              >
+                {showAddonPricing ? <FaEyeSlash className="text-sm" /> : <FaEye className="text-sm" />}
+                {/* {showAddonPricing ? "Hide Internal Pricing" : "View Internal Pricing"} */}
+              </button>
+            </div>
+            <div className="overflow-x-auto rounded-xl border border-slate-200">
+              <table className="w-full text-xs">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="px-3 py-2 text-left font-semibold text-slate-700">Component</th>
+                    <th className="px-3 py-2 text-right font-semibold w-16 text-slate-700">Qty</th>
                     {showAddonPricing && (
                       <>
-                        <td className="px-2 py-1 align-middle bg-amber-50/20">
-                          <input
-                            type="number"
-                            value={addon.markup || 0}
-                            onChange={(e) => updateAddonPricing(addon.id, { markup: parseFloat(e.target.value) || 0, discount: addon.discount || 0 })}
-                            className="w-full text-center py-1 rounded bg-white border border-amber-200 text-brand-blue font-bold focus:ring-1 focus:ring-amber-400 outline-none"
-                          />
-                        </td>
-                        <td className="px-2 py-1 align-middle bg-amber-50/20">
-                          <input
-                            type="number"
-                            value={addon.discount || 0}
-                            onChange={(e) => updateAddonPricing(addon.id, { markup: addon.markup || 0, discount: parseFloat(e.target.value) || 0 })}
-                            className="w-full text-center py-1 rounded bg-white border border-amber-200 text-rose-500 font-bold focus:ring-1 focus:ring-amber-400 outline-none"
-                          />
-                        </td>
+                        <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Markup %</th>
+                        <th className="px-3 py-2 text-center font-semibold w-24 text-slate-700 bg-amber-50/50">Disc %</th>
                       </>
                     )}
-                    <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold whitespace-nowrap">
-                      {addon.isIncluded ? "Included" : (addon.price || "—")}
-                    </td>
+                    <th className="px-3 py-2 text-right font-semibold w-32 text-slate-700">Price</th>
                   </tr>
-                ))}
-
-                {/* Add Custom Item Row - ALWAYS VISIBLE */}
-                <tr className="border-t border-brand-blue/20 bg-brand-blue/5">
-                  <td className="px-2 py-2">
-                    <input
-                      type="text"
-                      placeholder="Add custom item name..."
-                      value={customAddonName}
-                      onChange={(e) => setCustomAddonName(e.target.value)}
-                      className="w-full px-2 py-1.5 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-brand-blue outline-none"
-                    />
-                  </td>
-                  <td className="px-2 py-2">
-                    <input
-                      type="number"
-                      placeholder="Qty"
-                      value={customAddonQty}
-                      onChange={(e) => setCustomAddonQty(parseInt(e.target.value) || 1)}
-                      className="w-full px-2 py-1.5 rounded border border-slate-200 text-xs text-right focus:ring-1 focus:ring-brand-blue outline-none"
-                    />
-                  </td>
-                  {showAddonPricing && (
-                    <>
-                      <td className="bg-amber-50/10"></td>
-                      <td className="bg-amber-50/10"></td>
-                    </>
+                </thead>
+                <tbody>
+                  {optItems.length === 0 && (
+                    <tr><td colSpan={showAddonPricing ? 5 : 3} className="px-3 py-3 text-center text-slate-400">No optional equipments selected.</td></tr>
                   )}
-                  <td className="px-2 py-2 flex items-center gap-2">
-                    <input
-                      type="number"
-                      placeholder="Price"
-                      value={customAddonPrice}
-                      onChange={(e) => setCustomAddonPrice(e.target.value)}
-                      className="flex-1 px-2 py-1.5 rounded border border-slate-200 text-xs text-right focus:ring-1 focus:ring-brand-blue outline-none"
-                    />
-                    <button
-                      onClick={handleAddCustomAddon}
-                      className="w-8 h-8 rounded-lg bg-brand-blue text-white flex items-center justify-center font-bold hover:bg-brand-dark transition-colors shadow-sm"
-                      title="Add Custom Item"
-                    >
-                      +
-                    </button>
-                  </td>
-                </tr>
 
-                {optItems.length > 0 && addonsTotal != null && (
-                  <tr className="border-t-2 border-slate-300 bg-slate-50">
-                    <td colSpan={showAddonPricing ? 4 : 2} className="px-3 py-2 text-right font-bold text-slate-700">
-                      Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
+                  {optItems.map((addon, idx) => (
+                    <tr key={addon.id || idx} className="border-t border-slate-100 group">
+                      <td className="px-3 py-2 align-top text-slate-900 group-hover:text-brand-blue transition-colors flex items-center gap-2">
+                        <button
+                          onClick={() => removeAddon(addon.id)}
+                          className="text-slate-300 hover:text-red-500 transition-colors"
+                          title="Remove item"
+                        >
+                          ×
+                        </button>
+                        <span>{addon.customName || addon.name}</span>
+                      </td>
+                      <td className="px-3 py-2 align-top text-right text-slate-900 font-medium">{addon.qty || 1}</td>
+                      {showAddonPricing && (
+                        <>
+                          <td className="px-2 py-1 align-middle bg-amber-50/20">
+                            <input
+                              type="number"
+                              value={addon.markup || 0}
+                              onChange={(e) => updateAddonPricing(addon.id, { markup: parseFloat(e.target.value) || 0, discount: addon.discount || 0 })}
+                              className="w-full text-center py-1 rounded bg-white border border-amber-200 text-brand-blue font-bold focus:ring-1 focus:ring-amber-400 outline-none"
+                            />
+                          </td>
+                          <td className="px-2 py-1 align-middle bg-amber-50/20">
+                            <input
+                              type="number"
+                              value={addon.discount || 0}
+                              onChange={(e) => updateAddonPricing(addon.id, { markup: addon.markup || 0, discount: parseFloat(e.target.value) || 0 })}
+                              className="w-full text-center py-1 rounded bg-white border border-amber-200 text-rose-500 font-bold focus:ring-1 focus:ring-amber-400 outline-none"
+                            />
+                          </td>
+                        </>
+                      )}
+                      <td className="px-3 py-2 align-top text-right text-slate-700 font-mono font-semibold whitespace-nowrap">
+                        {addon.isIncluded ? "Included" : (addon.price || "—")}
+                      </td>
+                    </tr>
+                  ))}
+
+                  {/* Add Custom Item Row - ALWAYS VISIBLE */}
+                  <tr className="border-t border-brand-blue/20 bg-brand-blue/5">
+                    <td className="px-2 py-2">
+                      <input
+                        type="text"
+                        placeholder="Add custom item name..."
+                        value={customAddonName}
+                        onChange={(e) => setCustomAddonName(e.target.value)}
+                        className="w-full px-2 py-1.5 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-brand-blue outline-none"
+                      />
                     </td>
-                    <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm whitespace-nowrap">
-                      {fmtPrice(addonsTotal, currency)}
+                    <td className="px-2 py-2">
+                      <input
+                        type="number"
+                        placeholder="Qty"
+                        value={customAddonQty}
+                        onChange={(e) => setCustomAddonQty(parseInt(e.target.value) || 1)}
+                        className="w-full px-2 py-1.5 rounded border border-slate-200 text-xs text-right focus:ring-1 focus:ring-brand-blue outline-none"
+                      />
+                    </td>
+                    {showAddonPricing && (
+                      <>
+                        <td className="bg-amber-50/10"></td>
+                        <td className="bg-amber-50/10"></td>
+                      </>
+                    )}
+                    <td className="px-2 py-2 flex items-center gap-2">
+                      <input
+                        type="number"
+                        placeholder="Price"
+                        value={customAddonPrice}
+                        onChange={(e) => setCustomAddonPrice(e.target.value)}
+                        className="flex-1 px-2 py-1.5 rounded border border-slate-200 text-xs text-right focus:ring-1 focus:ring-brand-blue outline-none"
+                      />
+                      <button
+                        onClick={handleAddCustomAddon}
+                        className="w-8 h-8 rounded-lg bg-brand-blue text-white flex items-center justify-center font-bold hover:bg-brand-dark transition-colors shadow-sm"
+                        title="Add Custom Item"
+                      >
+                        +
+                      </button>
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
 
-          {/* ── GRAND TOTAL BAR ──────────────────────────────────────── */}
-          {machineType !== "material-handling" && (() => {
-            const machineFinal = discount > 0 ? afterDiscount : withMarkup;
-            const grandTotal = machineFinal + (addonsTotal || 0);
-            const existingLine = (selectedAddons || []).find(a => a.id === "grand-total-line");
-            const alreadyAdded = !!existingLine;
-            // Detect price drift so user can refresh
-            const isStale = alreadyAdded && existingLine.price !== grandTotal;
+                  {optItems.length > 0 && addonsTotal != null && (
+                    <tr className="border-t-2 border-slate-300 bg-slate-50">
+                      <td colSpan={showAddonPricing ? 4 : 2} className="px-3 py-2 text-right font-bold text-slate-700">
+                        Total {currency === 'USD' ? 'USD ($)' : 'INR (₹)'}
+                      </td>
+                      <td className="px-3 py-2 text-right font-extrabold text-emerald-600 text-sm whitespace-nowrap">
+                        {fmtPrice(addonsTotal, currency)}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-            const handleGrandTotalBtn = () => {
-              if (alreadyAdded && !isStale) {
-                // Toggle off — user explicitly removing
-                removeAddon("grand-total-line");
-              } else {
-                // Add fresh OR refresh stale — addAddon handles replace internally (isDynamic)
-                addAddon("Optional Equipment", {
-                  id: "grand-total-line",
-                  name: "Total Price (Machine + Optional Equipment)",
-                  price: grandTotal,
-                  qty: 1,
-                  isCustom: true,
-                  isDynamic: true,
-                  cardDesc: "Combined grand total: machine final price plus all optional equipment.",
-                  image: "",
-                });
-              }
-            };
+            {/* ── GRAND TOTAL BAR ──────────────────────────────────────── */}
+            {machineType !== "material-handling" && (() => {
+              const machineFinal = discount > 0 ? afterDiscount : withMarkup;
+              const grandTotal = machineFinal + (addonsTotal || 0);
+              const existingLine = (selectedAddons || []).find(a => a.id === "grand-total-line");
+              const alreadyAdded = !!existingLine;
+              // Detect price drift so user can refresh
+              const isStale = alreadyAdded && existingLine.price !== grandTotal;
 
-            return (
-              <div className="mt-3 flex items-center gap-3 rounded-xl border-2 border-brand-blue/20 bg-gradient-to-r from-brand-blue/5 to-indigo-50 px-4 py-3">
-                <div className="flex-1">
-                  <div className="text-[10px] font-semibold uppercase tracking-wider text-brand-blue/60 mb-0.5">
-                    Grand Total &nbsp;=&nbsp; Machine Final Price + Optional Addons
+              const handleGrandTotalBtn = () => {
+                if (alreadyAdded && !isStale) {
+                  // Toggle off — user explicitly removing
+                  removeAddon("grand-total-line");
+                } else {
+                  // Add fresh OR refresh stale — addAddon handles replace internally (isDynamic)
+                  addAddon("Optional Equipment", {
+                    id: "grand-total-line",
+                    name: "Total Price (Machine + Optional Equipment)",
+                    price: grandTotal,
+                    qty: 1,
+                    isCustom: true,
+                    isDynamic: true,
+                    cardDesc: "Combined grand total: machine final price plus all optional equipment.",
+                    image: "",
+                  });
+                }
+              };
+
+              return (
+                <div className="mt-3 flex items-center gap-3 rounded-xl border-2 border-brand-blue/20 bg-gradient-to-r from-brand-blue/5 to-indigo-50 px-4 py-3">
+                  <div className="flex-1">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-brand-blue/60 mb-0.5">
+                      Grand Total &nbsp;=&nbsp; Machine Final Price + Optional Addons
+                    </div>
+                    <div className="flex items-baseline gap-3 flex-wrap">
+                      <span className="text-xl font-extrabold text-brand-blue">
+                        {fmtPrice(grandTotal, currency)}
+                      </span>
+                      <span className="text-xs text-slate-400 italic">
+                        {fmtWords(grandTotal, currency)}
+                      </span>
+                    </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">
+                      {fmtPrice(machineFinal, currency)} (machine)&nbsp;+&nbsp;{fmtPrice(addonsTotal || 0, currency)} (optional)
+                    </div>
                   </div>
-                  <div className="flex items-baseline gap-3 flex-wrap">
-                    <span className="text-xl font-extrabold text-brand-blue">
-                      {fmtPrice(grandTotal, currency)}
+                  <button
+                    onClick={handleGrandTotalBtn}
+                    title={
+                      isStale ? "Price changed — click to refresh in proposal"
+                        : alreadyAdded ? "Click to remove from proposal"
+                          : "Add grand total to proposal"
+                    }
+                    className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold shadow transition-all duration-200 ${isStale
+                        ? "bg-amber-100 text-amber-700 border-2 border-amber-400 hover:bg-amber-200"
+                        : alreadyAdded
+                          ? "bg-emerald-100 text-emerald-700 border-2 border-emerald-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
+                          : "bg-brand-blue text-white hover:bg-brand-dark shadow-brand-blue/30"
+                      }`}
+                  >
+                    <span className="text-base leading-none">
+                      {isStale ? "↻" : alreadyAdded ? "✓" : "+"}
                     </span>
-                    <span className="text-xs text-slate-400 italic">
-                      {fmtWords(grandTotal, currency)}
+                    <span>
+                      {isStale ? "Refresh" : alreadyAdded ? "Added" : "Add to Proposal"}
                     </span>
-                  </div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">
-                    {fmtPrice(machineFinal, currency)} (machine)&nbsp;+&nbsp;{fmtPrice(addonsTotal || 0, currency)} (optional)
-                  </div>
+                  </button>
                 </div>
-                <button
-                  onClick={handleGrandTotalBtn}
-                  title={
-                    isStale ? "Price changed — click to refresh in proposal"
-                    : alreadyAdded ? "Click to remove from proposal"
-                    : "Add grand total to proposal"
-                  }
-                  className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold shadow transition-all duration-200 ${
-                    isStale
-                      ? "bg-amber-100 text-amber-700 border-2 border-amber-400 hover:bg-amber-200"
-                      : alreadyAdded
-                        ? "bg-emerald-100 text-emerald-700 border-2 border-emerald-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
-                        : "bg-brand-blue text-white hover:bg-brand-dark shadow-brand-blue/30"
-                  }`}
-                >
-                  <span className="text-base leading-none">
-                    {isStale ? "↻" : alreadyAdded ? "✓" : "+"}
-                  </span>
-                  <span>
-                    {isStale ? "Refresh" : alreadyAdded ? "Added" : "Add to Proposal"}
-                  </span>
-                </button>
-              </div>
-            );
-          })()}
-        </section>
+              );
+            })()}
+          </section>
         )}
 
         {/* ── SELECTED IMAGES ───────────────────────────────────────────── */}
@@ -1769,10 +1887,10 @@ export default function SummaryPage() {
               {[{ k: "classic", label: "📄 Adroit Classic" }, { k: "v2", label: "✨ New Style" }]
                 .filter(opt => opt.k !== "v2" || process.env.NODE_ENV === "development")
                 .map(({ k, label }) => (
-                <button key={k} onClick={() => setQuoteTemplate(k)}
-                  style={{ backgroundColor: quoteTemplate === k ? "#2563eb" : "transparent", color: "#fff", border: "none", borderRadius: "6px", padding: "5px 12px", fontWeight: quoteTemplate === k ? 700 : 400, cursor: "pointer", fontSize: "12px", transition: "background 0.2s" }}
-                >{label}</button>
-              ))}
+                  <button key={k} onClick={() => setQuoteTemplate(k)}
+                    style={{ backgroundColor: quoteTemplate === k ? "#2563eb" : "transparent", color: "#fff", border: "none", borderRadius: "6px", padding: "5px 12px", fontWeight: quoteTemplate === k ? 700 : 400, cursor: "pointer", fontSize: "12px", transition: "background 0.2s" }}
+                  >{label}</button>
+                ))}
             </div>
             <button
               onClick={async () => {
@@ -1805,7 +1923,7 @@ export default function SummaryPage() {
                   if (i > 0) pdf.addPage();
                   pdf.addImage(imgData, "JPEG", 0, 0, A4_W_MM, A4_H_MM);
                 }
-                
+
                 // Save lead in the background
                 try {
                   const base64Pdf = pdf.output("datauristring");

@@ -337,7 +337,7 @@ function CoverPage({ customer, machine, quotation, annexIndex, pageNum, total })
             marginTop: "3px",
           }}
         >
-          M/s. {c.company || c.name || ""}
+          M/s. {c.company || ""}
         </div>
         {c.address && (
           <div style={{ fontSize: "9.5pt", fontFamily: F, color: INK, marginTop: "4px" }}>

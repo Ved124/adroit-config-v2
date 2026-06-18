@@ -268,14 +268,14 @@ export default function MachineTypePage() {
               <div className="bg-white rounded-2xl p-6 flex items-center justify-center h-72 shadow-soft border border-slate-100">
                 {activeFamily === "mono" && (
                   <img
-                    src="/images/machines/5 layer.png"
+                    src="/images/machines/mono.jpg"
                     alt="Unoflex Monolayer"
                     className="max-h-60 w-auto object-contain"
                   />
                 )}
                 {activeFamily === "aba" && (
                   <img
-                    src="/images/machines/5 layer.png"
+                    src="/images/machines/aba.png"
                     alt="Duoflex ABA/AB"
                     className="max-h-60 w-auto object-contain"
                   />
@@ -537,8 +537,8 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isMixer = item.id === "mixer-dynamic";
 
-  const otherMixerSelected = (isMixerDryer && selectedAddons?.some(x => x.id === "mixer-dynamic")) || 
-                             (isMixer && selectedAddons?.some(x => x.id === "mixer-dryer-dynamic"));
+  const otherMixerSelected = (isMixerDryer && selectedAddons?.some(x => x.id === "mixer-dynamic")) ||
+    (isMixer && selectedAddons?.some(x => x.id === "mixer-dryer-dynamic"));
 
   const isDisabled = otherMixerSelected && !isSelected;
 

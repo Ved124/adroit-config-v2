@@ -75,7 +75,7 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
   const allDrives = extruders
     .map((ext, idx) => {
       const driveStr = td(ext, "main drive", "drive") || "";
-      const m = driveStr.match(/(\d+)\s*HP/i) || driveStr.match(/(\d+)\s*kW/i);
+      const m = driveStr.match(/(\d+(?:\.\d+)?)\s*HP/i) || driveStr.match(/(\d+(?:\.\d+)?)\s*kW/i);
       if (m) return m[1];
 
       // Fallback: If techDesc is missing, try to parse from machineModel.motorsHp (e.g. "50/100/50")

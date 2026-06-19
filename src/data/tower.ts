@@ -51,4 +51,21 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
       "Idler rollers": "Set of idler aluminium rollers of TBD mm face width.",
     },
   },
+  {
+    id: "tower_std",
+    name: "Tower / Platform",
+    isDynamic: false,
+    machineTypes: ["mono", "aba"],
+    usedInModels: [],
+    image: "/images/machines/3layer.png",
+    cardDesc: "Standard MS tower structure with walk-around platform, staircase and safety handrails for ABA / mono lines.",
+    price: 600000,
+    techDesc: {
+      "Structure": "Knock-down type tower structure fabricated in mild steel.",
+      "Platforms": "Walk-around platform with grating.",
+      "Staircase": "Staircase with hand rails.",
+      "Safety": "Hand rails and kick plates.",
+      "Idler rollers": "Set of idler aluminium rollers as per layout.",
+    },
+  },
 ];

@@ -846,7 +846,12 @@ function PricingPage({ pricing, optionalItems, pageNum, total }) {
 // ANNEXURE 4 — PER-COMPONENT PAGE
 // ═══════════════════════════════════════════════════════════════════════════════
 function ComponentPage2({ item, pageNum, total }) {
+  if (!item) return null;
   const td = Object.entries(item.techDesc || {});
+  
+  // If there is no image AND no specs, do not render a blank page
+  if (!item.image && td.length === 0) return null;
+
   return (
     <Page2 pageNum={pageNum} total={total}>
       <AnnexTitle num={4} label={item.name} />

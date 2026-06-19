@@ -1,5 +1,7 @@
 // src/data/modelPresets.ts
 
+import { image } from "html2canvas/dist/types/css/types/image";
+
 export type PresetComponent = {
   category: string;
   id: string;
@@ -803,249 +805,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  // "DUOFLEX-750": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-35-aba", qty: 1 },
-  //     { category: "Extruder", id: "ext-45-aba", qty: 1 },
-  //     { category: "Die Head", id: "die-aba-70-150", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
-  //   ],
 
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "DUOFLEX-1000": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-55-aba", qty: 1 },
-  //     { category: "Extruder", id: "ext-45-aba", qty: 1 },
-  //     { category: "Die Head", id: "die-aba-125-250", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "DUOFLEX-1250": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-55-aba", qty: 2 },
-  //     { category: "Die Head", id: "die-aba-150-300", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "DUOFLEX-1750": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-55-aba", qty: 1 },
-  //     { category: "Extruder", id: "ext-65-aba", qty: 1 },
-  //     { category: "Die Head", id: "die-aba-225-375", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-
-  // "UNOFLEX-450": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-35-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-50-100", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "UNOFLEX-750_900": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-90-175", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "UNOFLEX-1000_1250": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-55-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-150-275", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "UNOFLEX-1250_1500": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-60-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-200-325", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "UNOFLEX-2000": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-75-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-300-475", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "UNOFLEX-2500": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-90-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-400-600", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-  // "UNOFLEX-3000": {
-  //   machineType: "aba",
-  //   components: [
-  //     { category: "Extruder", id: "ext-100-mono-short", qty: 1 },
-  //     { category: "Die Head", id: "die-mono-450-700", qty: 1 },
-  //     // { category: "Bubble Cage", id: "bc-9seg-motorized", qty: 1 },
-  //     { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-  //     { category: "Haul-Off", id: "haul-horizontal-standard", qty: 1 },
-  //     { category: "Tower / Platform", id: "tower_std", qty: 1 },
-  //     { category: "Winder", id: "winder-surface-dynamic", qty: 1 },
-  //   ],
-
-  //   addons: [
-  //     {
-  //       category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
-  //     },
-  //   ],
-  // },
-
-  "DUOFLEX-26": {
-    machineType: "aba",
-    basePrice: 1350000,
-    components: [
-      { category: "Extruder", id: "ext-35-aba", qty: 1 },
-      { category: "Extruder", id: "ext-40-aba", qty: 1 },
-      { category: "Die Head", id: "die-aba-100", qty: 1 },
-      {
-        category: "Air Ring",
-        id: "airring-dr-dynamic-aba",
-        qty: 1,
-        metadata: {
-          size: "100",
-          price: 0,
-          customName: "100 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "100 mm" }
-        }
-      },
-      { category: "Bubble Cage", id: "bc-manual-dynamic-aba", qty: 1 },
-      {
-        category: "Collapsing Frame",
-        id: "cf-pbt-dynamic",
-        qty: 1,
-        metadata: {
-          size: "1250",
-          price: 0,
-          customName: "Collapsing Frame - 1250 mm",
-          techDesc: { "Width Capability": "1250 mm" }
-        }
-      },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
-    ],
-
-    addons: [
-      {
-        category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
-      },
-    ],
-  },
 
   "DUOFLEX-32": {
     machineType: "aba",
@@ -1462,8 +1222,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 0,
           customName: "75 mm Air Ring (2 HP Blower)",
           techDesc: {
-            "Blower": "2 HP with inlet air filter.",
-            "Type": "Irish Ring to Support the bubble."
+            "Blower": "2 HP with inlet air filter."
           }
         }
       },
@@ -1485,26 +1244,26 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "500",
           price: 0,
           customName: "Collapsing Frame - 500 mm",
-          techDesc: { 
+          techDesc: {
             "Width Capability": "500 mm",
             "Collapsing Frames": "PBT rollers / Wooden Slates."
           }
         }
       },
-      {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
-        qty: 1,
-        metadata: {
-          size: "500",
-          customName: "HORIZONTAL HAULOFF - 500 mm",
-          techDesc: {
-            "Hauloff Size": "500 mm",
-            "Nip roller width": "500 mm",
-            "Nip roller drive": "1 HP AC motor with variable frequency drive."
-          }
-        }
-      },
+      // {
+      //   category: "Haul-Off",
+      //   id: "haul-horizontal-dynamic",
+      //   qty: 1,
+      //   metadata: {
+      //     size: "500",
+      //     customName: "HORIZONTAL HAULOFF - 500 mm",
+      //     techDesc: {
+      //       "Hauloff Size": "500 mm",
+      //       "Nip roller width": "500 mm",
+      //       "Nip roller drive": "1 HP AC motor with variable frequency drive."
+      //     }
+      //   }
+      // },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
@@ -1513,14 +1272,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "450",
           techDesc: {
-            "Surface Winder (02 No.)": "450 mm film width.",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically. Knurling Provided",
+            "Nip roller width": "500 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers / Wooden Slates.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder": "Maximum web width of 450 mm with Manual Changeover.",
             "Roll diameter": "400 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with variable frequency drive.",
-            "Tension control": "Through Torque mode.",
-            "Winder Type": "Surface Winder",
-            "Main Nip rollers": "02 nos.- 3” Mechanical shaft, bow roller",
-            "Nip roller width": "TBD",
-            "Nip roller drive": "0.5 HP Torque Motor and Drive."
+            "Tension control": "Through Torque mode."
           }
         }
       },
@@ -1530,12 +1290,184 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
+  "DUOFLEX-26": {
+    machineType: "aba",
+    basePrice: 1585000,
+    components: [
+      {
+        category: "Extruder",
+        id: "ext-35-aba",
+        qty: 1,
+        metadata: {
+          customName: "Extruder 35 mm",
+          techDesc: {
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters (Hitco or equivalent)",
+            "No. of Zones": "02 Nos. on barrel",
+            "Transmission System": "Motor directly coupled / Belt with helical gearbox.",
+            "Gearbox": "Premium or equivalent make."
+          }
+        }
+      },
+      {
+        category: "Extruder",
+        id: "ext-40-aba",
+        qty: 1,
+        metadata: {
+          customName: "Extruder 40 mm",
+          techDesc: {
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters",
+            "No. of Zones": "02 Nos. on barrel",
+            "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled / Belt with helical gearbox.",
+            "Gearbox": "Zeal or equivalent make."
+          }
+        }
+      },
+      {
+        category: "Die Head",
+        id: "die-aba-100",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Chrome plated Three Layer ABA Spiral Mandrel Die and lip diameter of 100 mm, complete with die adapters and carriage.",
+          techDesc: {
+            "Surface Treatment": "Chrome plated & highly polished melt paths.",
+            "Die Size": "Diameter as per width and lip gap.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Heating System": "Ceramic band heaters (Hitco or equivalent)",
+            "Heating Zones": "hidden",
+            "Distribution": "hidden"
+          }
+        }
+      },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "100",
+          price: 0,
+          customName: "Air Ring (3 HP)",
+          techDesc: {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "3 HP with inlet air filter."
+          }
+        }
+      },
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
+        qty: 1,
+        metadata: {
+          size: "550",
+          customName: "Irish Ring",
+          scopeDesc: "One Irish Ring to support the bubble.",
+          techDesc: {
+            "Type": "Manual Cage to Support the bubble."
+          }
+        }
+      },
+      {
+        category: "Collapsing Frame",
+        id: "main-nip-dynamic",
+        qty: 1,
+        metadata: {
+          size: "550",
+          hideFromAnnexure: true,
+          customName: "Collapsing Frame",
+          scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
+          techDesc: {
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically. Knurling Provided",
+            "Nip roller width": "600 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates.",
+            "Idler rollers": "Adequate quantity as per layout."
+          }
+        }
+      },
+      {
+        category: "Winder",
+        id: "winder-single-surface-only-dynamic",
+        qty: 1,
+        metadata: {
+          size: "550",
+          customName: "Single Surface Winder",
+          scopeDesc: "One Surface Winders of 550 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
+          techDesc: {
+            "Additional Nip": "hidden",
+            "Edge slit assembly": "hidden",
+            "Length counter meter": "hidden",
+            "Trim Suction Blower": "hidden",
+            "Surface Winders (01 No.)": "hidden",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically. Knurling Provided",
+            "Nip roller width": "600 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder": "Maximum web width of 550 mm with Manual Changeover.",
+            "Roll diameter": "400 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "0.5 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode."
+          }
+        }
+      }
+    ],
+    addons: [
+      { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
+    ],
+  },
+
   "UNOFLEX-20": {
     machineType: "mono",
-    basePrice: 674000,
+    basePrice: 820000,
     components: [
-      { category: "Extruder", id: "ext-35-mono-short", qty: 1 },
-      { category: "Die Head", id: "die-mono-100", qty: 1 },
+      {
+        category: "Extruder",
+        id: "ext-35-mono-short",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Nos. Extruders of 35 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 7.5 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 35 mm Extruders.",
+          techDesc: {
+            "Screw Diameter": "35 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "28:1",
+            "Type": "hidden",
+            "Screw Speed": "hidden",
+            "No. of Heating Zones": "hidden",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters",
+            "No. of Zones": "02 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "7.5 HP AC motor with frequency variable drive.",
+            "Transmission System": "Motor Belt coupled with helical gearbox.",
+            "Gearbox": "Zeal or equivalent make.",
+            "Screen Changer": "Candle type"
+          }
+        }
+      },
+      {
+        category: "Die Head",
+        id: "die-mono-100",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage.",
+          techDesc: {
+            "Type": "hidden",
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel plated & highly polished melt paths.",
+            "Die Size": "Diameter as per width and lip gap.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Heating Zones": "02 Nos.",
+            "Heating System": "Ceramic band heaters"
+          }
+        }
+      },
       {
         category: "Air Ring",
         id: "airring-g-dynamic",
@@ -1543,71 +1475,351 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "100",
           price: 0,
-          customName: "100 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "100 mm" }
+          customName: "100 mm Air Ring",
+          scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
+          techDesc: {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "03 HP with inlet air filter."
+          }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "1250",
-          price: 1100000,
-          customName: "HORIZONTAL HAULOFF - 1250 mm",
-          techDesc: { "Hauloff Size": "1250 mm" }
+          size: "450",
+          price: 0,
+          customName: "Manual Cage",
+          scopeDesc: "One Manual Cage to support the bubble."
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          size: "450",
+          customName: "Collapsing Frame - 450 mm",
+          scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
+      {
+        category: "Winder",
+        id: "winder-single-surface-only-dynamic",
+        qty: 1,
+        metadata: {
+          size: "500",
+          customName: "Single Surface Winder - 500 mm",
+          scopeDesc: "One Surface Winders of 500 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
+          techDesc: {
+            "Surface Winder (02 No.)": "hidden",
+            "Winder Type": "hidden",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "500 mm",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder": "Maximum web width of 450 mm with Manual Changeover.",
+            "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "01 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode."
+          }
+        }
+      },
+      {
+        category: "Electrical & Control Panel",
+        id: "panel-dol-starter",
+        qty: 1,
+        metadata: {
+          customName: "Extrusion Control Panel",
+          scopeDesc: "Complete extrusion controls on main panel with Cold start protection."
+        }
+      },
     ],
 
     addons: [
-      {
-        category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
-      },
     ],
   },
 
-  "UNOFLEX-32": {
+  "UNOFLEX-24": {
     machineType: "mono",
-    basePrice: 1065000,
+    basePrice: 850000,
     components: [
-      { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
-      { category: "Die Head", id: "die-mono-200", qty: 1 },
+      {
+        category: "Extruder",
+        id: "ext-mono-40",
+        qty: 1,
+        metadata: {
+          image: "/images/Extruder/Extruder ABA.JPG",
+          customName: "40 mm Extruder",
+          scopeDesc: "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 40 mm Extruders.",
+          techDesc: {
+            "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "28:1",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters",
+            "No. of Zones": "02 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled / Belt with helical gearbox.",
+            "Gearbox": "Zeal or equivalent make.",
+            "Screen Changer": "Candle type"
+          }
+        }
+      },
+      {
+        category: "Die Head",
+        id: "die-mono-100",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage.",
+          techDesc: {
+            "Type": "hidden",
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Chrome plated & highly polished melt paths.",
+            "Die Size": "Diameter as per width and lip gap.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Heating Zones": "02 Nos.",
+            "Heating System": "Ceramic band heaters"
+          }
+        }
+      },
       {
         category: "Air Ring",
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "200",
+          size: "150",
           price: 0,
-          customName: "200 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "200 mm" }
+          customName: "150 mm Air Ring",
+          scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
+          techDesc: {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "3 HP"
+          }
         }
       },
-      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "1250",
-          price: 1100000,
-          customName: "HORIZONTAL HAULOFF - 1250 mm",
-          techDesc: { "Hauloff Size": "1250 mm" }
+          size: "600",
+          price: 0,
+          customName: "Manual Cage",
+          scopeDesc: "One Manual Bubble cage to support the bubble.",
+          techDesc: {
+            "Type": "Manual cage to Support the bubble.",
+            "Support Rollers": "hidden",
+            "Adjustment": "hidden",
+            "Film Width Range": "hidden",
+            "Construction": "hidden"
+          }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
-    ],
 
-    addons: [
       {
-        category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          size: "600",
+          customName: "Collapsing Frame - 600 mm",
+          scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
       },
+      {
+        category: "Winder",
+        id: "winder-single-surface-only-dynamic",
+        qty: 1,
+        metadata: {
+          size: "600",
+          customName: "Surface Winder - 600 mm",
+          scopeDesc: "One Surface Winders of 600 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
+          techDesc: {
+            "Surface Winder (02 No.)": "hidden",
+            "Winder Type": "hidden",
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "600 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder": "Maximum web width of 550 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "0.5 HP Torque motor with variable frequency drive.",
+            "Tension control": "Through Torque mode."
+          }
+        }
+      },
+      {
+        category: "Electrical & Control Panel",
+        id: "panel-dol-starter",
+        qty: 1,
+        metadata: {
+          customName: "Extrusion Control Panel",
+          scopeDesc: "Complete extrusion controls on main panel with Cold start protection."
+        }
+      },
+    ],
+    addons: []
+  },
+
+  "UNOFLEX-32": {
+    machineType: "mono",
+    basePrice: 1185000,
+    components: [
+      {
+        category: "Extruder",
+        id: "ext-45-mono-short",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Nos. Extruders of 45 mm screw diameter and L/D ratio of 28:1, Nitro Alloy Screw & barrel, Ceramic Heater, 15 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 45 mm Extruders.",
+          techDesc: {
+            "Screw Diameter": "45 mm single screw extruder mounted on a sturdy Frame.",
+            "L/D ratio": "30:1",
+            "Type": "hidden",
+            "Screw Speed": "hidden",
+            "No. of Heating Zones": "hidden",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy steel",
+            "Heating System": "Ceramic Band type Heaters",
+            "No. of Zones": "02 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual Inspection. Magnetic grill provided.",
+            "Main Drive": "15 HP AC motor (ABB/ BB) with frequency variable drive.",
+            "Transmission System": "Motor coupled with helical gearbox.",
+            "Screen Changer": "Candle type"
+          }
+        }
+      },
+      {
+        category: "Die Head",
+        id: "die-mono-150",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Imported Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of 150 mm, complete with die adapters and carriage.",
+          techDesc: {
+            "Type": "hidden",
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+            "Die Size": "Diameter as per width and lip gap.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Heating Zones": "02 Nos.",
+            "Heating System": "Ceramic band heaters (Hitco or equivalent)"
+          }
+        }
+      },
+      {
+        category: "Air Ring",
+        id: "airring-g-dynamic",
+        qty: 1,
+        metadata: {
+          size: "150",
+          price: 0,
+          customName: "150 mm Air Ring",
+          scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
+          techDesc: {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "3 HP with inlet air filter."
+          }
+        }
+      },
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic-aba",
+        qty: 1,
+        metadata: {
+          size: "750",
+          price: 0,
+          customName: "Manual Cage",
+          scopeDesc: "One Manual Bubble cage to support the bubble.",
+          techDesc: {
+            "Type": "Manual cage to Support the bubble.",
+            "Support Rollers": "hidden",
+            "Adjustment": "hidden",
+            "Film Width Range": "hidden",
+            "Construction": "hidden"
+          }
+        }
+      },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          size: "800",
+          customName: "Collapsing Frame - 800 mm",
+          scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive. Gusset included.",
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
+      {
+        category: "Winder",
+        id: "winder-single-surface-only-dynamic",
+        qty: 1,
+        metadata: {
+          size: "750",
+          customName: "Back to Back Surface Winder - 750 mm",
+          scopeDesc: "One Surface Winder of 750 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP AC Motor and Drive.",
+          techDesc: {
+            "Surface Winder (02 No.)": "hidden",
+            "Winder Type": "hidden",
+            "Collapsing Frames": "PBT rollers / Wooden Slates.",
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "800 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder": "Maximum web width of 750 mm with Manual Changeover.",
+            "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "0.5 HP AC motor with torque drive.",
+            "Tension control": "Through Torque mode."
+          }
+        }
+      },
+      {
+        category: "Electrical & Control Panel",
+        id: "panel-dol-starter",
+        qty: 1,
+        metadata: {
+          customName: "Extrusion Control Panel",
+          scopeDesc: "Complete extrusion controls on main panel with Cold start protection."
+        }
+      },
+    ],
+    addons: [
     ],
   },
 
@@ -1629,7 +1841,21 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1641,8 +1867,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "1250 mm" }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      {
+        category: "Winder",
+        id: "winder-manual-back-to-back-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Collapsing Frames": "PBT rollers / Wooden Slates."
+          }
+        }
+      },
     ],
 
     addons: [
@@ -1680,7 +1914,36 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "1250 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1692,10 +1955,207 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "1350 mm" }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      {
+        category: "Winder",
+        id: "winder-manual-back-to-back-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Collapsing Frames": "PBT rollers / Wooden Slates."
+          }
+        }
+      },
     ],
 
+    addons: [
+      {
+        category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
+      },
+    ],
+  },
+  "UNOFLEX-50-65MM": {
+    machineType: "mono",
+    basePrice: 3974000,
+    components: [
+      { category: "Extruder", id: "ext-65-mono-short", qty: 1 },
+      {
+        category: "Die Head",
+        id: "die-mono-300",
+        qty: 1,
+        metadata: {
+          techDesc: { "Die Size": "300 mm" }
+        }
+      },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 150000,
+          customName: "Dual Lip Air Ring (7.5 HP)",
+          techDesc: {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "One no. with inlet air filter.",
+            "Blower ": "7.5 HP AC variable frequency drive."
+          }
+        }
+      },
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag."
+          }
+        }
+      },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
+          techDesc: {
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
+          }
+        }
+      },
+      {
+        category: "Winder",
+        id: "winder-manual-back-to-back-dynamic",
+        qty: 1,
+        metadata: {
+          name: "Manual Back to Back Winder",
+          customName: "Two back to back Surface Winders of 1250 mm film width",
+          scopeDesc: "Back to Back Surface Winder of 1250 mm film width. Manual roll change over mechanism, tension control through Torque, digital length counter, 04 nos.- 3” Air shaft, bow roller, 2 HP AC Motor and Drive. Post Extrusion Gear Motors will be Bonvario or Equivalent.",
+          techDesc: {
+            "Additional Nip": "hidden",
+            "Edge slit assembly": "hidden",
+            "Length counter meter": "hidden",
+            "Trim Suction Blower": "hidden",
+            "Surface Winders (01 No.)": "hidden",
+            "Tension control ": "hidden",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Two Surface Winder": "Maximum web width of 1250 mm with Manual Changeover.",
+            "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "02 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode.",
+            "Type of winder": "Two back to back type."
+          }
+        }
+      },
+    ],
+
+    addons: [
+      {
+        category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
+      },
+    ],
+  },
+
+  "UNOFLEX-40-55MM": {
+    machineType: "mono",
+    basePrice: 2451000,
+    components: [
+      {
+        category: "Extruder",
+        id: "ext-55-mono-short",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "No. of Heating Zones": "hidden",
+            "No. of Zones": "04 Nos. on barrel",
+            "Heating System": "Ceramic Band type Heaters (Hitco or equivalent)",
+            "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+            "Gearbox": "Premium / Zeal or equivalent make."
+          }
+        }
+      },
+      {
+        category: "Die Head",
+        id: "die-mono-200",
+        qty: 1,
+        metadata: {
+          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die with lip diameter of 200 mm, complete with die adapters and carriage. Die with Rotation.",
+          techDesc: {
+            "Surface Treatment": "Chrome plated and highly polished.",
+            "Die Size": "Diameter as per width and lip gap.",
+            "Heating System": "Ceramic band heaters (DHE or equivalent)",
+            "Die rotation": "Provided"
+          }
+        }
+      },
+      {
+        category: "Air Ring",
+        id: "airring-standard-dynamic",
+        qty: 1,
+        metadata: {
+          size: "200",
+          price: 0,
+          customName: "Air Ring (5 HP)",
+          techDesc: {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "05 HP with Drive and inlet air filter."
+          }
+        }
+      },
+      {
+        category: "Bubble Cage",
+        id: "bc-manual-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Type": "Manual cage to Support the bubble."
+          }
+        }
+      },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Winder",
+        id: "winder-manual-back-to-back-dynamic",
+        qty: 1,
+        metadata: {
+          name: "Manual Back to Back Winder",
+          customName: "Back to Back Dual Surface Winder of 1000 mm width",
+          scopeDesc: "Back to Back Dual Surface Winder of 1000 mm width. Manual roll change over mechanism, 04 nos.- 3” Mechanical shaft, bow roller, 1 HP AC Motor and Drive.",
+          techDesc: {
+            "Additional Nip": "hidden",
+            "Edge slit assembly": "hidden",
+            "Nip roller width": "hidden",
+            "Nip roller drive": "hidden",
+            "Length counter meter": "hidden",
+            "Trim Suction Blower": "hidden",
+            "Surface Winders (01 No.)": "hidden",
+            "Tension control ": "hidden",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width ": "1100 mm",
+            "Nip roller drive ": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Single Surface Winder": "Maximum web width of 1000 mm with Manual Changeover.",
+            "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "1 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode.",
+            "Winder Type": "Single Surface winder."
+          }
+        }
+      },
+    ],
     addons: [
       {
         category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
@@ -1721,7 +2181,36 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1733,8 +2222,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "2000 mm" }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      {
+        category: "Winder",
+        id: "winder-manual-back-to-back-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Collapsing Frames": "PBT rollers / Wooden Slates."
+          }
+        }
+      },
     ],
 
     addons: [
@@ -1772,7 +2269,21 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Type": "Manual open-close operation with PBT rollers.", "Cage Size": "3000 mm" }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
+            "Collapsing Frames": "hidden"
+          }
+        }
+      },
       {
         category: "Haul-Off",
         id: "haul-horizontal-dynamic",
@@ -1784,8 +2295,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "3000 mm" }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      {
+        category: "Winder",
+        id: "winder-manual-back-to-back-dynamic",
+        qty: 1,
+        metadata: {
+          techDesc: {
+            "Collapsing Frames": "PBT rollers / Wooden Slates."
+          }
+        }
+      },
     ],
 
     addons: [
@@ -1794,6 +2313,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
     ],
   },
+
+
 
   // ---------------------------------------------------------
   // IBC MODELS

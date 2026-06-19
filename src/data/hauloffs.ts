@@ -82,4 +82,23 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
       "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
     },
   },
+
+  {
+    id: "main-nip-dynamic",
+    name: "Main Nip",
+    variant: "horizontal",
+    isDynamic: true,
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    usedInModels: [],
+    image: "/images/hauloff/Horizontal Hauloff (1).jpeg",
+    cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
+    price: 0,
+    techDesc: {
+      "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+      "Nip roller width": "TBD mm",
+      "Nip roller drive": "1-2 HP AC motor with variable frequency drive.",
+      "Collapsing Frames": "PBT rollers.",
+      "Idler rollers": "Adequate quantity as per layout.",
+    },
+  },
 ];

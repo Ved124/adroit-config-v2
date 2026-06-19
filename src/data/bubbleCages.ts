@@ -24,6 +24,7 @@ export interface BubbleCageComponent {
 }
 
 export const MANUAL_BC_PRICES: Record<string, number> = {
+  "550": 15000,
   "850": 25000,
   "1000": 35000,
   "1250": 55000,
@@ -39,6 +40,7 @@ export const MANUAL_BC_PRICES: Record<string, number> = {
 };
 
 export const OPEN_CLOSE_BC_PRICES: Record<string, number> = {
+  "550": 125000,
   "850": 150000,
   "1000": 175000,
   "1250": 250000,
@@ -54,6 +56,7 @@ export const OPEN_CLOSE_BC_PRICES: Record<string, number> = {
 };
 
 export const UP_DOWN_BC_PRICES: Record<string, number> = {
+  "550": 250000,
   "850": 300000,
   "1000": 350000,
   "1250": 450000,

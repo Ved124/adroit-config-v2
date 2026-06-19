@@ -653,7 +653,7 @@ function CommercialScopePage({ price, basicInWords, discountedPrice, discountedW
 }
 
 // ─── PAGE 3: INDICATIVE PERFORMANCE ──────────────────────────────────────────
-function PerformancePage({ perf }) {
+function PerformancePage({ perf, machineType }) {
     const p = perf || {};
     return (
         <Page>
@@ -661,8 +661,7 @@ function PerformancePage({ perf }) {
 
             <div style={{ marginBottom: "10px" }}>
                 <SpecRow label="Product to be made" value={p.product || "High Quality Blown Film"} />
-                <SpecRow label={`Max Output in kg/hr (${p.diameterMm || "die"})
-                                80% LL + 20% LD`} value={p.max_output || "—"} shaded />
+                <SpecRow label={machineType === 'mono' ? `Max Output in kg/hr (${p.diameterMm || "die"})` : `Max Output in kg/hr (${p.diameterMm || "die"})\n80% LL + 20% LD`} value={p.max_output || "—"} shaded />
                 <SpecRow label="Lay-flat Width(mm)" value={p.layflat_width || "—"} />
                 <SpecRow label="Film Thickness Range" value={p.thickness_range || "20 – 150 micron"} shaded />
                 <SpecRow label="Thickness Variation" value={"+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery."} />
@@ -704,7 +703,12 @@ function PerformancePage({ perf }) {
 // ─── COMPONENT DETAIL PAGE ────────────────────────────────────────────────────
 // Layout: name bar → image (top, ~55% height) → blue divider → spec rows
 function ComponentPage({ item }) {
+    if (!item) return null;
     const specs = normSpecs(item.techDesc);
+    
+    // If there is no image AND no specs, do not render a blank page
+    if (!item.image && specs.length === 0) return null;
+
 
     return (
         <Page>
@@ -790,7 +794,7 @@ function ElectricalsPage({ electricals, machineType }) {
                 <SpecRow label="Max. non-carbonate hardness" value="2 Degrees dH" />
                 <SpecRow label="Filter (max.)" value="40 microns" shaded />
                 <SpecRow label="General Criteria" value="Free from corrosion substances and foreign particles." noBorder />
-                <SpecRow label="Water requirement" value={machineType === 'aba' ? "30 LPM X 2 extruders = Total 60 LPM at 25 Degree centigrade." : "30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade."} noBorder shaded />
+                <SpecRow label="Water requirement" value={machineType === 'mono' ? "30 LPM at 25 Degree centigrade." : machineType === 'aba' ? "30 LPM X 2 extruders = Total 60 LPM at 25 Degree centigrade." : "30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade."} noBorder shaded />
             </div><br />
 
             <SectionTitle>
@@ -853,7 +857,7 @@ function OptionalAndUtilitiesPage({ optionalItems, powerLoads, machineType }) {
 
             {/* ── Compressed Air Equipment Table ─────────────────────── */}
 
-            {machineType !== "aba" && (
+            {machineType !== "aba" && machineType !== "mono" && (
                 <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "8px", fontSize: "8pt", fontFamily: F }}>
                     <thead>
                         <tr>
@@ -1400,7 +1404,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
                     />
 
                     {/* Page 4 — Indicative Performance */}
-                    <PerformancePage perf={perf} />
+                    <PerformancePage perf={perf} machineType={machine?.type} />
 
                     {/* Pages 4+ — One page per selected component */}
                     {annexureComponents.map((item, i) => (

@@ -298,8 +298,17 @@ function buildProposalData({
   function fillTechDesc(item, techDesc, machineModel = null) {
     if (!techDesc) return {};
     const filled = { ...techDesc };
+    
+    // Remove explicitly hidden properties
+    for (const key in filled) {
+      if (filled[key] === "hidden") {
+        delete filled[key];
+      }
+    }
+
     const nameLc = (item.name || "").toLowerCase();
     const isWinder = nameLc.includes("winder") || (item.category || "").toLowerCase().includes("winder");
+
 
     // Extract size from item name or size property
     let size = item.size || item.currentSize || "";
@@ -307,6 +316,13 @@ function buildProposalData({
       const match = nameLc.match(/(\d+)\s*mm/i);
       if (match) size = match[1];
     }
+
+    // Dynamically replace "TBD" with the extracted size if available
+    Object.keys(filled).forEach(k => {
+      if (typeof filled[k] === 'string' && size) {
+        filled[k] = filled[k].replace(/TBD/g, size);
+      }
+    });
     // Prefer user input roller width if applicable
     const displayWidth = customRollerWidth || (size ? `${size} mm` : "");
 
@@ -635,7 +651,10 @@ function buildProposalData({
     .map(item => {
       const c = (item?.category || "").toLowerCase();
       // Only exclude inner-utility items 
-      if (c.includes("filter")) {
+      if (c.includes("filter") || item.hideFromAnnexure) {
+        return null;
+      }
+      if (machineType === "mono" && c.includes("collapsing frame")) {
         return null;
       }
 
@@ -669,7 +688,9 @@ function buildProposalData({
     .filter(Boolean);
 
   // Sort annexure components as well
-  const sortedAnnexure = getSortedScope(annexureComponents);
+  const sortedAnnexure = getSortedScope(annexureComponents).filter(item => {
+    return Object.keys(item.techDesc || {}).length > 0;
+  });
 
   const hasSelectedTower = [...selectedScopeItems, ...winderTowerAddonsRaw].some(item => {
     const n = (item.name || "").toLowerCase();
@@ -686,7 +707,7 @@ function buildProposalData({
       techDesc: {},
       _autoDesc: "Aluminum Idler rollers as per layout drawing."
     },
-    machineType !== "aba" && !hasSelectedTower && {
+    machineType !== "aba" && machineType !== "mono" && !hasSelectedTower && {
       id: "auto_tower", name: "Tower Structure", qty: 1, image: "",
       shortDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc.",
       scopeDesc: autoScopeDesc({ name: "Tower Structure", shortDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc." }),
@@ -760,6 +781,7 @@ function buildProposalData({
   const finalScope = getSortedScope(preCombineScope)
     .concat(extraScopeItems)
     .concat(manualExtra.shortDesc ? [manualExtra] : [])
+    .filter(item => item.scopeDesc !== "hidden" && item.shortDesc !== "hidden" && item.name !== "hidden")
     .map((item, i) => ({
       ...item,
       sr: i + 1,
@@ -833,7 +855,7 @@ function buildProposalData({
             const mixerAddon = (selectedAddons || []).find(a => a.id === "mixer-dynamic" || a.id === "mixer-dryer-dynamic");
             return mixerAddon?.image || "/images/Acessories/Vertical Granule Mixer with Dryer.JPG";
           }
-          if (machineType === "mono") return "/images/machines/mono.jpg";
+          if (machineType === "mono") return "/images/machines/mono.png";
           if (machineType === "aba") return "/images/machines/aba.png";
           if (machineType === "3layer") return "/images/machines/3layer.png";
           if (machineType === "5layer") return "/images/machines/5 layer.png";

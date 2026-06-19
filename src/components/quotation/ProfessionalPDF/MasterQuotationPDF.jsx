@@ -689,7 +689,7 @@ const SiteServicesPage = ({ siteServices, letterheadB64, machineType }) => {
     ['Max. non-carbonate hardness', w.nc_hardness || '2 Degrees dH'],
     ['Filter to max.', w.filter || '40 microns'],
     ['General criteria', w.general || 'Free from corrosion substances and any foreign particles.'],
-    ['Water requirement', w.requirement || (machineType === 'aba' ? '30 LPM X 2 extruders = Total 60 LPM at 25 Degree centigrade' : '30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade')],
+    ['Water requirement', w.requirement || (machineType === 'mono' ? '30 LPM at 25 Degree centigrade' : machineType === 'aba' ? '30 LPM X 2 extruders = Total 60 LPM at 25 Degree centigrade' : '30 LPM X 3 extruders = Total 90 LPM at 25 Degree centigrade')],
   ];
 
   const envRows = [
@@ -732,7 +732,7 @@ const SiteServicesPage = ({ siteServices, letterheadB64, machineType }) => {
           </View>
         ))}
 
-        {airTable.length > 0 && (
+        {machineType !== 'aba' && machineType !== 'mono' && airTable.length > 0 && (
           <View style={S.airTbl}>
             <View style={S.airHead}>
               <View style={S.ac0}><Text style={S.airHd}>{'SR.\nNO.'}</Text></View>

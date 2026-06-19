@@ -268,7 +268,7 @@ export default function MachineTypePage() {
               <div className="bg-white rounded-2xl p-6 flex items-center justify-center h-72 shadow-soft border border-slate-100">
                 {activeFamily === "mono" && (
                   <img
-                    src="/images/machines/mono.jpg"
+                    src="/images/machines/mono.png"
                     alt="Unoflex Monolayer"
                     className="max-h-60 w-auto object-contain"
                   />

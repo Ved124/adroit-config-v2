@@ -35,6 +35,35 @@ export const PANEL_3LAYER_PRICES: Record<string, number> = {
 };
 
 export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
+  // ---------------- DOL STARTER PANEL – SMALL MONO / ABA ----------------
+  {
+    id: "panel-dol-starter",
+    name: "Electrical Control Panel – DOL Starter",
+    type: "basic-panel",
+    machineTypes: ["mono", "aba"],
+    usedInModels: [],
+    image: "/images/addons/electrical/panel-basic.png",
+    cardDesc:
+      "Basic control panel with DOL starters and PID temperature controllers for small mono/ABA lines.",
+    price: 0,
+    qty: 1,
+    techDesc: {
+      "Panel Type":
+        "Floor mounted MS powder coated enclosure with front door.",
+      "Temperature Control":
+        "PID temperature controllers for barrel and die zones.",
+      "Drives":
+        "DOL / Star-Delta starters for extruder and auxiliary motors; AC VFD for haul-off and winder.",
+      "Protection":
+        "MCBs, contactors, overload relays and emergency stop circuits.",
+      "Indicators":
+        "Digital temperature indicators and ammeters as required.",
+      "Supply":
+        "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified).",
+    },
+    shortDesc: "DOL starter panel with PID temp control for small mono/ABA lines.",
+  },
+
   // ---------------- BASIC PANEL – MONO ----------------
   {
     id: "panel-basic-mono",

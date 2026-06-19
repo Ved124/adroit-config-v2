@@ -20,6 +20,7 @@ export interface CollapsingFrameComponent {
 
 // Map sizes for dynamic selection (matching haul-off/bubble cage standards)
 export const COLLAPSING_FRAME_PRICES: Record<string, number> = {
+  "550": 0,
   "1000": 0,
   "1250": 0,
   "1350": 0,

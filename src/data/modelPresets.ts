@@ -1168,7 +1168,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1500",
           price: 0,
           customName: "Collapsing Frame - 1500 mm",
-          techDesc: { "Width Capability": "1500 mm" }
+          techDesc: {
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1550 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
+          }
         }
       },
       {
@@ -1245,7 +1250,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 0,
           customName: "Collapsing Frame - 500 mm",
           techDesc: {
-            "Width Capability": "500 mm",
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "500 mm",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers / Wooden Slates."
           }
         }
@@ -1272,11 +1279,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "450",
           techDesc: {
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically. Knurling Provided",
-            "Nip roller width": "500 mm",
-            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers / Wooden Slates.",
-            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
+            "Surface Winders (01 No.)": "hidden",
             "Surface Winder": "Maximum web width of 450 mm with Manual Changeover.",
             "Roll diameter": "400 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with variable frequency drive.",
@@ -1379,7 +1384,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         qty: 1,
         metadata: {
           size: "550",
-          hideFromAnnexure: true,
           customName: "Collapsing Frame",
           scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
           techDesc: {
@@ -1391,7 +1395,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1404,12 +1409,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Edge slit assembly": "hidden",
             "Length counter meter": "hidden",
             "Trim Suction Blower": "hidden",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically. Knurling Provided",
-            "Nip roller width": "600 mm",
-            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "Wooden Slates.",
-            "Idler rollers": "Adequate quantity as per layout.",
             "Surface Winder": "Maximum web width of 550 mm with Manual Changeover.",
             "Roll diameter": "400 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with variable frequency drive.",
@@ -1507,16 +1509,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Collapsing Frame - 450 mm",
           scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "450 mm",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1525,13 +1526,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Single Surface Winder - 500 mm",
           scopeDesc: "One Surface Winders of 500 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
           techDesc: {
-            "Surface Winder (02 No.)": "hidden",
             "Winder Type": "hidden",
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "500 mm",
-            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "Wooden Slates.",
-            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
+            "Surface Winders (01 No.)": "hidden",
             "Surface Winder": "Maximum web width of 450 mm with Manual Changeover.",
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "01 HP AC motor with variable frequency drive.",
@@ -1563,7 +1561,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "ext-mono-40",
         qty: 1,
         metadata: {
-          image: "/images/Extruder/Extruder ABA.JPG",
+          image: "/images/Extruder/Extruder ABA.png",
           customName: "40 mm Extruder",
           scopeDesc: "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 40 mm Extruders.",
           techDesc: {
@@ -1644,16 +1642,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Collapsing Frame - 600 mm",
           scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "600 mm",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1662,13 +1659,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Surface Winder - 600 mm",
           scopeDesc: "One Surface Winders of 600 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
           techDesc: {
-            "Surface Winder (02 No.)": "hidden",
             "Winder Type": "hidden",
-            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "600 mm",
-            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "Wooden Slates.",
-            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
+            "Surface Winders (01 No.)": "hidden",
             "Surface Winder": "Maximum web width of 550 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP Torque motor with variable frequency drive.",
             "Tension control": "Through Torque mode."
@@ -1777,16 +1771,15 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Collapsing Frame - 800 mm",
           scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive. Gusset included.",
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "800 mm",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1795,13 +1788,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Back to Back Surface Winder - 750 mm",
           scopeDesc: "One Surface Winder of 750 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP AC Motor and Drive.",
           techDesc: {
-            "Surface Winder (02 No.)": "hidden",
             "Winder Type": "hidden",
-            "Collapsing Frames": "PBT rollers / Wooden Slates.",
-            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "800 mm",
-            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
-            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
+            "Surface Winders (01 No.)": "hidden",
             "Surface Winder": "Maximum web width of 750 mm with Manual Changeover.",
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with torque drive.",
@@ -1847,12 +1837,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         qty: 1,
         metadata: {
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers / Wooden Slates."
           }
         }
       },
@@ -1867,7 +1854,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "1250 mm" }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -1955,7 +1943,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "1350 mm" }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -1983,6 +1972,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-300",
         qty: 1,
         metadata: {
+          scopeDesc: "One chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage. Die with Rotation.",
           techDesc: { "Die Size": "300 mm" }
         }
       },
@@ -2028,7 +2018,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -2041,13 +2032,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Edge slit assembly": "hidden",
             "Length counter meter": "hidden",
             "Trim Suction Blower": "hidden",
-            "Surface Winders (01 No.)": "hidden",
             "Tension control ": "hidden",
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1370 mm",
-            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers.",
-            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
+            "Surface Winders (01 No.)": "hidden",
             "Two Surface Winder": "Maximum web width of 1250 mm with Manual Changeover.",
             "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "02 HP AC motor with variable frequency drive.",
@@ -2057,11 +2045,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
     ],
-
     addons: [
       {
         category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
       },
+      { category: "Die Addons", id: "die-rotation-addon", qty: 1 },
     ],
   },
 
@@ -2125,7 +2113,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -2140,13 +2129,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Nip roller drive": "hidden",
             "Length counter meter": "hidden",
             "Trim Suction Blower": "hidden",
-            "Surface Winders (01 No.)": "hidden",
             "Tension control ": "hidden",
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width ": "1100 mm",
-            "Nip roller drive ": "01 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers.",
-            "Idler rollers": "Adequate quantity as per layout.",
+            "Surface Winder (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "hidden",
+            "Surface Winders (01 No.)": "hidden",
             "Single Surface Winder": "Maximum web width of 1000 mm with Manual Changeover.",
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "1 HP AC motor with variable frequency drive.",
@@ -2187,12 +2173,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         qty: 1,
         metadata: {
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
           }
         }
       },
@@ -2202,12 +2185,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         qty: 1,
         metadata: {
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
           }
         }
       },
@@ -2222,7 +2202,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "2000 mm" }
         }
       },
-      {
+            { category: "Tower / Platform", id: "tower_std", qty: 1 },
+{
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -2275,12 +2256,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         qty: 1,
         metadata: {
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller drive": "03 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
           }
         }
       },

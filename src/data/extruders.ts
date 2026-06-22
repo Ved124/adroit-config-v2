@@ -35,7 +35,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-450"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "35 mm monolayer extruder. Motor 7.5 kW, L/D 30:1.",
     price: 0, // TODO: fill price
     techDesc: {
@@ -62,7 +62,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-24"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "40 mm monolayer extruder. Motor 10 HP, L/D 28:1.",
     price: 0,
     techDesc: {
@@ -88,7 +88,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-750_900"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "45 mm monolayer extruder. Motor 15 kW, L/D 30:1.",
     price: 0,
     techDesc: {
@@ -118,7 +118,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-1000_1250"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "55 mm monolayer extruder. Motor 22.5 kW, L/D 30:1.",
     price: 0,
     techDesc: {
@@ -146,7 +146,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-1250_1500"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "60 mm monolayer extruder. Motor 30 kW, L/D 30:1.",
     price: 0,
     techDesc: {
@@ -170,7 +170,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-2000"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "75 mm monolayer extruder. Motor 45 kW, L/D 30:1.",
     price: 0,
     techDesc: {
@@ -193,7 +193,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-2500"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "90 mm monolayer extruder. Motor 50 kW, L/D 30:1.",
     price: 0,
     techDesc: {
@@ -213,7 +213,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-3000"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "100 mm monolayer extruder. Motor 60 kW, L/D 30:1.",
     price: 0,
     techDesc: {
@@ -235,7 +235,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-20"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "35 mm screw co-extruder for skin layer (ABA).",
     price: 0,
     techDesc: {
@@ -262,7 +262,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["3layer", "5layer"],
     usedInModels: ["Innoflex-1120"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder.png",
     cardDesc: "40 mm co-extruder for 3-layer machines.",
     price: 0,
     techDesc: {
@@ -290,7 +290,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-750"],
-    image: "/images/Extruder/Extruder ABA.JPG",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "40 mm screw co-extruder for ABA machines.",
     price: 0,
     techDesc: {
@@ -346,7 +346,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-750", "DUOFLEX-1000"],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "45 mm screw co-extruder for ABA machines.",
     price: 700000,
     techDesc: {
@@ -399,7 +399,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: [],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "50 mm single screw extruder for ABA machines.",
     price: 1000000,
     techDesc: {
@@ -454,7 +454,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-1000", "DUOFLEX-1250", "DUOFLEX-1750"],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "55 mm screw co-extruder for core or skin layer (ABA).",
     price: 1350000,
     techDesc: {
@@ -508,7 +508,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-1750"],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "65 mm co-extruder for high output ABA lines.",
     price: 1600000,
     techDesc: {
@@ -535,7 +535,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "short",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-72"],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "65 mm co-extruder for high output monolayer lines.",
     price: 1600000,
     techDesc: {
@@ -589,7 +589,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: [],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "75 mm screw co-extruder for large ABA machines.",
     price: 2400000,
     techDesc: {
@@ -644,7 +644,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     variant: "long",
     machineTypes: ["aba"],
     usedInModels: [],
-    image: "/images/Extruder/Extruder.png",
+    image: "/images/Extruder/Extruder ABA.png",
     cardDesc: "90 mm screw co-extruder for core layer (ABA).",
     price: 3000000,
     techDesc: {

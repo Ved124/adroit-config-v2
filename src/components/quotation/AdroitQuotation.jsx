@@ -166,7 +166,7 @@ function Page({ children }) {
             color: INK,
             pageBreakAfter: "always",
             breakAfter: "page",
-            overflow: "hidden",         // hard clip — nothing bleeds into next page
+            overflow: "hidden", gap: "20px",         // hard clip — nothing bleeds into next page
         }}>
             {/* Letterhead full-bleed */}
             <img
@@ -742,7 +742,10 @@ function ComponentPage({ item }) {
                 overflow: "hidden",
             }}>
                 {item.image
-                    ? <Img src={item.image} style={{ maxWidth: "100%", maxHeight: "272px" }} />
+                    ? <>
+                            {item.image && <Img src={item.image} style={{ maxWidth: item.image2 ? "48%" : "100%", maxHeight: "272px" }} />}
+                            {item.image2 && <Img src={item.image2} style={{ maxWidth: item.image ? "48%" : "100%", maxHeight: "272px" }} />}
+                        </>
                     : <span style={{ color: "#ccc", fontSize: "11pt", fontStyle: "italic", fontFamily: F }}>[No image]</span>
                 }
             </div>
@@ -1325,25 +1328,24 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
     const rawComponents = data.components || [];
     const rawAnnexure = data.annexure_components || rawComponents;
 
-    const getSortOrder = (item) => {
+        const getSortOrder = (item) => {
         if (!item) return 99;
         const n = String(item.name || "").toLowerCase();
-        const d = String(item.shortDesc || item.description || "").toLowerCase();
-        const combined = n + " " + d;
+        const c = String(item.category || "").toLowerCase();
+        const combined = n + " " + c;
 
         if (n.includes("extruder")) return 1;
         if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
         if (n.includes("die")) return 3;
         if (combined.includes("air ring") || combined.includes("airring")) return 4;
         if (combined.includes("ibc")) return 5;
-        if (n.includes("tower") || n.includes("platform")) return 11;
         if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
-        if (combined.includes("secondary nip")) return 9;
-        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+        if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
         if (combined.includes("idler")) return 8;
+        if (combined.includes("secondary nip")) return 9;
         if (combined.includes("winder")) return 10;
-
+        if (n.includes("tower") || n.includes("platform")) return 100;
+        
         return 90;
     };
 
@@ -1355,7 +1357,9 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
     };
 
     const allComponents = [...rawComponents].sort(sortFn);
-    const annexureComponents = [...rawAnnexure].sort(sortFn);
+    const annexureComponents = [...rawAnnexure]
+        .filter(c => c.category !== "Electrical & Control Panel")
+        .sort(sortFn);
 
     const optionalItems = data.optional_items || [];
     // All pricing comes from data.pricing (built by buildProposalData in summary.jsx)

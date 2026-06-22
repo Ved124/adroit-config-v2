@@ -298,7 +298,7 @@ function buildProposalData({
   function fillTechDesc(item, techDesc, machineModel = null) {
     if (!techDesc) return {};
     const filled = { ...techDesc };
-    
+
     // Remove explicitly hidden properties
     for (const key in filled) {
       if (filled[key] === "hidden") {
@@ -488,11 +488,11 @@ function buildProposalData({
           } else {
             nipWidth = (parseInt(item.size) || 0) + 50; // fallback
           }
-          
+
           let hp = "2 HP";
           if (nipWidth >= 1500 && nipWidth <= 2000) hp = "3 HP";
           else if (nipWidth > 2000) hp = "5 HP";
-          
+
           const nipWidthStr = nipWidth > 50 ? ` of ${nipWidth} mm width` : "";
           const cfDesc = `Collapsing frame with PBT rollers, side guides, Main Nip${nipWidthStr} with ${hp} AC Drive.`;
 
@@ -578,7 +578,7 @@ function buildProposalData({
       const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
 
       const techDescFilled = fillTechDesc(item, item.techDesc, currentMachineModel);
-      if (machineType === "aba") {
+      if (machineType === "aba" || machineType === "mono") {
         return [
           {
             id: `${item.id}-cf`,
@@ -588,7 +588,11 @@ function buildProposalData({
             category: "Collapsing Frame",
             shortDesc: "if there is hauloff then hauloff will come with collapsing frame",
             scopeDesc: "if there is hauloff then hauloff will come with collapsing frame",
-            techDesc: techDescFilled,
+            techDesc: {
+              "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
+              "Material": "PBT rollers for scratch-free handling.",
+              "Adjustment": "Manual width adjustment with locking system."
+            },
             _autoDesc: "if there is hauloff then hauloff will come with collapsing frame",
           },
           {
@@ -646,15 +650,33 @@ function buildProposalData({
     };
   });
 
+  const hasSelectedCF = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
+    const n = (item.name || "").toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    return n.includes("collapsing") || c.includes("collapsing");
+  });
+
+  const auto_cf_obj = (machineType === "aba" || machineType === "mono") && !hasSelectedCF ? {
+    id: "auto_cf", name: "Main Nip and Collapsing Frame", qty: 1, image: "/images/MainNip/MainNip.png",
+    category: "Collapsing Frame",
+    shortDesc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble.",
+    scopeDesc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble.",
+    techDesc: {
+      "Main Nip Rollers": "2 Nos. nip rollers mounted in bearings: one chrome plated roller and one rubber coated roller, pneumatically loaded.",
+      "Drive": "AC Motor with Variable Frequency Drive (VFD).",
+      "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
+      "Material": "PBT rollers for scratch-free handling.",
+      "Adjustment": "Manual width adjustment with locking system."
+    },
+    _autoDesc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble."
+  } : null;
+
   const annexureComponents = (selected || [])
     .filter(item => item && item.name)
     .map(item => {
       const c = (item?.category || "").toLowerCase();
       // Only exclude inner-utility items 
       if (c.includes("filter") || item.hideFromAnnexure) {
-        return null;
-      }
-      if (machineType === "mono" && c.includes("collapsing frame")) {
         return null;
       }
 
@@ -685,17 +707,64 @@ function buildProposalData({
       };
     })
     .concat(winderTowerScopeItems)
+    .concat(auto_cf_obj ? [auto_cf_obj] : [])
     .filter(Boolean);
 
   // Sort annexure components as well
-  const sortedAnnexure = getSortedScope(annexureComponents).filter(item => {
+  let sortedAnnexure = getSortedScope(annexureComponents, "annexure").filter(item => {
     return Object.keys(item.techDesc || {}).length > 0;
   });
+
+  // For ALL models Annexure: Combine Main Nip + Collapsing Frame and remove Nip from Winder (only if no haul-off)
+  const hauloffIdxAnnex = sortedAnnexure.findIndex(i => i && ((i.category || "").toLowerCase().includes("haul") || (i.name || "").toLowerCase().includes("haul")));
+
+  if (hauloffIdxAnnex === -1) {
+    const mainNipIdxAnnex = sortedAnnexure.findIndex(i => i && ((i.category || "").toLowerCase().includes("main nip") || (i.name || "").toLowerCase().includes("main nip")));
+    const cfIdxAnnex = sortedAnnexure.findIndex(i => {
+      if (!i) return false;
+      const cat = (i.category || "").toLowerCase();
+      const n = (i.name || "").toLowerCase();
+      return (cat.includes("collapsing") || n.includes("collapsing")) && !cat.includes("main nip") && !n.includes("main nip");
+    });
+
+    if (mainNipIdxAnnex !== -1 && cfIdxAnnex !== -1) {
+      const mnItem = sortedAnnexure[mainNipIdxAnnex];
+      const cfItem = sortedAnnexure[cfIdxAnnex];
+      sortedAnnexure[cfIdxAnnex] = {
+        ...cfItem,
+        name: "Main Nip and Collapsing Frame",
+        techDesc: { ...cfItem.techDesc, ...mnItem.techDesc },
+        image2: mnItem.image || "/images/MainNip/MainNipMultiL.png"
+      };
+      sortedAnnexure.splice(mainNipIdxAnnex, 1);
+    } else if (cfIdxAnnex !== -1) {
+      sortedAnnexure[cfIdxAnnex].name = "Main Nip and Collapsing Frame";
+      sortedAnnexure[cfIdxAnnex].image = "/images/MainNip/MainNip.png";
+    }
+
+    sortedAnnexure.forEach(w => {
+      if (w && ((w.category || "").toLowerCase().includes("winder") || (w.name || "").toLowerCase().includes("winder"))) {
+        if (w.techDesc) {
+          const newTech = { ...w.techDesc };
+          Object.keys(newTech).forEach(k => {
+            if (k.toLowerCase().includes("nip")) delete newTech[k];
+          });
+          w.techDesc = newTech;
+        }
+      }
+    });
+  }
 
   const hasSelectedTower = [...selectedScopeItems, ...winderTowerAddonsRaw].some(item => {
     const n = (item.name || "").toLowerCase();
     const c = (item.category || "").toLowerCase();
     return n.includes("tower") || c.includes("tower");
+  });
+
+  const hasSelectedCF_scope = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
+    const n = (item.name || "").toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    return n.includes("collapsing") || c.includes("collapsing");
   });
 
   // ── Static items  ───────────────────────────────────────────────────────────
@@ -714,6 +783,7 @@ function buildProposalData({
       techDesc: {},
       _autoDesc: "Tower Structure to support and mount Bubble stabilizing Basket, Collapsing Frame, Oscillating Haul Off, Secondary Nip, Web aligner, Corona Treater etc."
     },
+    auto_cf_obj,
     {
       id: "auto_control", name: "Extrusion Control Line", qty: 1, image: "",
       shortDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel.",
@@ -751,20 +821,25 @@ function buildProposalData({
   const hauloffIdx = preCombineScope.findIndex(item => {
     const category = (item.category || "").toLowerCase();
     if (category.includes("haul")) return true;
-    const combined = (String(item.name || "") + " " + String(item.shortDesc || item.description || "")).toLowerCase();
-    return combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+    const name = String(item.name || "").toLowerCase();
+    return name.includes("haul-off") || name.includes("hauloff") || (name.includes("haul") && name.includes("off"));
   });
 
   const collapsingIdx = preCombineScope.findIndex(item => {
     const category = (item.category || "").toLowerCase();
     if (category.includes("collapsing")) return true;
-    const combined = (String(item.name || "") + " " + String(item.shortDesc || item.description || "")).toLowerCase();
-    const isCollapsing = combined.includes("collapsing frame") || combined.includes("collapsing");
-    const isHaulOff = category.includes("haul") || combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+    const name = String(item.name || "").toLowerCase();
+    const isCollapsing = name.includes("collapsing frame") || name.includes("collapsing");
+    const isHaulOff = category.includes("haul") || name.includes("haul-off") || name.includes("hauloff") || (name.includes("haul") && name.includes("off"));
     return isCollapsing && !isHaulOff;
   });
 
-  if (hauloffIdx !== -1 && collapsingIdx !== -1) {
+  // For 3-layer and 5-layer: keep haul-off and collapsing frame as SEPARATE SOS entries.
+  // Collapsing frame only appears if die rotation is selected (controlled by selected items).
+  // Do NOT merge them - just sort them in the right order.
+  const isMultiLayer = machineType === "3layer" || machineType === "5layer";
+
+  if (!isMultiLayer && hauloffIdx !== -1 && collapsingIdx !== -1) {
     const cfItem = preCombineScope[collapsingIdx];
     const hoItem = preCombineScope[hauloffIdx];
 
@@ -778,7 +853,53 @@ function buildProposalData({
     preCombineScope.splice(collapsingIdx, 1);
   }
 
-  const finalScope = getSortedScope(preCombineScope)
+  // For ALL models: combine Main Nip + Collapsing Frame into one labelled entry.
+  // Haul-off (if present) stays as its own separate entry.
+  // We apply this everywhere as requested.
+  {
+    const mainNipIdx = preCombineScope.findIndex(item => {
+      const cat = (item.category || "").toLowerCase();
+      const n = (item.name || "").toLowerCase();
+      return cat.includes("main nip") || cat === "main nip" || n.includes("main nip");
+    });
+
+    const cfIdx3L = preCombineScope.findIndex(item => {
+      const cat = (item.category || "").toLowerCase();
+      const n = (item.name || "").toLowerCase();
+      const isCollapsing = cat.includes("collapsing") || n.includes("collapsing frame");
+      const isMainNip = cat.includes("main nip") || n.includes("main nip");
+      return isCollapsing && !isMainNip;
+    });
+
+    if (mainNipIdx !== -1) {
+      const mnItem = preCombineScope[mainNipIdx];
+      if (cfIdx3L !== -1) {
+        // Merge a separate collapsing frame item into the main nip entry
+        const cfItem3L = preCombineScope[cfIdx3L];
+        preCombineScope[mainNipIdx] = {
+          ...mnItem,
+          name: "Main Nip and Collapsing Frame",
+          shortDesc: mnItem.shortDesc || "",
+          scopeDesc: mnItem.scopeDesc || mnItem.shortDesc || "",
+          techDesc: { ...cfItem3L.techDesc, ...mnItem.techDesc }
+        };
+        preCombineScope.splice(cfIdx3L, 1);
+      } else {
+        // No separate collapsing frame item — just rename the Main Nip entry
+        preCombineScope[mainNipIdx] = {
+          ...mnItem,
+          name: "Main Nip and Collapsing Frame",
+        };
+      }
+    } else if (cfIdx3L !== -1) {
+      preCombineScope[cfIdx3L] = {
+        ...preCombineScope[cfIdx3L],
+        name: "Main Nip and Collapsing Frame",
+      };
+    }
+  }
+
+  const finalScope = getSortedScope(preCombineScope, "sos")
     .concat(extraScopeItems)
     .concat(manualExtra.shortDesc ? [manualExtra] : [])
     .filter(item => item.scopeDesc !== "hidden" && item.shortDesc !== "hidden" && item.name !== "hidden")
@@ -789,26 +910,66 @@ function buildProposalData({
       desc: item.scopeDesc || item.shortDesc || item.name || '',
     }));
 
-  // Refine SORT_ORDER index logic to put panel/control at the absolute bottom
-  function getSortedScope(items) {
+  // Sort scope items with mode-aware ordering for 3-layer/5-layer machines.
+  // Mode "sos": scope of supply list  |  Mode "annexure": detailed component descriptions.
+  function getSortedScope(items, mode = "sos") {
+    const is3or5Layer = machineType === "3layer" || machineType === "5layer";
+
     const getSortOrder = (item) => {
       if (!item) return 99;
       const n = String(item.name || "").toLowerCase();
-      const d = String(item.shortDesc || item.description || "").toLowerCase();
-      const combined = n + " " + d;
+      const c = String(item.category || "").toLowerCase();
+      const combined = n + " " + c;
 
+      if (is3or5Layer && mode === "sos") {
+        // 3/5-layer SOS: extruder -> control -> die -> air ring -> bubble cage ->
+        // haul-off -> collapsing frame (only if die rotation) -> idler -> secondary nip -> winder -> tower
+        if (n.includes("extruder")) return 1;
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+        if (n.includes("die")) return 3;
+        if (combined.includes("air ring") || combined.includes("airring")) return 4;
+        if (combined.includes("ibc")) return 4.5;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 5;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
+        // main nip and collapsing frame (may be combined into one entry for DR models)
+        if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 7;
+        if (combined.includes("idler")) return 8;
+        if (combined.includes("secondary nip")) return 9;
+        if (combined.includes("winder")) return 10;
+        if (n.includes("tower") || n.includes("platform")) return 100;
+        return 90;
+      }
+
+      if (is3or5Layer && mode === "annexure") {
+        // 3/5-layer detailed desc: Extruder -> Die/Air Ring -> Bubble Cage ->
+        // Main Nip + Collapsing Frame -> Haul-Off -> Winder -> Tower
+        if (n.includes("extruder")) return 1;
+        if (n.includes("die")) return 3;
+        if (combined.includes("air ring") || combined.includes("airring")) return 3;
+        if (combined.includes("ibc")) return 3.5;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
+        if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
+        if (combined.includes("secondary nip")) return 6.5;
+        if (combined.includes("winder")) return 7;
+        if (combined.includes("idler")) return 8.5;
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 9;
+        if (n.includes("tower") || n.includes("platform")) return 100;
+        return 90;
+      }
+
+      // Default order (mono / aba / other machine types)
       if (n.includes("extruder")) return 1;
       if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
       if (n.includes("die")) return 3;
       if (combined.includes("air ring") || combined.includes("airring")) return 4;
       if (combined.includes("ibc")) return 5;
       if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-      if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 7;
+      if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
       if (combined.includes("idler")) return 8;
       if (combined.includes("secondary nip")) return 9;
       if (combined.includes("winder")) return 10;
-      if (n.includes("tower") || n.includes("platform")) return 11;
-
+      if (n.includes("tower") || n.includes("platform")) return 100;
       return 90;
     };
 
@@ -857,9 +1018,9 @@ function buildProposalData({
           }
           if (machineType === "mono") return "/images/machines/mono.png";
           if (machineType === "aba") return "/images/machines/aba.png";
-          if (machineType === "3layer") return "/images/machines/3layer.png";
-          if (machineType === "5layer") return "/images/machines/5 layer.png";
-          return `/images/machines/5 layer.png`;
+          if (machineType === "3layer") return "/images/machines/Multilayer.png";
+          if (machineType === "5layer") return "/images/machines/Multilayer.png";
+          return `/images/machines/Multilayer.png`;
         })(),
       };
 
@@ -1822,10 +1983,10 @@ export default function SummaryPage() {
                           : "Add grand total to proposal"
                     }
                     className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold shadow transition-all duration-200 ${isStale
-                        ? "bg-amber-100 text-amber-700 border-2 border-amber-400 hover:bg-amber-200"
-                        : alreadyAdded
-                          ? "bg-emerald-100 text-emerald-700 border-2 border-emerald-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
-                          : "bg-brand-blue text-white hover:bg-brand-dark shadow-brand-blue/30"
+                      ? "bg-amber-100 text-amber-700 border-2 border-amber-400 hover:bg-amber-200"
+                      : alreadyAdded
+                        ? "bg-emerald-100 text-emerald-700 border-2 border-emerald-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
+                        : "bg-brand-blue text-white hover:bg-brand-dark shadow-brand-blue/30"
                       }`}
                   >
                     <span className="text-base leading-none">

@@ -1341,24 +1341,23 @@ export const AdroitQuotation2 = memo(
     const machine = data.machine || {};
     const quot = data.quotation || {};
     const perf = data.indicative_performance || {};
-    const getSortOrder = (item) => {
+        const getSortOrder = (item) => {
         if (!item) return 99;
         const n = String(item.name || "").toLowerCase();
-        const d = String(item.shortDesc || item.description || "").toLowerCase();
-        const combined = n + " " + d;
+        const c = String(item.category || "").toLowerCase();
+        const combined = n + " " + c;
 
         if (n.includes("extruder")) return 1;
         if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
         if (n.includes("die")) return 3;
         if (combined.includes("air ring") || combined.includes("airring")) return 4;
         if (combined.includes("ibc")) return 5;
-        if (n.includes("tower") || n.includes("platform")) return 11;
         if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-        if (combined.includes("collapsing frame") || combined.includes("collapsing")) return 6.5;
-        if (combined.includes("secondary nip")) return 9;
-        if (combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+        if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
         if (combined.includes("idler")) return 8;
+        if (combined.includes("secondary nip")) return 9;
         if (combined.includes("winder")) return 10;
+        if (n.includes("tower") || n.includes("platform")) return 100;
         
         return 90;
     };
@@ -1371,7 +1370,9 @@ export const AdroitQuotation2 = memo(
     };
 
     const components = [...(data.components || [])].sort(sortFn);
-    const annexureComponents = [...(data.annexure_components || components)].sort(sortFn);
+    const annexureComponents = [...(data.annexure_components || components)]
+        .filter(c => c.category !== "Electrical & Control Panel")
+        .sort(sortFn);
 
     const optItems = data.optional_items || [];
     const pricing = data.pricing || {};

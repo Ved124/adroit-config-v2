@@ -26,7 +26,7 @@ export const EPC_COMPONENTS: EPC[] = [
     {
         id: "epc-dynamic",
         name: "Extrusion Process Control With Trio Loader",
-        image: "/images/Acessories/EPC.JPG",
+        image: "/images/Acessories/EPC.png",
         cardDesc: "Select Brand to add.",
         price: 0,
         qty: 1,

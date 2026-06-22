@@ -30,10 +30,10 @@ const SafeImage = ({ src, style }) => (
 
 // Returns the best image path for a mixer addon
 function getMixerImage(mixer) {
-    if (!mixer) return "/images/Acessories/Vertical Granule Mixer with Dryer.JPG";
+    if (!mixer) return "/images/Acessories/Vertical Granule Mixer with Dryer.png";
     if (mixer.image) return mixer.image;
-    if (mixer.id === "mixer-dryer-dynamic") return "/images/Acessories/Vertical Granule Mixer with Dryer.JPG";
-    return "/images/Acessories/Vertical Granule Mixer with Dryer.JPG";
+    if (mixer.id === "mixer-dryer-dynamic") return "/images/Acessories/Vertical Granule Mixer with Dryer.png";
+    return "/images/Acessories/Vertical Granule Mixer with Dryer.png";
 }
 
 export const KioskFlyer = forwardRef(({ data }, ref) => {

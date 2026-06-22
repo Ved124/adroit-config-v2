@@ -6,7 +6,7 @@ import { G_AIR_RING_PRICES, AIR_RING_PRICES, DR_AIR_RING_PRICES } from "../src/d
 import { MANUAL_BC_PRICES, OPEN_CLOSE_BC_PRICES, UP_DOWN_BC_PRICES } from "../src/data/bubbleCages";
 import { HAULOFF_PRICES } from "../src/data/hauloffs";
 import { TOWER_PRICES } from "../src/data/tower";
-import { MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES } from "../src/data/winders";
+import { MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES, SINGLE_SURFACE_PRICES } from "../src/data/winders";
 import { PANEL_3LAYER_PRICES } from "../src/data/electricalPanel";
 import { COLLAPSING_FRAME_PRICES } from "../src/data/collapsingFrame";
 
@@ -147,9 +147,11 @@ function ComponentCard({
   const isOCBC = item.id === "bc-open-close-dynamic";
   const isUDBC = item.id === "bc-up-down-dynamic";
   const isDynamicHauloff = item.id === "haul-horizontal-dynamic";
+  const isDynamicMainNip = item.id === "main-nip-dynamic" || item.id === "main-nip-dynamic-multi";
   const isDynamicTower = item.id === "tower-dynamic";
   const isManualWinder = item.id === "winder-manual-back-to-back-dynamic";
   const isSurfaceWinder = item.id === "winder-surface-dynamic";
+  const isSingleSurfaceWinder = item.id === "winder-single-surface-only-dynamic";
   const isAutoWinder = item.id === "winder-automatic-dynamic";
   const is3LayerPanel = item.id === "panel-3layer-dynamic";
   const isCollapsingFrame = item.id === "cf-pbt-dynamic";
@@ -162,9 +164,11 @@ function ComponentCard({
   else if (isOCBC) prices = OPEN_CLOSE_BC_PRICES;
   else if (isUDBC) prices = UP_DOWN_BC_PRICES;
   else if (isDynamicHauloff) prices = HAULOFF_PRICES;
+  else if (isDynamicMainNip) prices = HAULOFF_PRICES;
   else if (isDynamicTower) prices = TOWER_PRICES;
   else if (isManualWinder) prices = MANUAL_BACK_TO_BACK_PRICES;
   else if (isSurfaceWinder) prices = SURFACE_WINDER_PRICES;
+  else if (isSingleSurfaceWinder) prices = SINGLE_SURFACE_PRICES;
   else if (isAutoWinder) prices = AUTOMATIC_WINDER_PRICES;
   else if (is3LayerPanel) prices = PANEL_3LAYER_PRICES;
   else if (isCollapsingFrame) prices = COLLAPSING_FRAME_PRICES;
@@ -193,14 +197,14 @@ function ComponentCard({
         customName: customName,
         techDesc: {
           ...item.techDesc,
-          [isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size")))))]: `${selectedSize} mm`,
+          [isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))]: `${selectedSize} mm`,
           ...(item.category === "Winder" ? { 
             "film width": `${selectedSize} mm`,
             "Winder Size": `${selectedSize} mm`,
             "Nip roller width": `${parseInt(selectedSize) + 125} mm`,
             [isAutoWinder ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)"]: `Maximum web width of ${selectedSize} mm with ${isAutoWinder ? "Automatic" : "Manual"} Changeover.`
           } : {}),
-          ...(isDynamicHauloff ? { "Nip roller width": `${parseInt(selectedSize) + 125} mm` } : {}),
+          ...(isDynamicHauloff || isDynamicMainNip ? { "Nip roller width": `${parseInt(selectedSize) + 125} mm` } : {}),
           ...(isDynamicTower ? { "Idler rollers": `Set of 150 mm diameter idler aluminium rollers of ${parseInt(selectedSize) + 200} mm face width.` } : {})
         }
       });
@@ -261,7 +265,7 @@ function ComponentCard({
       {item.isDynamic && (
         <div className="mt-4 p-2.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-1.5 animate-in fade-in slide-in-from-top-1 duration-300">
           <label className="text-[9px] font-bold text-slate-500 uppercase tracking-widest px-1">
-            {isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size")))))}
+            {isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))}
           </label>
           <select
             disabled={isSelected}

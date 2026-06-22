@@ -18,7 +18,7 @@ import { DIE_COMPONENTS } from "../src/data/dies";
 import { BUBBLE_CAGE_COMPONENTS, MANUAL_BC_PRICES, OPEN_CLOSE_BC_PRICES, UP_DOWN_BC_PRICES } from "../src/data/bubbleCages";
 import { HAULOFF_COMPONENTS, HAULOFF_PRICES } from "../src/data/hauloffs";
 import { TOWER_COMPONENTS, TOWER_PRICES } from "../src/data/tower";
-import { WINDER_COMPONENTS, MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES } from "../src/data/winders";
+import { WINDER_COMPONENTS, MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES, SINGLE_SURFACE_PRICES } from "../src/data/winders";
 import { AIR_RING_COMPONENTS } from "../src/data/airRing";
 import { IBC_COMPONENTS } from "../src/data/ibc";
 import { COLLAPSING_FRAME_COMPONENTS, COLLAPSING_FRAME_PRICES } from "../src/data/collapsingFrame";
@@ -88,8 +88,8 @@ export const COMPONENTS_DATA = {
   "Air Ring": AIR_RING_COMPONENTS,
   IBC: IBC_COMPONENTS,
   "Collapsing Frame": COLLAPSING_FRAME_COMPONENTS,
-  "Haul-Off": HAULOFF_COMPONENTS,
-  "Main Nip": HAULOFF_COMPONENTS,
+  "Haul-Off": HAULOFF_COMPONENTS.filter(c => !c.id.includes("main-nip")),
+  "Main Nip": HAULOFF_COMPONENTS.filter(c => c.id.includes("main-nip")),
   "Bubble Cage": BUBBLE_CAGE_COMPONENTS,
   "Tower / Platform": TOWER_COMPONENTS,
   Winder: WINDER_COMPONENTS,
@@ -101,7 +101,7 @@ export const ADDONS_DATA = {
   "Corona Treater": CORONA_TREATER_COMPONENTS,
   // "Trim Handling": TRIM_ADDONS,
   "Material Handling": MATERIAL_HANDLING_ADDONS,
-  "Gauge / Thickness Control": GAUGE_ADDONS,
+  // "Gauge / Thickness Control": GAUGE_ADDONS,
   "Web Guide": WEB_GUIDE_ADDONS,
   "Cooling System": CHILLER_ADDONS,
   "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
@@ -672,7 +672,7 @@ export function ConfigProvider({ children }) {
             segments: segments,
             price: newPrice,
             image: dynamicBCItem.image || item.image,
-            customName: `Motorised Bubble Cage - ${displaySize} mm`,
+            customName: isManual ? `Manual Bubble Cage - ${displaySize} mm` : `Motorised Bubble Cage - ${displaySize} mm`,
             techDesc: sanitizeTechDesc("Bubble Cage", {
               ...(dynamicBCItem.techDesc || {}),
               "Type": typeStr,
@@ -759,10 +759,48 @@ export function ConfigProvider({ children }) {
           };
         }
       });
+      
+      // 4.9) DYNAMIC MAIN NIP LOGIC
+      nextSelected.forEach((item, index) => {
+        if (item.category === "Main Nip" && item.isDynamic) {
+          const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const presetSize = parseInt(item.size) || 0;
+          const chosenSize = presetSize > 0 ? presetSize : minSize;
+          const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
+
+          const mainNipId = (machineType === "3layer" || machineType === "5layer") ? "main-nip-dynamic-multi" : "main-nip-dynamic";
+          const dynamicMainNipItem = HAULOFF_COMPONENTS.find(h => h.id === mainNipId) || item;
+
+          let hp = "2 HP";
+          if (chosenSize >= 1500 && chosenSize <= 2000) hp = "3 HP";
+          else if (chosenSize > 2000) hp = "5 HP";
+
+          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
+
+          nextSelected[index] = {
+            ...item,
+            category: "Main Nip",
+            qty: 1,
+            size: chosenSize.toString(),
+            price: newPrice,
+            image: dynamicMainNipItem.image || item.image,
+            customName: `MAIN NIP - ${displaySize} mm`,
+            techDesc: {
+              ...(dynamicMainNipItem.techDesc || {}),
+              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
+              "Nip roller drive": `${hp} AC motor with variable frequency drive.`,
+              ...(item.techDesc || {})
+            }
+          };
+        }
+      });
+
       // 4.8) DYNAMIC WINDER LOGIC
       nextSelected.forEach((item, index) => {
         const isWinderId = [
           "winder-manual-back-to-back-dynamic",
+          "winder-single-surface-only-dynamic",
           "winder-surface-dynamic",
           "winder-automatic-dynamic",
           "winder-surface-manual",
@@ -775,9 +813,11 @@ export function ConfigProvider({ children }) {
           const isManual = name.includes("manual");
           const isAuto = name.includes("automatic") || name.includes("auto");
           const isSurface = !isManual && !isAuto;
+          const isSingleSurfaceWinder = item.id === "winder-single-surface-only-dynamic";
 
           let priceMap = SURFACE_WINDER_PRICES;
           if (isManual) priceMap = MANUAL_BACK_TO_BACK_PRICES;
+          else if (isSingleSurfaceWinder) priceMap = SINGLE_SURFACE_PRICES;
           else if (isAuto) priceMap = AUTOMATIC_WINDER_PRICES;
 
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
@@ -1583,7 +1623,7 @@ export function ConfigProvider({ children }) {
       if (isCombinedWinder && !customDesc) {
         const nipDesc = generateSecondaryNip(item, currentMachineModel);
         const winderDesc = generateWinder(item, currentMachineModel, { includeNipPrefix: false, selectedAddons });
-        if (machineType === "aba") {
+        if (machineType === "aba" || machineType === "mono") {
           return [
             {
               id: `${item.id}-cf`,
@@ -1622,29 +1662,60 @@ export function ConfigProvider({ children }) {
     });
 
     const hasSelectedTower = [...selectedScopeItems, ...winderTowerScopeItems].some(item => (item.name || "").toLowerCase().includes("tower"));
+    const hasSelectedCF = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
+      const n = (item.name || "").toLowerCase();
+      const c = (item.category || "").toLowerCase();
+      return n.includes("collapsing") || c.includes("collapsing");
+    });
 
     const staticItems = [
       { name: "Idler Rollers", qty: 1, desc: "Aluminum Idler rollers as per layout drawing." },
       !hasSelectedTower && { name: "Tower Structure", qty: 1, desc: "Tower Structure to support bubble stabilizing basket, haul-off, etc." },
+      (machineType === "aba" || machineType === "mono") && !hasSelectedCF && {
+        name: "Main Nip and Collapsing Frame", qty: 1, category: "Collapsing Frame", desc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble."
+      },
       { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
     ].filter(Boolean);
 
+    const is3or5Layer = machineType === "3layer" || machineType === "5layer";
+
     const getIdx = (item) => {
       const n = String(item.name || "").toLowerCase();
-      const d = String(item.desc || item.description || "").toLowerCase();
-      const combined = n + " " + d;
+      const c = String(item.category || "").toLowerCase();
+      const combined = n + " " + c;
 
+      if (is3or5Layer) {
+        // 3/5-layer SOS order:
+        // extruder → extrusion control → die → air ring → bubble cage →
+        // haul-off → collapsing frame (only if die rotation) → idler → secondary nip → winder → tower
+        if (n.includes("extruder")) return 1;
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+        if (n.includes("die")) return 3;
+        if (combined.includes("air ring") || combined.includes("airring")) return 4;
+        if (combined.includes("ibc")) return 4.5;
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 5;
+        if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
+        // main nip and collapsing frame (may be combined into one entry for DR models)
+        if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 7;
+        if (combined.includes("idler")) return 8;
+        if (combined.includes("secondary nip")) return 9;
+        if (combined.includes("winder")) return 10;
+        if (n.includes("tower") || n.includes("platform")) return 100;
+        return 90;
+      }
+
+      // Default order (mono / aba)
       if (n.includes("extruder")) return 1;
       if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
       if (n.includes("die")) return 3;
       if (combined.includes("air ring") || combined.includes("airring")) return 4;
       if (combined.includes("ibc")) return 5;
-      if (n.includes("tower") || n.includes("platform")) return 11;
       if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
       if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
       if (combined.includes("idler")) return 8;
       if (combined.includes("secondary nip")) return 9;
       if (combined.includes("winder")) return 10;
+      if (n.includes("tower") || n.includes("platform")) return 100;
 
       return 90;
     };
@@ -1657,20 +1728,21 @@ export function ConfigProvider({ children }) {
     const hauloffIdx = preCombineScope.findIndex(item => {
       const category = (item.category || "").toLowerCase();
       if (category.includes("haul")) return true;
-      const combined = (String(item.name || "") + " " + String(item.desc || item.description || "")).toLowerCase();
-      return combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+      const name = String(item.name || "").toLowerCase();
+      return name.includes("haul-off") || name.includes("hauloff") || (name.includes("haul") && name.includes("off"));
     });
 
     const collapsingIdx = preCombineScope.findIndex(item => {
       const category = (item.category || "").toLowerCase();
       if (category.includes("collapsing")) return true;
-      const combined = (String(item.name || "") + " " + String(item.desc || item.description || "")).toLowerCase();
-      const isCollapsing = combined.includes("collapsing frame") || combined.includes("collapsing");
-      const isHaulOff = category.includes("haul") || combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"));
+      const name = String(item.name || "").toLowerCase();
+      const isCollapsing = name.includes("collapsing frame") || name.includes("collapsing");
+      const isHaulOff = category.includes("haul") || name.includes("haul-off") || name.includes("hauloff") || (name.includes("haul") && name.includes("off"));
       return isCollapsing && !isHaulOff;
     });
 
-    if (hauloffIdx !== -1 && collapsingIdx !== -1) {
+    // For 3-layer/5-layer: keep haul-off and collapsing frame as separate SOS entries.
+    if (!is3or5Layer && hauloffIdx !== -1 && collapsingIdx !== -1) {
       const cfItem = preCombineScope[collapsingIdx];
       const hoItem = preCombineScope[hauloffIdx];
       
@@ -1681,6 +1753,48 @@ export function ConfigProvider({ children }) {
         techDesc: { ...cfItem.techDesc, ...hoItem.techDesc }
       };
       preCombineScope.splice(collapsingIdx, 1);
+    }
+
+    // For ALL models SOS: combine Main Nip + Collapsing Frame into one labelled entry.
+    // Haul-off (if present) stays as its own separate entry.
+    {
+      const mainNipIdx = preCombineScope.findIndex(item => {
+        const cat = (item.category || "").toLowerCase();
+        const n = (item.name || "").toLowerCase();
+        return cat.includes("main nip") || cat === "main nip" || n.includes("main nip");
+      });
+
+      const cfIdx3L = preCombineScope.findIndex(item => {
+        const cat = (item.category || "").toLowerCase();
+        const n = (item.name || "").toLowerCase();
+        const isCollapsing = cat.includes("collapsing") || n.includes("collapsing frame");
+        const isMainNip = cat.includes("main nip") || n.includes("main nip");
+        return isCollapsing && !isMainNip;
+      });
+
+      if (mainNipIdx !== -1) {
+        const mnItem = preCombineScope[mainNipIdx];
+        if (cfIdx3L !== -1) {
+          const cfItem3L = preCombineScope[cfIdx3L];
+          preCombineScope[mainNipIdx] = {
+            ...mnItem,
+            name: "Main Nip and Collapsing Frame",
+            desc: mnItem.desc || mnItem.description || "",
+            techDesc: { ...cfItem3L.techDesc, ...mnItem.techDesc }
+          };
+          preCombineScope.splice(cfIdx3L, 1);
+        } else {
+          preCombineScope[mainNipIdx] = {
+            ...mnItem,
+            name: "Main Nip and Collapsing Frame",
+          };
+        }
+      } else if (cfIdx3L !== -1) {
+        preCombineScope[cfIdx3L] = {
+          ...preCombineScope[cfIdx3L],
+          name: "Main Nip and Collapsing Frame",
+        };
+      }
     }
 
     const sortedScope = [...preCombineScope].sort((a, b) => getIdx(a) - getIdx(b));
@@ -3524,10 +3638,10 @@ export function ConfigProvider({ children }) {
             title={item.name || "Details"}
             widthClass="max-w-4xl"
           >
-            <div className="flex flex-col md:flex-row gap-4 bg-black">
+            <div className="flex flex-col md:flex-row gap-4 bg-white">
               {/* LEFT: big image */}
               <div className="md:w-2/5 w-full">
-                <div className="bg-black rounded-xl p-3 flex items-center justify-center">
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-center">
                   {item.image ? (
                     <img
                       src={item.image}
@@ -3544,21 +3658,21 @@ export function ConfigProvider({ children }) {
               <div className="flex-1">
                 {/* short paragraph if present */}
                 {(item.desc || item.shortDesc) && (
-                  <p className="text-sm mb-3 text-white">
+                  <p className="text-sm mb-3 text-slate-700">
                     {item.desc || item.shortDesc}
                   </p>
                 )}
 
                 {techRows ? (
-                  <div className="max-h-72 overflow-auto border border-slate-200 rounded-xl p-3 bg-black">
+                  <div className="max-h-72 overflow-auto border border-slate-200 rounded-xl p-3 bg-white">
                     <table className="w-full text-xs border-separate border-spacing-y-1">
                       <tbody>
                         {techRows.map((row, idx) => (
                           <tr key={idx}>
-                            <td className="whitespace-nowrap pr-3 text-white align-top font-medium">
+                            <td className="whitespace-nowrap pr-3 text-slate-500 align-top font-medium">
                               {row.label}
                             </td>
-                            <td className="text-white align-top">
+                            <td className="text-slate-900 align-top">
                               {row.value}
                             </td>
                           </tr>

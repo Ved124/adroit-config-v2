@@ -1165,7 +1165,8 @@ export const MasterQuotationPDF = ({ data }) => {
   const quot = data.quotation || {};
   const scope = data.scope || [];
   const pricing = data.pricing || {};
-  const components = data.annexure_components || data.components || [];
+  const components = (data.annexure_components || data.components || [])
+      .filter(c => c.category !== "Electrical & Control Panel");
   // User wants only main components (no addons) in the image annexure.
   // annexure_components from summary.jsx already filters for isMain: true.
   const allItems = components.filter(item =>

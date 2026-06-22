@@ -44,11 +44,11 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, title, children, wi
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 24, opacity: 0, scale: 0.98 }}
               transition={{ type: 'spring', stiffness: SPRING.medium.stiffness, damping: SPRING.medium.damping }}
-              className={`w-full ${widthClass} rounded-2xl bg-black text-white shadow-xl border border-white/10`}
+              className={`w-full ${widthClass} rounded-2xl bg-white text-slate-900 shadow-xl border border-slate-200`}
             >
-              <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-                <h3 className="text-sm sm:text-base font-semibold text-white">{title}</h3>
-                <button onClick={onClose} aria-label="Close modal" className="p-2 rounded-lg hover:bg-white/10 text-white">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
+                <h3 className="text-sm sm:text-base font-semibold text-slate-900">{title}</h3>
+                <button onClick={onClose} aria-label="Close modal" className="p-2 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 6l12 12M6 18L18 6" /></svg>
                 </button>
               </div>

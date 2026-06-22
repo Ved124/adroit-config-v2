@@ -464,21 +464,21 @@ export default function MachineTypePage() {
         )}
       </motion.main>
 
-      {/* DETAILS MODAL for model CSV data - KEEPING DARK THEME AS REQUESTED */}
+      {/* DETAILS MODAL for model CSV data */}
       {modalModel && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] backdrop-blur-sm p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60] backdrop-blur-sm p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-black rounded-2xl border border-slate-700 max-w-3xl w-full max-h-[80vh] flex flex-col shadow-2xl"
+            className="bg-white rounded-2xl border border-slate-200 max-w-3xl w-full max-h-[80vh] flex flex-col shadow-2xl"
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <div className="font-semibold text-sm text-white">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <div className="font-semibold text-sm text-slate-900">
                 {modalModel.label} – Technical Specification
               </div>
               <button
                 onClick={() => setModalModel(null)}
-                className="text-slate-400 hover:text-white text-xl transition-colors"
+                className="text-slate-400 hover:text-slate-900 text-xl transition-colors"
               >
                 ×
               </button>
@@ -501,11 +501,11 @@ export default function MachineTypePage() {
                         .trim();
 
                       return (
-                        <tr key={key} className="hover:bg-slate-900/50 transition-colors">
-                          <td className="align-top pr-4 py-1 text-slate-400 whitespace-nowrap font-medium w-1/3">
+                        <tr key={key} className="hover:bg-slate-50 transition-colors">
+                          <td className="align-top pr-4 py-1 text-slate-500 whitespace-nowrap font-medium w-1/3">
                             {label}
                           </td>
-                          <td className="align-top py-1 text-slate-100 font-mono">
+                          <td className="align-top py-1 text-slate-900 font-mono">
                             {String(value)}
                           </td>
                         </tr>
@@ -514,10 +514,10 @@ export default function MachineTypePage() {
                 </tbody>
               </table>
             </div>
-            <div className="px-6 py-4 border-t border-slate-800 flex justify-end bg-black/50 rounded-b-2xl">
+            <div className="px-6 py-4 border-t border-slate-200 flex justify-end bg-slate-50 rounded-b-2xl">
               <button
                 onClick={() => setModalModel(null)}
-                className="px-5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-medium transition-colors border border-slate-700"
+                className="px-5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-colors border border-slate-200"
               >
                 Close
               </button>

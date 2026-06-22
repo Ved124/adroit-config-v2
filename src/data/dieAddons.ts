@@ -25,7 +25,7 @@ export const DIE_ROTATION_ADDON: DieAddon = {
   name: "Die Rotation System",
   category: "Die Addons",
   machineTypes: ["mono", "aba", "3layer", "5layer"],
-  image: "/images/Die/Die.JPG",
+  image: "/images/Acessories/DieRotation.png",
   cardDesc: "Revolving die head system for even distribution of thickness variation.",
   price: 600000,
   isDynamic: true,

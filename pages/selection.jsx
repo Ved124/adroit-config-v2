@@ -315,7 +315,7 @@ function ComponentCard({
           ) : (
             <button
               type="button"
-              onClick={() => openModal({ category, item })}
+              onClick={() => openModal({ category, item: isSelected ? { ...item, ...line, techDesc: { ...item.techDesc, ...(line?.techDesc || {}) } } : item })}
               className="px-3 py-1.5 rounded-xl text-[10px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all"
             >
               Specs

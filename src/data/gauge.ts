@@ -77,17 +77,17 @@ export const GAUGE_ADDONS: GaugeControlAddon[] = [
   // --------------------------------------
   {
     id: "gauge-imported-full",
-    name: "Imported Automatic Thickness Control System",
+    name: "Automatic Thickness Control System",
     type: "imported-auto",
     machineTypes: ["3layer", "5layer"],
     usedInModels: ["Innoflex-1620", "Innoflex-1870", "Innoflex-2120", "Innoflex-2370", "Innoflex-2620"],
     image: "/images/addons/gauge/imported-auto.png",
     cardDesc:
-      "Imported auto gauge system for industrial multilayer films with high accuracy.",
+      "Auto gauge system for industrial multilayer films with high accuracy.",
     price: 0,
     qty: 1,
     techDesc: {
-      "System Type": "High precision imported gauge system",
+      "System Type": "High precision auto gauge system",
       "Resolution": "Micron-level accuracy with multi-zone compensation",
       "Sensors": "Laser / capacitive scanning system (model dependent)",
       "Control": "Real-time closed loop to die zones + air ring + IBC",
@@ -95,7 +95,7 @@ export const GAUGE_ADDONS: GaugeControlAddon[] = [
       "Use Case": "Stretch hood, lamination, agriculture & barrier films",
       "Compliance": "CE certified hardware (model dependent)",
     },
-    shortDesc: "Imported automatic thickness control system with high precision for multilayer extrusion lines producing industrial films.",
+    shortDesc: "Automatic thickness control system with high precision for multilayer extrusion lines producing industrial films.",
   },
 
 

@@ -151,8 +151,9 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Construction": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
-      "Blower": "One no. with inlet air filter.",
+      "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
+      "Blower": "20 HP AC variable frequency drive.",
+      "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor."
     },
     shortDesc: "Dual lip air ring for high capacity co-extruded films.",
   },

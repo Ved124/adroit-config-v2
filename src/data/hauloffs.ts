@@ -68,9 +68,14 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     isDynamic: true,
     techDesc: {
       "Construction": "The haul off will be shipped in assembled parts.",
-
+      "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+      "Nip roller width": "TBD",
+      "Nip roller drive": "TBD",
+      "Collapsing Frames": "PBT rollers.",
+      "Idler rollers": "Adequate quantity as per layout.",
       "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
       "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
+      "Max linespeed": "TBD",
     },
   },
 

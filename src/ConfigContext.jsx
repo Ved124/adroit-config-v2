@@ -457,18 +457,23 @@ export function ConfigProvider({ children }) {
     const clean = { ...techDesc };
     if (category === "Bubble Cage") {
       delete clean["Segments"];
-      delete clean["Actuation of arms"];
-      if (clean["Type"] && /with \d+ arms/i.test(clean["Type"])) {
-        clean["Type"] = clean["Type"].replace(/\s*with \d+ arms\s*/gi, " ").trim();
-        // Ensure first letter is capitalized and ends with a period if it was stripped
-        if (clean["Type"].length > 0) {
-          clean["Type"] = clean["Type"].charAt(0).toUpperCase() + clean["Type"].slice(1);
-          if (!clean["Type"].endsWith(".")) clean["Type"] += ".";
-        }
-      }
     }
     if (category === "Die Head") {
       clean["Surface Treatment"] = "Chrome plated and highly polished.";
+    }
+    if (category === "Winder") {
+      delete clean["Surface Winders (02 Nos.)"];
+      delete clean["Surface Winders (01 No.)"];
+      delete clean["Surface Winder (01 No.)"];
+      delete clean["Nip roller width"];
+      delete clean["Nip roller drive"];
+      delete clean["Surface winder drive"];
+      delete clean["Maximum web width"];
+    }
+    if (category === "Haul-Off" || category === "Main Nip") {
+      delete clean["Nip roller width"];
+      delete clean["Nip roller drive"];
+      delete clean["Max linespeed"];
     }
     return clean;
   }
@@ -631,9 +636,9 @@ export function ConfigProvider({ children }) {
       nextSelected.forEach((item, index) => {
         if (item.category === "Bubble Cage" && (item.isDynamic || item.id.includes("dynamic"))) {
           const name = (item.name || "").toLowerCase();
-          const isManual = name.includes("manual");
-          const isUpDown = name.includes("up down");
-          const isOC = name.includes("open close") || (!isManual && !isUpDown);
+          const isManual = name.includes("manual") || item.id.includes("manual");
+          const isUpDown = name.includes("up down") || item.id.includes("up-down");
+          const isOC = name.includes("open close") || item.id.includes("open-close") || (!isManual && !isUpDown);
 
           let priceMap = OPEN_CLOSE_BC_PRICES;
           let label = "Film width range";
@@ -641,7 +646,7 @@ export function ConfigProvider({ children }) {
 
           if (isManual) {
             priceMap = MANUAL_BC_PRICES;
-            label = "Bubble diameter range";
+            label = "Bubble width range";
             minRatio = 0.6;
           } else if (isUpDown) {
             priceMap = UP_DOWN_BC_PRICES;
@@ -662,9 +667,17 @@ export function ConfigProvider({ children }) {
 
           const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
           const segments = (chosenSize >= 2370) ? 9 : (chosenSize >= 2000 ? 8 : 6);
-          const typeStr = `Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
+          const typeStr = `Calibration bubble guide basket with ${segments} arms arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
+
+          // Determine actuation string based on variant
+          const actuationStr = isManual
+            ? "Manual Open-Close operation."
+            : isUpDown
+              ? "Motorized Up Down & Open-Close with Linear Actuator."
+              : "Motorized Open-Close operation.";
 
           // Update item properties directly at the top level
+          // Dynamic keys come LAST so they always override any stale preset techDesc
           nextSelected[index] = {
             ...item,
             name: `${item.name} - ${displaySize} mm`,
@@ -675,9 +688,10 @@ export function ConfigProvider({ children }) {
             customName: isManual ? `Manual Bubble Cage - ${displaySize} mm` : `Motorised Bubble Cage - ${displaySize} mm`,
             techDesc: sanitizeTechDesc("Bubble Cage", {
               ...(dynamicBCItem.techDesc || {}),
-              "Type": typeStr,
-              [label]: `${minRange} to ${maxFilmWidth} mm`,
               ...(item.techDesc || {}),
+              "Type": typeStr,
+              "Actuation of arms": actuationStr,
+              [label]: `${minRange} to ${maxFilmWidth} mm`,
             })
           };
         }
@@ -716,10 +730,12 @@ export function ConfigProvider({ children }) {
             image: dynamicHauloffItem.image || item.image, // Ensure image is preserved
             customName: `HORIZONTAL HAULOFF - ${displaySize} mm`,
             techDesc: {
-              ...(dynamicHauloffItem.techDesc || {}), // Start with base data
-              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
+              ...(dynamicHauloffItem.techDesc || {}), // Start with base data (all static fields)
+              ...(sanitizeTechDesc("Haul-Off", item.techDesc) || {}), // Overlay existing overrides (stripped of dynamic keys)
+              // Dynamic keys come LAST — always override stale preset values
+              "Nip roller width": `${displaySize} mm`,
               "Nip roller drive": `${hp} AC motor with variable frequency drive.`,
-              ...(item.techDesc || {}) // Overlay existing overrides
+              "Max linespeed": speed,
             }
           };
         }
@@ -751,9 +767,8 @@ export function ConfigProvider({ children }) {
             customName: `TOWER / PLATFORM - ${displaySize} mm`,
             techDesc: {
               ...(dynamicTowerItem.techDesc || {}),
-              "Tower Size": `${displaySize} mm`,
               "Staircase": "Staircase with hand rails.",
-              "Idler rollers": `Set of idler aluminium rollers of ${(rollerNum > 500) ? rollerNum : (chosenSize + ((rollerNum === 1450) ? 100 : 120))} mm face width.`,
+              "Idler rollers": `Set of idler aluminium rollers of ${displaySize} mm face width.`,
               ...(item.techDesc || {})
             }
           };
@@ -828,7 +843,7 @@ export function ConfigProvider({ children }) {
           const chosenSize = presetSize > 0 ? presetSize : minSize;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
-          const stationLabel = isAuto ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)";
+          const stationLabel = isSingleSurfaceWinder ? "Surface Winder (01 No.)" : "Surface Winders (02 Nos.)";
 
           const dynamicWinderItem = WINDER_COMPONENTS.find(w => w.id === item.id) || item;
 
@@ -843,17 +858,18 @@ export function ConfigProvider({ children }) {
           // Update item properties
           nextSelected[index] = {
             ...item,
-            size: chosenSize.toString(),
+            size: displaySize.toString(),
             price: newPrice,
             image: dynamicWinderItem.image || item.image,
             customName: `${item.name} - ${displaySize} mm`,
             techDesc: {
               ...(dynamicWinderItem.techDesc || {}),
-              "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
-              "Nip roller drive": `${nipHP} AC motor with variable frequency drive.`,
-              "Surface winder drive": `${nipHP} AC motor with variable frequency drive.`,
+              ...(sanitizeTechDesc("Winder", item.techDesc) || {}),
+              "Nip roller width": `${displaySize} mm`,
+              "Maximum web width": `${maxFilmWidth} mm`,
+              "Nip roller drive": `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
+              "Surface winder drive": `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
               [stationLabel]: `Maximum web width of ${maxFilmWidth} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`,
-              ...(item.techDesc || {})
             }
           };
         }
@@ -1518,7 +1534,24 @@ export function ConfigProvider({ children }) {
     const overrides = scopeOverrides || {};
     let hasExtruder = false;
 
-    const selectedScopeItems = (processedSelected || [])
+    let preProcessedSelected = processedSelected || [];
+    let preSelectedAddons = selectedAddons || [];
+    if (machineType === "mono") {
+      preProcessedSelected = preProcessedSelected.filter(item => {
+        if (!item) return false;
+        const n = (item.name || "").toLowerCase();
+        const c = (item.category || "").toLowerCase();
+        return !(n.includes("tower") || c.includes("tower") || n.includes("platform") || c.includes("platform"));
+      });
+      preSelectedAddons = preSelectedAddons.filter(item => {
+        if (!item) return false;
+        const n = (item.name || "").toLowerCase();
+        const c = (item.category || "").toLowerCase();
+        return !(n.includes("tower") || c.includes("tower") || n.includes("platform") || c.includes("platform"));
+      });
+    }
+
+    const selectedScopeItems = preProcessedSelected
       .filter(item => item && item.name)
       .flatMap(item => {
         const c = (item.category || "").toLowerCase();
@@ -1606,7 +1639,7 @@ export function ConfigProvider({ children }) {
         }];
       });
 
-    const winderTowerAddonsRaw = (selectedAddons || []).filter(item => {
+    const winderTowerAddonsRaw = preSelectedAddons.filter(item => {
       if (!item || !item.name) return false;
       const n = item.name.toLowerCase();
       const c = (item.category || "").toLowerCase();
@@ -1667,11 +1700,16 @@ export function ConfigProvider({ children }) {
       const c = (item.category || "").toLowerCase();
       return n.includes("collapsing") || c.includes("collapsing");
     });
+    const hasHaulOffItem = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
+      const n = (item.name || "").toLowerCase();
+      const c = (item.category || "").toLowerCase();
+      return c.includes("haul") || n.includes("haul");
+    });
 
     const staticItems = [
       { name: "Idler Rollers", qty: 1, desc: "Aluminum Idler rollers as per layout drawing." },
       !hasSelectedTower && { name: "Tower Structure", qty: 1, desc: "Tower Structure to support bubble stabilizing basket, haul-off, etc." },
-      (machineType === "aba" || machineType === "mono") && !hasSelectedCF && {
+      (machineType === "aba" || machineType === "mono") && !hasSelectedCF && !hasHaulOffItem && {
         name: "Main Nip and Collapsing Frame", qty: 1, category: "Collapsing Frame", desc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble."
       },
       { name: "Control Panel", qty: 1, desc: "Complete extrusion controls on main panel with Touch Panel." }
@@ -1769,7 +1807,8 @@ export function ConfigProvider({ children }) {
         const n = (item.name || "").toLowerCase();
         const isCollapsing = cat.includes("collapsing") || n.includes("collapsing frame");
         const isMainNip = cat.includes("main nip") || n.includes("main nip");
-        return isCollapsing && !isMainNip;
+        const isCombinedWithHaulOff = n.includes("haul-off") || n.includes("hauloff") || cat.includes("haul");
+        return isCollapsing && !isMainNip && !isCombinedWithHaulOff;
       });
 
       if (mainNipIdx !== -1) {
@@ -1794,6 +1833,18 @@ export function ConfigProvider({ children }) {
           ...preCombineScope[cfIdx3L],
           name: "Main Nip and Collapsing Frame",
         };
+      }
+    }
+
+    if (machineType === "mono") {
+      const mnCfIdx = preCombineScope.findIndex(item => item.name === "Main Nip and Collapsing Frame");
+      if (mnCfIdx !== -1 && preCombineScope[mnCfIdx].techDesc) {
+        const newTechDesc = { ...preCombineScope[mnCfIdx].techDesc };
+        delete newTechDesc["Construction"];
+        delete newTechDesc["Material"];
+        delete newTechDesc["Adjustment"];
+        delete newTechDesc["Width Capability"];
+        preCombineScope[mnCfIdx].techDesc = newTechDesc;
       }
     }
 

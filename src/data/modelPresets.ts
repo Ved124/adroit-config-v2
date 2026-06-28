@@ -107,10 +107,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370 DR": {
     machineType: "3layer",
-    basePrice: 6750000,
+    basePrice: 7365000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-275", qty: 1 },
+      { category: "Die Head", id: "die-3layer-300", qty: 1 },
       {
         category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
         metadata: {
@@ -126,10 +126,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
-          size: "275",
+          size: "300",
           price: 0,
-          customName: "275 mm Dual Lip Air Ring (10 HP)",
-          techDesc: { "Design": "Dual Lip Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -161,7 +161,23 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      {
+        category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1,
+        metadata: {
+          techDesc: {
+            "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode.",
+            "Surface Winders (02 Nos.)": "Maximum web width of 1250 mm with Manual Changeover.",
+            "Roll diameter": "500 mm diameter or 400 kg weight in single up whichever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "02 HP AC motor with variable frequency drive.",
+            "Tension control ": "Through Torque mode.",
+            "Trim Suction Blower": "Provided",
+          }
+        }
+      },
     ],
 
     addons: [
@@ -173,17 +189,21 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370 HO": {
     machineType: "3layer",
-    basePrice: 7875000,
+    basePrice: 8171000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-275-stationary", qty: 1 },
+      { category: "Die Head", id: "die-3layer-300", qty: 1 },
       {
-        category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
+        category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1,
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1370 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
+          customName: "Manual Bubble Cage - 1370 mm",
+          techDesc: {
+            "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+            "Actuation of arms": "Manual open-close operation.",
+            "Bubble width range": "750 to 1250 mm",
+          }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -192,10 +212,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
-          size: "275",
+          size: "300",
           price: 0,
-          customName: "275 mm Dual Lip Air Ring (10 HP)",
-          techDesc: { "Design": "Dual Lip Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
@@ -237,31 +257,35 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370-170": {
     machineType: "3layer",
-    basePrice: 8551000,
+    basePrice: 8751000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-275", qty: 1 },
+      { category: "Die Head", id: "die-3layer-300", qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
         qty: 1,
         metadata: {
-          size: "275",
+          size: "300",
           price: 0,
-          customName: "275 mm Dual Lip Air Ring (10 HP)",
-          techDesc: { "Design": "Dual Lip Air Ring", "Size": "275 mm", "Blower": "10 HP AC Motor" }
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
         }
       },
       {
         category: "Bubble Cage",
-        id: "bc-open-close-dynamic",
+        id: "bc-manual-dynamic",
         qty: 1,
         metadata: {
           size: "1350",
           price: 250000,
-          customName: "Motorised Bubble Cage - 1370 mm",
-          techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
+          customName: "Manual Bubble Cage - 1370 mm",
+          techDesc: {
+            "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+            "Actuation of arms": "Manual open-close operation.",
+            "Bubble width range": "750 to 1250 mm",
+          }
         }
       },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
@@ -293,7 +317,24 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      {
+        category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1,
+        metadata: {
+          techDesc: {
+            "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "2 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode.",
+            "Surface Winders (02 Nos.)": "Maximum web width of 1250 mm with Manual Changeover.",
+            "Roll diameter": "600 mm diameter or 400 kg weight in single up whichever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "2 HP AC motor with variable frequency drive.",
+            "Tension control ": "Through Torque mode.",
+            "Length counter meter": "Provided",
+            "Trim Suction Blower": "Provided",
+          }
+        }
+      },
     ],
 
     addons: [
@@ -304,7 +345,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370-180": {
     machineType: "3layer",
-    basePrice: 8850000,
+    basePrice: 8925000,
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
@@ -375,7 +416,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
-      { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
+      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
         category: "Air Ring",
@@ -567,9 +608,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1850",
           price: 1500000,
           customName: "HORIZONTAL HAULOFF - 1870 mm",
-          techDesc: {
-            "Oscillation": "360 degree oscillating mechanism."
-          }
+          // techDesc removed to match screenshot
         }
       },
       {
@@ -620,9 +659,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2000",
           price: 1800000,
           customName: "HORIZONTAL HAULOFF - 1970 mm",
-          techDesc: {
-            "Oscillation": "360 degree oscillating mechanism."
-          }
+          // techDesc removed to match screenshot
         }
       },
       {
@@ -672,9 +709,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2250",
           price: 2500000,
           customName: "HORIZONTAL HAULOFF - 2120 mm",
-          techDesc: {
-            "Oscillation": "360 degree oscillating mechanism."
-          }
+          // techDesc removed to match screenshot
         }
       },
       {
@@ -699,7 +734,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-2370": {
     machineType: "3layer",
-    basePrice: 18750000,
+    basePrice: 19451000,
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
@@ -725,9 +760,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2500",
           price: 2700000,
           customName: "HORIZONTAL HAULOFF - 2370 mm",
-          techDesc: {
-            "Oscillation": "360 degree oscillating mechanism."
-          }
+          // techDesc removed to match screenshot
         }
       },
       {
@@ -778,10 +811,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2750",
           price: 3200000,
           customName: "HORIZONTAL HAULOFF - 2620 mm",
-          techDesc: {
-            "Hauloff Size": "2620 mm",
-            "Oscillation": "360 degree oscillating mechanism."
-          }
+          // techDesc removed to match screenshot
         }
       },
       {
@@ -816,7 +846,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "ext-35-aba",
         qty: 1,
         metadata: {
-          scopeDesc: "Two Nos. Extruders of 45/35 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 15/7.5 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 45/35 mm Extruders."
+          scopeDesc: "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders."
         }
       },
       { category: "Extruder", id: "ext-45-aba", qty: 1 },
@@ -848,6 +878,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "bc-manual-dynamic-aba",
         qty: 1,
         metadata: {
+          size: "750",
           scopeDesc: "One Bubble Stabilizing Basket with Diameter adjustment.",
           techDesc: {
             "Type": "Bubble Cage to support the bubble."
@@ -859,19 +890,23 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          size: "850",
+          size: "800",
           price: 0,
-          customName: "Main Nip - 850 mm",
+          customName: "Main Nip - 800 mm",
           scopeDesc: "Main Nip with 1 HP AC Drive. Wooden Slates/PBT roller Collapsing Frame.",
           techDesc: {
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "850 mm",
+            "Nip roller width": "800 mm",
             "Nip roller drive": "1 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT roller / Wooden Slates frame."
+            "Collapsing Frames": "PBT roller / Wooden Slates frame.",
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden"
           }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
@@ -882,10 +917,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Single Surface Winder - 750 mm",
           scopeDesc: "Single Surface Winders of 750 mm film width. 3\" mechanical Shaft – 04 Nos.",
           techDesc: {
-            "Surface Winder (02 No.)": "Maximum web width of 750 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface Winder (01 No.)": "Maximum web width of 750 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface Winders (01 No.)": "hidden",
             "Surface winder drive": "1 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
-            "Winder Type": "Back to Back Surface type."
+            "Winder Type": "Single Surface type."
           }
         }
       },
@@ -907,7 +943,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "ext-35-aba",
         qty: 1,
         metadata: {
-          scopeDesc: "Two Nos. Extruders of 45/35 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 15/7.5 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 45/35 mm Extruders."
+          scopeDesc: "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders."
         }
       },
       { category: "Extruder", id: "ext-45-aba", qty: 1 },
@@ -959,17 +995,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "900 mm",
             "Nip roller drive": "1 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT roller / Wooden Slates frame."
+            "Collapsing Frames": "PBT roller / Wooden Slates frame.",
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden"
           }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
         metadata: {
           size: "850",
+          techDesc: {
+            "Surface Winder (02 No.)": "Maximum web width of 850 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface Winders (01 No.)": "hidden",
+            "Roll diameter": "hidden",
+            "Surface winder drive": "0.5 HP Torque motor with variable frequency drive.",
+            "Tension control ": "hidden",
+            "Tension control": "Through Torque mode.",
+            "Winder Type": "Dual Surface type."
+          }
         }
       },
     ],
@@ -1028,7 +1077,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: {
             "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
             "Actuation of ring": "Manual open-close operation.",
-            "Bubble diameter range": "600 to 1000 mm"
+            "Bubble diameter range": "600 to 950 mm"
           }
         }
       },
@@ -1042,11 +1091,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Main Nip - 1050 mm",
           scopeDesc: "Main Nip with 1 HP AC Drive. Wooden Slates Collapsing Frame. Gusset included.",
           techDesc: {
-            "Width Capability": "1000 mm layflat"
+            "Width Capability": "950 mm layflat"
           }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
@@ -1056,8 +1104,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Single Surface Winder - 1000 mm",
           scopeDesc: "Single Surface Winders of 1000 mm film width. 3” mechanical Shaft – 02 Nos.",
           techDesc: {
-            "Surface Winder (02 No.)": "1000 mm film width.",
-            "Nip roller width": "1000 mm"
+            "Surface Winder (01 No.)": "hidden",
+            "Roll diameter": "hidden",
+            "Surface Winders (01 No.)": "hidden",
+            "Surface Winder (02 No.)": "Maximum web width of 950 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding."
           }
         }
       },
@@ -1104,20 +1154,41 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1250",
           price: 0,
-          customName: "Collapsing Frame - 1250 mm",
-          techDesc: { "Width Capability": "1250 mm" }
+          customName: "MAIN NIP",
+          techDesc: {
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "2 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rolls.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden"
+          }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
+          customName: "SURFACE WINDER",
           techDesc: {
-            "Nip roller width": "1300 mm",
-            "Surface Winders (01 No.)": "1250 mm film width."
+            "Surface Winders (01 No.)": "hidden",
+            "Surface Winders (02 Nos.)": "hidden",
+            "Nip roller width": "hidden",
+            "Nip roller drive": "hidden",
+            "Roll diameter": "hidden",
+            "Length counter meter": "hidden",
+            "Trim Suction Blower": "hidden",
+            "Tension control ": "hidden",
+            "Surface Winder (02 No.)": "Maximum web width of 1250 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "1 HP AC motor with variable frequency drive.",
+            "Tension control": "Through Torque mode.",
+            "Type of Winder": "Back to Back Surface Winder"
           }
         }
       },
@@ -1131,7 +1202,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "DUOFLEX-60": {
+  "DUOFLEX-50-65/55": {
     machineType: "aba",
     basePrice: 7625000,
     components: [
@@ -1156,24 +1227,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "bc-manual-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "1500",
-          customName: "Manual BC - 1500 mm"
-        }
-      },
-      {
-        category: "Collapsing Frame",
-        id: "cf-pbt-dynamic",
-        qty: 1,
-        metadata: {
-          size: "1500",
-          price: 0,
-          customName: "Collapsing Frame - 1500 mm",
-          techDesc: {
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1550 mm",
-            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
-          }
+          size: "1250",
+          customName: "Manual BC - 1250 mm"
         }
       },
       {
@@ -1181,31 +1236,30 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
-          size: "1500",
-          customName: "HORIZONTAL HAULOFF - 1500 mm",
+          size: "1250",
+          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          scopeDesc: "One 360-degree rotation Horizontal Oscillating Haul Off. Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
-            "Hauloff Size": "1500 mm",
-            "Nip roller width": "1550 mm"
+            "Hauloff Size": "1250 mm",
+            "Nip roller width": "1370 mm"
           }
         }
       },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
-          size: "1500",
+          size: "1250",
           techDesc: {
-            "Nip roller width": "1550 mm",
-            "Surface Winder (02 No.)": "1500 mm film width."
+            "Nip roller width": "1370 mm",
+            "Surface Winder (01 No.)": "hidden"
           }
         }
       },
     ],
 
     addons: [
-      { category: "Die Addons", id: "die-rotation-addon", qty: 1, metadata: { size: "350" } },
       {
         category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
       },
@@ -1253,7 +1307,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "500 mm",
             "Nip roller drive": "01 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers / Wooden Slates."
+            "Collapsing Frames": "PBT rollers / Wooden Slates.",
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden"
           }
         }
       },
@@ -1271,7 +1330,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       //     }
       //   }
       // },
-      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
@@ -1391,12 +1449,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Nip roller width": "600 mm",
             "Nip roller drive": "1 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "Wooden Slates.",
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden",
             "Idler rollers": "Adequate quantity as per layout."
           }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1516,8 +1578,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1649,8 +1711,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1714,7 +1776,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-150",
         qty: 1,
         metadata: {
-          scopeDesc: "One Imported Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of 150 mm, complete with die adapters and carriage.",
+          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of 150 mm, complete with die adapters and carriage.",
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -1778,8 +1840,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
         qty: 1,
@@ -1854,8 +1916,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "1250 mm" }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -1943,8 +2005,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "1350 mm" }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -1989,7 +2051,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Construction": "hidden",
             "Cooling": "hidden",
             "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
-            "Blower": "One no. with inlet air filter.",
             "Blower ": "7.5 HP AC variable frequency drive."
           }
         }
@@ -2018,8 +2079,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -2112,9 +2173,24 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           }
         }
       },
-      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      {
+        category: "Collapsing Frame",
+        id: "cf-pbt-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1000",
+          customName: "Collapsing Frame - 1000 mm",
+          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 1 HP AC Drive.",
+          techDesc: {
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1000 mm",
+            "Nip roller drive": "01 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
+          }
+        }
+      },
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -2202,8 +2278,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Hauloff Size": "2000 mm" }
         }
       },
-            { category: "Tower / Platform", id: "tower_std", qty: 1 },
-{
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
+      {
         category: "Winder",
         id: "winder-manual-back-to-back-dynamic",
         qty: 1,
@@ -2324,7 +2400,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1850",
           price: 1500000,
           customName: "HORIZONTAL HAULOFF - 1870 mm",
-          techDesc: { "Line Speed": "80 MPM" }
+          // techDesc removed to match screenshot
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1850", price: 1650000 } },
@@ -2336,7 +2412,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1850",
           price: 700000,
           customName: "Motorised Bubble Cage - 1870 mm",
-          techDesc: { "Type": "Motorized Up-Down & Open-Close", "Cage Size": "1870 mm" }
+          techDesc: { "Cage Size": "1870 mm" }
         }
       },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "1850", price: 3200000 } },
@@ -2374,7 +2450,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1970",
           price: 1750000,
           customName: "HORIZONTAL HAULOFF - 1970 mm",
-          techDesc: { "Line Speed": "80 MPM" }
+          // techDesc removed to match screenshot
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "1970", price: 1750000 } },
@@ -2386,7 +2462,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "1970",
           price: 725000,
           customName: "Motorised Bubble Cage - 1970 mm",
-          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
+          // techDesc removed so dynamic typeStr applies
         }
       },
       { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "1970", price: 3400000 } },
@@ -2413,7 +2489,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "450",
           price: 800000,
           customName: "450 mm Dual Lip Air Ring (20 HP)",
-          techDesc: { "Design": "Dual Lip Air Ring", "Size": "450 mm", "Blower": "20 HP AC Motor" }
+          techDesc: { "Design": "hidden", "Size": "hidden", "Blower": "20 HP AC variable frequency drive." }
         }
       },
       {
@@ -2424,7 +2500,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2120",
           price: 2500000,
           customName: "HORIZONTAL HAULOFF - 2120 mm",
-          techDesc: { "Line Speed": "80 MPM" }
+          // techDesc removed to match screenshot
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2120", price: 2000000 } },
@@ -2436,7 +2512,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2120",
           price: 800000,
           customName: "Motorised Bubble Cage - 2120 mm",
-          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
+          // techDesc removed so dynamic typeStr applies
         }
       },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2120", price: 4000000 } },
@@ -2462,7 +2538,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "500",
           price: 750000,
           customName: "500 mm Dual Lip Air Ring (20 HP)",
-          techDesc: { "Design": "Dual Lip Air Ring", "Size": "500 mm", "Blower": "20 HP AC Motor" }
+          techDesc: { "Design": "hidden", "Size": "hidden", "Blower": "20 HP AC variable frequency drive." }
         }
       },
       {
@@ -2473,7 +2549,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2370",
           price: 2700000,
           customName: "HORIZONTAL HAULOFF - 2370 mm",
-          techDesc: { "Hauloff Size": "2370 mm", "Nip roller drive": "5 HP", "Line Speed": "80 MPM" }
+          // techDesc removed to match screenshot
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2370", price: 2350000 } },
@@ -2485,7 +2561,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2370",
           price: 900000,
           customName: "Motorised Bubble Cage - 2370 mm",
-          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
+          // techDesc removed so dynamic typeStr applies
         }
       },
       { category: "Winder", id: "winder-automatic-dynamic", qty: 1, metadata: { size: "2370", price: 4500000 } },
@@ -2511,7 +2587,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "500",
           price: 750000,
           customName: "500 mm Dual Lip Air Ring (25 HP)",
-          techDesc: { "Design": "Dual Lip Air Ring", "Size": "500 mm", "Blower": "25 HP AC Motor" }
+          techDesc: { "Design": "hidden", "Size": "hidden", "Blower": "25 HP AC variable frequency drive." }
         }
       },
       {
@@ -2522,7 +2598,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2370",
           price: 2700000,
           customName: "HORIZONTAL HAULOFF - 2370 mm",
-          techDesc: { "Hauloff Size": "2370 mm", "Nip roller drive": "5 HP", "Line Speed": "80 MPM" }
+          // techDesc removed to match screenshot
         }
       },
       { category: "Tower / Platform", id: "tower-dynamic", qty: 1, metadata: { size: "2370", price: 2350000 } },
@@ -2534,7 +2610,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "2370",
           price: 900000,
           customName: "Motorised Bubble Cage - 2370 mm",
-          techDesc: { "Type": "Motorized Up-Down & Open-Close" }
+          // techDesc removed so dynamic typeStr applies
         }
       },
       { category: "Winder", id: "winder-surface-dynamic", qty: 1, metadata: { size: "2370", price: 4500000 } },

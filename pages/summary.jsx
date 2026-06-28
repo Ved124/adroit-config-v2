@@ -172,6 +172,21 @@ function buildProposalData({
   rate = 1,
   quotationDate = null,
 } = {}) {
+  if (machineType === "mono") {
+    selected = (selected || []).filter(item => {
+      if (!item) return false;
+      const n = (item.name || "").toLowerCase();
+      const c = (item.category || "").toLowerCase();
+      return !(n.includes("tower") || c.includes("tower") || n.includes("platform") || c.includes("platform"));
+    });
+    selectedAddons = (selectedAddons || []).filter(item => {
+      if (!item) return false;
+      const n = (item.name || "").toLowerCase();
+      const c = (item.category || "").toLowerCase();
+      return !(n.includes("tower") || c.includes("tower") || n.includes("platform") || c.includes("platform"));
+    });
+  }
+
   const SERIES = { mono: "Monolayer", aba: "ABA", "3layer": "3 Layer", "5layer": "5 Layer" };
   const TYPE_NAMES = {
     mono: "MONOLAYER BLOWN FILM LINE",
@@ -656,7 +671,13 @@ function buildProposalData({
     return n.includes("collapsing") || c.includes("collapsing");
   });
 
-  const auto_cf_obj = (machineType === "aba" || machineType === "mono") && !hasSelectedCF ? {
+  const hasHaulOffItem = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
+    const n = (item.name || "").toLowerCase();
+    const c = (item.category || "").toLowerCase();
+    return c.includes("haul") || n.includes("haul");
+  });
+
+  const auto_cf_obj = (machineType === "aba" || machineType === "mono") && !hasSelectedCF && !hasHaulOffItem ? {
     id: "auto_cf", name: "Main Nip and Collapsing Frame", qty: 1, image: "/images/MainNip/MainNip.png",
     category: "Collapsing Frame",
     shortDesc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble.",
@@ -753,6 +774,18 @@ function buildProposalData({
         }
       }
     });
+  }
+
+  if (machineType === "mono") {
+    const mnCfIdx = sortedAnnexure.findIndex(item => item && item.name === "Main Nip and Collapsing Frame");
+    if (mnCfIdx !== -1 && sortedAnnexure[mnCfIdx].techDesc) {
+      const newTechDesc = { ...sortedAnnexure[mnCfIdx].techDesc };
+      delete newTechDesc["Construction"];
+      delete newTechDesc["Material"];
+      delete newTechDesc["Adjustment"];
+      delete newTechDesc["Width Capability"];
+      sortedAnnexure[mnCfIdx].techDesc = newTechDesc;
+    }
   }
 
   const hasSelectedTower = [...selectedScopeItems, ...winderTowerAddonsRaw].some(item => {
@@ -896,6 +929,18 @@ function buildProposalData({
         ...preCombineScope[cfIdx3L],
         name: "Main Nip and Collapsing Frame",
       };
+    }
+  }
+
+  if (machineType === "mono") {
+    const mnCfIdx = preCombineScope.findIndex(item => item.name === "Main Nip and Collapsing Frame");
+    if (mnCfIdx !== -1 && preCombineScope[mnCfIdx].techDesc) {
+      const newTechDesc = { ...preCombineScope[mnCfIdx].techDesc };
+      delete newTechDesc["Construction"];
+      delete newTechDesc["Material"];
+      delete newTechDesc["Adjustment"];
+      delete newTechDesc["Width Capability"];
+      preCombineScope[mnCfIdx].techDesc = newTechDesc;
     }
   }
 

@@ -71,12 +71,33 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
 
   const totalQty = extruders.reduce((sum, it) => sum + (it.qty || 1), 0);
 
+  // kW → HP: map standard kW ratings to their HP equivalents
+  function kwToHp(kw) {
+    const val = parseFloat(kw);
+    if (isNaN(val)) return null;
+    const map = [
+      [0.75, "1"], [1.1, "1.5"], [1.5, "2"], [2.2, "3"], [3.7, "5"],
+      [4.0, "5.5"], [5.6, "7.5"], [7.5, "10"], [11.2, "15"],
+      [15, "20"], [18.5, "25"], [22.5, "30"], [30, "40"], [37, "50"],
+    ];
+    // Find closest match
+    let best = null, bestDiff = Infinity;
+    for (const [kwVal, hp] of map) {
+      const diff = Math.abs(val - kwVal);
+      if (diff < bestDiff) { bestDiff = diff; best = hp; }
+    }
+    return best;
+  }
+
   // Motor HP — extract digits from "Main Drive" or "Drive" tech field
   const allDrives = extruders
     .map((ext, idx) => {
       const driveStr = td(ext, "main drive", "drive") || "";
-      const m = driveStr.match(/(\d+(?:\.\d+)?)\s*HP/i) || driveStr.match(/(\d+(?:\.\d+)?)\s*kW/i);
-      if (m) return m[1];
+      // Prefer HP match, then kW (converted to HP)
+      const hpMatch = driveStr.match(/(\d+(?:\.\d+)?)\s*HP/i);
+      if (hpMatch) return hpMatch[1];
+      const kwMatch = driveStr.match(/(\d+(?:\.\d+)?)\s*kW/i);
+      if (kwMatch) return kwToHp(kwMatch[1]) || kwMatch[1];
 
       // Fallback: If techDesc is missing, try to parse from machineModel.motorsHp (e.g. "50/100/50")
       if (machineModel && machineModel.motorsHp) {
@@ -87,22 +108,43 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
           return pm ? pm[1] : null;
         }
       }
+      // Last resort: use machineModel.extruderMotorKw and convert to HP
+      if (machineModel && machineModel.extruderMotorKw) {
+        const kwParts = machineModel.extruderMotorKw.split("/");
+        if (kwParts.length === totalQty) {
+          return kwToHp(kwParts[idx].trim());
+        }
+      }
       return null;
     });
+
+  // Parse sizes from machineModel.screwDiameter if available (authoritative source, e.g. "35/45 MM")
+  let modelSizes = null;
+  if (machineModel && machineModel.screwDiameter) {
+    const parts = machineModel.screwDiameter.split("/").map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
+    if (parts.length === totalQty) modelSizes = parts;
+  }
 
   const combined = [];
   extruders.forEach((ext, idx) => {
     const q = ext.qty || 1;
-    let sz = ext.sizeMm;
-    if (!sz) {
-      const m = (ext.name || "").match(/\b(\d{2,3})\s*mm/i);
-      if (m) sz = parseInt(m[1], 10);
+    let sz;
+    if (modelSizes) {
+      // Use machine model's authoritative screw diameter
+      sz = modelSizes[idx];
+    } else {
+      sz = ext.sizeMm;
+      if (!sz) {
+        const m = (ext.name || "").match(/\b(\d{2,3})\s*mm/i);
+        if (m) sz = parseInt(m[1], 10);
+      }
     }
     const hp = allDrives[idx] || null;
     for (let i = 0; i < q; i++) {
       combined.push({ sz: sz || "?", hp: hp || "?" });
     }
   });
+
 
   // Reorder for 3, 5, 7 layers to place the largest screws in the middle
   let ordered = [...combined];
@@ -145,16 +187,16 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
   const isAba = machineModel && machineModel.machineType === "aba";
 
   let materialLine = material.toLowerCase().includes("nitro")
-    ? (isAba ? "Nitro Alloy screw & barrel" : "Imported Nitro Alloy screw & barrel")
+    ? "Nitro Alloy screw & barrel"
     : material;
 
   if (numBimetallic > 0) {
     if (numBimetallic >= totalQty) {
-      materialLine = "Imported Bi-metallic screw & barrel";
+      materialLine = "Bi-metallic screw & barrel";
     } else {
       // Mixed case
       const nitroCount = totalQty - numBimetallic;
-      const nitroText = isAba ? "Nitro Alloy screw & barrel" : "Imported Nitro Alloy screw & barrel";
+      const nitroText = "Nitro Alloy screw & barrel";
       materialLine = `${numWord(numBimetallic)} with Bi-metallic screw & barrel, ${numWord(nitroCount)} with ${nitroText}`;
     }
   }
@@ -250,9 +292,17 @@ function generateDieHead(item, machineModel) {
 
 function generateAirRing(item) {
   const hpFromTech = td(item, "blower");
-  const hp = hpFromTech
-    ? (hpFromTech.includes("HP") ? hpFromTech : `${hpFromTech} HP`)
-    : (item.blowerPowerHP ? `${item.blowerPowerHP} HP` : "High Pressure");
+  let hp = "High Pressure";
+  if (hpFromTech) {
+    const match = hpFromTech.match(/([0-9.]+)\s*HP/i);
+    if (match) {
+      hp = `${match[1]} HP`;
+    } else {
+      hp = hpFromTech.includes("HP") ? hpFromTech : `${hpFromTech} HP`;
+    }
+  } else if (item.blowerPowerHP) {
+    hp = `${item.blowerPowerHP} HP`;
+  }
 
   const lipType =
     item.type === "dual" || (item.name || "").toLowerCase().includes("dual")
@@ -419,9 +469,27 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     ? widthRaw.match(/\d+/)[0] + " mm"
     : widthRaw || "";
 
-  // If still no width, try item.size or item.currentSize
+  // If not found in keys, check values for "web width of XXX mm" (generated by ConfigContext)
+  if (!widthStr && item.techDesc) {
+    for (const val of Object.values(item.techDesc)) {
+      if (typeof val === "string") {
+        const m = val.match(/web width of (\d+)\s*mm/i);
+        if (m) {
+          widthStr = m[1] + " mm";
+          break;
+        }
+      }
+    }
+  }
+
+  // If still no width, try item.size or item.currentSize, converting roller width to film width
   if (!widthStr && (item.size || item.currentSize)) {
-    widthStr = `${item.size || item.currentSize} mm`;
+    const s = parseInt(item.size || item.currentSize) || 0;
+    // If size matches standard machine widths (1000, 1250, 1350, 1500, etc), it might already be film width
+    // but the safest fallback is just s
+    const diff = (s === 1450) ? 100 : 120;
+    const maxFilmWidth = s > 500 ? (s - diff) : s;
+    widthStr = `${maxFilmWidth} mm`;
   }
 
   const widthNum = parseInt(widthStr) || 0;

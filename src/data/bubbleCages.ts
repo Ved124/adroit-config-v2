@@ -83,9 +83,9 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
-      "Actuation": "Manual open-close operation.",
-      "Bubble diameter range": "750 to 1250 mm"
+      "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+      "Actuation of arms": "Manual open-close operation.",
+      "Bubble width range": "750 to 1250 mm"
     },
     shortDesc: "Universal manual bubble cage with adjustable diameter."
   },
@@ -117,7 +117,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     isDynamic: true,
     techDesc: {
       "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
-      "Actuation": "Motorized Open-Close operation.",
+      "Actuation of arms": "Motorized Open-Close operation.",
       "Film width range": "800 to 1600 mm"
     },
     shortDesc: "Motorized open-close bubble cage for precision control."
@@ -134,7 +134,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     isDynamic: true,
     techDesc: {
       "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
-      "Actuation": "Motorized Up Down and Open-Close with Liner Actuator.",
+      "Actuation of arms": "Motorized Up Down & Open-Close with Liner Actuator.",
       "Bubble width range": "1300 to 2250 mm"
     },
     shortDesc: "Full motorized bubble cage with vertical and radial adjustment."

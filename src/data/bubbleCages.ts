@@ -101,7 +101,6 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     isDynamic: true,
     techDesc: {
       "Type": "Arms to support the bubble.",
-      "Actuation of ring": "Manual open-close operation.",
     },
     shortDesc: "Universal manual bubble cage with adjustable diameter for ABA."
   },

@@ -108,7 +108,17 @@ function buildMachineCode({ machineType, currentMachineModel, selectedMachineMod
 
   const roller = (customRollerWidth || "").replace(/[^\d]/g, '');
   let code = roller || presetLabel || seriesBase;
-  if (screwStr) code += `_${screwStr}`;
+  
+  if (machineType === "mono" || machineType === "aba") {
+    if (roller) {
+      code = `${roller}"`;
+    }
+    if (screwStr) {
+      code += `_${screwStr}mm`;
+    }
+  } else {
+    if (screwStr) code += `_${screwStr}`;
+  }
 
   return code;
 }

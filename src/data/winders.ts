@@ -83,7 +83,7 @@ export const SECONDARY_NIP_TECH_DESC: TechSpecMap = {
   "Additional Nip": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
   "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
   "Nip roller width": "TBD", // Will be set dynamically
-  "Nip roller drive": "2 HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+  "Nip roller drive": "2 HP AC motor with variable frequency drive. ",
   "Tension control": "Through torque.",
 };
 
@@ -103,11 +103,11 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
       "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
       "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
       "Nip roller width": "TBD",
-      "Nip roller drive": "TBD HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+      "Nip roller drive": "TBD HP AC motor with variable frequency drive. ",
       "Tension control": "Through Torque mode.",
       "Surface Winders (02 Nos.)": "TBD",
       "Roll diameter": "600 mm diameter or 400 kg weight in single up whichever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
-      "Surface winder drive": "TBD HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+      "Surface winder drive": "TBD HP AC motor with variable frequency drive. ",
       "Tension control ": "Through Torque mode.",
       "Length counter meter": "Provided",
       "Trim Suction Blower": "Provided",
@@ -125,7 +125,6 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Surface Winder (01 No.)": "TBD",
       "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
       "Surface winder drive": "1 HP AC motor with variable frequency drive.",
       "Tension control": "Through Torque mode.",

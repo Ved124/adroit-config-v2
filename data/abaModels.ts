@@ -4,7 +4,7 @@ export const ABA_MODELS = [
   // {
   //   code: "DUOFLEX-750",
   //   family: "Duoflex ABA & AB",
-  //   label: "Duoflex ABA 750",
+  //   label: "Duoflex_750\"_35*35mm",
   //   machineType: "aba",
 
   //   screwDiameter: "35/45",
@@ -160,9 +160,9 @@ export const ABA_MODELS = [
     specificPowerConsumption: "0.40 kW/KG/HR",
   },
   {
-    code: "DUOFLEX-26",
+    code: "DUOFLEX-24",
     family: "ABA",
-    label: "DUOFLEX-26",
+    label: "Duoflex_24\"_35*40mm",
     machineType: "aba",
     screwDiameter: "35/40 MM",
     layflatWidthMm: 550,
@@ -185,7 +185,7 @@ export const ABA_MODELS = [
   {
     code: "DUOFLEX-32",
     family: "ABA",
-    label: "DUOFLEX-32",
+    label: "Duoflex_32\"_35*45mm",
     machineType: "aba",
     screwDiameter: "35/45 MM",
     layflatWidthMm: 750,
@@ -208,7 +208,7 @@ export const ABA_MODELS = [
   {
     code: "DUOFLEX-36",
     family: "ABA",
-    label: "DUOFLEX-36",
+    label: "Duoflex_36\"_35*45mm",
     machineType: "aba",
     screwDiameter: "35/45 MM",
     layflatWidthMm: 850,
@@ -231,7 +231,7 @@ export const ABA_MODELS = [
   {
     code: "DUOFLEX-40",
     family: "ABA",
-    label: "DUOFLEX-40",
+    label: "Duoflex_40\"_40*45mm",
     machineType: "aba",
     screwDiameter: "40/45 MM",
     layflatWidthMm: 950,
@@ -254,7 +254,7 @@ export const ABA_MODELS = [
   {
     code: "DUOFLEX-50",
     family: "ABA",
-    label: "DUOFLEX-50",
+    label: "Duoflex_50\"_45*55mm",
     machineType: "aba",
     screwDiameter: "45/55 MM",
     layflatWidthMm: 1250,
@@ -277,7 +277,7 @@ export const ABA_MODELS = [
   {
     code: "DUOFLEX-50-65/55",
     family: "ABA",
-    label: "DUOFLEX-50-65/55",
+    label: "Duoflex_50\"_55*65mm",
     machineType: "aba",
     screwDiameter: "55/65 MM",
     layflatWidthMm: 1250,

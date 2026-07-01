@@ -272,7 +272,7 @@ function generateDieHead(item, machineModel) {
   }
 
   const distribution = td(item, "distribution") || "Spiral";
-  const distStr = distribution.toLowerCase().includes("spiral")
+  const distStr = distribution.toLowerCase().includes("spiral") || distribution.toLowerCase() === "hidden"
     ? "Spiral Mandrel"
     : distribution;
 
@@ -283,9 +283,15 @@ function generateDieHead(item, machineModel) {
   const isRotation = item.isRotationSelected || name.toLowerCase().includes("rotation") || (item.id || "").toLowerCase().includes("-dr") || (item.id || "").includes("dr-") || isRotationModel;
   const rotationSuffix = isRotation ? " Die with Rotation." : "";
 
+  const isMonoOrAba = machineModel && (machineModel.machineType === "mono" || machineModel.machineType === "aba" || (machineModel.code && (machineModel.code.includes("UNO") || machineModel.code.includes("DUO"))));
+  let diamStr = diam ? ` with lip diameter of ${diam}` : "";
+  if (isMonoOrAba || name.toLowerCase().includes("mono") || name.toLowerCase().includes("aba")) {
+    diamStr = " with lip diameter as per width";
+  }
+
   return (
     `${numWord(qty)} ${surfaceStr}${layerStr}${distStr} Die` +
-    (diam ? ` with lip diameter of ${diam}` : "") +
+    diamStr +
     ` complete with die adapters and carriage${ibcSuffix}.${rotationSuffix}`
   );
 }
@@ -351,31 +357,48 @@ function generateBubbleCage(item) {
 }
 
 function generateCollapsingFrame(item) {
-  const rollerType =
-    td(item.techDesc, "roller", "type") || "Segmented PBT";
-  return `Collapsing Frame with ${rollerType} rollers, complete with side guides.`;
+  let baseDesc = item.scopeDesc || "";
+
+  // If there's no predefined scopeDesc, build a fallback that safely avoids reading the nip's bearing text
+  if (!baseDesc) {
+    let rollerType = "Segmented PBT";
+    const cfVal = td(item.techDesc, "collapsing frames", "collapsing frame");
+    if (cfVal) {
+      rollerType = cfVal.replace(/rollers?\.?/gi, "").trim();
+    } else if (item.techDesc && item.techDesc["Type"]) {
+      rollerType = item.techDesc["Type"].replace(/rollers?\.?/gi, "").trim();
+    }
+    
+    // Check if it's a combined unit by looking for nip motor
+    const motorStr = td(item.techDesc, "nip roller drive", "nip drive", "motor");
+    const hpMatch = motorStr ? motorStr.match(/(\d+)\s*HP/i) : null;
+    
+    if (hpMatch) {
+      baseDesc = `Collapsing frame with ${rollerType} rollers, side guides, Main Nip with ${hpMatch[1]} HP AC Drive.`;
+    } else {
+      baseDesc = `Collapsing frame with ${rollerType} rollers, complete with side guides.`;
+    }
+  }
+
+  // Take care of dynamic elements in the scopeDesc (like dynamic HP based on width)
+  const motorRaw = td(item.techDesc, "nip roller drive", "nip drive", "motor");
+  const hpMatch = motorRaw ? motorRaw.match(/(\d+)\s*HP/i) : null;
+  if (hpMatch && baseDesc.match(/\d+\s*HP/i)) {
+    baseDesc = baseDesc.replace(/\d+\s*HP/i, `${hpMatch[1]} HP`);
+  }
+
+  return baseDesc;
 }
 
 /**
- * MAIN NIP — for Die Rotation models (1120 DR, 1350 DR) which have no oscillating haul-off.
- * Produces: "Collapsing frame with Segmented PBT Roller, side guides, Main Nip with X HP AC Drive."
+ * MAIN NIP — for models which separate the Nip from the Collapsing Frame.
  */
 function generateMainNip(item) {
-  // Prefer scopeDesc stored directly on item (from preset metadata)
   if (item.scopeDesc) return item.scopeDesc;
-
-  // Derive width for dynamic HP calculation
-  const widthRaw = td(item, "nip roller width", "width") || "";
-  const widthNum = parseInt(widthRaw.match(/\d+/)?.[0] || "0");
-
-  let hp = "2 HP";
-  if (widthNum >= 1500 && widthNum <= 2000) hp = "3 HP";
-  else if (widthNum > 2000) hp = "5 HP";
-
   // Derive motor HP from techDesc as fallback/override
   const nipDriveRaw = td(item, "nip roller drive", "nip drive", "drive") || "";
   const hpMatch = nipDriveRaw.match(/(\d+)\s*HP/i);
-  const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : `${hp.replace(" HP", "")} HP AC`;
+  const motorStr = hpMatch ? `${hpMatch[1]} HP AC` : "2 HP AC";
 
   return `Collapsing frame with Segmented PBT Roller, side guides, Main Nip with ${motorStr} Drive.`;
 }
@@ -648,7 +671,7 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null, s
       return generateIBC(item);
     }
     if (nameLc.includes("die")) {
-      return generateDieHead(item);
+      return generateDieHead(item, machineModel);
     }
     if (nameLc.includes("air ring")) {
       return generateAirRing(item);

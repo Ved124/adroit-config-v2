@@ -49,8 +49,7 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
       "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
       "Material": "PBT rollers for scratch-free handling.",
       "Adjustment": "Manual width adjustment with locking system.",
-      "Width Capability": "TBD mm",
-      "Application": "Suitable for Lamination, Liquid Packaging and General Purpose films.",
+      "Width Capability": "TBD mm"
     },
     shortDesc: "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
   },

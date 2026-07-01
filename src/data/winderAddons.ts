@@ -14,6 +14,19 @@ export interface WinderAddon {
 
 export const WINDER_ADDONS: WinderAddon[] = [
   {
+    id: "winder-manual-back-to-back-dynamic",
+    name: "Back to back Surface Winder",
+    category: "Winder Addons",
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    image: "/images/Winder/Back to back winder.png",
+    cardDesc: "Add a Back-to-back surface winder for efficient winding.",
+    price: 350000,
+    techDesc: {
+      "Type": "Back to back Surface Winder",
+      "Actuation": "Manual Changeover."
+    }
+  },
+  {
     id: "addon-loadcell-tension",
     name: "Loadcell upgrade",
     category: "Winder Addons",

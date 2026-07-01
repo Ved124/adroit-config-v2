@@ -661,7 +661,7 @@ function PerformancePage({ perf, machineType }) {
 
             <div style={{ marginBottom: "10px" }}>
                 <SpecRow label="Product to be made" value={p.product || "High Quality Blown Film"} />
-                <SpecRow label={machineType === 'mono' ? `Max Output in kg/hr (${p.diameterMm || "die"})` : `Max Output in kg/hr (${p.diameterMm || "die"})\n80% LL + 20% LD`} value={p.max_output || "—"} shaded />
+                <SpecRow label={(machineType === 'mono' || machineType === 'aba') ? `Max Output in kg/hr (${p.diameterMm || "die"})` : `Max Output in kg/hr (${p.diameterMm || "die"})\n80% LL + 20% LD`} value={p.max_output || "—"} shaded />
                 <SpecRow label="Lay-flat Width(mm)" value={p.layflat_width || "—"} />
                 <SpecRow label="Film Thickness Range" value={p.thickness_range || "20 – 150 micron"} shaded />
                 <SpecRow label="Thickness Variation" value={"+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery."} />

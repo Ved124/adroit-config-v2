@@ -462,12 +462,6 @@ export function ConfigProvider({ children }) {
       clean["Surface Treatment"] = "Chrome plated and highly polished.";
     }
     if (category === "Winder") {
-      delete clean["Surface Winders (02 Nos.)"];
-      delete clean["Surface Winders (01 No.)"];
-      delete clean["Surface Winder (01 No.)"];
-      delete clean["Nip roller width"];
-      delete clean["Nip roller drive"];
-      delete clean["Surface winder drive"];
       delete clean["Maximum web width"];
     }
     if (category === "Haul-Off" || category === "Main Nip") {
@@ -606,10 +600,10 @@ export function ConfigProvider({ children }) {
 
     let machineWidth = 0;
     if (rollerNum > 0) {
-      const diff = (rollerNum === 1450) ? 100 : 120;
+      const diff = isMonoOrAba ? 50 : ((rollerNum === 1450) ? 100 : 120);
       if (isMonoOrAba) {
         setCustomRollerWidth(`${rollerNum} inch`);
-        machineWidth = modelObj?.layflatWidthMm || modelObj?.widthMm || (rollerNum * 25);
+        machineWidth = modelObj?.layflatWidthMm || modelObj?.widthMm || ((rollerNum * 25) - diff);
         setCustomLayflat(`${machineWidth} mm`);
       } else {
         setCustomRollerWidth(`${rollerNum} mm`);
@@ -659,9 +653,9 @@ export function ConfigProvider({ children }) {
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1]);
 
-          const diff = (rollerNum === 1450) ? 100 : 120;
-          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
-          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
+          const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
+          const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
+          const maxFilmWidth = (rollerNum > 0) ? (displaySize - diff) : chosenSize;
           const minRange = Math.round((maxFilmWidth * minRatio) / 10) * 10;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
@@ -685,7 +679,7 @@ export function ConfigProvider({ children }) {
             segments: segments,
             price: newPrice,
             image: dynamicBCItem.image || item.image,
-            customName: isManual ? `Manual Bubble Cage - ${displaySize} mm` : `Motorised Bubble Cage - ${displaySize} mm`,
+            customName: isManual ? `Manual Bubble Cage` : `Motorised Bubble Cage`,
             techDesc: sanitizeTechDesc("Bubble Cage", {
               ...(dynamicBCItem.techDesc || {}),
               ...(item.techDesc || {}),
@@ -728,7 +722,7 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicHauloffItem.image || item.image, // Ensure image is preserved
-            customName: `HORIZONTAL HAULOFF - ${displaySize} mm`,
+            customName: `HORIZONTAL HAULOFF`,
             techDesc: {
               ...(dynamicHauloffItem.techDesc || {}), // Start with base data (all static fields)
               ...(sanitizeTechDesc("Haul-Off", item.techDesc) || {}), // Overlay existing overrides (stripped of dynamic keys)
@@ -764,7 +758,7 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicTowerItem.image || item.image,
-            customName: `TOWER / PLATFORM - ${displaySize} mm`,
+            customName: `TOWER / PLATFORM`,
             techDesc: {
               ...(dynamicTowerItem.techDesc || {}),
               "Staircase": "Staircase with hand rails.",
@@ -800,7 +794,7 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicMainNipItem.image || item.image,
-            customName: `MAIN NIP - ${displaySize} mm`,
+            customName: `MAIN NIP`,
             techDesc: {
               ...(dynamicMainNipItem.techDesc || {}),
               "Nip roller width": (rollerNum > 500) ? `${rollerNum} mm` : `${chosenSize + ((rollerNum === 1450) ? 100 : 120)} mm`,
@@ -851,9 +845,9 @@ export function ConfigProvider({ children }) {
           if (chosenSize >= 1500 && chosenSize <= 2000) nipHP = "3 HP";
           else if (chosenSize > 2000) nipHP = "5 HP";
 
-          const diff = (rollerNum === 1450) ? 100 : 120;
-          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
-          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
+          const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
+          const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
+          const maxFilmWidth = (rollerNum > 0) ? (displaySize - diff) : chosenSize;
 
           // Update item properties
           nextSelected[index] = {
@@ -861,14 +855,14 @@ export function ConfigProvider({ children }) {
             size: displaySize.toString(),
             price: newPrice,
             image: dynamicWinderItem.image || item.image,
-            customName: `${item.name} - ${displaySize} mm`,
+            customName: `${item.name}`,
             techDesc: {
               ...(dynamicWinderItem.techDesc || {}),
               ...(sanitizeTechDesc("Winder", item.techDesc) || {}),
               "Nip roller width": `${displaySize} mm`,
               "Maximum web width": `${maxFilmWidth} mm`,
               "Nip roller drive": `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
-              "Surface winder drive": `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
+              "Surface winder drive": isMonoOrAba ? `${nipHP} AC motor with variable frequency drive.` : `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
               [stationLabel]: `Maximum web width of ${maxFilmWidth} mm with ${isAuto ? "Automatic" : "Manual"} Changeover.`,
             }
           };
@@ -890,9 +884,9 @@ export function ConfigProvider({ children }) {
           const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
           const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
 
-          const diff = (rollerNum === 1450) ? 100 : 120;
-          const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
-          const maxFilmWidth = (rollerNum > 500) ? (rollerNum - diff) : chosenSize;
+          const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
+          const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
+          const maxFilmWidth = (rollerNum > 0) ? (displaySize - diff) : chosenSize;
 
           const actualLayflat = (machineType === "aba" && currentMachineModel?.layflatWidthMm) 
             ? currentMachineModel.layflatWidthMm 
@@ -906,7 +900,7 @@ export function ConfigProvider({ children }) {
             size: chosenSize.toString(),
             price: newPrice,
             image: dynamicCFItem.image || item.image,
-            customName: `${item.name} - ${displaySize} mm`,
+            customName: `${item.name}`,
             techDesc: {
               ...(dynamicCFItem.techDesc || {}),
               "Width Capability": `${actualLayflat} mm layflat`,
@@ -1261,16 +1255,40 @@ export function ConfigProvider({ children }) {
       let updatedItem = { ...item };
       const category = (item.category || "").toLowerCase();
 
-      // 1. Die Rotation Update
-      if (category.includes("die") && isDieRotationSelected) {
+      // 1. Die Updates (Rotation + Clean Name for Mono/ABA)
+      if (category.includes("die")) {
+        let newName = updatedItem.name;
+        let newCustomName = updatedItem.customName;
+        let newTechDesc = { ...updatedItem.techDesc };
+
+        if (machineType === "mono" || machineType === "aba") {
+          newName = (newName || "").replace(/\s*\d+\s*(?:\/\s*\d+\s*)?mm/i, "").trim();
+          if (newCustomName) {
+            newCustomName = newCustomName.replace(/\s*\d+\s*(?:\/\s*\d+\s*)?mm/i, "").trim();
+          }
+          const dieSizeKey = Object.keys(newTechDesc).find(k => k.toLowerCase().includes("die size") || k.toLowerCase().includes("diameter"));
+          if (dieSizeKey) {
+            newTechDesc[dieSizeKey] = "Diameter as per width and lip gap.";
+          }
+        }
+
         updatedItem = {
           ...updatedItem,
-          isRotationSelected: true,
-          techDesc: {
-            ...updatedItem.techDesc,
-            "Die Rotation": "Provided"
-          }
+          name: newName,
+          customName: newCustomName || updatedItem.customName,
+          techDesc: newTechDesc
         };
+
+        if (isDieRotationSelected) {
+          updatedItem = {
+            ...updatedItem,
+            isRotationSelected: true,
+            techDesc: {
+              ...updatedItem.techDesc,
+              "Die Rotation": "Provided"
+            }
+          };
+        }
       }
 
       // 2. Extruder Updates (Screen Changer and Bimetallic)
@@ -1302,6 +1320,68 @@ export function ConfigProvider({ children }) {
             techDesc: newTechDesc
           };
         }
+      }
+
+      // 3. Winder Updates (Back to Back Winder replacement)
+      const isBackToBackSelected = selectedAddons.some(a => a.id === "winder-manual-back-to-back-dynamic");
+      if (category === "winder" && isBackToBackSelected) {
+        const addon = selectedAddons.find(a => a.id === "winder-manual-back-to-back-dynamic");
+        if (addon) {
+          updatedItem = {
+            ...updatedItem,
+            name: addon.name || "Two back to back Surface Winder",
+            customName: addon.customName || addon.name || "Two back to back Surface Winder",
+            image: addon.image || updatedItem.image,
+            techDesc: {
+              ...updatedItem.techDesc,
+              "Type": "Back to back Surface Winder",
+              "Actuation": "Manual Changeover.",
+              "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
+              "Surface winder drive": (machineType === "mono" || machineType === "aba") ? "2 HP AC motor with variable frequency drive." : "2 HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+              "Tension control": "Through Torque mode.",
+              "Length counter meter": "Provided",
+              "Trim Suction Blower": "Provided"
+            }
+          };
+        }
+      }
+
+      // 4. Bubble Cage Updates
+      if (category.includes("bubble cage")) {
+        let newTechDesc = { ...updatedItem.techDesc };
+        if (newTechDesc["Type"]) {
+          const isMonoOrAba = machineType === "mono" || machineType === "aba";
+          const armsText = isMonoOrAba ? "4 arms" : "6 arms";
+          
+          let typeDesc = newTechDesc["Type"];
+          typeDesc = typeDesc.replace(/with \d+ arms /gi, "");
+          typeDesc = typeDesc.replace(/arranged to /gi, `with ${armsText} arranged to `);
+          newTechDesc["Type"] = typeDesc;
+        }
+        updatedItem = {
+          ...updatedItem,
+          techDesc: newTechDesc
+        };
+      }
+
+      // 5. Global Component Name Clean-up
+      let finalName = updatedItem.customName || updatedItem.name || "";
+      if (finalName) {
+        // Strip leading sizes (e.g., "300 mm " or "75mm ")
+        finalName = finalName.replace(/^\d+\s*mm\s*-\s*/i, "");
+        finalName = finalName.replace(/^\d+\s*mm\s*/i, "");
+        
+        // Strip trailing sizes (e.g., " - 1120 mm" or " 150 mm")
+        finalName = finalName.replace(/\s*-\s*\d+\s*mm$/i, "");
+        finalName = finalName.replace(/\s*\d+\s*mm$/i, "");
+        
+        // Strip trailing parenthesis (e.g., "(10 HP)" or "(2 HP Blower)")
+        finalName = finalName.replace(/\s*\([^)]*\)\s*$/i, "");
+        
+        updatedItem = {
+          ...updatedItem,
+          customName: finalName.trim()
+        };
       }
 
       return updatedItem;

@@ -307,7 +307,7 @@ export default async function handler(req, res) {
             ["Product to be made", perf.product || "High Quality Three Layer Film"],
             ["Max Throughput", perf.max_output || "200 KG / HR"],
             ["Thickness Variation", "+/- 8% above 40 and +/- 10% upto 40 or +/- 4 micron whichever is higher."],
-            ["Raw Materials", perf.raw_materials || "LDPE, LLDPE, HDPE, mLLDPE etc."],
+            ["Raw Materials", perf.raw_materials || "LDPE, LLDPE, HDPE, etc."],
             ["Thickness Range", perf.thickness_range || "20 – 150 micron"],
             ["Lay flat Width", perf.layflat_width || "1350 MM maximum process able width."],
         ];

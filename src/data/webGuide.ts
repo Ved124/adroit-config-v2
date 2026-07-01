@@ -54,4 +54,23 @@ export const WEB_GUIDE_ADDONS: WebGuideAddon[] = [
       "Installation": "Typically mounted before secondary nip or winder infeed.",
     },
   },
+  {
+    id: "webguide-hydro-pneumatic-dynamic",
+    name: "Hydro Pneumatic Webguide",
+    type: "standard-epc",
+    machineTypes: ["aba"],
+    image: "/images/Acessories/e+l_webguide.jpg",
+    cardDesc: "Hydro Pneumatic Webguide system for ABA machine.",
+    price: 0,
+    qty: 1,
+    isDynamic: true,
+    techDesc: {
+      "Type": "Hydro Pneumatic Webguide",
+      "Application": "Suitable for high tension applications.",
+      "Features": "Hydro-pneumatic system ensures smooth and precise web guiding.",
+      "Sensor": "High resolution edge sensors with adjustable bracket.",
+      "Actuator": "Heavy duty linear actuator with position feedback.",
+      "Installation": "Typically mounted before secondary nip or winder infeed.",
+    },
+  },
 ];

@@ -4,7 +4,7 @@ export const MONO_MODELS = [
   // {
   //   code: "UNOFLEX-450",
   //   family: "Unoflex Monolayer",
-  //   label: "Unoflex 450",
+  //   label: "Unoflex_450\"_35mm",
   //   machineType: "mono",
 
   //   screwDiameter: "35 mm",
@@ -281,7 +281,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-24",
     family: "Monolayer",
-    label: "UNOFLEX - 24\"",
+    label: "Unoflex_24\"_40mm",
     machineType: "mono",
     screwDiameter: "40 MM",
     layflatWidthMm: 550,
@@ -304,7 +304,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-32",
     family: "Monolayer",
-    label: "UNOFLEX - 32\"",
+    label: "Unoflex_32\"_45mm",
     machineType: "mono",
     screwDiameter: "45 MM",
     layflatWidthMm: 750,
@@ -327,7 +327,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-40-55MM",
     family: "Monolayer",
-    label: "UNOFLEX - 40\" (55mm)",
+    label: "Unoflex_40\"_55mm",
     machineType: "mono",
     screwDiameter: "55 MM",
     layflatWidthMm: 1000,
@@ -350,7 +350,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-50-65MM",
     family: "Monolayer",
-    label: "UNOFLEX - 50\" (65mm)",
+    label: "Unoflex_50\"_65mm",
     machineType: "mono",
     screwDiameter: "65 MM",
     layflatWidthMm: 1250,
@@ -373,7 +373,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-40",
     family: "Monolayer",
-    label: "UNOFLEX - 40\"",
+    label: "Unoflex_40\"_45mm",
     machineType: "mono",
     screwDiameter: "45 MM",
     layflatWidthMm: 1000,
@@ -396,7 +396,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-50",
     family: "Monolayer",
-    label: "UNOFLEX - 50\"",
+    label: "Unoflex_50\"_55mm",
     machineType: "mono",
     screwDiameter: "55 MM",
     layflatWidthMm: 1250,
@@ -419,7 +419,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-72",
     family: "Monolayer",
-    label: "UNOFLEX - 72\"",
+    label: "Unoflex_72\"_65mm",
     machineType: "mono",
     screwDiameter: "65 MM",
     layflatWidthMm: 1800,
@@ -442,7 +442,7 @@ export const MONO_MODELS = [
   {
     code: "UNOFLEX-110",
     family: "Monolayer",
-    label: "UNOFLEX - 110\"",
+    label: "Unoflex_110\"_90mm",
     machineType: "mono",
     screwDiameter: "90 MM",
     layflatWidthMm: 2800,

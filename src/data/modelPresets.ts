@@ -92,7 +92,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -162,7 +162,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       {
-        category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1,
+        category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1,
         metadata: {
           techDesc: {
             "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -246,7 +246,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -318,7 +318,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       {
-        category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1,
+        category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1,
         metadata: {
           techDesc: {
             "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -400,7 +400,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -456,7 +456,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -574,7 +574,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
         }
       },
-      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1, metadata: { size: "1750" } },
+      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1, metadata: { size: "1750" } },
     ],
 
     addons: [
@@ -855,8 +855,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-150",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Three Layer Spiral Mandrel Die with lip diameter as per width, complete with die adapters and carriage."
-        }
+          }
       },
       {
         category: "Air Ring",
@@ -915,7 +914,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           size: "750",
           price: 0,
           customName: "Single Surface Winder - 750 mm",
-          scopeDesc: "Single Surface Winders of 750 mm film width. 3\" mechanical Shaft – 04 Nos.",
           techDesc: {
             "Surface Winder (01 No.)": "Maximum web width of 750 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface Winders (01 No.)": "hidden",
@@ -952,8 +950,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-150",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Three Layer Spiral Mandrel Die with lip diameter as per width, complete with die adapters and carriage."
-        }
+          }
       },
       {
         category: "Air Ring",
@@ -1006,7 +1003,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           size: "850",
@@ -1048,8 +1045,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-200",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Three Layer Spiral Mandrel Die with lip diameter as per width, complete with die adapters and carriage."
-        }
+          }
       },
       {
         category: "Air Ring",
@@ -1102,7 +1098,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1000",
           customName: "Single Surface Winder - 1000 mm",
-          scopeDesc: "Single Surface Winders of 1000 mm film width. 3” mechanical Shaft – 02 Nos.",
           techDesc: {
             "Surface Winder (01 No.)": "hidden",
             "Roll diameter": "hidden",
@@ -1171,7 +1166,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           size: "1250",
@@ -1353,7 +1348,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 
-  "DUOFLEX-26": {
+  "DUOFLEX-24": {
     machineType: "aba",
     basePrice: 1585000,
     components: [
@@ -1395,7 +1390,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-100",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Three Layer ABA Spiral Mandrel Die and lip diameter of 100 mm, complete with die adapters and carriage.",
+          
           techDesc: {
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "Diameter as per width and lip gap.",
@@ -1465,7 +1460,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "550",
           customName: "Single Surface Winder",
-          scopeDesc: "One Surface Winders of 550 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
           techDesc: {
             "Additional Nip": "hidden",
             "Edge slit assembly": "hidden",
@@ -1520,7 +1514,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-100",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage.",
+          
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -1586,7 +1580,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "500",
           customName: "Single Surface Winder - 500 mm",
-          scopeDesc: "One Surface Winders of 500 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
           techDesc: {
             "Winder Type": "hidden",
             "Surface Winder (01 No.)": "hidden",
@@ -1646,7 +1639,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-100",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage.",
+          
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -1719,7 +1712,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "600",
           customName: "Surface Winder - 600 mm",
-          scopeDesc: "One Surface Winders of 600 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP Torque Motor and Drive.",
           techDesc: {
             "Winder Type": "hidden",
             "Surface Winder (01 No.)": "hidden",
@@ -1776,7 +1768,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-150",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of 150 mm, complete with die adapters and carriage.",
+          
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -1848,7 +1840,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "750",
           customName: "Back to Back Surface Winder - 750 mm",
-          scopeDesc: "One Surface Winder of 750 mm film width. Manual roll change over mechanism, 02 nos.- 3” Mechanical shaft, bow roller, 0.5 HP AC Motor and Drive.",
           techDesc: {
             "Winder Type": "hidden",
             "Surface Winder (01 No.)": "hidden",
@@ -1919,7 +1910,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           techDesc: {
@@ -2008,7 +1999,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           techDesc: {
@@ -2034,7 +2025,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-300",
         qty: 1,
         metadata: {
-          scopeDesc: "One chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage. Die with Rotation.",
+          
           techDesc: { "Die Size": "300 mm" }
         }
       },
@@ -2082,12 +2073,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           name: "Manual Back to Back Winder",
           customName: "Two back to back Surface Winders of 1250 mm film width",
-          scopeDesc: "Back to Back Surface Winder of 1250 mm film width. Manual roll change over mechanism, tension control through Torque, digital length counter, 04 nos.- 3” Air shaft, bow roller, 2 HP AC Motor and Drive. Post Extrusion Gear Motors will be Bonvario or Equivalent.",
           techDesc: {
             "Additional Nip": "hidden",
             "Edge slit assembly": "hidden",
@@ -2137,7 +2127,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-200",
         qty: 1,
         metadata: {
-          scopeDesc: "One Chrome plated Mono Layer Spiral Mandrel Die with lip diameter of 200 mm, complete with die adapters and carriage. Die with Rotation.",
+          
           techDesc: {
             "Surface Treatment": "Chrome plated and highly polished.",
             "Die Size": "Diameter as per width and lip gap.",
@@ -2192,12 +2182,11 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           name: "Manual Back to Back Winder",
           customName: "Back to Back Dual Surface Winder of 1000 mm width",
-          scopeDesc: "Back to Back Dual Surface Winder of 1000 mm width. Manual roll change over mechanism, 04 nos.- 3” Mechanical shaft, bow roller, 1 HP AC Motor and Drive.",
           techDesc: {
             "Additional Nip": "hidden",
             "Edge slit assembly": "hidden",
@@ -2281,7 +2270,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           techDesc: {
@@ -2351,7 +2340,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Winder",
-        id: "winder-manual-back-to-back-dynamic",
+        id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
           techDesc: {

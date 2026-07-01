@@ -261,6 +261,7 @@ function buildProposalData({
   const selectedAddonsSafe = selectedAddons || [];
   const winderTowerAddonsRaw = selectedAddonsSafe.filter(item => {
     if (!item || !item.name) return false;
+    if (item.id === "winder-manual-back-to-back-dynamic") return false;
     const n = item.name.toLowerCase();
     const c = (item.category || "").toLowerCase();
     const isTrim = n.includes("trim");
@@ -460,6 +461,39 @@ function buildProposalData({
         }
       }
     });
+
+    if (isExtruder) {
+      const order = [
+        "Screw Diameter",
+        "L/D ratio",
+        "Screw Speed",
+        "Type",
+        "Barrel",
+        "Material",
+        "Heating System",
+        "No. of Zones",
+        "Hopper",
+        "Main Drive",
+        "Transmission System",
+        "Gearbox",
+        "Screen changer"
+      ];
+      
+      const sorted = {};
+      order.forEach(desiredKey => {
+        const matchingKey = Object.keys(filled).find(k => k.toLowerCase() === desiredKey.toLowerCase());
+        if (matchingKey) {
+          sorted[matchingKey] = filled[matchingKey];
+          delete filled[matchingKey];
+        }
+      });
+      // Append any unmapped keys
+      Object.keys(filled).forEach(k => {
+        sorted[k] = filled[k];
+      });
+      return sorted;
+    }
+
     return filled;
   }
 
@@ -663,12 +697,18 @@ function buildProposalData({
     const isExtruderNow = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
     const qtySuffix = (isExtruderNow && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
 
+    const c = (item.category || "").toLowerCase();
+    const isAirRing = c.includes("air ring") || c.includes("airring");
+    const overrideImage = (isAirRing && (machineType === "mono" || machineType === "aba")) 
+      ? "/images/Airring/Airring_mono_aba.jpeg" 
+      : (item.image || "");
+
     return {
       id: item.id || "",
       name: (item.name || "") + qtySuffix,
       qty: item.qty || 1,
       category: item.category || "",
-      image: item.image || "",
+      image: overrideImage,
       shortDesc: (finalDesc || "") + qtySuffix,
       techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
       _autoDesc: autoDesc
@@ -727,12 +767,17 @@ function buildProposalData({
       const isExtruderNow = (item.category || "").toLowerCase().includes("extruder") || (item.name || "").toLowerCase().includes("extruder");
       const qtySuffix = (isExtruderNow && item.qty > 0) ? ` (${String(item.qty).padStart(2, '0')} NOS.)` : "";
 
+      const isAirRing = c.includes("air ring") || c.includes("airring");
+      const overrideImage = (isAirRing && (machineType === "mono" || machineType === "aba")) 
+        ? "/images/Airring/Airring_mono_aba.jpeg" 
+        : (item.image || "");
+
       return {
         id: item.id || "",
         name: (item.customName || item.name || "") + qtySuffix,
         qty: item.qty || 1,
         category: item.category || "",
-        image: item.image || "",
+        image: overrideImage,
         shortDesc: (item.shortDesc || item.cardDesc || "") + qtySuffix,
         techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
       };
@@ -829,10 +874,10 @@ function buildProposalData({
     auto_cf_obj,
     {
       id: "auto_control", name: "Extrusion Control Line", qty: 1, image: "",
-      shortDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel.",
-      scopeDesc: autoScopeDesc({ name: "Extrusion Control Line", shortDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel." }),
+      shortDesc: (machineType === "aba" || machineType === "mono") ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel.",
+      scopeDesc: autoScopeDesc({ name: "Extrusion Control Line", shortDesc: (machineType === "aba" || machineType === "mono") ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel." }),
       techDesc: {},
-      _autoDesc: machineType === "aba" ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel."
+      _autoDesc: (machineType === "aba" || machineType === "mono") ? "Complete extrusion controls on main panel." : "Complete extrusion controls on main panel with Cold start protection and with Touch Panel."
     }
   ].filter(Boolean);
 
@@ -1135,7 +1180,7 @@ function buildProposalData({
         die_size: dieSize,
         thickness_range: thicknessRange,
         thickness_variation: thicknessVariation,
-        raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
+        raw_materials: (machineType === "mono" || machineType === "aba") ? "LDPE, LLDPE, HDPE, etc." : "LDPE, LLDPE, HDPE, mLLDPE, etc.",
       };
     })(),
 

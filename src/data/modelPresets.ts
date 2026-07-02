@@ -92,7 +92,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -162,7 +162,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       {
-        category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1,
+        category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1,
         metadata: {
           techDesc: {
             "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -246,7 +246,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -318,7 +318,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         }
       },
       {
-        category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1,
+        category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1,
         metadata: {
           techDesc: {
             "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -400,7 +400,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
         }
       },
-      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -456,7 +456,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
         }
       },
-      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1 },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
     ],
 
     addons: [
@@ -574,7 +574,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
         }
       },
-      { category: "Winder", id: "winder-single-surface-only-dynamic", qty: 1, metadata: { size: "1750" } },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1, metadata: { size: "1750" } },
     ],
 
     addons: [

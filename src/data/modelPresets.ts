@@ -1183,7 +1183,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (02 No.)": "Maximum web width of 1250 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "1 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
-            "Type of Winder": "Back to Back Surface Winder"
+            "Winder Type": "Single Surface winder."
           }
         }
       },
@@ -1839,7 +1839,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         qty: 1,
         metadata: {
           size: "750",
-          customName: "Back to Back Surface Winder - 750 mm",
           techDesc: {
             "Winder Type": "hidden",
             "Surface Winder (01 No.)": "hidden",
@@ -2076,8 +2075,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
-          name: "Manual Back to Back Winder",
-          customName: "Two back to back Surface Winders of 1250 mm film width",
           techDesc: {
             "Additional Nip": "hidden",
             "Edge slit assembly": "hidden",
@@ -2091,7 +2088,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "02 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
-            "Type of winder": "Two back to back type."
+            "Winder Type": "Single Surface winder."
           }
         }
       },
@@ -2185,8 +2182,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
-          name: "Manual Back to Back Winder",
-          customName: "Back to Back Dual Surface Winder of 1000 mm width",
           techDesc: {
             "Additional Nip": "hidden",
             "Edge slit assembly": "hidden",

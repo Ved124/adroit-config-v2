@@ -520,10 +520,7 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   if (widthNum >= 1500 && widthNum <= 2000) hpLabel = "3 HP";
   else if (widthNum > 2000) hpLabel = "5 HP";
 
-  const isAba = machineModel && machineModel.machineType === "aba";
-  const prefix = (includeNipPrefix && !isAba)
-    ? `One Secondary nip with edge slitting assembly and edge trimming assembly. `
-    : "";
+  const prefix = "";
 
   const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
   const isIBC = (machineModel?.name || "").toLowerCase().includes("ibc") || (item.name || "").toLowerCase().includes("ibc");

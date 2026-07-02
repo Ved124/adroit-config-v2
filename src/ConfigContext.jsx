@@ -653,9 +653,9 @@ export function ConfigProvider({ children }) {
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1]);
 
-          const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
+          const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
-          const maxFilmWidth = (rollerNum > 0) ? (displaySize - diff) : chosenSize;
+          const maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
           const minRange = Math.round((maxFilmWidth * minRatio) / 10) * 10;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
@@ -845,9 +845,9 @@ export function ConfigProvider({ children }) {
           if (chosenSize >= 1500 && chosenSize <= 2000) nipHP = "3 HP";
           else if (chosenSize > 2000) nipHP = "5 HP";
 
-          const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
+          const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
-          const maxFilmWidth = (isMonoOrAba && currentMachineModel?.layflatWidthMm) ? currentMachineModel.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
+          const maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
 
           // Update item properties
           nextSelected[index] = {
@@ -884,9 +884,9 @@ export function ConfigProvider({ children }) {
           const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
           const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
 
-          const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
+          const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
-          const maxFilmWidth = (rollerNum > 0) ? (displaySize - diff) : chosenSize;
+          const maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
 
           const actualLayflat = (machineType === "aba" && currentMachineModel?.layflatWidthMm) 
             ? currentMachineModel.layflatWidthMm 

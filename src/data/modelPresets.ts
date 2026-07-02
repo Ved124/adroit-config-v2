@@ -2149,6 +2149,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "bc-manual-dynamic",
         qty: 1,
         metadata: {
+          size: "1100",
           techDesc: {
             "Type": "Manual cage to Support the bubble."
           }
@@ -2159,12 +2160,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          size: "1000",
-          customName: "Collapsing Frame - 1000 mm",
+          size: "1100",
+          customName: "Collapsing Frame - 1100 mm",
           scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 1 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "1000 mm",
+            "Nip roller width": "1100 mm",
             "Nip roller drive": "01 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers."
           }
@@ -2176,6 +2177,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
+          size: "1100",
           techDesc: {
             "Additional Nip": "hidden",
             "Edge slit assembly": "hidden",

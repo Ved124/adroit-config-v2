@@ -1335,7 +1335,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Surface Winder": "Maximum web width of 450 mm with Manual Changeover.",
             "Roll diameter": "400 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode."
@@ -1468,7 +1467,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Surface Winder": "Maximum web width of 550 mm with Manual Changeover.",
             "Roll diameter": "400 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode."
@@ -1585,7 +1583,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Surface Winder": "Maximum web width of 450 mm with Manual Changeover.",
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "01 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode."
@@ -1717,7 +1714,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Surface Winder": "Maximum web width of 550 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP Torque motor with variable frequency drive.",
             "Tension control": "Through Torque mode."
           }
@@ -1844,7 +1840,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Surface Winder": "Maximum web width of 750 mm with Manual Changeover.",
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "0.5 HP AC motor with torque drive.",
             "Tension control": "Through Torque mode."
@@ -2084,7 +2079,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Two Surface Winder": "Maximum web width of 1250 mm with Manual Changeover.",
             "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "02 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
@@ -2193,7 +2187,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Surface Winder (02 No.)": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Single Surface Winder": "Maximum web width of 1000 mm with Manual Changeover.",
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "1 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",

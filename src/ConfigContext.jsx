@@ -847,7 +847,7 @@ export function ConfigProvider({ children }) {
 
           const displaySize = (rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize;
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
-          const maxFilmWidth = (rollerNum > 0) ? (displaySize - diff) : chosenSize;
+          const maxFilmWidth = (isMonoOrAba && currentMachineModel?.layflatWidthMm) ? currentMachineModel.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
 
           // Update item properties
           nextSelected[index] = {

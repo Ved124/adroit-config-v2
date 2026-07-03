@@ -855,7 +855,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-150",
         qty: 1,
         metadata: {
-          }
+        }
       },
       {
         category: "Air Ring",
@@ -950,7 +950,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-150",
         qty: 1,
         metadata: {
-          }
+        }
       },
       {
         category: "Air Ring",
@@ -1008,7 +1008,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "850",
           techDesc: {
-            "Surface Winder (02 No.)": "Maximum web width of 850 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            // "Surface Winder (02 No.)": "Maximum web width of 850 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface Winders (01 No.)": "hidden",
             "Roll diameter": "hidden",
             "Surface winder drive": "0.5 HP Torque motor with variable frequency drive.",
@@ -1045,7 +1045,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-200",
         qty: 1,
         metadata: {
-          }
+        }
       },
       {
         category: "Air Ring",
@@ -1073,7 +1073,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           techDesc: {
             "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
             "Actuation of ring": "Manual open-close operation.",
-            "Bubble diameter range": "600 to 950 mm"
           }
         }
       },
@@ -1087,7 +1086,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           customName: "Main Nip - 1050 mm",
           scopeDesc: "Main Nip with 1 HP AC Drive. Wooden Slates Collapsing Frame. Gusset included.",
           techDesc: {
-            "Width Capability": "950 mm layflat"
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1000 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates / PBT roller frame.",
+            "Idler rollers": "Adequate quantity as per layout.",
+            "Construction": "hidden",
+            "Material": "hidden",
+            "Adjustment": "hidden",
+            "Width Capability": "hidden",
+            "Application": "hidden"
           }
         }
       },
@@ -1102,7 +1110,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Winder (01 No.)": "hidden",
             "Roll diameter": "hidden",
             "Surface Winders (01 No.)": "hidden",
-            "Surface Winder (02 No.)": "Maximum web width of 950 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding."
+            // "Surface Winder (02 No.)": "Maximum web width of 950 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding."
           }
         }
       },
@@ -1180,7 +1188,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Length counter meter": "hidden",
             "Trim Suction Blower": "hidden",
             "Tension control ": "hidden",
-            "Surface Winder (02 No.)": "Maximum web width of 1250 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
+            // "Surface Winder (02 No.)": "Maximum web width of 1250 mm with Manual Changeover.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "1 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
             "Winder Type": "Single Surface winder."
@@ -1231,8 +1239,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
-          size: "1250",
-          customName: "HORIZONTAL HAULOFF - 1250 mm",
+          size: "1370",
+          customName: "HORIZONTAL HAULOFF - 1370 mm",
           scopeDesc: "One 360-degree rotation Horizontal Oscillating Haul Off. Collapsing frame with Segmented PBT Roller, side guides, Main Nip with 2 HP AC Drive.",
           techDesc: {
             "Hauloff Size": "1250 mm",
@@ -1245,7 +1253,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "winder-single-surface-only-dynamic",
         qty: 1,
         metadata: {
-          size: "1250",
+          size: "1370",
           techDesc: {
             "Nip roller width": "1370 mm",
             "Surface Winder (01 No.)": "hidden"
@@ -1389,7 +1397,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-aba-100",
         qty: 1,
         metadata: {
-          
+
           techDesc: {
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "Diameter as per width and lip gap.",
@@ -1512,7 +1520,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-100",
         qty: 1,
         metadata: {
-          
+
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -1559,12 +1567,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          size: "450",
-          customName: "Collapsing Frame - 450 mm",
-          scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive.",
+          size: "500",
+          customName: "Collapsing Frame - 500 mm",
+          scopeDesc: "Collapsing frame with Wooden Slates, side guides, Main Nip with 1 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller width": "450 mm",
+            "Nip roller width": "500 mm",
             "Nip roller drive": "01 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "Wooden Slates."
           }
@@ -1636,7 +1644,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-100",
         qty: 1,
         metadata: {
-          
+
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -1764,7 +1772,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-150",
         qty: 1,
         metadata: {
-          
+
           techDesc: {
             "Type": "hidden",
             "Material of Construction": "Hardened high strength alloy steel.",
@@ -2019,7 +2027,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-300",
         qty: 1,
         metadata: {
-          
+
           techDesc: { "Die Size": "300 mm" }
         }
       },
@@ -2118,7 +2126,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "die-mono-200",
         qty: 1,
         metadata: {
-          
+
           techDesc: {
             "Surface Treatment": "Chrome plated and highly polished.",
             "Die Size": "Diameter as per width and lip gap.",

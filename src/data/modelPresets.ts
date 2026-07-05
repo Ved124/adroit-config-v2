@@ -862,9 +862,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "150",
+
           price: 0,
-          customName: "150 mm G-Series Air Ring",
+          customName: "G-Series Air Ring",
           scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
           techDesc: {
             "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
@@ -957,9 +957,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "150",
+
           price: 0,
-          customName: "150 mm G-Series Air Ring",
+          customName: "G-Series Air Ring",
           scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
           techDesc: {
             "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
@@ -1052,9 +1052,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "200",
+
           price: 0,
-          customName: "200 mm G-Series Air Ring",
+          customName: "G-Series Air Ring",
           scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
           techDesc: {
             "Blower": "5 HP with inlet air filter."
@@ -1135,9 +1135,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "300",
+
           price: 350000,
-          customName: "300 mm G-Series Air Ring"
+          customName: "G-Series Air Ring"
         }
       },
       {
@@ -1217,9 +1217,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "350",
+
           price: 0,
-          customName: "350 mm G-Series Air Ring (10 HP)",
+          customName: "G-Series Air Ring (10 HP)",
           techDesc: {
             "Blower": "10 HP with inlet air filter."
           }
@@ -1280,9 +1280,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-dr-dynamic-aba",
         qty: 1,
         metadata: {
-          size: "75",
+
           price: 0,
-          customName: "75 mm Air Ring (2 HP Blower)",
+          customName: "Air Ring (2 HP Blower)",
           techDesc: {
             "Blower": "2 HP with inlet air filter."
           }
@@ -1413,7 +1413,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "100",
+
           price: 0,
           customName: "Air Ring (3 HP)",
           techDesc: {
@@ -1537,9 +1537,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "100",
+
           price: 0,
-          customName: "100 mm Air Ring",
+          customName: "Air Ring",
           scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
           techDesc: {
             "Design": "hidden",
@@ -1661,9 +1661,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "150",
+
           price: 0,
-          customName: "150 mm Air Ring",
+          customName: "Air Ring",
           scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
           techDesc: {
             "Design": "hidden",
@@ -1789,9 +1789,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "150",
+
           price: 0,
-          customName: "150 mm Air Ring",
+          customName: "Air Ring",
           scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
           techDesc: {
             "Design": "hidden",
@@ -1879,10 +1879,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "250",
+
           price: 0,
-          customName: "250 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "250 mm" }
+          customName: "G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring" }
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
@@ -1926,10 +1926,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-g-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
+
           price: 350000,
-          customName: "300 mm G-Series Air Ring",
-          techDesc: { "Design": "G-Series Aerodynamic Air Ring", "Size": "300 mm" }
+          customName: "G-Series Air Ring",
+          techDesc: { "Design": "G-Series Aerodynamic Air Ring" }
         }
       },
       {
@@ -1991,7 +1991,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "300",
+
           price: 150000,
           customName: "Dual Lip Air Ring (7.5 HP)",
           techDesc: {
@@ -2093,7 +2093,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "200",
+
           price: 0,
           customName: "Air Ring (5 HP)",
           techDesc: {
@@ -2176,10 +2176,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "400",
+
           price: 575000,
-          customName: "400 mm Standard Air Ring (15 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "400 mm" }
+          customName: "Standard Air Ring (15 HP)",
+          techDesc: { "Design": "Standard Series Air Ring" }
         }
       },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
@@ -2223,10 +2223,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "airring-standard-dynamic",
         qty: 1,
         metadata: {
-          size: "600",
+
           price: 950000,
-          customName: "600 mm Standard Air Ring (25 HP)",
-          techDesc: { "Design": "Standard Series Air Ring", "Size": "600 mm" }
+          customName: "Standard Air Ring (25 HP)",
+          techDesc: { "Design": "Standard Series Air Ring" }
         }
       },
       {

@@ -107,7 +107,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370 DR": {
     machineType: "3layer",
-    basePrice: 7365000,
+    basePrice: 6750000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
@@ -189,7 +189,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370 HO": {
     machineType: "3layer",
-    basePrice: 8171000,
+    basePrice: 7875000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
@@ -257,7 +257,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370-170": {
     machineType: "3layer",
-    basePrice: 8751000,
+    basePrice: 8551000,
     components: [
       { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
@@ -345,7 +345,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1370-180": {
     machineType: "3layer",
-    basePrice: 8925000,
+    basePrice: 8850000,
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-300", qty: 1 },
@@ -467,7 +467,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1620": {
     machineType: "3layer",
-    basePrice: 10671000,
+    basePrice: 9875000,
     components: [
       { category: "Extruder", id: "ext-50-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
@@ -520,7 +520,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-1870-250": {
     machineType: "3layer",
-    basePrice: 11645000,
+    basePrice: 11275000,
     components: [
       { category: "Extruder", id: "ext-55-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
@@ -684,7 +684,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-2120": {
     machineType: "3layer",
-    basePrice: 13700000,
+    basePrice: 13750000,
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 3 },
       { category: "Die Head", id: "die-3layer-450", qty: 1 },
@@ -734,7 +734,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
   },
   "INNOFLEX-2370": {
     machineType: "3layer",
-    basePrice: 19451000,
+    basePrice: 18750000,
     components: [
       { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
       { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
@@ -934,7 +934,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "DUOFLEX-36": {
     machineType: "aba",
-    basePrice: 2487000,
+    basePrice: 1875000,
     components: [
       {
         category: "Extruder",
@@ -1125,7 +1125,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "DUOFLEX-50": {
     machineType: "aba",
-    basePrice: 5981000,
+    basePrice: 3675000,
     components: [
       { category: "Extruder", id: "ext-45-aba", qty: 1 },
       { category: "Extruder", id: "ext-55-aba", qty: 1 },
@@ -1489,7 +1489,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "UNOFLEX-20": {
     machineType: "mono",
-    basePrice: 820000,
+    basePrice: 675000,
     components: [
       {
         category: "Extruder",
@@ -1614,14 +1614,14 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "UNOFLEX-24": {
     machineType: "mono",
-    basePrice: 850000,
+    basePrice: 775000,
     components: [
       {
         category: "Extruder",
         id: "ext-mono-40",
         qty: 1,
         metadata: {
-          image: "/images/Extruder/Extruder ABA.png",
+          image: "/images/Extruder/Extruder Mono.png",
           customName: "40 mm Extruder",
           scopeDesc: "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 40 mm Extruders.",
           techDesc: {
@@ -1633,7 +1633,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "No. of Zones": "02 Nos. on barrel",
             "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
             "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
-            "Transmission System": "Motor directly coupled / Belt with helical gearbox.",
+            "Transmission System": "Through Belt and Pulley.",
             "Gearbox": "Zeal or equivalent make.",
             "Screen Changer": "Candle type"
           }
@@ -1742,7 +1742,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "UNOFLEX-32": {
     machineType: "mono",
-    basePrice: 1185000,
+    basePrice: 1065000,
     components: [
       {
         category: "Extruder",
@@ -1891,34 +1891,20 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
+          scopeDesc: "Collapsing frame with Segmented PBT Rollers / Wooden Slates, side guides, Main Nip with 01 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1100 mm",
             "Nip roller drive": "01 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers / Wooden Slates."
           }
-        }
-      },
-      {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
-        qty: 1,
-        metadata: {
-          size: "1250",
-          price: 1100000,
-          customName: "HORIZONTAL HAULOFF - 1250 mm",
-          techDesc: { "Hauloff Size": "1250 mm" }
         }
       },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
-        qty: 1,
-        metadata: {
-          techDesc: {
-            "Collapsing Frames": "PBT rollers / Wooden Slates."
-          }
-        }
+        qty: 1
       },
     ],
 
@@ -1962,52 +1948,21 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
+          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
           techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
+            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1370 mm",
+            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "PBT rollers."
           }
         }
       },
-      {
-        category: "Collapsing Frame",
-        id: "cf-pbt-dynamic",
-        qty: 1,
-        metadata: {
-          techDesc: {
-            "Construction": "hidden",
-            "Material": "hidden",
-            "Adjustment": "hidden",
-            "Width Capability": "hidden",
-            "Application": "hidden",
-            "Collapsing Frames": "hidden"
-          }
-        }
-      },
-      {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
-        qty: 1,
-        metadata: {
-          size: "1350",
-          price: 1150000,
-          customName: "HORIZONTAL HAULOFF - 1350 mm",
-          techDesc: { "Hauloff Size": "1350 mm" }
-        }
-      },
+
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
-        qty: 1,
-        metadata: {
-          techDesc: {
-            "Collapsing Frames": "PBT rollers / Wooden Slates."
-          }
-        }
+        qty: 1
       },
     ],
 
@@ -2090,7 +2045,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "02 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
-            "Winder Type": "Single Surface winder."
+            // "Winder Type": "Single Surface winder."
           }
         }
       },
@@ -2099,7 +2054,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       {
         category: "Electrical & Control Panel", id: "panel-dol-starter", qty: 1,
       },
-      { category: "Die Addons", id: "die-rotation-addon", qty: 1 },
     ],
   },
 
@@ -2131,7 +2085,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Surface Treatment": "Chrome plated and highly polished.",
             "Die Size": "Diameter as per width and lip gap.",
             "Heating System": "Ceramic band heaters (DHE or equivalent)",
-            "Die rotation": "Provided"
           }
         }
       },
@@ -2200,7 +2153,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first.\nBow roller prior to drum roller for wrinkle free winding.",
             "Surface winder drive": "1 HP AC motor with variable frequency drive.",
             "Tension control": "Through Torque mode.",
-            "Winder Type": "Single Surface winder."
+            // "Winder Type": "Single Surface winder."
           }
         }
       },
@@ -2235,46 +2188,20 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
+          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "1900 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers."
           }
-        }
-      },
-      {
-        category: "Collapsing Frame",
-        id: "cf-pbt-dynamic",
-        qty: 1,
-        metadata: {
-          techDesc: {
-            "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-            "Nip roller drive": "02 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
-          }
-        }
-      },
-      {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
-        qty: 1,
-        metadata: {
-          size: "2000",
-          price: 1800000,
-          customName: "HORIZONTAL HAULOFF - 2000 mm",
-          techDesc: { "Hauloff Size": "2000 mm" }
         }
       },
       { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
-        qty: 1,
-        metadata: {
-          techDesc: {
-            "Collapsing Frames": "PBT rollers / Wooden Slates."
-          }
-        }
+        qty: 1
       },
     ],
 
@@ -2318,33 +2245,20 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
+          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 03 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "2900 mm",
             "Nip roller drive": "03 HP AC motor with variable frequency drive.",
             "Collapsing Frames": "PBT rollers."
           }
         }
       },
-      {
-        category: "Haul-Off",
-        id: "haul-horizontal-dynamic",
-        qty: 1,
-        metadata: {
-          size: "3000",
-          price: 3500000,
-          customName: "HORIZONTAL HAULOFF - 3000 mm",
-          techDesc: { "Hauloff Size": "3000 mm" }
-        }
-      },
+      { category: "Tower / Platform", id: "tower_std", qty: 1 },
       {
         category: "Winder",
         id: "winder-single-surface-only-dynamic",
-        qty: 1,
-        metadata: {
-          techDesc: {
-            "Collapsing Frames": "PBT rollers / Wooden Slates."
-          }
-        }
+        qty: 1
       },
     ],
 

@@ -262,6 +262,7 @@ function buildProposalData({
   const winderTowerAddonsRaw = selectedAddonsSafe.filter(item => {
     if (!item || !item.name) return false;
     if (item.id === "winder-manual-back-to-back-dynamic") return false;
+    if (item.id === "addon-air-shaft-dynamic") return false;
     const n = item.name.toLowerCase();
     const c = (item.category || "").toLowerCase();
     const isTrim = n.includes("trim");
@@ -279,12 +280,18 @@ function buildProposalData({
     const isLoadcell = item.id === "addon-loadcell-tension";
     const isGrandTotal = item.id === "grand-total-line";
     const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
+    const isUpDownBC = item.id === "addon-up-down-bubble-cage";
 
     if (machineType === "material-handling" && isMixer) {
       return false;
     }
 
-    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;
+    if (machineType === "mono" || machineType === "aba") {
+      if (isGrandTotal) return false;
+      return true;
+    }
+
+    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isUpDownBC;
   });
 
   // Compute grand total for the pricing block (machine final + addons)
@@ -301,7 +308,7 @@ function buildProposalData({
       qty: item.qty || 1,
       image: item.image || "",
       shortDesc: item.shortDesc || item.cardDesc || "",
-      techDesc: item.techDesc || {},
+      techDesc: fillTechDesc(item, item.techDesc, currentMachineModel),
       price: item.price != null
         ? (() => {
           const base = (item.price * (item.qty || 1));
@@ -343,10 +350,17 @@ function buildProposalData({
       if (match) size = match[1];
     }
 
-    // Dynamically replace "TBD" with the extracted size if available
+    const layflatW = customLayflat ? customLayflat.replace(/[^0-9]/g, '') : (machineModel?.layflatWidthMm || machineModel?.widthMm || "1250");
+
+    // Dynamically replace "TBD" with the extracted size if available, and [W] with layflat width
     Object.keys(filled).forEach(k => {
-      if (typeof filled[k] === 'string' && size) {
-        filled[k] = filled[k].replace(/TBD/g, size);
+      if (typeof filled[k] === 'string') {
+        if (size) {
+          filled[k] = filled[k].replace(/TBD/g, size);
+        }
+        if (filled[k].includes('[W]')) {
+          filled[k] = filled[k].replace(/\[W\]/g, layflatW);
+        }
       }
     });
     // Prefer user input roller width if applicable
@@ -562,8 +576,8 @@ function buildProposalData({
               qty: 1,
               image: item.image,
               category: "Collapsing Frame",
-              shortDesc: cfDesc,
-              scopeDesc: cfDesc,
+              shortDesc: overrides[`${item.id}-cf`] !== undefined ? overrides[`${item.id}-cf`] : cfDesc,
+              scopeDesc: overrides[`${item.id}-cf`] !== undefined ? overrides[`${item.id}-cf`] : cfDesc,
               techDesc: techDescFilled,
               _autoDesc: cfDesc,
             },
@@ -572,8 +586,8 @@ function buildProposalData({
               name: item.name.replace(/Secondary Nip & /i, ""),
               qty: item.qty || 1,
               image: item.image,
-              shortDesc: winderDesc,
-              scopeDesc: winderDesc,
+              shortDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
+              scopeDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
               techDesc: techDescFilled,
               _autoDesc: winderDesc,
             }
@@ -585,8 +599,8 @@ function buildProposalData({
               name: "Secondary Nip Assembly",
               qty: 1,
               image: item.image,
-              shortDesc: nipDesc,
-              scopeDesc: nipDesc,
+              shortDesc: overrides[`${item.id}-nip`] !== undefined ? overrides[`${item.id}-nip`] : nipDesc,
+              scopeDesc: overrides[`${item.id}-nip`] !== undefined ? overrides[`${item.id}-nip`] : nipDesc,
               techDesc: techDescFilled,
               _autoDesc: nipDesc,
             },
@@ -595,8 +609,8 @@ function buildProposalData({
               name: item.name.replace(/Secondary Nip & /i, ""),
               qty: item.qty || 1,
               image: item.image,
-              shortDesc: winderDesc,
-              scopeDesc: winderDesc,
+              shortDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
+              scopeDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
               techDesc: techDescFilled,
               _autoDesc: winderDesc,
             }
@@ -645,8 +659,8 @@ function buildProposalData({
             qty: 1,
             image: item.image,
             category: "Collapsing Frame",
-            shortDesc: "if there is hauloff then hauloff will come with collapsing frame",
-            scopeDesc: "if there is hauloff then hauloff will come with collapsing frame",
+            shortDesc: overrides[`${item.id}-cf`] !== undefined ? overrides[`${item.id}-cf`] : "if there is hauloff then hauloff will come with collapsing frame",
+            scopeDesc: overrides[`${item.id}-cf`] !== undefined ? overrides[`${item.id}-cf`] : "if there is hauloff then hauloff will come with collapsing frame",
             techDesc: {
               "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
               "Material": "PBT rollers for scratch-free handling.",
@@ -659,8 +673,8 @@ function buildProposalData({
             name: (item.name || "").replace(/Secondary Nip & /i, ""),
             qty: item.qty || 1,
             image: item.image,
-            shortDesc: winderDesc,
-            scopeDesc: winderDesc,
+            shortDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
+            scopeDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
             techDesc: techDescFilled,
             _autoDesc: winderDesc,
           }
@@ -672,8 +686,8 @@ function buildProposalData({
             name: "Secondary Nip Assembly",
             qty: 1,
             image: item.image,
-            shortDesc: nipDesc,
-            scopeDesc: nipDesc,
+            shortDesc: overrides[`${item.id}-nip`] !== undefined ? overrides[`${item.id}-nip`] : nipDesc,
+            scopeDesc: overrides[`${item.id}-nip`] !== undefined ? overrides[`${item.id}-nip`] : nipDesc,
             techDesc: techDescFilled,
             _autoDesc: nipDesc,
           },
@@ -682,8 +696,8 @@ function buildProposalData({
             name: (item.name || "").replace(/Secondary Nip & /i, ""),
             qty: item.qty || 1,
             image: item.image,
-            shortDesc: winderDesc,
-            scopeDesc: winderDesc,
+            shortDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
+            scopeDesc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
             techDesc: techDescFilled,
             _autoDesc: winderDesc,
           }
@@ -1461,6 +1475,11 @@ export default function SummaryPage() {
 
     if (machineType === "material-handling" && isMixer) {
       return false;
+    }
+
+    if (machineType === "mono" || machineType === "aba") {
+      if (isGrandTotal) return false;
+      return true;
     }
 
     return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation;

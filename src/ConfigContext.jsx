@@ -29,14 +29,16 @@ import { GAUGE_ADDONS } from "./data/gauge";
 import { WEB_GUIDE_ADDONS } from "./data/webGuide";
 import { CHILLER_ADDONS } from "./data/chiller";
 import { EXTRUDER_ADDONS } from "./data/extruderAddons";
-import { HEAT_EXCHANGER_ADDONS } from "./data/heatExchanger";
+import { HEAT_EXCHANGER_ADDONS } from "../src/data/heatExchanger";
+import { PRINTER_ADDONS } from "../src/data/printer";
 import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
 import { BIMETALLIC_BASE, SCREW_SIZES } from "./data/bimetallic";
 import { WINDER_ADDONS } from "./data/winderAddons";
-import { DIE_ROTATION_ADDON } from "./data/dieAddons";
+import { DIE_ADDONS, DIE_ROTATION_ADDON } from "./data/dieAddons";
 import { EPC_COMPONENTS } from "./data/epc";
+import { OPTIONAL_FEATURE_ADDONS } from "./data/optionalFeatures";
 import { MODEL_PRESETS } from "./data/modelPresets";
 
 import { Modal } from "../components/ui/Modal"; // ← keep your existing Modal
@@ -111,6 +113,8 @@ export const ADDONS_DATA = {
   "Winder Addons": WINDER_ADDONS,
   // "MDO Unit": MDO_ADDONS,
   "EPC": EPC_COMPONENTS,
+  "Optional Equipments": PRINTER_ADDONS,
+  "Optional Features": OPTIONAL_FEATURE_ADDONS,
 };
 
 
@@ -1231,16 +1235,99 @@ export function ConfigProvider({ children }) {
       out["Extruder Addons"] = extAddons;
     }
 
-    // --- DYNAMIC DIE ROTATION ADDON ---
+    // --- DYNAMIC DIE ADDONS ---
     const selectedDie = (selected || []).find(s => s.category === "Die Head");
     if (selectedDie) {
       const dieSize = selectedDie.diameterMm || selectedDie.size || "";
-      out["Die Addons"] = [{
-        ...DIE_ROTATION_ADDON,
-        name: `Die Rotation System for ${dieSize} mm Die`,
-        id: "die-rotation-addon",
-        metadata: { ...DIE_ROTATION_ADDON.metadata, size: String(dieSize) }
-      }];
+      
+      out["Die Addons"] = DIE_ADDONS.map(addon => {
+        let dynamicPrice = addon.price;
+        if (machineType === "mono" && addon.monoPrices) {
+          const mc = currentMachineModel?.code || "";
+          for (const [key, val] of Object.entries(addon.monoPrices)) {
+            if (mc.includes(key)) {
+              dynamicPrice = val;
+            }
+          }
+        }
+        
+        let addonName = addon.name;
+        if (addon.id === "die-rotation-addon") {
+           addonName = `Die Rotation System for ${dieSize} mm Die`;
+        } else if (addon.id === "additional-lip-set-addon") {
+           addonName = `Additional Lip Set with Inserts for ${dieSize} mm Die`;
+        }
+
+        return {
+          ...addon,
+          name: addonName,
+          price: dynamicPrice,
+          metadata: { ...addon.metadata, size: String(dieSize) }
+        };
+      });
+    }
+
+    // --- DYNAMIC BACK TO BACK WINDER PRICING ---
+    if (out["Winder Addons"]) {
+      out["Winder Addons"] = out["Winder Addons"].map(addon => {
+        if (addon.monoPrices) {
+          let dynamicPrice = addon.price;
+          if (machineType === "mono") {
+            const mc = currentMachineModel?.code || "";
+            for (const [key, val] of Object.entries(addon.monoPrices)) {
+              if (mc.includes(key)) {
+                dynamicPrice = val;
+              }
+            }
+          }
+          return { ...addon, price: dynamicPrice };
+        }
+        return addon;
+      });
+    }
+
+    // --- DYNAMIC MATERIAL HANDLING PRICING ---
+    if (out["Material Handling"]) {
+      out["Material Handling"] = out["Material Handling"].map(addon => {
+        if (addon.monoPrices) {
+          let dynamicPrice = addon.price;
+          if (machineType === "mono" || machineType === "aba") {
+            const mc = currentMachineModel?.code || "";
+            for (const [key, val] of Object.entries(addon.monoPrices)) {
+              if (mc.includes(key)) {
+                dynamicPrice = val;
+              }
+            }
+          }
+          return { ...addon, price: dynamicPrice };
+        }
+        return addon;
+      });
+    }
+
+    // --- DYNAMIC UP DOWN BUBBLE CAGE UPGRADE FOR 3 LAYER ---
+    if (machineType === "3layer") {
+      const selectedBC = (selected || []).find(s => s.category === "Bubble Cage");
+      if (selectedBC) {
+        const bcSize = parseInt(selectedBC.size) || 0;
+        const upDownPrice = UP_DOWN_BC_PRICES[bcSize.toString()] || 150000;
+        const currentPrice = selectedBC.price || 0;
+        const upgradePrice = Math.max(0, upDownPrice - currentPrice);
+
+        out["Bubble Cage Addons"] = [{
+          id: "addon-up-down-bubble-cage",
+          name: "Up Down Bubble Cage",
+          category: "Bubble Cage Addons",
+          image: "/images/Bubble Cage/UD Bubble Cage.png",
+          cardDesc: "Upgrade to motorized up-down & open-close bubble cage.",
+          price: upgradePrice > 0 ? upgradePrice : 150000,
+          isDynamic: false,
+          techDesc: {
+            "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+            "Actuation of arms": "Motorized Up Down & Open-Close with Linear Actuator."
+          }
+        }];
+      }
     }
 
     return out;
@@ -1327,21 +1414,34 @@ export function ConfigProvider({ children }) {
       if (category === "winder" && isBackToBackSelected) {
         const addon = selectedAddons.find(a => a.id === "winder-manual-back-to-back-dynamic");
         if (addon) {
+          const layflatW = customLayflat ? customLayflat.replace(/[^0-9]/g, '') : (machineDetails?.layflatWidthMm || machineDetails?.widthMm || "1250");
+          const newWinderTechDesc = {
+            ...updatedItem.techDesc,
+            "Two Surface Winder": `Maximum web width of ${layflatW} mm with Manual Changeover.`,
+            "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": (machineType === "mono" || machineType === "aba") ? "02 HP AC motor with variable frequency drive." : "02 HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+            "Tension control": "Through Torque mode.",
+            "Type of winder": "Two back to back type.",
+            "Length counter meter": "Provided",
+            "Trim Suction Blower": "Provided"
+          };
+          delete newWinderTechDesc["Winder Type"];
+          delete newWinderTechDesc["Type"];
+          delete newWinderTechDesc["Actuation"];
+          
+          // Remove old winder designation lines that cause duplicate type lines in the PDF
+          Object.keys(newWinderTechDesc).forEach(k => {
+            if (k.toLowerCase().includes("surface winder (") || k.toLowerCase().includes("surface winders (")) {
+              delete newWinderTechDesc[k];
+            }
+          });
+
           updatedItem = {
             ...updatedItem,
             name: addon.name || "Two back to back Surface Winder",
             customName: addon.customName || addon.name || "Two back to back Surface Winder",
             image: addon.image || updatedItem.image,
-            techDesc: {
-              ...updatedItem.techDesc,
-              "Type": "Back to back Surface Winder",
-              "Actuation": "Manual Changeover.",
-              "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
-              "Surface winder drive": (machineType === "mono" || machineType === "aba") ? "2 HP AC motor with variable frequency drive." : "2 HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
-              "Tension control": "Through Torque mode.",
-              "Length counter meter": "Provided",
-              "Trim Suction Blower": "Provided"
-            }
+            techDesc: newWinderTechDesc
           };
         }
       }
@@ -1358,6 +1458,23 @@ export function ConfigProvider({ children }) {
           typeDesc = typeDesc.replace(/arranged to /gi, `with ${armsText} arranged to `);
           newTechDesc["Type"] = typeDesc;
         }
+
+        const isUpDownSelected = selectedAddons.some(a => a.id === "addon-up-down-bubble-cage");
+        if (isUpDownSelected) {
+          const addon = selectedAddons.find(a => a.id === "addon-up-down-bubble-cage");
+          updatedItem = {
+            ...updatedItem,
+            name: "Motorised Up Down Bubble Cage",
+            customName: "Motorised Up Down Bubble Cage",
+            image: addon.image || updatedItem.image,
+            techDesc: {
+              ...newTechDesc,
+              ...addon.techDesc
+            }
+          };
+          newTechDesc = updatedItem.techDesc;
+        }
+
         updatedItem = {
           ...updatedItem,
           techDesc: newTechDesc
@@ -1384,7 +1501,7 @@ export function ConfigProvider({ children }) {
         };
       }
 
-      return updatedItem;
+      console.log("updatedItem:", updatedItem.category, updatedItem.name, updatedItem.customName); return updatedItem;
     });
   }, [selected, selectedAddons]);
 
@@ -1440,7 +1557,13 @@ export function ConfigProvider({ children }) {
       const isLeverScreenChanger = item.id === "addon-lever-screen-changer";
 
       const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
-      const isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation || isLeverScreenChanger;
+      
+      let isHidden = isBimetallic || isLoadcell || isGrandTotal || isDieRotation || isLeverScreenChanger;
+      if (machineType === "mono" || machineType === "aba") {
+        if (isDieRotation) {
+          isHidden = false;
+        }
+      }
 
       const base = (item.price || 0) * (item.qty || 1);
       const m = item.markup || 0;
@@ -1675,13 +1798,13 @@ export function ConfigProvider({ children }) {
                 name: "Collapsing Frame",
                 qty: 1,
                 category: "Collapsing Frame",
-                desc: cfDesc,
+                desc: overrides[`${item.id}-cf`] !== undefined ? overrides[`${item.id}-cf`] : cfDesc,
               },
               {
                 id: `${item.id}-winder`,
                 name: item.name.replace(/Secondary Nip & /i, ""),
                 qty: item.qty || 1,
-                desc: winderDesc,
+                desc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
               }
             ];
           } else {
@@ -1690,13 +1813,13 @@ export function ConfigProvider({ children }) {
                 id: `${item.id}-nip`,
                 name: "Secondary Nip Assembly",
                 qty: 1,
-                desc: nipDesc,
+                desc: overrides[`${item.id}-nip`] !== undefined ? overrides[`${item.id}-nip`] : nipDesc,
               },
               {
                 id: `${item.id}-winder`,
                 name: item.name.replace(/Secondary Nip & /i, ""),
                 qty: item.qty || 1,
-                desc: winderDesc,
+                desc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
               }
             ];
           }
@@ -1721,6 +1844,7 @@ export function ConfigProvider({ children }) {
 
     const winderTowerAddonsRaw = preSelectedAddons.filter(item => {
       if (!item || !item.name) return false;
+      if (item.id === "winder-manual-back-to-back-dynamic") return false;
       const n = item.name.toLowerCase();
       const c = (item.category || "").toLowerCase();
       return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel") && item.id !== "addon-loadcell-tension";
@@ -1743,19 +1867,19 @@ export function ConfigProvider({ children }) {
               name: "Collapsing Frame",
               qty: 1,
               category: "Collapsing Frame",
-              desc: "if there is hauloff then hauloff will come with collapsing frame",
+              desc: overrides[`${item.id}-cf`] !== undefined ? overrides[`${item.id}-cf`] : "if there is hauloff then hauloff will come with collapsing frame",
             },
             {
               id: `${item.id}-winder`,
               name: item.name.replace(/Secondary Nip & /i, ""),
               qty: item.qty || 1,
-              desc: winderDesc,
+              desc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc,
             }
           ];
         } else {
           return [
-            { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: nipDesc },
-            { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: winderDesc }
+            { id: `${item.id}-nip`, name: "Secondary Nip Assembly", qty: 1, desc: overrides[`${item.id}-nip`] !== undefined ? overrides[`${item.id}-nip`] : nipDesc },
+            { id: `${item.id}-winder`, name: item.name.replace(/Secondary Nip & /i, ""), qty: item.qty || 1, desc: overrides[`${item.id}-winder`] !== undefined ? overrides[`${item.id}-winder`] : winderDesc }
           ];
         }
       }
@@ -1970,7 +2094,13 @@ export function ConfigProvider({ children }) {
         if (machineType === "material-handling" && isMixer) {
           return false;
         }
-        return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger;
+
+        if (machineType === "mono" || machineType === "aba") {
+          if (a.id === "die-rotation-addon") return true;
+          if (a.id === "winder-manual-back-to-back-dynamic") return true;
+        }
+
+        return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger && a.id !== "winder-manual-back-to-back-dynamic";
       }).map((a, idx) => {
         const rawPrice = (a.price || 0) * (a.qty || 1);
         const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;

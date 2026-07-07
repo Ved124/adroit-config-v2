@@ -8,11 +8,13 @@ import { motion } from "framer-motion";
 import { CORONA_PRICES, CORONA_BRANDS } from "../src/data/corona";
 import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
 import { PRASAD_AIR_CHILLER_PRICES, PRASAD_WATER_CHILLER_PRICES, CHILLER_BRANDS, CONAIR_AIR_CHILLER_PRICES, CONAIR_WATER_CHILLER_PRICES } from "../src/data/chiller";
-import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS } from "../src/data/heatExchanger";
+import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS, HEAT_EXCHANGER_UNO_PRICES, HEAT_EXCHANGER_DUO_PRICES } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
 import { SCREW_SIZES } from "../src/data/bimetallic";
-import { DIE_ROTATION_PRICES } from "../src/data/dieAddons";
+import { DIE_ROTATION_PRICES, ADDITIONAL_LIP_PRICES } from "../src/data/dieAddons";
 import { EPC_COMPONENTS, EPC_BRANDS, EPC_PRICES } from "../src/data/epc";
+import { BACK_TO_BACK_PRICES, AIR_SHAFT_PRICES } from "../src/data/winderAddons";
+import { HOPPER_LOADER_UNO_PRICES, HOPPER_LOADER_DUO_PRICES, HOPPER_LOADER_MULTI, HOPPER_DRYER_B_PRICES } from "../src/data/materialHandling";
 
 export default function AddonsPage() {
   const router = useRouter();
@@ -174,10 +176,21 @@ function AddonCard({
   const isChiller = (isAirChiller || isWaterChiller) && item.isDynamic;
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isMixer = item.id === "mixer-dynamic";
-  const isHeatExchanger = item.id === "heat-exchanger-dynamic";
+  const isHeatExchanger = item.type === "heat-exchanger";
+  const isHeatExchangerUno = item.id === "heat-exchanger-uno";
+  const isHeatExchangerDuo = item.id === "heat-exchanger-duo";
   const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
   const isDieRotation = item.id === "die-rotation-addon";
   const isEpC = item.id === "epc-dynamic";
+  
+  const isBackToBack = item.id === "winder-manual-back-to-back-dynamic";
+  const isAirShaft = item.id === "addon-air-shaft-dynamic";
+  const isHopperLoaderUno = item.id === "hopper-loader-uno-dynamic";
+  const isHopperLoaderDuo = item.id === "hopper-loader-duo-dynamic";
+  const isHopperLoaderTrio = item.id === "hopper-loader-300kg";
+  const isHopperDryerB = item.id === "hopper-dryer-b";
+  const isAdditionalLip = item.id === "additional-lip-set-addon";
+  const isOptionalFeature = item.category === "Optional Features";
 
   const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : (isEpC ? EPC_BRANDS : []))))));
 
@@ -204,7 +217,11 @@ function AddonCard({
   else if (isChiller) prices = chillerPrices;
   else if (isMixerDryer) prices = MIXER_DRYER_PRICES;
   else if (isMixer) prices = MIXER_PRICES;
-  else if (isHeatExchanger) prices = HEAT_EXCHANGER_PRICES;
+  else if (isHeatExchanger) {
+    if (item.name === "Heat Exchanger Uno") prices = HEAT_EXCHANGER_UNO_PRICES;
+    else if (item.name === "Heat Exchanger Duo") prices = HEAT_EXCHANGER_DUO_PRICES;
+    else prices = HEAT_EXCHANGER_PRICES;
+  }
   else if (isBimetallic) {
     prices = SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {});
   } else if (isDieRotation) {
@@ -213,13 +230,25 @@ function AddonCard({
   else if (isEpC) {
     prices = EPC_PRICES;
   }
+  else if (isBackToBack) prices = BACK_TO_BACK_PRICES;
+  else if (isAirShaft) prices = AIR_SHAFT_PRICES;
+  else if (isHopperLoaderUno) prices = HOPPER_LOADER_UNO_PRICES;
+  else if (isHopperLoaderDuo) prices = HOPPER_LOADER_DUO_PRICES;
+  else if (isHopperLoaderTrio) prices = HOPPER_LOADER_MULTI;
+  else if (isHopperDryerB) prices = HOPPER_DRYER_B_PRICES;
+  else if (isAdditionalLip) prices = ADDITIONAL_LIP_PRICES;
+  // Generic fallback: use item.prices if supplied on the data object
+  else if (item.prices && Object.keys(item.prices).length > 0) prices = item.prices;
 
   // UI customization based on component type
   const isOutputBased = isMixerDryer || isMixer || isHeatExchanger;
   const isCapacityBased = isChiller && Object.keys(prices).length > 0 && Object.keys(prices)[0].includes("TR");
-  const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Max Roller Width")));
+  const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Size")));
+  
+  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHopperLoaderUno || isHopperLoaderDuo || isHopperLoaderTrio || isHopperDryerB || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature;
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
-  const formatSize = (s) => (s && s.includes("TR")) ? s : `${s} ${unit}`;
+  // For optional features the key is now a plain mm size — uses the standard formatter below
+  const formatSize = (s) => (s && (s.includes("TR") || s.includes('"'))) ? s : `${s} ${unit}`;
   // EPC: price is keyed by brand — use selectedBrand as the effective size key
   const epcPrice = isEpC ? (EPC_PRICES[selectedBrand] || 0) : null;
 
@@ -303,17 +332,22 @@ function AddonCard({
       else if (isEpC) {
         // EPC: brand-only, no size
         customName = `Extrusion Process Control With Trio Loader (${selectedBrand})`;
+      } else if (isAdditionalLip) {
+        customName = `Additional Lip Set with Inserts`;
+      } else if (isOptionalFeature) {
+        // Optional Features: name with mm size e.g. "PLC Control in Place of POTs (1350 mm)"
+        customName = `${item.name} (${selectedSize} mm)`;
       }
 
       addAddon(category, item, {
-        brand: (isDieRotation || isBimetallic) ? undefined : selectedBrand,
+        brand: (isDieRotation || isBimetallic || isOptionalFeature) ? undefined : selectedBrand,
         size: isEpC ? undefined : selectedSize,
         price: isEpC ? epcPrice : currentPrice,
         customName: customName,
         image: displayImage,
         techDesc: {
           ...item.techDesc,
-          ...((isDieRotation || isBimetallic) ? {} : { "Brand": selectedBrand }),
+          ...((isDieRotation || isBimetallic || isBackToBack || isAirShaft || isHopperLoaderUno || isHopperLoaderDuo || isHopperDryerB || isAdditionalLip || isOptionalFeature) ? {} : { "Brand": selectedBrand }),
           ...(isEpC ? {} : { [selectorLabel]: formatSize(selectedSize) }),
         }
       });
@@ -373,7 +407,7 @@ function AddonCard({
       {/* Dynamic Selectors */}
       {item.isDynamic && (
         <div className="mt-4 grid grid-cols-2 gap-2 p-2 bg-slate-50 rounded-lg border border-slate-100">
-          {!isDieRotation && !isBimetallic && (
+          {!hideBrandDropdown && (
             <div className={`flex flex-col gap-1 ${isEpC ? "col-span-2" : ""}`}>
               <span className="text-[10px] font-bold text-slate-500 uppercase px-1">Brand</span>
               <select
@@ -387,7 +421,7 @@ function AddonCard({
             </div>
           )}
           {!isEpC && (
-            <div className={`flex flex-col gap-1 ${(isDieRotation || isBimetallic) ? "col-span-2" : ""}`}>
+            <div className={`flex flex-col gap-1 ${hideBrandDropdown ? "col-span-2" : ""}`}>
               <span className="text-[10px] font-bold text-slate-500 uppercase px-1">{selectorLabel}</span>
               <select
                 disabled={isSelected}

@@ -512,7 +512,7 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
 //   Table: SR. NO | DESCRIPTION | PRICE
 //   TOTAL Rs. row at bottom
 function CommercialScopePage({ price, basicInWords, discountedPrice, discountedWords, optionalItems, addonsTotal, currency = "INR", grandTotal = null, grandTotalName = "Total Price (Machine + Optional Equipment)", grandTotalWords = "" }) {
-    const opts = (optionalItems || []).filter(o => o && o.name && o.id !== "grand-total-line" && o.id !== "die-rotation-addon");
+    const opts = (optionalItems || []).filter(o => o && o.name && o.id !== "grand-total-line");
 
     // Strips currency symbols and trailing /- for clean numeric display in tables
     const cleanPrice = (val) => {

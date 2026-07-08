@@ -1827,7 +1827,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "800",
           customName: "Collapsing Frame - 800 mm",
-          scopeDesc: "Collapsing frame with Segmented wooden slates, side guides, Main Nip with 1 HP AC Drive. Gusset included.",
+          scopeDesc: "Collapsing frame with wooden slates, side guides, Main Nip with 1 HP AC Drive. Gusset included.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "800 mm",
@@ -1948,12 +1948,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
+          scopeDesc: "Collapsing frame with Wooden Slates, Side guides, Main Nip with 02 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1370 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
@@ -2018,12 +2018,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
+          scopeDesc: "Collapsing frame with Wooden Slates, Side guides, Main Nip with 02 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1370 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
@@ -2077,7 +2077,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Die Head",
-        id: "die-mono-200",
+        id: "die-mono-250",
         qty: 1,
         metadata: {
 
@@ -2123,12 +2123,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         metadata: {
           size: "1100",
           customName: "Collapsing Frame - 1100 mm",
-          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 1 HP AC Drive.",
+          scopeDesc: "Collapsing frame with Wooden Slates, Side guides, Main Nip with 1 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1100 mm",
             "Nip roller drive": "01 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
@@ -2188,12 +2188,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
+          scopeDesc: "Collapsing frame with  Wooden Slates, Side guides, Main Nip with 02 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1900 mm",
             "Nip roller drive": "02 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
+            "Collapsing Frames": "Wooden Slates."
           }
         }
       },
@@ -2245,12 +2245,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "cf-pbt-dynamic",
         qty: 1,
         metadata: {
-          scopeDesc: "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 03 HP AC Drive.",
+          scopeDesc: "Collapsing frame with Wooden Slates, Side guides, Main Nip with 03 HP AC Drive.",
           techDesc: {
             "Main Nip rollers": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "2900 mm",
             "Nip roller drive": "03 HP AC motor with variable frequency drive.",
-            "Collapsing Frames": "PBT rollers."
+            "Collapsing Frames": "Wooden Slates"
           }
         }
       },

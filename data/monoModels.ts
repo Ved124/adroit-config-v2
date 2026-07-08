@@ -335,7 +335,7 @@ export const MONO_MODELS = [
     maxOutputKgHr: "70–90 KG/HR",
     screwLdRatio: "30:1",
     extruderMotorKw: "22.5",
-    dieSizeHmLd: "200 MM",
+    dieSizeHmLd: "250 MM",
     airRingBlowerKw: "3.75",
 
     mainNipLineSpeed: "10–50 MPM",

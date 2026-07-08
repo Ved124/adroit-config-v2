@@ -532,17 +532,31 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     : `${numWord(qty)} `;
 
   if (isBackToBack) {
+    const isMonoOrAba = machineModel && (machineModel.machineType === "mono" || machineModel.machineType === "aba");
+    const hasAirShaft = (selectedAddons || []).some(a => a.id === "addon-air-shaft-dynamic");
+    
+    let shaftStr = "04 nos.- 3” Air shaft";
+    let gearMotorStr = "Post Extrusion Gear Motors will be Bonvario or Equivalent.";
+
+    if (isMonoOrAba) {
+      shaftStr = hasAirShaft ? "04 nos.- 3” Air shaft" : "04 nos.- 3” Mechanical shaft";
+      gearMotorStr = ""; 
+    }
+
     const parts = [
       "Manual roll change over mechanism",
       tensionStr,
       "digital length counter",
-      "04 nos.- 3” Air shaft",
+      shaftStr,
       "bow roller",
       `${hpLabel} AC Motor and Drive`
     ].filter(Boolean);
 
-    return prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` +
-      parts.join(", ") + ". Post Extrusion Gear Motors will be Bonvario or Equivalent.";
+    let res = prefix + `${qWord}${typeLabel} of ${widthStr} film width. ` + parts.join(", ") + ".";
+    if (gearMotorStr) {
+      res += " " + gearMotorStr;
+    }
+    return res;
   }
 
   if (isTwoSeparate) {

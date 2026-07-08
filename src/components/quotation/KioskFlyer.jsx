@@ -42,7 +42,7 @@ export const KioskFlyer = forwardRef(({ data }, ref) => {
 
     const scope = Array.isArray(data?.scope) ? data.scope : [];
     const optionals = Array.isArray(data?.optional_items)
-        ? data.optional_items.filter(o => o && o.id !== "grand-total-line" && o.id !== "die-rotation-addon")
+        ? data.optional_items.filter(o => o && o.id !== "grand-total-line")
         : [];
     const topItems = scope.slice(0, 20);
 

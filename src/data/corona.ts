@@ -21,16 +21,28 @@ export interface CoronaTreater {
 
 // Extracted from user image
 export const CORONA_PRICES = {
+  "U20\"": 70000,
+  "U24\"": 70000,
+  "U32\"": 80000,
+  "U40\"": 90000,
+  "U50\"": 115000,
+  "U72\"": 165000,
+  "U110\"": 360000,
+  "D26\"": 85000,
+  "D32\"": 95000,
+  "D40\"": 135000,
+  "D50\"": 160000,
+  "D60\"": 200000,
   "1120": 425000,
-  "1350": 550000,
-  "1450": 550000,
-  "1550": 625000,
+  "1370": 550000,
+  "1450": 625000,
   "1620": 715000,
   "1870": 715000,
-  "1970": 715000,
+  "1970": 785000,
   "2120": 850000,
   "2370": 975000,
   "2620": 1025000,
+
 };
 
 export const CORONA_BRANDS = ["Jain Electrotech", "IEEC"];
@@ -48,7 +60,7 @@ export const CORONA_TREATER_COMPONENTS: CoronaTreater[] = [
     isDynamic: true,
     techDesc: {
       "Brand": "Selectable (Jain Electro / IEEC)",
-      "Size": "Selectable (1120mm - 2620mm)",
+      "Size": "Selectable (U20\" - U110\")",
       "System": "Surface treatment system for plastic films.",
     },
     shortDesc: "High performance corona treater for superior surface treatment."

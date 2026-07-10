@@ -11,6 +11,9 @@ export interface EPC {
     qty?: number;
     shortDesc?: string;
     isDynamic?: boolean; // New flag for dropdown-based selection
+    category?: string;
+    machineTypes?: string[];
+    prices?: Record<string, number>;
 }
 
 // Extracted from user image
@@ -54,7 +57,7 @@ export const EPC_COMPONENTS: EPC[] = [
         name: "Single Component Gravimetric System",
         category: "EPC",
         machineTypes: ["mono", "aba", "3layer", "5layer"],
-        image: "/images/Acessories/loadcell.png",
+        image: "/images/Acessories/EPC.png",
         cardDesc: "Gravimetric blending and dosing system for accurate single-component material feeding based on weight, ensuring consistent film quality.",
         price: 0,
         isDynamic: true,

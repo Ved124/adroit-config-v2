@@ -14,41 +14,41 @@ export interface EPC {
 }
 
 // Extracted from user image
-export const EPC_PRICES = {
-    "Adroit": 1085000,
-    "Conair": 1085000,
-    "Prasad": 1085000,
-};
+// export const EPC_PRICES = {
+//     "Adroit": 1085000,
+//     "Conair": 1085000,
+//     "Prasad": 1085000,
+// };
 
-export const EPC_BRANDS = ["Conair", "Prasad", "Adroit"];
+// export const EPC_BRANDS = ["Conair", "Prasad", "Adroit"];
 
 export const GRAVIMETRIC_PRICES: Record<string, number> = {
-  "1350": 1025000,
-  "1450": 1025000,
-  "1550": 1025000,
-  "1625": 1025000,
-  "1870": 1025000,
-  "1970": 1025000,
-  "2125": 1250000,
-  "2370": 1250000,
-  "2620": 1250000,
+    "1350": 1025000,
+    "1450": 1025000,
+    "1550": 1025000,
+    "1625": 1025000,
+    "1870": 1025000,
+    "1970": 1025000,
+    "2125": 1250000,
+    "2370": 1250000,
+    "2620": 1250000,
 };
 
 export const EPC_COMPONENTS: EPC[] = [
-    {
-        id: "epc-dynamic",
-        name: "Extrusion Process Control With Trio Loader",
-        image: "/images/Acessories/EPC.png",
-        cardDesc: "Select Brand to add.",
-        price: 0,
-        qty: 1,
-        isDynamic: true,
-        techDesc: {
-            "Brand": "Selectable (Conair / Prasad / Adroit)",
-            "Type": "Extrusion Process Control With Trio Loader",
-        },
-        shortDesc: "Extrusion Process Control With Trio Loader."
-    },
+    // {
+    //     id: "epc-dynamic",
+    //     name: "Extrusion Process Control With Trio Loader",
+    //     image: "/images/Acessories/EPC.png",
+    //     cardDesc: "Select Brand to add.",
+    //     price: 0,
+    //     qty: 1,
+    //     isDynamic: true,
+    //     techDesc: {
+    //         "Brand": "Selectable (Conair / Prasad / Adroit)",
+    //         "Type": "Extrusion Process Control With Trio Loader",
+    //     },
+    //     shortDesc: "Extrusion Process Control With Trio Loader."
+    // },
     {
         id: "optional-gravimetric-system",
         name: "Single Component Gravimetric System",

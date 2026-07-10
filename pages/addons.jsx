@@ -12,7 +12,7 @@ import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS, HEAT_EXCHANGER_UNO_PRICES
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
 import { BIMETALLIC_PRICES } from "../src/data/bimetallic";
 import { DIE_ROTATION_PRICES, ADDITIONAL_LIP_PRICES } from "../src/data/dieAddons";
-import { EPC_COMPONENTS, EPC_BRANDS, EPC_PRICES } from "../src/data/epc";
+import { EPC_COMPONENTS } from "../src/data/epc";
 import { BACK_TO_BACK_PRICES, AIR_SHAFT_PRICES } from "../src/data/winderAddons";
 import { HOPPER_LOADER_UNO_PRICES, HOPPER_LOADER_DUO_PRICES, HOPPER_LOADER_MULTI, HOPPER_DRYER_B_PRICES } from "../src/data/materialHandling";
 
@@ -181,7 +181,7 @@ function AddonCard({
   const isHeatExchangerDuo = item.id === "heat-exchanger-duo";
   const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
   const isDieRotation = item.id === "die-rotation-addon";
-  const isEpC = item.id === "epc-dynamic";
+  const isEpC = false;
   
   const isBackToBack = item.id === "winder-manual-back-to-back-dynamic";
   const isAirShaft = item.id === "addon-air-shaft-dynamic";
@@ -192,7 +192,7 @@ function AddonCard({
   const isAdditionalLip = item.id === "additional-lip-set-addon";
   const isOptionalFeature = item.category === "Optional Features";
 
-  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : (isEpC ? EPC_BRANDS : []))))));
+  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : [])))));
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
@@ -227,9 +227,6 @@ function AddonCard({
   } else if (isDieRotation) {
     prices = DIE_ROTATION_PRICES;
   }
-  else if (isEpC) {
-    prices = EPC_PRICES;
-  }
   else if (isBackToBack) prices = BACK_TO_BACK_PRICES;
   else if (isAirShaft) prices = AIR_SHAFT_PRICES;
   else if (isHopperLoaderUno) prices = HOPPER_LOADER_UNO_PRICES;
@@ -249,8 +246,7 @@ function AddonCard({
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
   // For optional features the key is now a plain mm size — uses the standard formatter below
   const formatSize = (s) => (s && (s.includes("TR") || s.includes('"'))) ? s : `${s} ${unit}`;
-  // EPC: price is keyed by brand — use selectedBrand as the effective size key
-  const epcPrice = isEpC ? (EPC_PRICES[selectedBrand] || 0) : null;
+  const epcPrice = null;
 
 
   const [selectedSize, setSelectedSize] = useState(

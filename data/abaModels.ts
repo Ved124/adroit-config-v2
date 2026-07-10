@@ -285,7 +285,7 @@ export const ABA_MODELS = [
     maxOutputKgHr: "140–170 KG/HR",
     screwLdRatio: "30:1",
     extruderMotorKw: "22.5/30.0",
-    dieSizeHmLd: "600 MM",
+    dieSizeHmLd: "300 MM",
     airRingBlowerKw: "7.5",
 
 

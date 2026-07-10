@@ -42,6 +42,17 @@ export const AIR_SHAFT_PRICES: Record<string, number> = {
   "D40\"": 29000,
   "D50\"": 31000,
   "D60\"": 35000,
+  "1000": 0,
+  "1250": 0,
+  "1350": 0,
+  "1500": 0,
+  "1750": 0,
+  "1850": 0,
+  "2000": 0,
+  "2250": 0,
+  "2500": 0,
+  "2750": 0,
+  "3000": 0,
 };
 
 export const WINDER_ADDONS: WinderAddon[] = [

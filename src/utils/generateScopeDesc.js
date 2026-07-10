@@ -508,10 +508,12 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
   // If still no width, try item.size or item.currentSize, converting roller width to film width
   if (!widthStr && (item.size || item.currentSize)) {
     const s = parseInt(item.size || item.currentSize) || 0;
-    // If size matches standard machine widths (1000, 1250, 1350, 1500, etc), it might already be film width
-    // but the safest fallback is just s
-    const diff = (s === 1450) ? 100 : 120;
-    const maxFilmWidth = s > 500 ? (s - diff) : s;
+    const standardFilmWidths = [850, 950, 1000, 1250, 1350, 1500, 1750, 1850, 2000, 2250, 2500, 2750, 3000];
+    let maxFilmWidth = s;
+    if (s > 500 && !standardFilmWidths.includes(s)) {
+      const diff = (s === 1450) ? 100 : 120;
+      maxFilmWidth = s - diff;
+    }
     widthStr = `${maxFilmWidth} mm`;
   }
 
@@ -535,11 +537,10 @@ export function generateWinder(item, machineModel = null, { includeNipPrefix = t
     const isMonoOrAba = machineModel && (machineModel.machineType === "mono" || machineModel.machineType === "aba");
     const hasAirShaft = (selectedAddons || []).some(a => a.id === "addon-air-shaft-dynamic");
     
-    let shaftStr = "04 nos.- 3” Air shaft";
+    let shaftStr = hasAirShaft ? "04 nos.- 3” Air shaft" : "04 nos.- 3” Mechanical shaft";
     let gearMotorStr = "Post Extrusion Gear Motors will be Bonvario or Equivalent.";
 
     if (isMonoOrAba) {
-      shaftStr = hasAirShaft ? "04 nos.- 3” Air shaft" : "04 nos.- 3” Mechanical shaft";
       gearMotorStr = ""; 
     }
 

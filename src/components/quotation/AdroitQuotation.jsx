@@ -705,7 +705,7 @@ function PerformancePage({ perf, machineType }) {
 function ComponentPage({ item }) {
     if (!item) return null;
     const specs = normSpecs(item.techDesc);
-    
+
     // If there is no image AND no specs, do not render a blank page
     if (!item.image && specs.length === 0) return null;
 
@@ -743,9 +743,9 @@ function ComponentPage({ item }) {
             }}>
                 {item.image
                     ? <>
-                            {item.image && <Img src={item.image} style={{ maxWidth: item.image2 ? "48%" : "100%", maxHeight: "272px" }} />}
-                            {item.image2 && <Img src={item.image2} style={{ maxWidth: item.image ? "48%" : "100%", maxHeight: "272px" }} />}
-                        </>
+                        {item.image && <Img src={item.image} style={{ maxWidth: item.image2 ? "48%" : "100%", maxHeight: "272px" }} />}
+                        {item.image2 && <Img src={item.image2} style={{ maxWidth: item.image ? "48%" : "100%", maxHeight: "272px" }} />}
+                    </>
                     : <span style={{ color: "#ccc", fontSize: "11pt", fontStyle: "italic", fontFamily: F }}>[No image]</span>
                 }
             </div>
@@ -781,7 +781,7 @@ function ElectricalsPage({ electricals, machineType }) {
                 <SpecRow label="Temperature Controllers" value="Fuji or equivalent make with +/- 1 deg. accuracy." shaded />
                 <SpecRow label="Drives" value="Delta or equivalent variable frequency drives." />
                 <SpecRow label="Haul-Off" value="PLC based operation." shaded />
-                <SpecRow label="Total connected Load" value={e.totalConnectedLoad ? `${e.totalConnectedLoad} KW.` : "108 KW."} />
+                <SpecRow label="Total connected Load" value={e.totalConnectedLoad ? `${e.totalConnectedLoad}.` : "108 KW."} />
                 <SpecRow label="Power Supply" value="415 V, 50 Hz, with N" shaded />
                 <SpecRow label="Voltage Fluctuation" value="+ /- 5%" noBorder />
             </div><br />
@@ -1328,7 +1328,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
     const rawComponents = data.components || [];
     const rawAnnexure = data.annexure_components || rawComponents;
 
-        const getSortOrder = (item) => {
+    const getSortOrder = (item) => {
         if (!item) return 99;
         const n = String(item.name || "").toLowerCase();
         const c = String(item.category || "").toLowerCase();
@@ -1345,7 +1345,7 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
         if (combined.includes("secondary nip")) return 9;
         if (combined.includes("winder")) return 10;
         if (n.includes("tower") || n.includes("platform")) return 100;
-        
+
         return 90;
     };
 

@@ -231,7 +231,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1370 mm",
             "Collapsing Frames": "PBT rollers.",
-            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
           }
         }
       },
@@ -244,6 +244,117 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 1150000,
           customName: "TOWER / PLATFORM - 1370 mm",
           techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms.", "Staircase": "Staircase with hand rails." }
+        }
+      },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+    ],
+
+    addons: [
+      {
+        category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
+      },
+    ],
+  },
+  "INNOFLEX-1370 ECO (45/45/45)": {
+    machineType: "3layer",
+    basePrice: 7651000,
+    components: [
+      { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
+      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-dr-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "HORIZONTAL HAULOFF - 1370 mm",
+          techDesc: {
+            "Construction": "The haul off will be shipped in assembled parts.",
+            "Main Nip rollers": "2 Nos. mounted in bearings.",
+            "Hauloff Size": "1370 mm",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
+          }
+        }
+      },
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "TOWER / PLATFORM - 1370 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+    ],
+
+    addons: [
+      {
+        category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
+      },
+    ],
+  },
+  "INNOFLEX-1370 ECO": {
+    machineType: "3layer",
+    basePrice: 8451000,
+    components: [
+      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
+      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
+      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-dr-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "HORIZONTAL HAULOFF - 1370 mm",
+          techDesc: {
+            "Construction": "The haul off will be shipped in assembled parts.",
+            "Main Nip rollers": "2 Nos. mounted in bearings.",
+            "Hauloff Size": "1370 mm",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
+          }
+        }
+      },
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1350",
+          price: 1150000,
+          customName: "TOWER / PLATFORM - 1370 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
         }
       },
       { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
@@ -302,7 +413,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1370 mm",
             "Collapsing Frames": "PBT rollers.",
-            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
           }
         }
       },
@@ -385,7 +496,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
             "Nip roller width": "1370 mm",
             "Collapsing Frames": "PBT rollers.",
-            "Oscillation": "360 degree oscillating mechanism for even thickness variation.",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
           }
         }
       },
@@ -441,7 +552,63 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
             "Construction": "The haul off will be shipped in assembled parts.",
             "Main Nip rollers": "2 Nos. mounted in bearings.",
             "Hauloff Size": "1450 mm",
-            "Oscillation": "360 degree oscillating mechanism."
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
+          }
+        }
+      },
+      {
+        category: "Tower / Platform",
+        id: "tower-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1500",
+          price: 1300000,
+          customName: "TOWER / PLATFORM - 1450 mm",
+          techDesc: { "Structure": "Knock-down type tower structure.", "Platforms": "3-walk around platforms." }
+        }
+      },
+      { category: "Winder", id: "winder-manual-back-to-back-dynamic", qty: 1 },
+    ],
+
+    addons: [
+      {
+        category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1,
+      },
+    ],
+  },
+  "INNOFLEX-1450 ECO": {
+    machineType: "3layer",
+    basePrice: 8951000,
+    components: [
+      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
+      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
+      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
+      { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
+      {
+        category: "Air Ring",
+        id: "airring-dr-dynamic",
+        qty: 1,
+        metadata: {
+          size: "300",
+          price: 425000,
+          customName: "300 mm Dual Lip Air Ring (10 HP)",
+          techDesc: { "Design": "Dual Lip Air Ring", "Size": "300 mm", "Blower": "10 HP AC Motor" }
+        }
+      },
+      {
+        category: "Haul-Off",
+        id: "haul-horizontal-dynamic",
+        qty: 1,
+        metadata: {
+          size: "1500",
+          price: 1200000,
+          customName: "HORIZONTAL HAULOFF - 1450 mm",
+          techDesc: {
+            "Construction": "The haul off will be shipped in assembled parts.",
+            "Main Nip rollers": "2 Nos. mounted in bearings.",
+            "Hauloff Size": "1450 mm",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
           }
         }
       },
@@ -494,7 +661,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 1400000,
           customName: "HORIZONTAL HAULOFF - 1620 mm",
           techDesc: {
-            "Oscillation": "360 degree oscillating mechanism."
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
           }
         }
       },
@@ -557,7 +724,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
           price: 0,
           customName: "HORIZONTAL HAULOFF - 1870 mm",
           techDesc: {
-            "Oscillation": "360 degree oscillating mechanism.",
+            "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
             "Nip roller drive": "3 HP AC motor (Bonvario, Italy)",
             "Max linespeed": "80 MPM"
           }
@@ -2321,7 +2488,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-1", qty: 3 },
     ],
   },
   "INNOFLEX-1970 IBC": {
@@ -2371,7 +2538,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-1", qty: 3 },
     ],
   },
   "INNOFLEX-2120 IBC": {
@@ -2470,7 +2637,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-1", qty: 3 },
     ],
   },
   "INNOFLEX-2370 IBC (75/75/75)": {
@@ -2519,7 +2686,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
     addons: [
       { category: "Electrical & Control Panel", id: "panel-acdrive-standard", qty: 1 },
-      { category: "Extruder Addons", id: "bimetallic-upgrade-all", qty: 3 },
+      { category: "Extruder Addons", id: "bimetallic-upgrade-1", qty: 3 },
     ],
   },
 };

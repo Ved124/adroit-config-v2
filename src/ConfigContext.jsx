@@ -851,7 +851,8 @@ export function ConfigProvider({ children }) {
 
           const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
-          const maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
+          const standardFilmWidths = [850, 950, 1000, 1250, 1350, 1500, 1750, 1850, 2000, 2250, 2500, 2750, 3000];
+          const maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0 && !standardFilmWidths.includes(displaySize)) ? (displaySize - diff) : displaySize);
 
           // Update item properties
           nextSelected[index] = {
@@ -863,7 +864,7 @@ export function ConfigProvider({ children }) {
             techDesc: {
               ...(dynamicWinderItem.techDesc || {}),
               ...(sanitizeTechDesc("Winder", item.techDesc) || {}),
-              "Nip roller width": `${displaySize} mm`,
+              "Nip roller width": `${standardFilmWidths.includes(displaySize) ? (displaySize + diff) : displaySize} mm`,
               "Maximum web width": `${maxFilmWidth} mm`,
               "Nip roller drive": `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
               "Surface winder drive": isMonoOrAba ? `${nipHP} AC motor with variable frequency drive.` : `${nipHP} AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.`,
@@ -1216,19 +1217,29 @@ export function ConfigProvider({ children }) {
     });
 
     if (totalExtruders > 0) {
-      const bimetallicItem = {
-        ...BIMETALLIC_BASE,
-        id: `bimetallic-upgrade-all`,
-        name: `Bi-metallic Screw Barrel (All Extruders)`,
-        cardDesc: `Upgrade all ${totalExtruders} Extruders (${sizes.join(', ')} mm) to premium wear-resistant Bi-metallic screw and barrel.`,
-        qty: totalExtruders,
-        isDynamic: false,
-        metadata: {
-          ...BIMETALLIC_BASE.metadata,
-          sizes: sizes
+      let extruderIndex = 1;
+      selectedExtruders.forEach((ext) => {
+        const q = ext.qty || 1;
+        for (let i = 0; i < q; i++) {
+          const sizeStr = String(ext.sizeMm || ext.size || ext.extruder || "45").split('/')[i] || String(ext.sizeMm || ext.size || ext.extruder || "45");
+          
+          const bimetallicItem = {
+            ...BIMETALLIC_BASE,
+            id: `bimetallic-upgrade-${extruderIndex}`,
+            name: `Bi-metallic Screw Barrel (Extruder ${extruderIndex})`,
+            cardDesc: `Upgrade Extruder ${extruderIndex} to premium wear-resistant Bi-metallic screw and barrel.`,
+            qty: 1,
+            isDynamic: true,
+            metadata: {
+              ...BIMETALLIC_BASE.metadata,
+              size: sizeStr,
+              targetExtruderId: ext.id
+            }
+          };
+          extAddons.push(bimetallicItem);
+          extruderIndex++;
         }
-      };
-      extAddons.push(bimetallicItem);
+      });
     }
 
     if (extAddons.length > 0) {

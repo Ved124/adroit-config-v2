@@ -10,7 +10,7 @@ import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
 import { PRASAD_AIR_CHILLER_PRICES, PRASAD_WATER_CHILLER_PRICES, CHILLER_BRANDS, CONAIR_AIR_CHILLER_PRICES, CONAIR_WATER_CHILLER_PRICES } from "../src/data/chiller";
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS, HEAT_EXCHANGER_UNO_PRICES, HEAT_EXCHANGER_DUO_PRICES } from "../src/data/heatExchanger";
 import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
-import { SCREW_SIZES } from "../src/data/bimetallic";
+import { BIMETALLIC_PRICES } from "../src/data/bimetallic";
 import { DIE_ROTATION_PRICES, ADDITIONAL_LIP_PRICES } from "../src/data/dieAddons";
 import { EPC_COMPONENTS, EPC_BRANDS, EPC_PRICES } from "../src/data/epc";
 import { BACK_TO_BACK_PRICES, AIR_SHAFT_PRICES } from "../src/data/winderAddons";
@@ -223,7 +223,7 @@ function AddonCard({
     else prices = HEAT_EXCHANGER_PRICES;
   }
   else if (isBimetallic) {
-    prices = SCREW_SIZES.reduce((acc, s) => ({ ...acc, [s]: item.price }), {});
+    prices = BIMETALLIC_PRICES;
   } else if (isDieRotation) {
     prices = DIE_ROTATION_PRICES;
   }

@@ -191,6 +191,7 @@ function AddonCard({
   const isHopperDryerB = item.id === "hopper-dryer-b";
   const isAdditionalLip = item.id === "additional-lip-set-addon";
   const isOptionalFeature = item.category === "Optional Features";
+  const isGravimetric = item.id === "optional-gravimetric-system";
 
   const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : [])))));
 
@@ -242,7 +243,7 @@ function AddonCard({
   const isCapacityBased = isChiller && Object.keys(prices).length > 0 && Object.keys(prices)[0].includes("TR");
   const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Size")));
   
-  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHopperLoaderUno || isHopperLoaderDuo || isHopperLoaderTrio || isHopperDryerB || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature;
+  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHopperLoaderUno || isHopperLoaderDuo || isHopperLoaderTrio || isHopperDryerB || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature || isGravimetric;
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
   // For optional features the key is now a plain mm size — uses the standard formatter below
   const formatSize = (s) => (s && (s.includes("TR") || s.includes('"'))) ? s : `${s} ${unit}`;
@@ -330,20 +331,20 @@ function AddonCard({
         customName = `Extrusion Process Control With Trio Loader (${selectedBrand})`;
       } else if (isAdditionalLip) {
         customName = `Additional Lip Set with Inserts`;
-      } else if (isOptionalFeature) {
-        // Optional Features: name with mm size e.g. "PLC Control in Place of POTs (1350 mm)"
+      } else if (isOptionalFeature || isGravimetric) {
+        // Optional Features & Gravimetric: name with mm size e.g. "PLC Control in Place of POTs (1350 mm)"
         customName = `${item.name} (${selectedSize} mm)`;
       }
 
       addAddon(category, item, {
-        brand: (isDieRotation || isBimetallic || isOptionalFeature) ? undefined : selectedBrand,
+        brand: (isDieRotation || isBimetallic || isOptionalFeature || isGravimetric) ? undefined : selectedBrand,
         size: isEpC ? undefined : selectedSize,
         price: isEpC ? epcPrice : currentPrice,
         customName: customName,
         image: displayImage,
         techDesc: {
           ...item.techDesc,
-          ...((isDieRotation || isBimetallic || isBackToBack || isAirShaft || isHopperLoaderUno || isHopperLoaderDuo || isHopperDryerB || isAdditionalLip || isOptionalFeature) ? {} : { "Brand": selectedBrand }),
+          ...((isDieRotation || isBimetallic || isBackToBack || isAirShaft || isHopperLoaderUno || isHopperLoaderDuo || isHopperDryerB || isAdditionalLip || isOptionalFeature || isGravimetric) ? {} : { "Brand": selectedBrand }),
           ...(isEpC ? {} : { [selectorLabel]: formatSize(selectedSize) }),
         }
       });

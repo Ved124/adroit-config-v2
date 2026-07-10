@@ -44,18 +44,6 @@ export const PBT_ALU_ROLLERS_PRICES: Record<string, number> = {
   "2620": 210000,
 };
 
-export const GRAVIMETRIC_PRICES: Record<string, number> = {
-  "1350": 1025000,
-  "1450": 1025000,
-  "1550": 1025000,
-  "1625": 1025000,
-  "1870": 1025000,
-  "1970": 1025000,
-  "2125": 1250000,
-  "2370": 1250000,
-  "2620": 1250000,
-};
-
 export const CHAIN_PULLEY_PRICES: Record<string, number> = {
   "1125": 150000,
   "1350": 250000,
@@ -144,24 +132,6 @@ export const OPTIONAL_FEATURE_ADDONS: OptionalFeatureAddon[] = [
       "Surface Finish": "Mirror-polished or hard anodized as per application."
     },
     prices: PBT_ALU_ROLLERS_PRICES,
-  },
-  {
-    id: "optional-gravimetric-system",
-    name: "Single Component Gravimetric System",
-    category: "Optional Features",
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/Acessories/loadcell.png",
-    cardDesc: "Gravimetric blending and dosing system for accurate single-component material feeding based on weight, ensuring consistent film quality.",
-    price: 0,
-    isDynamic: true,
-    techDesc: {
-      "Type": "Single component loss-in-weight gravimetric feeder.",
-      "Accuracy": "Throughput accuracy within ±0.5% of setpoint.",
-      "Control": "Microprocessor-based controller with digital display.",
-      "Integration": "Syncs with extruder screw speed for closed-loop output control.",
-      "Benefit": "Eliminates material waste and ensures consistent film thickness."
-    },
-    prices: GRAVIMETRIC_PRICES,
   },
   {
     id: "optional-chain-pulley-block",

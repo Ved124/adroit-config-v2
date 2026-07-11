@@ -65,7 +65,7 @@ export const ADDITIONAL_LIP_SET_ADDON: DieAddon = {
   name: "Additional Lip Set with Inserts",
   category: "Die Addons",
   machineTypes: ["mono", "aba", "3layer", "5layer"],
-  image: "/images/Acessories/DieRotation.png", // Or a relevant image
+  image: "/images/Acessories/die_lip.png", // Or a relevant image
   cardDesc: "Additional Lip Set with Inserts for versatile production.",
   price: 0,
   isDynamic: true,

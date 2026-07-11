@@ -1438,7 +1438,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "DUOFLEX-20": {
     machineType: "aba",
-    basePrice: 1585000,
+    basePrice: 1385000,
     components: [
       { category: "Extruder", id: "ext-35-aba", qty: 2 },
       { category: "Die Head", id: "die-aba-75", qty: 1 },
@@ -2226,7 +2226,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
 
   "UNOFLEX-40-55MM": {
     machineType: "mono",
-    basePrice: 2451000,
+    basePrice: 2036100,
     components: [
       {
         category: "Extruder",

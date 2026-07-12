@@ -2066,6 +2066,13 @@ export function ConfigProvider({ children }) {
     const sortedScope = [...preCombineScope].sort((a, b) => getIdx(a) - getIdx(b));
     const finalScope = [...sortedScope, ...manualExtra].map(item => ({ ...item, description: item.desc }));
 
+    let computedImagePath = "/images/machines/5 layer.png";
+    if (machineType === "mono") computedImagePath = "/images/machines/mono.png";
+    else if (machineType === "aba") computedImagePath = "/images/machines/aba.png";
+    else if (machineType === "3layer") computedImagePath = "/images/machines/3layer.png";
+    else if (machineType === "5layer") computedImagePath = "/images/machines/5 layer.png";
+    else if (machineType === "7layer" || machineType === "9layer") computedImagePath = "/images/machines/Multilayer.png";
+
     return {
       company: COMPANY,
       customer: {
@@ -2090,8 +2097,10 @@ export function ConfigProvider({ children }) {
         model: machineDetails.label || safeCustomer.machineModel || "BLOWN FILM LINE",
         family: safeCustomer.machineFamily || machineType || "",
         modelCode: machineDetails.code || safeCustomer.machineModelCode || safeCustomer.machineModel || "",
+        coverImage: computedImagePath,
       },
-      machine_details: machineDetails,
+      machine_image: computedImagePath,
+      machine_details: { ...machineDetails, machineImagePath: computedImagePath },
       scope: finalScope,
       optional_items: (selectedAddons || []).filter(a => {
         if (!a) return false;
@@ -3085,8 +3094,8 @@ export function ConfigProvider({ children }) {
       const pdfBlob = await html2pdf().from(element).set({
         margin: 0,
         filename: 'flyer.pdf',
-        image: { type: 'jpeg', quality: 0.92 },
-        html2canvas: { scale: 1.8, useCORS: true, letterRendering: true },
+        image: { type: 'jpeg', quality: 0.8 },
+        html2canvas: { scale: 1, useCORS: true, letterRendering: true, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
         pagebreak: { mode: 'avoid-all' }
       }).outputPdf('blob');

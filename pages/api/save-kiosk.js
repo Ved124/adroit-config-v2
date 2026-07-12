@@ -149,7 +149,7 @@ export default async function handler(req, res) {
                 'x-webhook-secret': process.env.CRM_WEBHOOK_SECRET,
               },
               body: JSON.stringify(webhookPayload),
-              signal: AbortSignal.timeout(5000), // 5 second timeout
+              signal: AbortSignal.timeout(2000), // 2 second timeout
             }
           )
 

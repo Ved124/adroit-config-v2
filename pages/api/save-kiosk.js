@@ -55,8 +55,8 @@ export default async function handler(req, res) {
     const safeCompany = String(company).replace(/[^a-z0-9]/gi, '_');
     const safeCity = String(city).replace(/[^a-z0-9]/gi, '_');
     
-    // Add a short timestamp to prevent caching issues
-    const ts = Date.now().toString().slice(-6);
+    // Add a unique timestamp and random string to prevent clashing from concurrent iPads
+    const ts = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
     const baseFileName = `${safeRef}_${safeCompany}_${safeCity}_${ts}`;
     const pdfName = `${baseFileName}.pdf`;
     const jsonName = `${baseFileName}.json`;
@@ -181,10 +181,13 @@ export default async function handler(req, res) {
     } else {
       // === LOCAL OFFLINE MODE ===
       const downloadDir = path.join(process.cwd(), 'public', 'downloads');
-      if (!fs.existsSync(downloadDir)) fs.mkdirSync(downloadDir, { recursive: true });
+      await fs.promises.mkdir(downloadDir, { recursive: true });
 
-      fs.writeFileSync(path.join(downloadDir, pdfName), pdfBuffer);
-      fs.writeFileSync(path.join(downloadDir, jsonName), jsonBuffer);
+      // Run writes concurrently and asynchronously to avoid blocking the Node event loop
+      await Promise.all([
+        fs.promises.writeFile(path.join(downloadDir, pdfName), pdfBuffer),
+        fs.promises.writeFile(path.join(downloadDir, jsonName), jsonBuffer)
+      ]);
 
       // GET SMART IP
       // Use the host header from the request (how the user is actually accessing it)

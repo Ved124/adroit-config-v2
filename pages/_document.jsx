@@ -14,6 +14,13 @@ export default function Document() {
         <meta name="keywords" content="blown film plants, extrusion machinery, film manufacturing, India manufacturer, ABA film, 3-layer film" />
         <meta name="author" content="Adroit Extrusion Tech Pvt. Ltd." />
 
+        {/* PWA & Kiosk Mode Tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0f172a" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
         {/* Structured Data for SEO */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: JSON.stringify({

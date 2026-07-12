@@ -33,3 +33,16 @@ public/downloads/*.json
 # OS files
 .DS_Store
 Thumbs.db
+
+# Scratch and Temp files
+scratch/
+temp_docx/
+*.txt
+*.zip
+temp_doc.html
+network_debug.json
+tsconfig.tsbuildinfo
+proposal1.md
+find_1870.js
+test-blob.js
+updatePresets.js

@@ -46,6 +46,7 @@ import { useToast } from "../components/ui/Toast"; // ← same hook you already 
 import { numberToWords } from "../utils/numberToWords"; // ← your existing helper
 
 // import html2pdf from "html2pdf.js";
+import { useRouter } from "next/router";
 import { createRoot } from "react-dom/client";
 import { AdroitQuotation } from "./components/quotation/AdroitQuotation";
 import { KioskFlyer } from "./components/quotation/KioskFlyer";
@@ -124,6 +125,7 @@ export const ADDONS_DATA = {
 
 export function ConfigProvider({ children }) {
   const toast = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     // Preload heavy client-side libraries to prevent ChunkLoadErrors during hot-reload/dev session
@@ -3248,9 +3250,8 @@ export function ConfigProvider({ children }) {
 
   // NEW: Automatically load from URL parameter if present
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const loadUrl = params.get('loadUrl');
+    if (typeof window === "undefined" || !router.isReady) return;
+    const loadUrl = router.query.loadUrl;
     if (loadUrl) {
       const fetchAndApply = async () => {
         const loadingToast = toast.push({ title: "Loading configuration...", variant: "loading", persist: true });
@@ -3269,9 +3270,9 @@ export function ConfigProvider({ children }) {
       };
       fetchAndApply();
       // Clear URL parameter so it doesn't trigger again on refresh
-      window.history.replaceState({}, document.title, window.location.pathname);
+      router.replace(router.pathname, undefined, { shallow: true });
     }
-  }, []);
+  }, [router.isReady, router.query.loadUrl]);
 
   // -------------------------------------------------------------
   // 5. Upload to API

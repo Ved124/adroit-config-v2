@@ -183,6 +183,17 @@ export default function LeadsDashboard() {
                     <td style={{ padding: '12px', fontSize: '12px', color: '#94a3b8' }}>{(blob.size / 1024).toFixed(1)} KB</td>
                     <td style={{ padding: '12px' }}>
                       <div style={{ display: 'flex', gap: '8px' }}>
+                        <Link
+                          href={`/customer?loadUrl=${encodeURIComponent(blob.url)}`}
+                          style={{
+                            background: '#10b981', color: 'white',
+                            padding: '6px 14px', borderRadius: '6px',
+                            textDecoration: 'none', fontSize: '12px', fontWeight: '700',
+                            display: 'inline-block', whiteSpace: 'nowrap'
+                          }}
+                        >
+                          ✎ Fill Lead
+                        </Link>
                         <a
                           href={downloadUrl}
                           download={filename}

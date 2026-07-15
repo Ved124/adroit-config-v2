@@ -1,0 +1,3882 @@
+{
+  "components": [
+    {
+      "id": "ext-35-mono-short",
+      "name": "Extruder 35 mm",
+      "sizeMm": 35,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-450"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "35 mm monolayer extruder. Motor 7.5 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "35 mm single screw extruder mounted on a sturdy fabricated frame.",
+        "L/D ratio": "28:1",
+        "Type": "Barrier type screw with grooved feed section.",
+        "Barrel": "Screw & barrel",
+        "Material": "Bimetallic screw and barrel, suitable for PE / LD / LLD blends.",
+        "Screw Speed": "Approx. 115 RPM (variable with AC drive).",
+        "Heating System": "Ceramic Heater",
+        "No. of Heating Zones": "4 zones on barrel + die adapter zone.",
+        "Main Drive": "7.5 HP AC Motor & AC variable frequency Drive.",
+        "Transmission System": "Through Belt and Pulley.",
+        "Hopper": "MS fabricated hopper with sight glass and magnetic grill for metal trapping.",
+        "Screen Changer": "One Candle type Manual Screen Changers for 35 mm Extruders."
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-mono-40",
+      "name": "Extruder 40 mm",
+      "sizeMm": 40,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-24"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "40 mm monolayer extruder. Motor 10 HP, L/D 28:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "28:1",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy.",
+        "Heating System": "Ceramic Band type Heaters",
+        "No. of Zones": "02 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+        "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Through Belt and Pulley.",
+        "Gearbox": "Zeal or equivalent make.",
+        "Screen Changer": "Candle type"
+      },
+      "shortDesc": "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-45-mono-short",
+      "name": "Extruder 45 mm",
+      "sizeMm": 45,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-750_900"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "45 mm monolayer extruder. Motor 15 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "45 mm single screw extruder for Unoflex monolayer range.",
+        "L/D ratio": "30 : 1 short barrel for medium output 50–60 kg/hr.",
+        "Type": "Barrier screw profile optimised for thin gauge film.",
+        "Barrel": "Water-cooled grooved feed section with bimetallic wear-resistant liner.",
+        "Screw Speed": "Up to 115 RPM with closed-loop speed control.",
+        "Heating System": "9.7 kW ceramic band heater load with PID temperature controllers.",
+        "No. of Heating Zones": "4 barrel zones + adapter.",
+        "Main Drive": "15 kW AC motor with VFD.",
+        "Transmission System": "Helical gear box with thrust bearing housing.",
+        "Hopper": "Fabricated hopper with glass window for visual inspection and magnetic grill.",
+        "Screen Changer": "Manual candle type (optional hydraulic on request)."
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-55-mono-short",
+      "name": "Extruder 55 mm",
+      "sizeMm": 55,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1000_1250"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "55 mm monolayer extruder. Motor 22.5 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30:1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy.",
+        "Heating System": "Ceramic Band type Heaters (Hitco or equivalent)",
+        "No. of Heating Zones": "04 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+        "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Through Belt and Pulley.",
+        "Gearbox": "Premium / Zeal or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-60-mono-short",
+      "name": "Extruder 60 mm",
+      "sizeMm": 60,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1250_1500"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "60 mm monolayer extruder. Motor 30 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "60 mm single screw extruder.",
+        "L/D ratio": "30 : 1 short barrel.",
+        "Main Drive": "30 kW AC motor with vector drive.",
+        "Heating System": "Approx. 15 kW total heater load on barrel.",
+        "Type": "Barrier screw, medium duty.",
+        "Hopper": "MS hopper with magnetic grill and level window.",
+        "Screen Changer": "Manual candle type.",
+        "Application": "For general purpose blown film, shopping bags and liners."
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-75-mono-short",
+      "name": "Extruder 75 mm",
+      "sizeMm": 75,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-2000"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "75 mm monolayer extruder. Motor 45 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "75 mm single screw extruder for high output monolayer line.",
+        "L/D ratio": "30 : 1 short barrel.",
+        "Main Drive": "45 kW AC motor with VFD.",
+        "Heating System": "Approx. 22.4 kW heater load.",
+        "Type": "Barrier type screw, bimetallic barrel.",
+        "Applications": "Heavy duty liner film, shrink film and high width shopping bags.",
+        "Screen Changer": "Optional hydraulic screen changer."
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-90-mono-short",
+      "name": "Extruder 90 mm",
+      "sizeMm": 90,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-2500"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "90 mm monolayer extruder. Motor 50 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "90 mm single screw extruder.",
+        "L/D ratio": "30 : 1.",
+        "Main Drive": "50 kW AC motor with inverter.",
+        "Heating System": "29.5 kW total barrel heater load.",
+        "Applications": "Wide width film for construction and agricultural use."
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-100-mono-short",
+      "name": "Extruder 100 mm",
+      "sizeMm": 100,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-3000"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "100 mm monolayer extruder. Motor 60 kW, L/D 30:1.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "100 mm single screw extruder.",
+        "L/D ratio": "30 : 1.",
+        "Main Drive": "60 kW AC motor with VFD.",
+        "Heating System": "31.5 kW heater load.",
+        "Applications": "Very wide width liner and greenhouse film."
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-35-aba",
+      "name": "Extruder 35 mm",
+      "sizeMm": 35,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-20"
+      ],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "35 mm screw co-extruder for skin layer (ABA).",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "35 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "28:1",
+        "Screw Speed": "95 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy steel",
+        "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
+        "No. of Zones": "02 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+        "Main Drive": "7.5 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor coupled with helical gearbox.",
+        "Gearbox": "Premium or Equivalent Make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-40-coex-long",
+      "name": "Extruder 40 mm",
+      "sizeMm": 40,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1120"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "40 mm co-extruder for 3-layer machines.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+        "No. of Zones": "03 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "15 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox.",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-40-aba",
+      "name": "Extruder 40 mm",
+      "sizeMm": 40,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-750"
+      ],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "40 mm screw co-extruder for ABA machines.",
+      "price": 0,
+      "techDesc": {
+        "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+        "No. of Zones": "03 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox.",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-45-coex-long",
+      "name": "Extruder 45 mm",
+      "sizeMm": 45,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350A"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "45 mm co-extruder for 3-layer / 5-layer machines.",
+      "price": 800000,
+      "techDesc": {
+        "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30 : 1",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+        "No. of Zones": "03 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+        "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox.",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-45-aba",
+      "name": "Extruder 45 mm",
+      "sizeMm": 45,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-750",
+        "DUOFLEX-1000"
+      ],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "45 mm screw co-extruder for ABA machines.",
+      "price": 700000,
+      "techDesc": {
+        "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30:1",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy steel",
+        "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
+        "No. of Zones": "03 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+        "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor coupled with helical gearbox.",
+        "Gearbox": "Helical Type. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-50-coex-long",
+      "name": "Extruder 50 mm",
+      "sizeMm": 50,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B",
+        "Innoflex-1620",
+        "Innoflex-1870"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "50 mm single screw extruder for 3-layer / 5-layer machines.",
+      "price": 1115000,
+      "techDesc": {
+        "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "04 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-50-aba",
+      "name": "Extruder 50 mm",
+      "sizeMm": 50,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "50 mm single screw extruder for ABA machines.",
+      "price": 1000000,
+      "techDesc": {
+        "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "04 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-55-coex-long",
+      "name": "Extruder 55 mm",
+      "sizeMm": 55,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350A",
+        "Innoflex-1870"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "55 mm co-extruder for 3-layer / 5-layer machines.",
+      "price": 1470000,
+      "techDesc": {
+        "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+        "No. of Zones": "04 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "40 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox.",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-55-aba",
+      "name": "Extruder 55 mm",
+      "sizeMm": 55,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-1000",
+        "DUOFLEX-1250",
+        "DUOFLEX-1750"
+      ],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "55 mm screw co-extruder for core or skin layer (ABA).",
+      "price": 1350000,
+      "techDesc": {
+        "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30:1",
+        "Type": "Barrier",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy.",
+        "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
+        "No. of Zones": "04 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+        "Main Drive": "30 HP AC motor (ABB or Equivalent) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox (Zeal).",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-65-coex-long",
+      "name": "Extruder 65 mm",
+      "sizeMm": 65,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620",
+        "Innoflex-1870",
+        "Innoflex-2120",
+        "Innoflex-2370"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "65 mm co-extruder for high output 3-layer / 5-layer lines.",
+      "price": 1730000,
+      "techDesc": {
+        "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "05 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "60 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-65-aba",
+      "name": "Extruder 65 mm",
+      "sizeMm": 65,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-1750"
+      ],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "65 mm co-extruder for high output ABA lines.",
+      "price": 1600000,
+      "techDesc": {
+        "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "05 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-65-mono-short",
+      "name": "Extruder 65 mm",
+      "sizeMm": 65,
+      "variant": "short",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-72"
+      ],
+      "image": "/images/Extruder/Extruder Mono.png",
+      "cardDesc": "65 mm co-extruder for high output monolayer lines.",
+      "price": 1600000,
+      "techDesc": {
+        "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "115 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "04 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-75-coex-long",
+      "name": "Extruder 75 mm",
+      "sizeMm": 75,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2120",
+        "Innoflex-2370",
+        "Innoflex-2620"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "75 mm long screw extruder for large 3-layer machines.",
+      "price": 2550000,
+      "techDesc": {
+        "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "30 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "105 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "05 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-75-aba",
+      "name": "Extruder 75 mm",
+      "sizeMm": 75,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "75 mm screw co-extruder for large ABA machines.",
+      "price": 2400000,
+      "techDesc": {
+        "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "105 RPM",
+        "Barrel": "Water cooled semi grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum)",
+        "No. of Zones": "05 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-90-coex-long",
+      "name": "Extruder 90 mm",
+      "sizeMm": 90,
+      "variant": "long",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2620"
+      ],
+      "image": "/images/Extruder/Extruder.png",
+      "cardDesc": "90 mm long screw extruder for very high output 3-layer / 5-layer machines.",
+      "price": 3185000,
+      "techDesc": {
+        "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "90 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+        "No. of Zones": "05 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox.",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "ext-90-aba",
+      "name": "Extruder 90 mm",
+      "sizeMm": 90,
+      "variant": "long",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [],
+      "image": "/images/Extruder/Extruder ABA.png",
+      "cardDesc": "90 mm screw co-extruder for core layer (ABA).",
+      "price": 3000000,
+      "techDesc": {
+        "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
+        "L/D ratio": "32 : 1",
+        "Type": "Barrier",
+        "Screw Speed": "90 RPM",
+        "Barrel": "Water cooled grooved feed section",
+        "Material": "Nitro Alloy",
+        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+        "No. of Zones": "05 Nos. on barrel",
+        "Hopper": "MS fabricated with glass window for visual inspection.",
+        "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
+        "Transmission System": "Motor directly coupled with helical gearbox.",
+        "Gearbox": "Premium or equivalent make.",
+        "Screen changer": "Candle type"
+      },
+      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+      "category": "Extruder"
+    },
+    {
+      "id": "die-mono-100",
+      "name": "Monolayer Die 100 mm",
+      "dieFamily": "mono",
+      "diameterMm": 100,
+      "lipsDesc": "100 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-20"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "02 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-150",
+      "name": "Monolayer Die 150 mm",
+      "dieFamily": "mono",
+      "diameterMm": 150,
+      "lipsDesc": "150 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-32"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "02 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-200",
+      "name": "Monolayer Die 200 mm",
+      "dieFamily": "mono",
+      "diameterMm": 200,
+      "lipsDesc": "200 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "02 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-250",
+      "name": "Monolayer Die 250 mm",
+      "dieFamily": "mono",
+      "diameterMm": 250,
+      "lipsDesc": "250 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-40"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "02 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-300",
+      "name": "Monolayer Die 300 mm",
+      "dieFamily": "mono",
+      "diameterMm": 300,
+      "lipsDesc": "300 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-50"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "02 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-400",
+      "name": "Monolayer Die 400 mm",
+      "dieFamily": "mono",
+      "diameterMm": 400,
+      "lipsDesc": "400 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-72"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-600",
+      "name": "Monolayer Die 600 mm",
+      "dieFamily": "mono",
+      "diameterMm": 600,
+      "lipsDesc": "600 mm",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-110"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "price": 0,
+      "techDesc": {
+        "Type": "hidden",
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
+        "Die Size": "Diameter as per width and lip gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-50-100",
+      "name": "Unoflex Die 50 / 100",
+      "dieFamily": "mono",
+      "diameterMm": 50,
+      "lipsDesc": "50 / 100 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-450"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Monolayer die 50 / 100 for narrow web film up to ~450 mm layflat.",
+      "price": 0,
+      "techDesc": {
+        "Application": "Monolayer blown film for narrow web general purpose film.",
+        "Die Size": "50 / 100 (HM / LD configuration).",
+        "Construction": "Hardened alloy steel body with polished melt flow paths.",
+        "Surface Treatment": "Electroless Chrome plated internal flow passages for corrosion resistance.",
+        "Lip Gap": "Adjustable lips with typical gap 0.8–1.2 mm.",
+        "Heating": "Band heaters with independent temperature zones.",
+        "Heating Zones": "2–3 zones depending on configuration.",
+        "Thermocouples": "Multiple TC points for uniform die temperature."
+      },
+      "shortDesc": "Compact monolayer die for producing narrow web blown films.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-90-175",
+      "name": "Unoflex Die 90 / 175",
+      "dieFamily": "mono",
+      "diameterMm": 90,
+      "lipsDesc": "90 / 175 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-750_900"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Monolayer die 90 / 175 for 750–900 mm layflat widths.",
+      "price": 0,
+      "techDesc": {
+        "Application": "Monolayer shopping bag and liner film.",
+        "Die Size": "90 / 175 (HM / LD).",
+        "Material of Construction": "Hardened high-strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plating, highly polished die lips.",
+        "Lip Design": "Adjustable circular lips with fine-thread bolts.",
+        "Heating System": "Ceramic band heaters with PID temperature control.",
+        "Heating Zones": "3–4 zones around die body and lips.",
+        "Distribution": "Spiral flow distribution for uniform gauge."
+      },
+      "shortDesc": "Mid-size monolayer die for medium-width blown film applications.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-150-275",
+      "name": "Unoflex Die 150 / 275",
+      "dieFamily": "mono",
+      "diameterMm": 150,
+      "lipsDesc": "150 / 275 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1000_1250"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Monolayer die 150 / 275 for mid-width film 1000–1250 mm.",
+      "price": 0,
+      "techDesc": {
+        "Application": "General packaging film, liners and surface printing film.",
+        "Die Size": "150 / 275 (HM / LD).",
+        "Material of Construction": "Hardened alloy steel with nitrided surfaces.",
+        "Surface Treatment": "Electroless Chrome plated with mirror finished flow paths.",
+        "Lip Gap": "Typical gap 1.0–1.5 mm, adjustable.",
+        "Heating System": "Band heaters with separate zones for body and lips.",
+        "Heating Zones": "4–5 zones.",
+        "Distribution": "Spiral distribution with balanced flow channels."
+      },
+      "shortDesc": "Versatile monolayer die for a wide range of blown film applications.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-200-325",
+      "name": "Unoflex Die 200 / 325",
+      "dieFamily": "mono",
+      "diameterMm": 200,
+      "lipsDesc": "200 / 325 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1250_1500"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Monolayer die 200 / 325 for 1250–1500 mm layflat film.",
+      "price": 0,
+      "techDesc": {
+        "Application": "Medium to wide web monolayer films.",
+        "Die Size": "200 / 325 (HM / LD).",
+        "Design": "Center fed spiral die with balanced flow passages.",
+        "Lip Design": "Adjustable lip bolts around circumference.",
+        "Heating System": "High capacity ceramic heaters on body and lips.",
+        "Heating Zones": "4–6 zones with individual temperature control."
+      },
+      "shortDesc": "Large monolayer die for wider blown film production.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-300-475",
+      "name": "Unoflex Die 300 / 475",
+      "dieFamily": "mono",
+      "diameterMm": 300,
+      "lipsDesc": "300 / 475 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-2000"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Monolayer die 300 / 475 for 2000 mm layflat film.",
+      "price": 900000,
+      "techDesc": {
+        "Application": "Heavy duty liner and shrink film.",
+        "Die Size": "300 / 475 (HM / LD).",
+        "Material of Construction": "High strength alloy steel.",
+        "Surface Treatment": "Chrome plated and highly polished.",
+        "Distribution": "Spiral type distribution for uniform gauge.",
+        "Heating System": "Ceramic band heaters with PID control.",
+        "Heating Zones": "Multiple zones along body and lips."
+      },
+      "shortDesc": "High capacity monolayer die for large blown film applications.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-400-600",
+      "name": "Unoflex Die 400 / 600",
+      "dieFamily": "mono",
+      "diameterMm": 400,
+      "lipsDesc": "400 / 600 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-2500"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Large mono die 400 / 600 for 2500 mm layflat widths.",
+      "price": 1400000,
+      "techDesc": {
+        "Application": "Construction film, agricultural cover and wide width liners.",
+        "Die Size": "400 / 600 (HM / LD).",
+        "Lip Gap": "Approx. 2.0–2.5 mm adjustable.",
+        "Distribution": "Spiral distribution ensuring even melt flow.",
+        "Heating System": "High capacity heaters with multi-zone control."
+      },
+      "shortDesc": "Spiral die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-450-700",
+      "name": "Unoflex Die 450 / 700",
+      "dieFamily": "mono",
+      "diameterMm": 450,
+      "lipsDesc": "450 / 700 (HM / LD)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-3000"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "Largest mono die 450 / 700 for 3000 mm layflat.",
+      "price": 1800000,
+      "techDesc": {
+        "Application": "Very wide width film, greenhouse and silo covers.",
+        "Die Size": "450 / 700 (HM / LD).",
+        "Design": "Heavy duty spiral die with stiffening ribs.",
+        "Heating": "Segmented band heaters for uniform temperature.",
+        "Heating Zones": "6+ zones with PID controllers."
+      },
+      "shortDesc": "Spiral die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-70-150",
+      "name": "ABA / AB Die 70 / 150",
+      "dieFamily": "aba",
+      "diameterMm": 70,
+      "lipsDesc": "70 / 150 (HM / LD)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-750"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "ABA / AB die 70 / 150 for Duoflex 750.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "70 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-125-250",
+      "name": "ABA / AB Die 125 / 250",
+      "dieFamily": "aba",
+      "diameterMm": 125,
+      "lipsDesc": "125 / 250 (HM / LD)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-1000"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "ABA / AB die 125 / 250 for mid-width Duoflex.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "125 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-150-300",
+      "name": "ABA / AB Die 150 / 300",
+      "dieFamily": "aba",
+      "diameterMm": 150,
+      "lipsDesc": "150 / 300 (HM / LD)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-1250"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "ABA / AB die 150 / 300 for 1250 mm layflat.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "150 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-225-375",
+      "name": "ABA / AB Die 225 / 375",
+      "dieFamily": "aba",
+      "diameterMm": 225,
+      "lipsDesc": "225 / 375 (HM / LD)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-1750"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "Large ABA / AB die 225 / 375 for 1750 mm layflat.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "225 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-350",
+      "name": "ABA / AB Die 350",
+      "dieFamily": "aba",
+      "diameterMm": 350,
+      "lipsDesc": "350",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-60"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "Large ABA / AB die 350 for 1500 mm layflat.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "350 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-225",
+      "name": "Three Layer Die 225 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 225,
+      "lipsDesc": "225 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1120"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 225 mm.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "225 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-275-stationary",
+      "name": "Three Layer Die 275 mm (Stationary)",
+      "dieFamily": "3layer",
+      "diameterMm": 275,
+      "lipsDesc": "275 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350 HO"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 275 mm stationary for oscillating haul-off lines.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-275",
+      "name": "Three Layer Die 275 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 275,
+      "lipsDesc": "275 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350 DR"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 275 mm.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-300",
+      "name": "Three Layer Die 300 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 300,
+      "lipsDesc": "300 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1120"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 300 mm.",
+      "price": 900000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-325",
+      "name": "Three Layer Die 325 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 325,
+      "lipsDesc": "325 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350A"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 325 mm for Innoflex-1350.",
+      "price": 1100000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-350",
+      "name": "Three Layer Die 350 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 350,
+      "lipsDesc": "350 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 350 mm for 1350 mm layflat.",
+      "price": 1150000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-375",
+      "name": "Three Layer Die 375 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 375,
+      "lipsDesc": "375 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 375 mm for 1350 mm layflat.",
+      "price": 1200000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-400",
+      "name": "Three Layer Die 400 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 400,
+      "lipsDesc": "400 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 400 mm for 1350 mm layflat.",
+      "price": 1400000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-425",
+      "name": "Three Layer Die 425 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 425,
+      "lipsDesc": "425 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 425 mm for 1500 mm layflat.",
+      "price": 1600000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-450",
+      "name": "Three Layer Die 450 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 450,
+      "lipsDesc": "450 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1870"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 450 mm for 1750 mm layflat.",
+      "price": 1800000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-500",
+      "name": "Three Layer Die 500 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 500,
+      "lipsDesc": "500 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1870"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 500 mm for 1850 mm layflat.",
+      "price": 2000000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-525",
+      "name": "Three Layer Die 525 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 525,
+      "lipsDesc": "525 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2370"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer die 525 mm for 2250 mm layflat.",
+      "price": 2100000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "525 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-550",
+      "name": "Three Layer Die 550 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 550,
+      "lipsDesc": "550 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2120"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer die 550 mm for 2000 mm layflat.",
+      "price": 2200000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-600",
+      "name": "Three Layer Die 600 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 600,
+      "lipsDesc": "600 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2370"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer die 600 mm for 2250 mm layflat.",
+      "price": 2500000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-650",
+      "name": "Three Layer Die 650 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 650,
+      "lipsDesc": "650 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2620"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer die 650 mm for 2500 mm layflat.",
+      "price": 2800000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "650 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-700",
+      "name": "Three Layer Die 700 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 700,
+      "lipsDesc": "700 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2620"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer die 700 mm for 3000 mm layflat.",
+      "price": 3400000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "700 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "05 Nos.",
+        "Heating System": "Ceramic band heaters (Hitco or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layer-750",
+      "name": "Three Layer Die 750 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 750,
+      "lipsDesc": "750 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2620"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer die 750 mm for 3000 mm layflat.",
+      "price": 3600000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "750 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "05 Nos.",
+        "Heating System": "Ceramic band heaters (Hitco or equivalent)."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-300",
+      "name": "Three Layer IBC Die 300 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 300,
+      "lipsDesc": "300 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1120"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 300 mm with IBC.",
+      "price": 1800000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-325",
+      "name": "Three Layer IBC Die 325 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 325,
+      "lipsDesc": "325 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350A"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 325 mm with IBC.",
+      "price": 1800000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-350",
+      "name": "Three Layer IBC Die 350 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 350,
+      "lipsDesc": "350 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 350 mm with IBC.",
+      "price": 1900000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-375",
+      "name": "Three Layer IBC Die 375 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 375,
+      "lipsDesc": "375 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 375 mm with IBC.",
+      "price": 2000000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-400",
+      "name": "Three Layer IBC Die 400 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 400,
+      "lipsDesc": "400 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1350B"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 400 mm with IBC.",
+      "price": 2100000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "04 Nos.",
+        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-425",
+      "name": "Three Layer IBC Die 425 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 425,
+      "lipsDesc": "425 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 425 mm with IBC.",
+      "price": 2300000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-450",
+      "name": "Three Layer IBC Die 450 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 450,
+      "lipsDesc": "450 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1870"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 450 mm with IBC.",
+      "price": 2500000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-500",
+      "name": "Three Layer IBC Die 500 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 500,
+      "lipsDesc": "500 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1870"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer spiral die 500 mm with IBC.",
+      "price": 3000000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-550",
+      "name": "Three Layer IBC Die 550 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 550,
+      "lipsDesc": "550 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2120"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer IBC die 550 mm with IBC.",
+      "price": 3200000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-3layeribc-600",
+      "name": "Three Layer IBC Die 600 mm",
+      "dieFamily": "3layer",
+      "diameterMm": 600,
+      "lipsDesc": "600 mm, 3-layer spiral die",
+      "machineTypes": [
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-2370"
+      ],
+      "image": "/images/Die/Die.png",
+      "cardDesc": "3-layer IBC die 600 mm with IBC.",
+      "price": 3500000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+        "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution for three layer structure.",
+        "Heating Zones": "4 zones with independent temperature control.",
+        "Heating System": "Ceramic band heaters (AUM or equivalent).",
+        "IBC Provision": "Die with IBC provision."
+      },
+      "shortDesc": "Die head that provides even melt distribution and consistent film thickness.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-75",
+      "name": "ABA Die 75 mm",
+      "dieFamily": "aba",
+      "diameterMm": 75,
+      "lipsDesc": "75 mm (ABA)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "DUOFLEX-500"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "75 mm ABA die for co-extrusion lines.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "75 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "02 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "ABA die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-100",
+      "name": "ABA Die 100 mm",
+      "dieFamily": "aba",
+      "diameterMm": 100,
+      "lipsDesc": "100 mm (ABA)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "ABA-26"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "100 mm ABA die for basic co-extrusion lines.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "100 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Basic ABA die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-150",
+      "name": "ABA Die 150 mm",
+      "dieFamily": "aba",
+      "diameterMm": 150,
+      "lipsDesc": "150 mm (ABA)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "ABA-32"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "150 mm ABA die for basic co-extrusion lines.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "150 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Basic ABA die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-200",
+      "name": "ABA Die 200 mm",
+      "dieFamily": "aba",
+      "diameterMm": 200,
+      "lipsDesc": "200 mm (ABA)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "ABA-40"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "200 mm ABA die for basic co-extrusion lines.",
+      "price": 0,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "200 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Basic ABA die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-300",
+      "name": "ABA Die 300 mm",
+      "dieFamily": "aba",
+      "diameterMm": 300,
+      "lipsDesc": "300 mm (ABA)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "ABA-50"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "300 mm ABA die for co-extrusion lines.",
+      "price": 900000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "300 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "ABA die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-aba-600",
+      "name": "ABA Die 600 mm",
+      "dieFamily": "aba",
+      "diameterMm": 600,
+      "lipsDesc": "600 mm (ABA)",
+      "machineTypes": [
+        "aba"
+      ],
+      "usedInModels": [
+        "ABA-60"
+      ],
+      "image": "/images/Die/DieABA.png",
+      "cardDesc": "600 mm ABA die for co-extrusion lines.",
+      "price": 2500000,
+      "techDesc": {
+        "Material of Construction": "Hardened high strength alloy steel.",
+        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+        "Die Size": "600 mm.",
+        "Die setting": "Die adjusting bolts will be provided.",
+        "Distribution": "Spiral distribution.",
+        "Heating Zones": "03 Nos.",
+        "Heating System": "Ceramic band heaters"
+      },
+      "shortDesc": "Large ABA die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-100",
+      "name": "Unoflex Die 100 mm",
+      "dieFamily": "mono",
+      "diameterMm": 100,
+      "lipsDesc": "100 mm (Mono)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-20"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "100 mm monolayer die head.",
+      "price": 0,
+      "techDesc": {
+        "Type": "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage."
+      },
+      "shortDesc": "Basic monolayer die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-200",
+      "name": "Unoflex Die 200 mm",
+      "dieFamily": "mono",
+      "diameterMm": 200,
+      "lipsDesc": "200 mm (Mono)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-32"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "200 mm monolayer die head.",
+      "price": 0,
+      "techDesc": {
+        "Material": "Hardened alloy steel.",
+        "Heating Zones": "2 Nos."
+      },
+      "shortDesc": "Basic monolayer die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-250",
+      "name": "Unoflex Die 250 mm",
+      "dieFamily": "mono",
+      "diameterMm": 250,
+      "lipsDesc": "250 mm (Mono)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-40"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "250 mm monolayer die head.",
+      "price": 0,
+      "techDesc": {
+        "Material": "Hardened alloy steel.",
+        "Heating Zones": "2 Nos."
+      },
+      "shortDesc": "Basic monolayer die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-300",
+      "name": "Unoflex Die 300 mm",
+      "dieFamily": "mono",
+      "diameterMm": 300,
+      "lipsDesc": "300 mm (Mono)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-50"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "300 mm monolayer die head.",
+      "price": 900000,
+      "techDesc": {
+        "Material": "Hardened alloy steel.",
+        "Heating Zones": "3 Nos."
+      },
+      "shortDesc": "Basic monolayer die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-400",
+      "name": "Unoflex Die 400 mm",
+      "dieFamily": "mono",
+      "diameterMm": 400,
+      "lipsDesc": "400 mm (Mono)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-72"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "400 mm monolayer die head.",
+      "price": 1400000,
+      "techDesc": {
+        "Material": "Hardened alloy steel.",
+        "Heating Zones": "4 Nos."
+      },
+      "shortDesc": "Large monolayer die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "die-mono-600",
+      "name": "Unoflex Die 600 mm",
+      "dieFamily": "mono",
+      "diameterMm": 600,
+      "lipsDesc": "600 mm (Mono)",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-110"
+      ],
+      "image": "/images/Die/DieMono.png",
+      "cardDesc": "600 mm monolayer die head.",
+      "price": 2500000,
+      "techDesc": {
+        "Material": "Hardened alloy steel.",
+        "Heating Zones": "5 Nos."
+      },
+      "shortDesc": "Large monolayer die head.",
+      "category": "Die Head"
+    },
+    {
+      "id": "airring-g-dynamic",
+      "name": "G AIRRING",
+      "type": "single",
+      "blowerPowerHP": 10,
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Airring/Airring.png",
+      "cardDesc": "Select Die size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Design": "Gamma Air Ring",
+        "Construction": "Precision machined aluminum body.",
+        "Cooling": "High efficiency lip profile."
+      },
+      "shortDesc": "Gamma Air Ring for optimal bubble cooling.",
+      "category": "Air Ring"
+    },
+    {
+      "id": "airring-standard-dynamic",
+      "name": "AIRRING",
+      "type": "single",
+      "blowerPowerHP": 15,
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Airring/Airring.png",
+      "cardDesc": "Select Die size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Design": "Standard Series Air Ring",
+        "Construction": "Robust aluminum alloy structure.",
+        "Cooling": "Uniform air distribution for stable bubble."
+      },
+      "shortDesc": "Standard high performance air ring.",
+      "category": "Air Ring"
+    },
+    {
+      "id": "airring-dr-dynamic",
+      "name": "DR AIRRING (Dual Lip)",
+      "type": "dual",
+      "blowerPowerHP": 20,
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Airring/Airring.png",
+      "cardDesc": "Select Die size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
+        "Blower": "20 HP AC variable frequency drive.",
+        "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor."
+      },
+      "shortDesc": "Dual lip air ring for high capacity co-extruded films.",
+      "category": "Air Ring"
+    },
+    {
+      "id": "airring-dr-dynamic-aba",
+      "name": "DR AIRRING (Dual Lip)",
+      "type": "dual",
+      "blowerPowerHP": 7.5,
+      "machineTypes": [
+        "aba"
+      ],
+      "image": "/images/Airring/Airring.png",
+      "cardDesc": "Select Die size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Construcion": "Aluminum body aerodynamic type dual lip air cooling ring.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
+        "Blower": "7.5 HP with inlet air filter."
+      },
+      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films.",
+      "category": "Air Ring"
+    },
+    {
+      "id": "bc-manual-dynamic",
+      "name": "Manual Bubble Cage",
+      "variant": "manual",
+      "segments": 6,
+      "machineTypes": [
+        "mono"
+      ],
+      "image": "/images/Bubble Cage/Manual Cage.png",
+      "cardDesc": "Select size to add manual bubble cage.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+        "Actuation of arms": "Manual open-close operation.",
+        "Bubble width range": "750 to 1250 mm"
+      },
+      "shortDesc": "Universal manual bubble cage with adjustable diameter.",
+      "category": "Bubble Cage"
+    },
+    {
+      "id": "bc-manual-dynamic-aba",
+      "name": "Manual Bubble Cage",
+      "variant": "manual",
+      "segments": 6,
+      "machineTypes": [
+        "aba"
+      ],
+      "image": "/images/Bubble Cage/Manual Cage.png",
+      "cardDesc": "Select size to add manual bubble cage.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Arms to support the bubble."
+      },
+      "shortDesc": "Universal manual bubble cage with adjustable diameter for ABA.",
+      "category": "Bubble Cage"
+    },
+    {
+      "id": "bc-open-close-dynamic",
+      "name": "Motorised Bubble Cage",
+      "variant": "motorized",
+      "segments": 6,
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Bubble Cage/OC Bubble Cage.png",
+      "cardDesc": "Select size to add motorized open-close bubble cage.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through Silicon Sleeve rollers for minimum drag.",
+        "Actuation of arms": "Motorized Open-Close operation.",
+        "Film width range": "800 to 1600 mm"
+      },
+      "shortDesc": "Motorized open-close bubble cage for precision control.",
+      "category": "Bubble Cage"
+    },
+    {
+      "id": "bc-up-down-dynamic",
+      "name": "Motorised Bubble Cage",
+      "variant": "motorized",
+      "segments": 6,
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Bubble Cage/UD Bubble Cage.png",
+      "cardDesc": "Select size to add motorized up-down & open-close bubble cage.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+        "Actuation of arms": "Motorized Up Down & Open-Close with Liner Actuator.",
+        "Bubble width range": "1300 to 2250 mm"
+      },
+      "shortDesc": "Full motorized bubble cage with vertical and radial adjustment.",
+      "category": "Bubble Cage"
+    },
+    {
+      "category": "Winder",
+      "id": "winder-manual-back-to-back-dynamic",
+      "name": "Secondary Nip & Manual Back to Back Winder",
+      "variant": "surface-manual",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer"
+      ],
+      "image": "/images/winder/Back to Back Winder.png",
+      "cardDesc": "Secondary Nip & Manual Back to Back Surface Winder. Select size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+        "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
+        "Nip roller width": "TBD",
+        "Nip roller drive": "TBD HP AC motor with variable frequency drive. ",
+        "Tension control": "Through Torque mode.",
+        "Surface Winders (02 Nos.)": "TBD",
+        "Roll diameter": "600 mm diameter or 400 kg weight in single up whichever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+        "Surface winder drive": "TBD HP AC motor with variable frequency drive. ",
+        "Tension control ": "Through Torque mode.",
+        "Length counter meter": "Provided",
+        "Trim Suction Blower": "Provided"
+      }
+    },
+    {
+      "category": "Winder",
+      "id": "winder-single-surface-only-dynamic",
+      "name": "Single Surface Winder",
+      "variant": "surface-manual",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "image": "/images/winder/Single Surface.png",
+      "cardDesc": "Single Surface Winder. Select size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
+        "Surface winder drive": "1 HP AC motor with variable frequency drive.",
+        "Tension control": "Through Torque mode.",
+        "Winder Type": "Single Surface type."
+      }
+    },
+    {
+      "category": "Winder",
+      "id": "winder-surface-dynamic",
+      "name": "Secondary Nip & Two Separate Surface Winder",
+      "variant": "surface-semi-auto",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/winder/Separate_Winder.png",
+      "cardDesc": "Secondary Nip & two separate surface winders. Select size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+        "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
+        "Nip roller width": "TBD",
+        "Nip roller drive": "TBD HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+        "Tension control": "Through Loadcell.",
+        "Surface Winders (02 Nos.)": "TBD",
+        "Roll diameter": "800 mm diameter or 600 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+        "Surface winder drive": "TBD HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+        "Tension control ": "Through Loadcell.",
+        "Length counter meter": "Provided",
+        "Trim Suction Blower": "Provided"
+      }
+    },
+    {
+      "category": "Winder",
+      "id": "winder-automatic-dynamic",
+      "name": "Secondary Nip & Two Separate Automatic Surface Winder",
+      "variant": "surface-auto",
+      "machineTypes": [
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/winder/5_layer_winder.png",
+      "cardDesc": "Secondary Nip & two separate surface winders with fully automatic changeover. Select size to add.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+        "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
+        "Nip roller width": "TBD",
+        "Nip roller drive": "TBD HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+        "Tension control": "Through Loadcell.",
+        "Surface Winders (02 Nos.)": "TBD",
+        "Roll diameter": "600 mm diameter or 450 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+        "Surface winder drive": "TBD HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+        "Tension control ": "Through Loadcell.",
+        "Length counter meter": "Provided",
+        "Trim Suction Blower": "Provided"
+      }
+    },
+    {
+      "id": "cf-pbt-dynamic",
+      "name": "Collapsing Frame – PBT Rollers",
+      "style": "PBT",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Gusset Board Assembly.jpeg",
+      "cardDesc": "Select size and technical specifications will update automatically.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
+        "Material": "PBT rollers for scratch-free handling.",
+        "Adjustment": "Manual width adjustment with locking system.",
+        "Width Capability": "TBD mm"
+      },
+      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
+      "category": "Collapsing Frame"
+    },
+    {
+      "id": "tower-dynamic",
+      "name": "Tower",
+      "isDynamic": true,
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [],
+      "image": "/images/tower.png",
+      "cardDesc": "Heavy duty MS structure with service platform and safety rails.",
+      "price": 1000000,
+      "techDesc": {
+        "Structure": "Knock-down type tower structure.",
+        "Platforms": "3-walk around platforms.",
+        "Staircase": "Staircase with hand rails.",
+        "Safety": "Hand rails and kick plates according to European safety standards.",
+        "Idler rollers": "Set of idler aluminium rollers as per nip size."
+      },
+      "category": "Tower / Platform"
+    },
+    {
+      "id": "tower_std",
+      "name": "Tower / Platform",
+      "isDynamic": false,
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [],
+      "image": "/images/tower.png",
+      "cardDesc": "Standard MS tower structure with walk-around platform, staircase and safety handrails for ABA / mono lines.",
+      "price": 600000,
+      "techDesc": {
+        "Structure": "Knock-down type tower structure fabricated in mild steel.",
+        "Platforms": "Walk-around platform with grating.",
+        "Staircase": "Staircase with hand rails.",
+        "Safety": "Hand rails and kick plates.",
+        "Idler rollers": "Set of idler aluminium rollers as per layout."
+      },
+      "category": "Tower / Platform"
+    },
+    {
+      "id": "trim-blower-standard",
+      "name": "Trim Suction Blower – Standard",
+      "type": "trim-blower",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [
+        "UNOFLEX-750_900",
+        "UNOFLEX-1000_1250",
+        "DUOFLEX-750"
+      ],
+      "image": "/images/addons/trim/trim_blower_standard.png",
+      "cardDesc": "Trim suction blower for conveying edge trims from secondary nip to trim winder / collection.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Used to extract side trims generated at secondary nip or slitting station.",
+        "Blower Type": "Centrifugal air blower with sheet metal housing.",
+        "Power": "Approx. 2–3 HP AC motor (model dependent).",
+        "Ducting": "Flexible / rigid duct from slitting point to cyclonic separator / trim winder.",
+        "Installation": "Mounted near winder or at convenient location; includes necessary bends and duct supports.",
+        "Benefit": "Keeps working area clean, reduces manual handling of trims."
+      },
+      "category": "Trim Blower"
+    },
+    {
+      "id": "trim-blower-heavy",
+      "name": "Trim Suction Blower – Heavy Duty",
+      "type": "trim-blower",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620",
+        "Innoflex-1870",
+        "Innoflex-2120",
+        "Innoflex-2370",
+        "Innoflex-2620"
+      ],
+      "image": "/images/addons/trim/trim-blower-heavy.png",
+      "cardDesc": "Heavy duty trim blower for wide 3-layer / 5-layer lines with higher trim load.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Blower Type": "Heavy duty centrifugal blower with high static pressure.",
+        "Power": "3–5 HP AC motor with starter / VFD as required.",
+        "Trim Capacity": "Designed to handle continuous side trims from both edges at high line speeds.",
+        "Discharge": "Trim can be directed to trim winder, baler or collection bin.",
+        "Additional Features": "Filter / separator where required to avoid dust in trim area."
+      },
+      "category": "Trim Blower"
+    },
+    {
+      "id": "trim-winder-standard",
+      "name": "Trim Winder – Standard",
+      "type": "trim-winder",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1000_1250",
+        "DUOFLEX-1000",
+        "Innoflex-1120",
+        "Innoflex-1350"
+      ],
+      "image": "/images/addons/trim/trim-winder-standard.png",
+      "cardDesc": "Single station trim winder for narrow edge trims, driven by small AC motor.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Used for winding edge trims coming from side slitters / secondary nip.",
+        "Stations": "Typically single station narrow width winder.",
+        "Drive": "Small AC motor with torque control / VFD.",
+        "Maximum Trim Width": "Up to ~100 mm per side (model dependent).",
+        "Core Sizes": "Normally 3\" paper core (others on request).",
+        "Control": "Manual speed control; can be synchronized with line speed if required."
+      },
+      "category": "Trim Blower"
+    },
+    {
+      "id": "trim-winder-heavy",
+      "name": "Trim Winder – Heavy Duty",
+      "type": "trim-winder",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620",
+        "Innoflex-1870",
+        "Innoflex-2120",
+        "Innoflex-2370",
+        "Innoflex-2620"
+      ],
+      "image": "/images/addons/trim/trim-winder-heavy.png",
+      "cardDesc": "Heavy duty trim winder for wide, high-speed lines with continuous trims.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "For continuous winding of trims at high speed and higher trim thickness.",
+        "Stations": "Single / dual station configuration depending on requirement.",
+        "Drive": "AC motor with torque mode operation; basic tension control included.",
+        "Integration": "Can be interlocked with trim blower for automatic start/stop.",
+        "Roll Diameter": "Up to ~500 mm trim roll (depending on trim thickness and width)."
+      },
+      "category": "Trim Blower"
+    },
+    {
+      "id": "ibc-system",
+      "name": "IBC System",
+      "machineTypes": [
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620",
+        "Innoflex-1870"
+      ],
+      "image": "/images/Acessories/ibc_system.jpg",
+      "cardDesc": "Internal bubble cooling system with complete control.",
+      "price": 3000000,
+      "techDesc": {
+        "IBC System": "Complete controls including sensors, control software.",
+        "Blowers": "Inlet and Outlet Blowers Provided.",
+        "IBC Hardware": "IBC pancakes, Silicone hoses, Manifolds, Gauges to be provided."
+      },
+      "category": "IBC"
+    },
+    {
+      "id": "corona-dynamic",
+      "name": "Corona Treater",
+      "type": "single",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/coronatreater.jpg",
+      "cardDesc": "Select Brand and Max Roller Width to add.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Brand": "Selectable (Jain Electro / IEEC)",
+        "Size": "Selectable (U20\" - U110\")",
+        "System": "Surface treatment system for plastic films."
+      },
+      "shortDesc": "High performance corona treater for superior surface treatment.",
+      "category": "Corona"
+    },
+    {
+      "id": "hopper-loader-uno-dynamic",
+      "name": "Hopper Loader Uno",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Single component automatic material loader for feeding system.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Capacity": "Appropriate kg/hr loading speed.",
+        "Material Type": "Virgin / Reprocess Granules.",
+        "Conveying Method": "Vacuum conveying.",
+        "Filter": "Integrated easy-clean filter system."
+      },
+      "category": "Material Handling"
+    },
+    {
+      "id": "hopper-loader-duo-dynamic",
+      "name": "Hopper Loader Duo",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Dual component automatic material loader for feeding system.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Capacity": "Appropriate kg/hr loading speed.",
+        "Material Type": "Virgin / Reprocess Granules.",
+        "Conveying Method": "Vacuum conveying.",
+        "Filter": "Integrated easy-clean filter system."
+      },
+      "category": "Material Handling"
+    },
+    {
+      "id": "hopper-loader-300kg",
+      "name": "Hopper Loader Trio",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Robust automatic material loader for feeding system.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Capacity": "300 kg/hr loading speed.",
+        "Material Type": "Virgin / Reprocess Granules.",
+        "Conveying Method": "Vacuum conveying.",
+        "Filter": "Integrated easy-clean filter system."
+      },
+      "category": "Material Handling"
+    },
+    {
+      "id": "hopper-dryer-b",
+      "name": "Hopper Dryer for B",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Hopper Dryer specifically for layer B.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Type": "Hopper Dryer",
+        "Function": "Efficient moisture removal from granules."
+      },
+      "category": "Material Handling"
+    },
+    {
+      "id": "mixer-dynamic",
+      "name": "Vertical Granule Mixer",
+      "type": "mixer",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Vertical Granule Mixer with Dryer.png",
+      "cardDesc": "Dynamic Vertical Granule Mixer (Adroit make)",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
+        "Switch Gear": "SCHNEIDER",
+        "Temp. Controller": "MULTISPAN",
+        "Material of Construction": "MS Painted",
+        "Drive": "Through belt and Pulley"
+      },
+      "category": "Material Handling"
+    },
+    {
+      "id": "mixer-dryer-dynamic",
+      "name": "Vertical Granule Mixer with Dryer",
+      "type": "mixer-dryer",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Vertical Granule Mixer with Dryer.png",
+      "cardDesc": "Dynamic Vertical Granule Mixer with Integrated Dryer system. (Adroit make)",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
+        "Switch Gear": "SCHNEIDER",
+        "Temp. Controller": "MULTISPAN",
+        "Material of Construction": "MS Painted",
+        "Drive": "Through belt and Pulley"
+      },
+      "category": "Material Handling"
+    },
+    {
+      "id": "gauge-basic-monitor",
+      "name": "Basic Thickness Monitoring Panel",
+      "type": "monitoring",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [
+        "UNOFLEX-750_900",
+        "DUOFLEX-750"
+      ],
+      "image": "/images/addons/gauge/basic-monitor.png",
+      "cardDesc": "PID-based thickness monitoring panel for basic monolayer/ABA lines.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "System Type": "Passive thickness display (no auto adjustment)",
+        "Sensor": "Single zone thickness sensor mapping bubble profile",
+        "Control": "PID-based temperature control only (no closed loop)",
+        "Display": "Digital gauge feedback on operator console",
+        "Use Case": "Basic LD/LLD general packaging film"
+      },
+      "shortDesc": "Basic thickness monitoring panel with PID control for stable film gauge in monolayer and ABA extrusion lines.",
+      "category": "Gauge Control"
+    },
+    {
+      "id": "gauge-auto-control",
+      "name": "Automatic Thickness Control System",
+      "type": "auto-gauge",
+      "machineTypes": [
+        "aba",
+        "3layer"
+      ],
+      "usedInModels": [
+        "DUOFLEX-1000",
+        "Innoflex-1120",
+        "Innoflex-1350"
+      ],
+      "image": "/images/addons/gauge/auto-gauge.png",
+      "cardDesc": "Closed-loop thickness control with automatic die & air ring correction.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "System Type": "Closed loop gauge control system",
+        "Control Method": "Automatic die bolt heater control + zone correction",
+        "Sensors": "Dual scanner profile measurement (rotational mapping)",
+        "Display": "Profile map + deviation heatmap",
+        "Output": "Auto feedback to heater zones for thickness balancing",
+        "Use Case": "Skin-core-skin ABA film, lamination film, food packaging"
+      },
+      "shortDesc": "Automatic thickness control system with closed-loop feedback for consistent film gauge in ABA and 3-layer extrusion lines.",
+      "category": "Gauge Control"
+    },
+    {
+      "id": "gauge-imported-full",
+      "name": "Automatic Thickness Control System",
+      "type": "imported-auto",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1620",
+        "Innoflex-1870",
+        "Innoflex-2120",
+        "Innoflex-2370",
+        "Innoflex-2620"
+      ],
+      "image": "/images/addons/gauge/imported-auto.png",
+      "cardDesc": "Auto gauge system for industrial multilayer films with high accuracy.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "System Type": "High precision auto gauge system",
+        "Resolution": "Micron-level accuracy with multi-zone compensation",
+        "Sensors": "Laser / capacitive scanning system (model dependent)",
+        "Control": "Real-time closed loop to die zones + air ring + IBC",
+        "Integration": "PLC + HMI based; recipe upload & trend monitoring",
+        "Use Case": "Stretch hood, lamination, agriculture & barrier films",
+        "Compliance": "CE certified hardware (model dependent)"
+      },
+      "shortDesc": "Automatic thickness control system with high precision for multilayer extrusion lines producing industrial films.",
+      "category": "Gauge Control"
+    },
+    {
+      "id": "tension-dancer",
+      "name": "Dancer System for Web Tension",
+      "type": "dancer",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1000_1250",
+        "DUOFLEX-1000"
+      ],
+      "image": "/images/addons/gauge/dancer.png",
+      "cardDesc": "Dancer-based mechanical tension stabilization system for winding.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Control Type": "Mechanical dancer with spring/pneumatic counterbalance",
+        "Function": "Smoothens tension oscillations before winding",
+        "Sensor": "Potentiometer feedback optional",
+        "Benefit": "Reduces wrinkles, improves layflat & roll compactness",
+        "Use Case": "Economical tension solution for low-mid speed lines"
+      },
+      "shortDesc": "Dancer system for mechanical web tension stabilization, reducing wrinkles and improving roll quality in monolayer and ABA extrusion lines.",
+      "category": "Gauge Control"
+    },
+    {
+      "id": "webguide-dynamic",
+      "name": "Web Guide",
+      "type": "standard-epc",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/e+l_webguide.jpg",
+      "cardDesc": "Digital Edge Positioning Control (EPC) system.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Function": "Maintains film edge position before winding / slitting to ensure neat roll edges.",
+        "Sensor": "High resolution edge sensors with adjustable bracket.",
+        "Actuator": "Heavy duty linear actuator with position feedback.",
+        "Installation": "Typically mounted before secondary nip or winder infeed."
+      },
+      "category": "Web Guide"
+    },
+    {
+      "id": "webguide-hydro-pneumatic-dynamic",
+      "name": "Hydro Pneumatic Webguide",
+      "type": "standard-epc",
+      "machineTypes": [
+        "aba"
+      ],
+      "image": "/images/Acessories/e+l_webguide.jpg",
+      "cardDesc": "Hydro Pneumatic Webguide system for ABA machine.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Hydro Pneumatic Webguide",
+        "Application": "Suitable for high tension applications.",
+        "Features": "Hydro-pneumatic system ensures smooth and precise web guiding.",
+        "Sensor": "High resolution edge sensors with adjustable bracket.",
+        "Actuator": "Heavy duty linear actuator with position feedback.",
+        "Installation": "Typically mounted before secondary nip or winder infeed."
+      },
+      "category": "Web Guide"
+    },
+    {
+      "id": "haul-vertical-compact",
+      "name": "Vertical Haul-Off (Compact)",
+      "variant": "vertical",
+      "machineTypes": [
+        "mono",
+        "3layer"
+      ],
+      "usedInModels": [
+        "UNOFLEX-450",
+        "UNOFLEX-750_900",
+        "Innoflex-1350A"
+      ],
+      "image": "/images/hauloff/Vertical Hauloff.png",
+      "cardDesc": "Compact vertical haul-off for small and medium monolayer lines.",
+      "price": 0,
+      "techDesc": {
+        "Construction": "The haul-off will be supplied as a compact assembly mounted above the die with adjustable platform.",
+        "Collapsing Frames": "Side-mounted slat / PBT roller collapsing frame (as per configuration).",
+        "Oscillation": "Optional manual oscillation arrangement for better roll geometry.",
+        "Turnbars": "Optional aluminium turn bars for edge trimming / gusseting."
+      },
+      "category": "Haul-Off"
+    },
+    {
+      "id": "haul-horizontal-dynamic",
+      "name": "Horizontal Haul-Off",
+      "variant": "oscillating",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/hauloff/Horizontal Hauloff.png",
+      "cardDesc": "Select size and technical specifications will update automatically.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Construction": "The haul off will be shipped in assembled parts.",
+        "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+        "Nip roller width": "TBD",
+        "Nip roller drive": "TBD",
+        "Collapsing Frames": "PBT rollers.",
+        "Idler rollers": "Adequate quantity as per layout.",
+        "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
+        "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
+        "Max linespeed": "TBD"
+      },
+      "category": "Haul-Off"
+    },
+    {
+      "id": "main-nip-dynamic",
+      "name": "Main Nip",
+      "variant": "horizontal",
+      "isDynamic": true,
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [],
+      "image": "/images/MainNip/MainNip.png",
+      "cardDesc": "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
+      "price": 0,
+      "techDesc": {
+        "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+        "Nip roller width": "TBD mm",
+        "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
+      },
+      "category": "Haul-Off"
+    },
+    {
+      "id": "main-nip-dynamic-multi",
+      "name": "Main Nip",
+      "variant": "horizontal",
+      "isDynamic": true,
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [],
+      "image": "/images/MainNip/MainNipMultiL.png",
+      "cardDesc": "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
+      "price": 0,
+      "techDesc": {
+        "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+        "Nip roller width": "TBD mm",
+        "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
+      },
+      "category": "Haul-Off"
+    },
+    {
+      "id": "panel-dol-starter",
+      "name": "Electrical Control Panel – DOL Starter",
+      "type": "basic-panel",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [],
+      "image": "/images/Panel/Panel.png",
+      "cardDesc": "Basic control panel with DOL starters and PID temperature controllers for small mono/ABA lines.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Panel Type": "Floor mounted MS powder coated enclosure with front door.",
+        "Temperature Control": "PID temperature controllers for barrel and die zones.",
+        "Drives": "DOL / Star-Delta starters for extruder and auxiliary motors; AC VFD for haul-off and winder.",
+        "Protection": "MCBs, contactors, overload relays and emergency stop circuits.",
+        "Indicators": "Digital temperature indicators and ammeters as required.",
+        "Supply": "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified)."
+      },
+      "shortDesc": "DOL starter panel with PID temp control for small mono/ABA lines.",
+      "category": "Electrical & Control Panel"
+    },
+    {
+      "id": "panel-basic-mono",
+      "name": "Electrical Control Panel – Basic",
+      "type": "basic-panel",
+      "machineTypes": [
+        "mono"
+      ],
+      "usedInModels": [
+        "UNOFLEX-450",
+        "UNOFLEX-750_900"
+      ],
+      "image": "/images/Panel/Panel.png",
+      "cardDesc": "Basic control panel with PID temperature controllers and AC drives for monolayer lines.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Panel Type": "Floor mounted MS powder coated enclosure with front door.",
+        "Temperature Control": "PID temperature controllers for barrel, die and air ring zones.",
+        "Drives": "AC variable frequency drives for extruder, haul-off and winder motors.",
+        "Protection": "MCBs, contactors, overload relays and emergency stop circuits.",
+        "Indicators": "Digital temperature indicators, ammeters and voltmeters as required.",
+        "Supply": "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified)."
+      },
+      "shortDesc": "Basic panel with PID temp control & AC drives for mono lines.",
+      "category": "Electrical & Control Panel"
+    },
+    {
+      "id": "panel-3layer-dynamic",
+      "name": "Electrical Control Panel",
+      "type": "ac-drive-panel",
+      "machineTypes": [
+        "3layer"
+      ],
+      "image": "/images/Panel/Panel.png",
+      "cardDesc": "Select size to add electrical control panel for 3-layer line.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Panel Type": "Floor mounted, compartmentalized panel with segregated power & control wiring.",
+        "Drives": "Individual AC drives for extruders, haul-off, winder and auxiliary motors.",
+        "Temperature Control": "PID temperature controllers for each heating zone, with digital display.",
+        "Interlocks": "Safety interlocks for heaters, motors, emergency stop and doors."
+      },
+      "shortDesc": "Dynamic control panel with model-specific size selection.",
+      "category": "Electrical & Control Panel"
+    },
+    {
+      "id": "addon-lever-screen-changer",
+      "name": "Lever type Manual Screen Changer Upgrade",
+      "category": "Extruder Addons",
+      "price": 100000,
+      "image": "/images/Acessories/lever_sc.jpg",
+      "cardDesc": "Upgrade to high-efficiency lever type screen changer.",
+      "description": "Upgrades standard candle type screen changers to high-efficiency lever type for faster screen replacement.",
+      "supportedTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ]
+    },
+    {
+      "id": "winder-manual-back-to-back-dynamic",
+      "name": "Back to back Surface Winder",
+      "category": "Winder Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/winder/Back to Back Winder.png",
+      "cardDesc": "Add a Back-to-back surface winder for efficient winding.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Two Surface Winder": "Maximum web width of [W] mm with Manual Changeover.",
+        "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+        "Surface winder drive": "02 HP AC motor with variable frequency drive.",
+        "Tension control": "Through Torque mode.",
+        "Type of winder": "Two back to back type.",
+        "Length counter meter": "Provided",
+        "Trim Suction Blower": "Provided"
+      }
+    },
+    {
+      "id": "addon-loadcell-tension",
+      "name": "Loadcell with HMI for Tension Control",
+      "category": "Winder Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/loadcell.png",
+      "cardDesc": "Loadcell with HMI for Tension Control",
+      "price": 325000,
+      "techDesc": {
+        "Type": "Loadcell feedback based automatic tension control.",
+        "HMI Panel": "Tension Display on HMI Panel",
+        "Loadcells": "Loadcells, amplifier, and PLC integration.",
+        "Application": "Suitable for high tension applications"
+      }
+    },
+    {
+      "id": "addon-air-shaft-dynamic",
+      "name": "Air Shaft Upgrade",
+      "category": "Winder Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/loadcell.png",
+      "cardDesc": "Upgrade to Air Shaft for quick and easy roll changes, providing consistent tension and better grip.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Air Shaft": "Provided for quick and easy roll changes.",
+        "Benefit": "Ensures consistent tension and provides a better grip on the core.",
+        "Material": "High-strength alloy or aluminum construction."
+      }
+    },
+    {
+      "id": "die-rotation-addon",
+      "name": "Die Rotation System",
+      "category": "Die Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/DieRotation.png",
+      "cardDesc": "Revolving die head system for even distribution of thickness variation.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Die Rotation": "Provided"
+      }
+    },
+    {
+      "id": "additional-lip-set-addon",
+      "name": "Additional Lip Set with Inserts",
+      "category": "Die Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/die_lip.png",
+      "cardDesc": "Additional Lip Set with Inserts for versatile production.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Additional Lip Set": "Provided with Inserts"
+      }
+    },
+    {
+      "id": "chiller-air-dynamic",
+      "name": "Air Cooled Air Chiller",
+      "type": "air-chiller",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/addons/chiller/air-chiller.png",
+      "cardDesc": "Select Brand and Machine Size.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Refrigerated Air Cooling",
+        "Function": "Cooling for main air ring and internal bubble cooling (IBC) air circuits.",
+        "Control": "Automatic temperature regulation."
+      },
+      "category": "Cooling System"
+    },
+    {
+      "id": "chiller-water-dynamic",
+      "name": "Air Cooled Water Chiller",
+      "type": "water-chiller",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/addons/chiller/water-chiller.png",
+      "cardDesc": "Select Brand and Machine Size.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Refrigerated Water Cooling",
+        "Function": "Supplies chilled water for die-head cooling and IBC heat exchangers.",
+        "Portability": "Self-contained with pump and tank."
+      },
+      "category": "Cooling System"
+    },
+    {
+      "id": "heat-exchanger-dynamic",
+      "name": "Heat Exchanger",
+      "type": "heat-exchanger",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Heat Exchanger.png",
+      "cardDesc": "Select Capacity (kg).",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Air-to-Water Heat Exchanger",
+        "Function": "Efficient heat transfer for process air cooling.",
+        "Construction": "Copper tubes with aluminum fins."
+      },
+      "shortDesc": "Efficient heat transfer for process air cooling.",
+      "category": "Heat Exchanger"
+    },
+    {
+      "id": "heat-exchanger-uno",
+      "name": "Heat Exchanger Uno",
+      "type": "heat-exchanger",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Heat Exchanger.png",
+      "cardDesc": "Select Capacity for Mono/ABA machines.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Air-to-Water Heat Exchanger",
+        "Function": "Efficient heat transfer for process air cooling.",
+        "Construction": "Copper tubes with aluminum fins."
+      },
+      "shortDesc": "Efficient heat exchanger for Mono models.",
+      "category": "Heat Exchanger"
+    },
+    {
+      "id": "heat-exchanger-duo",
+      "name": "Heat Exchanger Duo",
+      "type": "heat-exchanger",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Heat Exchanger.png",
+      "cardDesc": "Select Capacity for ABA and Multilayer machines.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Air-to-Water Heat Exchanger",
+        "Function": "Efficient heat transfer for process air cooling.",
+        "Construction": "Copper tubes with aluminum fins."
+      },
+      "shortDesc": "Efficient heat exchanger for ABA and Multilayer models.",
+      "category": "Heat Exchanger"
+    },
+    {
+      "id": "optional-gravimetric-system",
+      "name": "Single Component Gravimetric System",
+      "category": "EPC",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/EPC.png",
+      "cardDesc": "Gravimetric blending and dosing system for accurate single-component material feeding based on weight, ensuring consistent film quality.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Single component loss-in-weight gravimetric feeder.",
+        "Accuracy": "Throughput accuracy within ±0.5% of setpoint.",
+        "Control": "Microprocessor-based controller with digital display.",
+        "Integration": "Syncs with extruder screw speed for closed-loop output control.",
+        "Benefit": "Eliminates material waste and ensures consistent film thickness."
+      },
+      "prices": {
+        "1350": 1025000,
+        "1450": 1025000,
+        "1550": 1025000,
+        "1625": 1025000,
+        "1870": 1025000,
+        "1970": 1025000,
+        "2125": 1250000,
+        "2370": 1250000,
+        "2620": 1250000
+      }
+    },
+    {
+      "id": "mdo-compact",
+      "name": "MDO Unit – Compact",
+      "type": "compact",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1000_1250",
+        "DUOFLEX-750",
+        "DUOFLEX-1000"
+      ],
+      "image": "/images/addons/mdo/mdo-compact.png",
+      "cardDesc": "Compact MDO unit for basic film orientation and gauge reduction on small/medium lines.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Machine direction orientation of thin films for strength and stiffness improvement.",
+        "Configuration": "Pre-heating zone + stretching zone + cooling zone in a compact frame.",
+        "Stretch Ratio": "Typical 2:1 to 4:1 (application dependent).",
+        "Rollers": "Chrome plated and rubber covered rollers with temperature control on heating section.",
+        "Drive": "Individual AC drive for main stretching section with speed ratio control.",
+        "Installation": "Mounted after blown film take-off / collapsing then re-wound at separate winder."
+      },
+      "category": "MDO"
+    },
+    {
+      "id": "mdo-inline-std",
+      "name": "MDO Unit – Inline (Standard)",
+      "type": "inline",
+      "machineTypes": [
+        "aba",
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1120",
+        "Innoflex-1350",
+        "Innoflex-1620"
+      ],
+      "image": "/images/addons/mdo/mdo-inline.png",
+      "cardDesc": "Inline MDO unit for ABA / 3-layer lamination and high dart FFS films.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Orientation of co-extruded film for lamination, FFS and high dart applications.",
+        "Zones": "Multiple pre-heat rollers, stretching roller pair and post-cooling rollers.",
+        "Temperature Control": "Electrical heating on pre-heat rolls with PID temperature controllers.",
+        "Stretch Ratio": "Adjustable ratio via independent drives on pre- and post-stretch sections.",
+        "Web Handling": "Precise nip control, edge guides and tension control through the MDO frame.",
+        "Integration": "Integrated with main line speed reference; coordinated ramp up/down."
+      },
+      "category": "MDO"
+    },
+    {
+      "id": "mdo-high-output",
+      "name": "MDO Unit – High Output / Wide Web",
+      "type": "high-output",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1870",
+        "Innoflex-2120",
+        "Innoflex-2370",
+        "Innoflex-2620"
+      ],
+      "image": "/images/addons/mdo/mdo-high-output.png",
+      "cardDesc": "Heavy duty MDO unit for wide web multilayer film, designed for high line speeds.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Production of oriented films for stretch hood, high strength lamination and industrial packaging.",
+        "Working Width": "Up to machine layflat (e.g. 1750–2500 mm, model dependent).",
+        "Rollers": "Large diameter chrome plated rolls, supported on heavy duty bearings.",
+        "Drive System": "Multiple AC vector drives with closed loop synchronization between sections.",
+        "Stretch Ratio": "Wide adjustment range with recipe-based setpoints from HMI.",
+        "Cooling": "Efficient post-cooling zone with chilled water rollers / air knives (depending on configuration).",
+        "Integration": "Fully integrated into main PLC/HMI with recipe management, alarms and trending."
+      },
+      "category": "MDO"
+    },
+    {
+      "id": "hyd-unloader-basic",
+      "name": "Hydraulic Roll Unloader – Basic",
+      "type": "basic",
+      "machineTypes": [
+        "mono",
+        "aba"
+      ],
+      "usedInModels": [
+        "UNOFLEX-1000_1250",
+        "DUOFLEX-750",
+        "DUOFLEX-1000"
+      ],
+      "image": "/images/addons/hydraulic/unloader-basic.png",
+      "cardDesc": "Basic hydraulic roll unloader for safely unloading finished rolls from surface winder.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Assists operator in unloading finished film rolls from winder without manual lifting.",
+        "Operation": "Hydraulic lifting platform raises/lower to winder level to receive roll.",
+        "Capacity": "Suitable for medium rolls (typically up to ~400 kg).",
+        "Control": "Simple up/down push button station near winder.",
+        "Benefit": "Improves safety and reduces operator fatigue."
+      },
+      "category": "Hydraulic Unloader"
+    },
+    {
+      "id": "hyd-unloader-swingarm",
+      "name": "Hydraulic Swing Arm Roll Unloader",
+      "type": "swing-arm",
+      "machineTypes": [
+        "aba",
+        "3layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1120",
+        "Innoflex-1350",
+        "Innoflex-1620"
+      ],
+      "image": "/images/addons/hydraulic/unloader-swingarm.png",
+      "cardDesc": "Swing arm type hydraulic unloader for heavier rolls and wider web lines.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Operation": "Hydraulically actuated swing arm picks roll from winder shafts and lowers to operator height.",
+        "Capacity": "Designed for rolls up to approx. 400–600 kg (model dependent).",
+        "Interface": "Mounted adjacent to winder frame; arm movement synchronized for safe operation.",
+        "Controls": "Local control box with joystick / push buttons and emergency stop.",
+        "Benefit": "Enables single operator handling for heavy rolls, reduces risk of injury."
+      },
+      "category": "Hydraulic Unloader"
+    },
+    {
+      "id": "hyd-unloader-trolley",
+      "name": "Hydraulic Roll Unloader with Floor Trolley",
+      "type": "floor-trolley",
+      "machineTypes": [
+        "3layer",
+        "5layer"
+      ],
+      "usedInModels": [
+        "Innoflex-1870",
+        "Innoflex-2120",
+        "Innoflex-2370",
+        "Innoflex-2620"
+      ],
+      "image": "/images/addons/hydraulic/unloader-trolley.png",
+      "cardDesc": "Heavy duty hydraulic unloader with floor level trolley for very large rolls.",
+      "price": 0,
+      "qty": 1,
+      "techDesc": {
+        "Application": "Used for unloading wide, heavy rolls from turret / surface winder and transferring to storage.",
+        "Construction": "Hydraulic lifting cradle integrated with movable trolley or rail-guided platform.",
+        "Capacity": "For rolls up to approx. 600 kg or more (model dependent).",
+        "Operation": "Lift-lower and clamp release via hydraulic power pack; trolley moved manually or with drive.",
+        "Safety": "Mechanical locks and safety valves provided as per standard practice.",
+        "Benefit": "Essential for safe handling on high output industrial lines."
+      },
+      "category": "Hydraulic Unloader"
+    },
+    {
+      "id": "optional-plc-control",
+      "name": "PLC Control in Place of POTs",
+      "category": "Optional Features",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Panel/Panel.png",
+      "cardDesc": "Upgrade from manual potentiometer controls to PLC-based digital control for precise and repeatable speed management.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Control Type": "PLC-based digital speed control replacing manual POT controllers.",
+        "Benefit": "Precise, repeatable speed settings with digital display and recipe storage.",
+        "Integration": "Integrated with existing VFDs and HMI for seamless operation.",
+        "Compatibility": "Suitable for all extruder, haul-off, and winder drives."
+      },
+      "prices": {
+        "1125": 175000,
+        "1350": 175000,
+        "1450": 175000
+      }
+    },
+    {
+      "id": "optional-pbt-alu-rollers",
+      "name": "PBT to Aluminium Rollers in Frame",
+      "category": "Optional Features",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/aluminium_rollers.jpeg",
+      "cardDesc": "Replace standard PBT rollers with precision-machined aluminium rollers for improved film handling and reduced film sticking.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Material": "Precision-machined aluminium rollers with anodized finish.",
+        "Benefit": "Reduced film sticking, better heat dissipation, and longer service life.",
+        "Application": "Idler rollers, guide rollers, and collapsing frame rollers.",
+        "Surface Finish": "Mirror-polished or hard anodized as per application."
+      },
+      "prices": {
+        "1125": 150000,
+        "1350": 180000,
+        "1450": 180000,
+        "1550": 210000,
+        "1625": 210000,
+        "1870": 320000,
+        "1970": 320000,
+        "2125": 210000,
+        "2370": 210000,
+        "2620": 210000
+      }
+    },
+    {
+      "id": "optional-chain-pulley-block",
+      "name": "Chain Pulley Block for Die Lifting",
+      "category": "Optional Features",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/chain_pulley.jpg",
+      "cardDesc": "Heavy-duty chain pulley block assembly mounted above the die for safe and easy die lifting during maintenance.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Manual chain pulley hoist with gear-operated lifting mechanism.",
+        "Capacity": "1 ton (1000 kg) safe working load.",
+        "Mounting": "Mounted on die support beam above the die head.",
+        "Application": "Safe lifting and lowering of die components during maintenance.",
+        "Safety": "Overload protection and self-locking brake mechanism."
+      },
+      "prices": {
+        "1125": 150000,
+        "1350": 250000,
+        "1450": 250000,
+        "1550": 250000,
+        "1625": 250000,
+        "1870": 250000,
+        "1970": 250000,
+        "2125": 360000,
+        "2370": 360000,
+        "2620": 360000
+      }
+    },
+    {
+      "id": "optional-melt-temp-indicator",
+      "name": "Melt Temperature & Pressure Indicator",
+      "category": "Optional Features",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/melt_temp_press_indicator.jpg",
+      "cardDesc": "Real-time melt temperature and pressure monitoring at the die head for process optimization and quality control.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Temperature Sensor": "Melt temperature thermocouple (Type J/K) at die inlet.",
+        "Pressure Sensor": "High-accuracy melt pressure transducer.",
+        "Display": "Digital panel-mounted indicator with peak hold function.",
+        "Range": "Temperature: 0–400°C | Pressure: 0–700 bar.",
+        "Benefit": "Enables process optimization and early detection of blockages."
+      },
+      "prices": {
+        "1125": 185000,
+        "1350": 185000,
+        "1450": 185000,
+        "1550": 185000,
+        "1625": 185000,
+        "1870": 185000,
+        "1970": 185000,
+        "2125": 185000,
+        "2370": 185000,
+        "2620": 185000
+      }
+    },
+    {
+      "id": "optional-static-eliminator",
+      "name": "Static Eliminator – 2 Nos.",
+      "category": "Optional Features",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/static_elim.jpg",
+      "cardDesc": "Ionizing bar static eliminators to neutralize static charge on the film surface, preventing dust attraction and improving roll quality.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "AC ionizing bar static eliminator.",
+        "Quantity": "2 Nos. – one before winder, one at film exit zone.",
+        "Ionizing Range": "Up to 400 mm effective range.",
+        "Power Supply": "24V DC power supply unit included.",
+        "Benefit": "Prevents dust contamination and reduces film sticking during winding."
+      },
+      "prices": {
+        "1125": 65000,
+        "1350": 70000,
+        "1450": 75000,
+        "1550": 80000,
+        "1625": 85000,
+        "1870": 95000,
+        "1970": 110000,
+        "2125": 120000,
+        "2370": 130000,
+        "2620": 140000
+      }
+    },
+    {
+      "id": "optional-manual-to-auto-changeover",
+      "name": "Manual to Auto Changeover",
+      "category": "Optional Features",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Panel/Panel.png",
+      "cardDesc": "Automatic changeover system for winder / process stations, reducing downtime and improving operator efficiency.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Function": "Automated changeover sequence from manual to automatic mode.",
+        "Control": "PLC-controlled sequence with HMI interface.",
+        "Benefit": "Reduces roll changeover time and minimizes waste.",
+        "Safety": "Interlocked with emergency stop and safety circuits.",
+        "Integration": "Compatible with existing winder and haul-off drives."
+      },
+      "prices": {
+        "1125": 650000,
+        "1350": 750000,
+        "1450": 750000,
+        "1550": 750000,
+        "1625": 825000,
+        "1870": 950000,
+        "1970": 950000,
+        "2125": 1015000,
+        "2370": 1450000,
+        "2620": 1450000
+      }
+    },
+    {
+      "id": "printer-addon",
+      "name": "Printer",
+      "type": "printer",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/printer.png",
+      "cardDesc": "Add an inline printer for branding and coding.",
+      "price": 40000,
+      "qty": 1,
+      "isDynamic": false,
+      "techDesc": {
+        "Type": "Inline flexographic or coding printer",
+        "Function": "Provides printing capabilities directly on the film.",
+        "Benefit": "Ideal for basic branding, logos, or barcode printing."
+      },
+      "shortDesc": "Inline printer for film branding and coding.",
+      "category": "Printer"
+    }
+  ],
+  "total": 147
+}

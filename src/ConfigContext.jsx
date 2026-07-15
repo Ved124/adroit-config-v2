@@ -667,7 +667,10 @@ export function ConfigProvider({ children }) {
 
           const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
           const segments = (chosenSize >= 2370) ? 9 : (chosenSize >= 2000 ? 8 : 6);
-          const typeStr = `Calibration bubble guide basket with ${segments} arms arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
+          let typeStr = dynamicBCItem.techDesc?.["Type"] || `Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
+          if (typeStr.includes("arranged to provide full support")) {
+            typeStr = typeStr.replace("arranged to provide full support", `with ${segments} arms arranged to provide full support`);
+          }
 
           // Determine actuation string based on variant
           const actuationStr = isManual

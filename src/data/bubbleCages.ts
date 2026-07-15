@@ -115,7 +115,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     price: 0,
     isDynamic: true,
     techDesc: {
-      "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+      "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through Silicon rollers for minimum drag.",
       "Actuation of arms": "Motorized Open-Close operation.",
       "Film width range": "800 to 1600 mm"
     },

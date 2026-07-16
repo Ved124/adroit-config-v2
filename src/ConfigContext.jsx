@@ -100,21 +100,16 @@ export const COMPONENTS_DATA = {
 };
 
 export const ADDONS_DATA = {
-
-  "Corona Treater": CORONA_TREATER_COMPONENTS,
-  // "Trim Handling": TRIM_ADDONS,
+  "Corona": CORONA_TREATER_COMPONENTS,
   "Material Handling": MATERIAL_HANDLING_ADDONS,
-  // "Gauge / Thickness Control": GAUGE_ADDONS,
   "Web Guide": WEB_GUIDE_ADDONS,
-  "Cooling System": CHILLER_ADDONS,
+  "Chiller": CHILLER_ADDONS,
   "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
-  // "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
   "Die Addons": [DIE_ROTATION_ADDON],
   "Extruder Addons": [BIMETALLIC_BASE],
   "Winder Addons": WINDER_ADDONS,
-  // "MDO Unit": MDO_ADDONS,
   "EPC": EPC_COMPONENTS,
-  "Optional Equipments": PRINTER_ADDONS,
+  "Printer": PRINTER_ADDONS,
   "Optional Features": OPTIONAL_FEATURE_ADDONS,
 };
 
@@ -193,16 +188,16 @@ export function ConfigProvider({ children }) {
         if (components.winders) COMPONENTS_DATA.Winder = components.winders;
         if (components.electricalPanel) COMPONENTS_DATA["Electrical & Control Panel"] = components.electricalPanel;
 
-        if (components.corona) ADDONS_DATA["Corona Treater"] = components.corona;
+        if (components.corona) ADDONS_DATA["Corona"] = components.corona;
         if (components.materialHandling) ADDONS_DATA["Material Handling"] = components.materialHandling;
         if (components.webGuide) ADDONS_DATA["Web Guide"] = components.webGuide;
-        if (components.chiller) ADDONS_DATA["Cooling System"] = components.chiller;
+        if (components.chiller) ADDONS_DATA["Chiller"] = components.chiller;
         if (components.heatExchanger) ADDONS_DATA["Heat Exchanger"] = components.heatExchanger;
         if (components.dieAddons) ADDONS_DATA["Die Addons"] = components.dieAddons;
         if (components.extruderAddons) ADDONS_DATA["Extruder Addons"] = components.extruderAddons;
         if (components.winderAddons) ADDONS_DATA["Winder Addons"] = components.winderAddons;
         if (components.epc) ADDONS_DATA["EPC"] = components.epc;
-        if (components.printer) ADDONS_DATA["Optional Equipments"] = components.printer;
+        if (components.printer) ADDONS_DATA["Printer"] = components.printer;
         if (components.optionalFeatures) ADDONS_DATA["Optional Features"] = components.optionalFeatures;
         changed = true;
       }

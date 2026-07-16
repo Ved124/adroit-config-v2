@@ -30,6 +30,10 @@ public/downloads/*.pdf
 public/downloads/*.json
 !public/downloads/.keep
 
+# Admin data overrides — DO commit these (they persist across deploys)
+# public/admin-data/ is intentionally tracked in git
+
+
 # OS files
 .DS_Store
 Thumbs.db

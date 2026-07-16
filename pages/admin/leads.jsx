@@ -74,15 +74,26 @@ export default function LeadsDashboard() {
             All JSON configurations auto-saved during the exhibition
           </p>
         </div>
-        <Link href="/customer" style={{
-          textDecoration: 'none', color: '#0f172a', fontWeight: '700',
-          fontSize: '13px', padding: '8px 18px',
-          border: '1.5px solid #cbd5e1', borderRadius: '8px',
-          background: 'white', transition: 'all 0.15s'
-        }}>
-          ← Back to Configurator
-        </Link>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <Link href="/admin/machines" style={{
+            textDecoration: 'none', color: 'white', fontWeight: '700',
+            fontSize: '13px', padding: '8px 18px',
+            border: 'none', borderRadius: '8px',
+            background: 'linear-gradient(135deg,#6366f1,#4f46e5)', transition: 'all 0.15s'
+          }}>
+            🏭 Machine Manager
+          </Link>
+          <Link href="/customer" style={{
+            textDecoration: 'none', color: '#0f172a', fontWeight: '700',
+            fontSize: '13px', padding: '8px 18px',
+            border: '1.5px solid #cbd5e1', borderRadius: '8px',
+            background: 'white', transition: 'all 0.15s'
+          }}>
+            ← Back to Configurator
+          </Link>
+        </div>
       </div>
+
 
       {/* Server info banner */}
       {serverInfo && (

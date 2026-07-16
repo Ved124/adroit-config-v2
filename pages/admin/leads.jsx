@@ -6,11 +6,22 @@ function parseFilename(filename) {
   // Expected: AE_DOM_MIX_01_fghj_NoCity_992337.json  →  ref=AE_DOM_MIX_01, company=fghj, city=NoCity, ts=992337
   const base = filename.replace(/\.(json|pdf)$/, '');
   const parts = base.split('_');
-  // Last part is timestamp (6 digits), second-to-last is city, the one before that is company
+  // Last part is timestamp (6 digits), second-to-last is city
   const ts = parts[parts.length - 1];
   const city = parts[parts.length - 2] === 'NoCity' ? '—' : parts[parts.length - 2];
-  const company = parts[parts.length - 3] || '—';
+  
+  // The user explicitly requested not to change Quote Ref, so we keep the legacy extraction.
   const ref = parts.slice(0, parts.length - 3).join('_');
+  
+  // Fix the company extraction: we know Quote Ref standard format is usually 4 parts (e.g. AE_DOM_XXXX_XX).
+  // Everything between the 4th part and the city is the actual company name.
+  let company = '—';
+  if (parts.length > 5) {
+    company = parts.slice(4, parts.length - 2).join(' ').trim() || '—';
+  } else {
+    company = parts[parts.length - 3] || '—';
+  }
+
   return { ref, company, city, ts };
 }
 

@@ -71,6 +71,7 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
       if (sibling) {
         defaultForm.cardDesc = sibling.cardDesc || '';
         defaultForm.shortDesc = sibling.shortDesc || '';
+        defaultForm.image = sibling.image || '';
         if (sibling.techDesc) {
           defaultForm.techDesc = { ...sibling.techDesc }; // copy keys AND values
         }

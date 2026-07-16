@@ -150,6 +150,77 @@ export function ConfigProvider({ children }) {
     }
   }, []);
 
+  const [adminDataLoaded, setAdminDataLoaded] = useState(false);
+
+  useEffect(() => {
+    // Fetch dynamic admin overrides so the Configurator reflects the Hub's CRUD edits live
+    Promise.all([
+      fetch('/admin-data/models.json').then(r => r.json()).catch(() => null),
+      fetch('/admin-data/presets.json').then(r => r.json()).catch(() => null),
+      fetch('/admin-data/components.json').then(r => r.json()).catch(() => null),
+      fetch('/admin-data/pricing.json').then(r => r.json()).catch(() => null),
+    ]).then(([models, presets, components, pricing]) => {
+      let changed = false;
+
+      if (models && Object.keys(models).length > 0) {
+        if (models.mono && models.mono.length > 0) { MONO_MODELS.splice(0, MONO_MODELS.length, ...models.mono); }
+        if (models.aba && models.aba.length > 0) { ABA_MODELS.splice(0, ABA_MODELS.length, ...models.aba); }
+        if (models.threeLayer && models.threeLayer.length > 0) { THREE_LAYER_MODELS.splice(0, THREE_LAYER_MODELS.length, ...models.threeLayer); }
+        changed = true;
+      }
+      
+      if (presets && Object.keys(presets).length > 0) {
+        Object.keys(MODEL_PRESETS).forEach(k => delete MODEL_PRESETS[k]);
+        Object.assign(MODEL_PRESETS, presets);
+        changed = true;
+      }
+
+      if (components && Object.keys(components).length > 0) {
+        if (components.extruders) COMPONENTS_DATA.Extruder = components.extruders;
+        if (components.dies) COMPONENTS_DATA["Die Head"] = components.dies;
+        if (components.airRing) COMPONENTS_DATA["Air Ring"] = components.airRing;
+        if (components.ibc) COMPONENTS_DATA.IBC = components.ibc;
+        if (components.collapsingFrame) COMPONENTS_DATA["Collapsing Frame"] = components.collapsingFrame;
+        if (components.hauloffs) {
+          COMPONENTS_DATA["Haul-Off"] = components.hauloffs.filter(c => !c.id.includes("main-nip"));
+          COMPONENTS_DATA["Main Nip"] = components.hauloffs.filter(c => c.id.includes("main-nip"));
+        }
+        if (components.bubbleCages) COMPONENTS_DATA["Bubble Cage"] = components.bubbleCages;
+        if (components.tower) COMPONENTS_DATA["Tower / Platform"] = components.tower;
+        if (components.winders) COMPONENTS_DATA.Winder = components.winders;
+        if (components.electricalPanel) COMPONENTS_DATA["Electrical & Control Panel"] = components.electricalPanel;
+
+        if (components.corona) ADDONS_DATA["Corona Treater"] = components.corona;
+        if (components.materialHandling) ADDONS_DATA["Material Handling"] = components.materialHandling;
+        if (components.webGuide) ADDONS_DATA["Web Guide"] = components.webGuide;
+        if (components.chiller) ADDONS_DATA["Cooling System"] = components.chiller;
+        if (components.heatExchanger) ADDONS_DATA["Heat Exchanger"] = components.heatExchanger;
+        if (components.dieAddons) ADDONS_DATA["Die Addons"] = components.dieAddons;
+        if (components.extruderAddons) ADDONS_DATA["Extruder Addons"] = components.extruderAddons;
+        if (components.winderAddons) ADDONS_DATA["Winder Addons"] = components.winderAddons;
+        if (components.epc) ADDONS_DATA["EPC"] = components.epc;
+        if (components.printer) ADDONS_DATA["Optional Equipments"] = components.printer;
+        if (components.optionalFeatures) ADDONS_DATA["Optional Features"] = components.optionalFeatures;
+        changed = true;
+      }
+
+      if (pricing && Object.keys(pricing).length > 0) {
+        if (pricing.MANUAL_BC_PRICES) { Object.keys(MANUAL_BC_PRICES).forEach(k => delete MANUAL_BC_PRICES[k]); Object.assign(MANUAL_BC_PRICES, pricing.MANUAL_BC_PRICES); }
+        if (pricing.OPEN_CLOSE_BC_PRICES) { Object.keys(OPEN_CLOSE_BC_PRICES).forEach(k => delete OPEN_CLOSE_BC_PRICES[k]); Object.assign(OPEN_CLOSE_BC_PRICES, pricing.OPEN_CLOSE_BC_PRICES); }
+        if (pricing.UP_DOWN_BC_PRICES) { Object.keys(UP_DOWN_BC_PRICES).forEach(k => delete UP_DOWN_BC_PRICES[k]); Object.assign(UP_DOWN_BC_PRICES, pricing.UP_DOWN_BC_PRICES); }
+        if (pricing.HAULOFF_PRICES) { Object.keys(HAULOFF_PRICES).forEach(k => delete HAULOFF_PRICES[k]); Object.assign(HAULOFF_PRICES, pricing.HAULOFF_PRICES); }
+        if (pricing.MANUAL_BACK_TO_BACK_PRICES) { Object.keys(MANUAL_BACK_TO_BACK_PRICES).forEach(k => delete MANUAL_BACK_TO_BACK_PRICES[k]); Object.assign(MANUAL_BACK_TO_BACK_PRICES, pricing.MANUAL_BACK_TO_BACK_PRICES); }
+        if (pricing.SURFACE_WINDER_PRICES) { Object.keys(SURFACE_WINDER_PRICES).forEach(k => delete SURFACE_WINDER_PRICES[k]); Object.assign(SURFACE_WINDER_PRICES, pricing.SURFACE_WINDER_PRICES); }
+        if (pricing.AUTOMATIC_WINDER_PRICES) { Object.keys(AUTOMATIC_WINDER_PRICES).forEach(k => delete AUTOMATIC_WINDER_PRICES[k]); Object.assign(AUTOMATIC_WINDER_PRICES, pricing.AUTOMATIC_WINDER_PRICES); }
+        changed = true;
+      }
+
+      if (changed) {
+        setAdminDataLoaded(prev => !prev);
+      }
+    });
+  }, []);
+
   const [customer, setCustomer] = useState({
     quotationRef: "Loading...", // Temporary initial state
     region: "DOM", // "DOM" or "EXP"

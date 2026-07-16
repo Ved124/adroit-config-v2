@@ -111,6 +111,10 @@ export const ADDONS_DATA = {
   "EPC": EPC_COMPONENTS,
   "Printer": PRINTER_ADDONS,
   "Optional Features": OPTIONAL_FEATURE_ADDONS,
+  "Gauge": GAUGE_ADDONS,
+  "MDO": MDO_ADDONS,
+  "Trim": TRIM_ADDONS,
+  "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
 };
 
 
@@ -199,6 +203,10 @@ export function ConfigProvider({ children }) {
         if (components.epc) ADDONS_DATA["EPC"] = components.epc;
         if (components.printer) ADDONS_DATA["Printer"] = components.printer;
         if (components.optionalFeatures) ADDONS_DATA["Optional Features"] = components.optionalFeatures;
+        if (components.gauge) ADDONS_DATA["Gauge"] = components.gauge;
+        if (components.mdo) ADDONS_DATA["MDO"] = components.mdo;
+        if (components.trim) ADDONS_DATA["Trim"] = components.trim;
+        if (components.hydraulicUnloader) ADDONS_DATA["Hydraulic Unloader"] = components.hydraulicUnloader;
         changed = true;
       }
 

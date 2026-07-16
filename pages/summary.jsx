@@ -271,27 +271,15 @@ function buildProposalData({
   });
   const realAddonsRaw = selectedAddonsSafe.filter(item => {
     if (!item || !item.name) return false;
-    const n = item.name.toLowerCase();
-    const c = (item.category || "").toLowerCase();
-    const isWinderTower = n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower");
-    const isTrim = n.includes("trim");
-    const isDieRotation = item.id === "die-rotation-addon";
-    const isBimetallic = item.id?.startsWith("bimetallic-upgrade-") || item.category === "Extruder Addons" || n.includes("bi-metallic");
-    const isLoadcell = item.id === "addon-loadcell-tension";
     const isGrandTotal = item.id === "grand-total-line";
+    if (isGrandTotal) return false;
+    
     const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
-    const isUpDownBC = item.id === "addon-up-down-bubble-cage";
-
     if (machineType === "material-handling" && isMixer) {
       return false;
     }
-
-    if (machineType === "mono" || machineType === "aba") {
-      if (isGrandTotal) return false;
-      return true;
-    }
-
-    return (!isWinderTower || isTrim) && !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isUpDownBC;
+    
+    return true;
   });
 
   // Compute grand total for the pricing block (machine final + addons)

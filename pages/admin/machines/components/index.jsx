@@ -65,16 +65,18 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
   const getInitialForm = () => {
     if (isEdit) return { ...component };
     
-    let defaultTechDesc = {};
+    let defaultForm = { ...EMPTY_COMPONENT };
     if (existingComponents && existingComponents.length > 0) {
-      const sibling = existingComponents.find(c => c.techDesc && Object.keys(c.techDesc).length > 0);
+      const sibling = existingComponents.find(c => c.techDesc && Object.keys(c.techDesc).length > 0) || existingComponents[0];
       if (sibling) {
-        Object.keys(sibling.techDesc).forEach(key => {
-          defaultTechDesc[key] = '';
-        });
+        defaultForm.cardDesc = sibling.cardDesc || '';
+        defaultForm.shortDesc = sibling.shortDesc || '';
+        if (sibling.techDesc) {
+          defaultForm.techDesc = { ...sibling.techDesc }; // copy keys AND values
+        }
       }
     }
-    return { ...EMPTY_COMPONENT, techDesc: defaultTechDesc };
+    return defaultForm;
   };
 
   const [form, setForm] = useState(getInitialForm);

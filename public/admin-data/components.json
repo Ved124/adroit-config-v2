@@ -907,7 +907,8 @@
         "Die Size": "Diameter as per width and lip gap.",
         "Die setting": "Die adjusting bolts will be provided.",
         "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
+        "Heating System": "Ceramic band heaters",
+        "Die Lip": "2.3mm"
       },
       "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
     },

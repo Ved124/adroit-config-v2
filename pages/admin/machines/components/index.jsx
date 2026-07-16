@@ -59,9 +59,25 @@ function Label({ children, required }) {
   );
 }
 
-function ComponentModal({ component, categoryKey, onSave, onClose }) {
+function ComponentModal({ component, categoryKey, existingComponents, onSave, onClose }) {
   const isEdit = !!component?.id;
-  const [form, setForm] = useState(isEdit ? { ...component } : { ...EMPTY_COMPONENT });
+
+  const getInitialForm = () => {
+    if (isEdit) return { ...component };
+    
+    let defaultTechDesc = {};
+    if (existingComponents && existingComponents.length > 0) {
+      const sibling = existingComponents.find(c => c.techDesc && Object.keys(c.techDesc).length > 0);
+      if (sibling) {
+        Object.keys(sibling.techDesc).forEach(key => {
+          defaultTechDesc[key] = '';
+        });
+      }
+    }
+    return { ...EMPTY_COMPONENT, techDesc: defaultTechDesc };
+  };
+
+  const [form, setForm] = useState(getInitialForm);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState('');
 
@@ -324,6 +340,7 @@ export default function ComponentsManager() {
         <ComponentModal
           component={modal.mode === 'edit' ? modal.component : null}
           categoryKey={activeCategory}
+          existingComponents={items}
           onSave={() => { setModal(null); showToast(modal.mode === 'edit' ? 'Component updated!' : 'Component added!'); load(); }}
           onClose={() => setModal(null)}
         />

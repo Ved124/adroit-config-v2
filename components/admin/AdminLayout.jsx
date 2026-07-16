@@ -97,7 +97,10 @@ export default function AdminLayout({ children, title }) {
             );
           })}
         </nav>
-        <div style={{ padding: '12px 20px', borderTop: '1px solid #334155' }}>
+        <div style={{ padding: '12px 20px', borderTop: '1px solid #334155', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <Link href="/customer" style={{ fontSize: '12px', color: '#94a3b8', textDecoration: 'none' }}>
+            ← Back to Configurator
+          </Link>
           <Link href="/admin/leads" style={{ fontSize: '12px', color: '#64748b', textDecoration: 'none' }}>
             ← Leads Dashboard
           </Link>

@@ -154,11 +154,14 @@ export function ConfigProvider({ children }) {
 
   useEffect(() => {
     // Fetch dynamic admin overrides so the Configurator reflects the Hub's CRUD edits live
+    // Adding a timestamp prevents the browser from caching the old JSON files.
+    // We run this whenever the route changes so navigating from Admin Hub -> Configurator updates immediately.
+    const t = Date.now();
     Promise.all([
-      fetch('/admin-data/models.json').then(r => r.json()).catch(() => null),
-      fetch('/admin-data/presets.json').then(r => r.json()).catch(() => null),
-      fetch('/admin-data/components.json').then(r => r.json()).catch(() => null),
-      fetch('/admin-data/pricing.json').then(r => r.json()).catch(() => null),
+      fetch(`/admin-data/models.json?t=${t}`).then(r => r.json()).catch(() => null),
+      fetch(`/admin-data/presets.json?t=${t}`).then(r => r.json()).catch(() => null),
+      fetch(`/admin-data/components.json?t=${t}`).then(r => r.json()).catch(() => null),
+      fetch(`/admin-data/pricing.json?t=${t}`).then(r => r.json()).catch(() => null),
     ]).then(([models, presets, components, pricing]) => {
       let changed = false;
 
@@ -219,7 +222,7 @@ export function ConfigProvider({ children }) {
         setAdminDataLoaded(prev => !prev);
       }
     });
-  }, []);
+  }, [router.asPath]);
 
   const [customer, setCustomer] = useState({
     quotationRef: "Loading...", // Temporary initial state

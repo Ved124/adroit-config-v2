@@ -62,19 +62,20 @@ function Label({ children, required }) {
 function ComponentModal({ component, categoryKey, existingComponents, onSave, onClose }) {
   const isEdit = !!component?.id;
 
+  const sibling = (existingComponents && existingComponents.length > 0)
+    ? (existingComponents.find(c => c.techDesc && Object.keys(c.techDesc).length > 0) || existingComponents[0])
+    : null;
+
   const getInitialForm = () => {
     if (isEdit) return { ...component };
     
     let defaultForm = { ...EMPTY_COMPONENT };
-    if (existingComponents && existingComponents.length > 0) {
-      const sibling = existingComponents.find(c => c.techDesc && Object.keys(c.techDesc).length > 0) || existingComponents[0];
-      if (sibling) {
-        defaultForm.cardDesc = sibling.cardDesc || '';
-        defaultForm.shortDesc = sibling.shortDesc || '';
-        defaultForm.image = sibling.image || '';
-        if (sibling.techDesc) {
-          defaultForm.techDesc = { ...sibling.techDesc }; // copy keys AND values
-        }
+    if (sibling) {
+      defaultForm.cardDesc = sibling.cardDesc || '';
+      defaultForm.shortDesc = sibling.shortDesc || '';
+      defaultForm.image = sibling.image || '';
+      if (sibling.techDesc) {
+        defaultForm.techDesc = { ...sibling.techDesc }; // copy keys AND values
       }
     }
     return defaultForm;
@@ -120,11 +121,11 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
           <div>
             <Label required>ID</Label>
-            <input value={form.id} onChange={e => set('id', e.target.value)} placeholder="ext-45-mono-short" style={inp(isEdit ? { background: '#f8fafc', color: '#94a3b8' } : {})} readOnly={isEdit} />
+            <input value={form.id} onChange={e => set('id', e.target.value)} placeholder={sibling ? `e.g. ${sibling.id}` : "ext-45-mono-short"} style={inp(isEdit ? { background: '#f8fafc', color: '#94a3b8' } : {})} readOnly={isEdit} />
           </div>
           <div>
             <Label required>Name</Label>
-            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="Extruder 45 mm" style={inp()} />
+            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder={sibling ? `e.g. ${sibling.name}` : "Extruder 45 mm"} style={inp()} />
           </div>
           <div>
             <Label>Price (₹)</Label>
@@ -132,7 +133,7 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
           </div>
           <div>
             <Label>Image Path</Label>
-            <input value={form.image || ''} onChange={e => set('image', e.target.value)} placeholder="/images/Extruder/Extruder Mono.png" style={inp()} />
+            <input value={form.image || ''} onChange={e => set('image', e.target.value)} placeholder={sibling ? `e.g. ${sibling.image || '/images/...'}` : "/images/Extruder/Extruder Mono.png"} style={inp()} />
           </div>
         </div>
 

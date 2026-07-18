@@ -7,8 +7,13 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
   // We only care about /admin and /api/admin routes
-  // Bypass middleware for the login API route
-  if (request.nextUrl.pathname.startsWith('/api/admin/login')) {
+  // Bypass middleware for public catalog endpoints
+  const publicApiPaths = ['/api/admin/login', '/api/admin/models', '/api/admin/presets', '/api/admin/components'];
+  if (publicApiPaths.some(p => pathname.startsWith(p)) && request.method === 'GET') {
+    return NextResponse.next();
+  }
+  
+  if (pathname.startsWith('/api/admin/login')) {
     return NextResponse.next();
   }
 

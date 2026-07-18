@@ -972,7 +972,21 @@
         "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
         "Nip roller width": "TBD mm",
         "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
-      }
+      },
+      "prices": {
+        "1000": 1100000,
+        "1250": 1100000,
+        "1350": 1150000,
+        "1500": 1200000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2500000,
+        "2500": 2700000,
+        "2750": 3200000,
+        "3000": 3500000
+      },
+      "pricingType": "size"
     }
   ],
   "dies": [
@@ -2648,7 +2662,35 @@
         "Construction": "Precision machined aluminum body.",
         "Cooling": "High efficiency lip profile."
       },
-      "shortDesc": "Gamma Air Ring for optimal bubble cooling."
+      "shortDesc": "Gamma Air Ring for optimal bubble cooling.",
+      "pricingType": "size",
+      "prices": {
+        "50": 0,
+        "70": 0,
+        "90": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "250": 0,
+        "275": 0,
+        "300": 350000,
+        "325": 375000,
+        "350": 400000,
+        "375": 425000,
+        "400": 450000,
+        "425": 0,
+        "450": 0,
+        "475": 0,
+        "500": 0,
+        "525": 0,
+        "550": 0,
+        "600": 0,
+        "650": 0,
+        "700": 0,
+        "750": 0
+      }
     },
     {
       "id": "airring-standard-dynamic",
@@ -2670,7 +2712,8 @@
         "Construction": "Robust aluminum alloy structure.",
         "Cooling": "Uniform air distribution for stable bubble."
       },
-      "shortDesc": "Standard high performance air ring."
+      "shortDesc": "Standard high performance air ring.",
+      "pricingType": "size"
     },
     {
       "id": "airring-dr-dynamic",
@@ -2690,7 +2733,35 @@
         "Blower": "20 HP AC variable frequency drive.",
         "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor."
       },
-      "shortDesc": "Dual lip air ring for high capacity co-extruded films."
+      "shortDesc": "Dual lip air ring for high capacity co-extruded films.",
+      "pricingType": "size",
+      "prices": {
+        "50": 0,
+        "70": 0,
+        "90": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "250": 0,
+        "275": 0,
+        "300": 500000,
+        "325": 600000,
+        "350": 650000,
+        "375": 700000,
+        "400": 725000,
+        "425": 800000,
+        "450": 800000,
+        "475": 0,
+        "500": 950000,
+        "525": 0,
+        "550": 0,
+        "600": 1000000,
+        "650": 0,
+        "700": 0,
+        "750": 0
+      }
     },
     {
       "id": "airring-dr-dynamic-aba",
@@ -2708,7 +2779,8 @@
         "Construcion": "Aluminum body aerodynamic type dual lip air cooling ring.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
         "Blower": "7.5 HP with inlet air filter."
       },
-      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films."
+      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films.",
+      "pricingType": "size"
     }
   ],
   "collapsingFrame": [
@@ -2732,7 +2804,22 @@
         "Adjustment": "Manual width adjustment with locking system.",
         "Width Capability": "TBD mm"
       },
-      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat."
+      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
+      "prices": {
+        "550": 0,
+        "1000": 0,
+        "1250": 0,
+        "1350": 0,
+        "1500": 0,
+        "1750": 0,
+        "1850": 0,
+        "2000": 0,
+        "2250": 0,
+        "2500": 0,
+        "2750": 0,
+        "3000": 0
+      },
+      "pricingType": "size"
     }
   ],
   "tower": [
@@ -2756,27 +2843,21 @@
         "Staircase": "Staircase with hand rails.",
         "Safety": "Hand rails and kick plates according to European safety standards.",
         "Idler rollers": "Set of idler aluminium rollers as per nip size."
-      }
-    },
-    {
-      "id": "tower_std",
-      "name": "Tower / Platform",
-      "isDynamic": false,
-      "machineTypes": [
-        "mono",
-        "aba"
-      ],
-      "usedInModels": [],
-      "image": "/images/tower.png",
-      "cardDesc": "Standard MS tower structure with walk-around platform, staircase and safety handrails for ABA / mono lines.",
-      "price": 600000,
-      "techDesc": {
-        "Structure": "Knock-down type tower structure fabricated in mild steel.",
-        "Platforms": "Walk-around platform with grating.",
-        "Staircase": "Staircase with hand rails.",
-        "Safety": "Hand rails and kick plates.",
-        "Idler rollers": "Set of idler aluminium rollers as per layout."
-      }
+      },
+      "prices": {
+        "1000": 1000000,
+        "1250": 1000000,
+        "1350": 1150000,
+        "1500": 1300000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2200000,
+        "2500": 2500000,
+        "2750": 3000000,
+        "3000": 3500000
+      },
+      "pricingType": "size"
     }
   ],
   "electricalPanel": [

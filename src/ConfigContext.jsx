@@ -1234,7 +1234,7 @@ export function ConfigProvider({ children }) {
     }
 
     return out;
-  }, [components, machineType, customMode, selectedMachineModelLabel]);
+  }, [components, machineType, customMode, selectedMachineModelLabel, adminDataLoaded]);
 
   // addons: only filter by family for now
   const filteredAddons = useMemo(() => {
@@ -1416,7 +1416,7 @@ export function ConfigProvider({ children }) {
     }
 
     return out;
-  }, [addons, machineType, selectedAddons, selected]);
+  }, [addons, machineType, selectedAddons, selected, adminDataLoaded]);
 
   const processedSelected = useMemo(() => {
     const isDieRotationSelected = selectedAddons.some(a => a.id === "die-rotation-addon");

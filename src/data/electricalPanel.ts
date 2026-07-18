@@ -20,6 +20,8 @@ export interface ElectricalAddon {
   isDynamic?: boolean;
   techDesc: TechSpecMap;
   shortDesc?: string;
+  pricingType?: "size" | "brand" | "dropdown";
+  prices?: Record<string, number>;
 }
 
 export const PANEL_3LAYER_PRICES: Record<string, number> = {
@@ -189,6 +191,8 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     price: 0,
     qty: 1,
     isDynamic: true,
+    pricingType: "size",
+    prices: PANEL_3LAYER_PRICES,
     techDesc: {
       "Panel Type": "Floor mounted, compartmentalized panel with segregated power & control wiring.",
       "Drives": "Individual AC drives for extruders, haul-off, winder and auxiliary motors.",

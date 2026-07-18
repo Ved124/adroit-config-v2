@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { ConfigContext } from "../src/ConfigContext";
 import { motion } from "framer-motion";
-import { MATERIAL_HANDLING_ADDONS, MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
+import { MATERIAL_HANDLING_ADDONS } from "../src/data/materialHandling";
 import { useEffect as ReactUseEffect } from "react";
 
 function getModelLabel(model, index) {
@@ -542,12 +542,12 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
 
   const isDisabled = otherMixerSelected && !isSelected;
 
-  const brands = MIXER_DRYER_BRANDS;
-  const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
+  const brands = ["Adroit"];
+  const [selectedBrand, setSelectedBrand] = useState(brands[0]);
 
-  let prices = {};
-  if (isMixerDryer) prices = MIXER_DRYER_PRICES;
-  else if (isMixer) prices = MIXER_PRICES;
+  const prices = item.pricingType === 'size' || item.pricingType === 'brand' || item.pricingType === 'dropdown' 
+    ? (item.prices || {})
+    : {};
 
   const isOutputBased = isMixerDryer || isMixer;
   const selectorLabel = isOutputBased ? "Output" : "";

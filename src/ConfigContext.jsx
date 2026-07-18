@@ -15,10 +15,10 @@ import { ABA_MODELS } from "../data/abaModels";
 import { THREE_LAYER_MODELS } from "../data/threeLayerModels";
 import { EXTRUDER_COMPONENTS } from "./data/extruders";
 import { DIE_COMPONENTS } from "./data/dies";
-import { BUBBLE_CAGE_COMPONENTS, MANUAL_BC_PRICES, OPEN_CLOSE_BC_PRICES, UP_DOWN_BC_PRICES } from "./data/bubbleCages";
-import { HAULOFF_COMPONENTS, HAULOFF_PRICES } from "./data/hauloffs";
+import { BUBBLE_CAGE_COMPONENTS } from "./data/bubbleCages";
+import { HAULOFF_COMPONENTS } from "./data/hauloffs";
 import { TOWER_COMPONENTS, TOWER_PRICES } from "./data/tower";
-import { WINDER_COMPONENTS, MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES, SINGLE_SURFACE_PRICES } from "./data/winders";
+import { WINDER_COMPONENTS } from "./data/winders";
 import { AIR_RING_COMPONENTS } from "./data/airRing";
 import { IBC_COMPONENTS } from "./data/ibc";
 import { COLLAPSING_FRAME_COMPONENTS, COLLAPSING_FRAME_PRICES } from "./data/collapsingFrame";
@@ -111,10 +111,7 @@ export const ADDONS_DATA = {
   "EPC": EPC_COMPONENTS,
   "Printer": PRINTER_ADDONS,
   "Optional Features": OPTIONAL_FEATURE_ADDONS,
-  "Gauge": GAUGE_ADDONS,
-  "MDO": MDO_ADDONS,
-  "Trim": TRIM_ADDONS,
-  "Hydraulic Unloader": HYDRAULIC_UNLOADER_ADDONS,
+  "IBC": IBC_COMPONENTS,
 };
 
 
@@ -157,11 +154,10 @@ export function ConfigProvider({ children }) {
     // We run this whenever the route changes so navigating from Admin Hub -> Configurator updates immediately.
     const t = Date.now();
     Promise.all([
-      fetch(`/admin-data/models.json?t=${t}`).then(r => r.json()).catch(() => null),
-      fetch(`/admin-data/presets.json?t=${t}`).then(r => r.json()).catch(() => null),
-      fetch(`/admin-data/components.json?t=${t}`).then(r => r.json()).catch(() => null),
-      fetch(`/admin-data/pricing.json?t=${t}`).then(r => r.json()).catch(() => null),
-    ]).then(([models, presets, components, pricing]) => {
+      fetch(`/api/admin/models?t=${t}`).then(r => r.json()).catch(() => null),
+      fetch(`/api/admin/presets?t=${t}`).then(r => r.json()).catch(() => null),
+      fetch(`/api/admin/components?t=${t}`).then(r => r.json()).catch(() => null),
+    ]).then(([models, presets, components]) => {
       let changed = false;
 
       if (models && Object.keys(models).length > 0) {
@@ -197,29 +193,14 @@ export function ConfigProvider({ children }) {
         if (components.webGuide) ADDONS_DATA["Web Guide"] = components.webGuide;
         if (components.chiller) ADDONS_DATA["Chiller"] = components.chiller;
         if (components.heatExchanger) ADDONS_DATA["Heat Exchanger"] = components.heatExchanger;
-        if (components.dieAddons) ADDONS_DATA["Die Addons"] = components.dieAddons;
-        if (components.extruderAddons) ADDONS_DATA["Extruder Addons"] = components.extruderAddons;
-        if (components.winderAddons) ADDONS_DATA["Winder Addons"] = components.winderAddons;
         if (components.epc) ADDONS_DATA["EPC"] = components.epc;
         if (components.printer) ADDONS_DATA["Printer"] = components.printer;
         if (components.optionalFeatures) ADDONS_DATA["Optional Features"] = components.optionalFeatures;
-        if (components.gauge) ADDONS_DATA["Gauge"] = components.gauge;
-        if (components.mdo) ADDONS_DATA["MDO"] = components.mdo;
-        if (components.trim) ADDONS_DATA["Trim"] = components.trim;
-        if (components.hydraulicUnloader) ADDONS_DATA["Hydraulic Unloader"] = components.hydraulicUnloader;
+        if (components.ibc) ADDONS_DATA["IBC"] = components.ibc;
         changed = true;
       }
 
-      if (pricing && Object.keys(pricing).length > 0) {
-        if (pricing.MANUAL_BC_PRICES) { Object.keys(MANUAL_BC_PRICES).forEach(k => delete MANUAL_BC_PRICES[k]); Object.assign(MANUAL_BC_PRICES, pricing.MANUAL_BC_PRICES); }
-        if (pricing.OPEN_CLOSE_BC_PRICES) { Object.keys(OPEN_CLOSE_BC_PRICES).forEach(k => delete OPEN_CLOSE_BC_PRICES[k]); Object.assign(OPEN_CLOSE_BC_PRICES, pricing.OPEN_CLOSE_BC_PRICES); }
-        if (pricing.UP_DOWN_BC_PRICES) { Object.keys(UP_DOWN_BC_PRICES).forEach(k => delete UP_DOWN_BC_PRICES[k]); Object.assign(UP_DOWN_BC_PRICES, pricing.UP_DOWN_BC_PRICES); }
-        if (pricing.HAULOFF_PRICES) { Object.keys(HAULOFF_PRICES).forEach(k => delete HAULOFF_PRICES[k]); Object.assign(HAULOFF_PRICES, pricing.HAULOFF_PRICES); }
-        if (pricing.MANUAL_BACK_TO_BACK_PRICES) { Object.keys(MANUAL_BACK_TO_BACK_PRICES).forEach(k => delete MANUAL_BACK_TO_BACK_PRICES[k]); Object.assign(MANUAL_BACK_TO_BACK_PRICES, pricing.MANUAL_BACK_TO_BACK_PRICES); }
-        if (pricing.SURFACE_WINDER_PRICES) { Object.keys(SURFACE_WINDER_PRICES).forEach(k => delete SURFACE_WINDER_PRICES[k]); Object.assign(SURFACE_WINDER_PRICES, pricing.SURFACE_WINDER_PRICES); }
-        if (pricing.AUTOMATIC_WINDER_PRICES) { Object.keys(AUTOMATIC_WINDER_PRICES).forEach(k => delete AUTOMATIC_WINDER_PRICES[k]); Object.assign(AUTOMATIC_WINDER_PRICES, pricing.AUTOMATIC_WINDER_PRICES); }
-        changed = true;
-      }
+
 
       if (changed) {
         setAdminDataLoaded(prev => !prev);
@@ -717,19 +698,22 @@ export function ConfigProvider({ children }) {
           const isUpDown = name.includes("up down") || item.id.includes("up-down");
           const isOC = name.includes("open close") || item.id.includes("open-close") || (!isManual && !isUpDown);
 
-          let priceMap = OPEN_CLOSE_BC_PRICES;
+          let compId = "bc-open-close-dynamic";
           let label = "Film width range";
           let minRatio = 0.5;
 
           if (isManual) {
-            priceMap = MANUAL_BC_PRICES;
+            compId = "bc-manual-dynamic";
             label = "Bubble width range";
             minRatio = 0.6;
           } else if (isUpDown) {
-            priceMap = UP_DOWN_BC_PRICES;
+            compId = "bc-up-down-dynamic";
             label = "Bubble width range";
             minRatio = 0.5;
           }
+
+          const bcComp = COMPONENTS_DATA["Bubble Cage"]?.find(c => c.id === compId || c.name.toLowerCase().includes(isManual ? "manual" : isUpDown ? "up down" : "motorised"));
+          const priceMap = bcComp?.prices || {};
 
           // Find smallest size >= machineWidth
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
@@ -782,15 +766,17 @@ export function ConfigProvider({ children }) {
         const isHaulOffId = ["haul-horizontal-standard", "haul-horizontal-heavy", "haul-oscillating", "haul-horizontal-dynamic"].includes(item.id);
 
         if (item.category === "Haul-Off" && (isHaulOffId || item.isDynamic)) {
-          const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
+          const hauloffComp = COMPONENTS_DATA["Haul-Off"]?.find(c => c.id === "haul-horizontal-dynamic" || c.name.toLowerCase().includes("haul-off"));
+          const priceMap = hauloffComp?.prices || {};
+          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
-          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0] || 0;
           // Respect preset size
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : minSize;
-          const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
+          const newPrice = priceMap[chosenSize.toString()] || 0;
 
-          const dynamicHauloffItem = HAULOFF_COMPONENTS.find(h => h.id === "haul-horizontal-dynamic") || item;
+          const dynamicHauloffItem = hauloffComp || item;
 
           let hp = "2 HP";
           if (chosenSize >= 1500 && chosenSize <= 2000) hp = "3 HP";
@@ -858,14 +844,16 @@ export function ConfigProvider({ children }) {
       // 4.9) DYNAMIC MAIN NIP LOGIC
       nextSelected.forEach((item, index) => {
         if (item.category === "Main Nip" && item.isDynamic) {
-          const availableSizes = Object.keys(HAULOFF_PRICES).map(Number).sort((a, b) => a - b);
-          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const mainNipId = (machineType === "3layer" || machineType === "5layer") ? "main-nip-dynamic-multi" : "main-nip-dynamic";
+          const mainNipComp = COMPONENTS_DATA["Main Nip"]?.find(c => c.id === mainNipId) || COMPONENTS_DATA["Haul-Off"]?.find(c => c.id === "haul-horizontal-dynamic");
+          const priceMap = mainNipComp?.prices || {};
+          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0] || 0;
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : minSize;
-          const newPrice = HAULOFF_PRICES[chosenSize.toString()] || 0;
+          const newPrice = priceMap[chosenSize.toString()] || 0;
 
-          const mainNipId = (machineType === "3layer" || machineType === "5layer") ? "main-nip-dynamic-multi" : "main-nip-dynamic";
-          const dynamicMainNipItem = HAULOFF_COMPONENTS.find(h => h.id === mainNipId) || item;
+          const dynamicMainNipItem = mainNipComp || item;
 
           let hp = "2 HP";
           if (chosenSize >= 1500 && chosenSize <= 2000) hp = "3 HP";
@@ -910,14 +898,17 @@ export function ConfigProvider({ children }) {
           const isSurface = !isManual && !isAuto;
           const isSingleSurfaceWinder = item.id === "winder-single-surface-only-dynamic";
 
-          let priceMap = SURFACE_WINDER_PRICES;
-          if (isManual) priceMap = MANUAL_BACK_TO_BACK_PRICES;
-          else if (isSingleSurfaceWinder) priceMap = SINGLE_SURFACE_PRICES;
-          else if (isAuto) priceMap = AUTOMATIC_WINDER_PRICES;
+          let compId = "winder-surface-dynamic";
+          if (isManual) compId = "winder-manual-back-to-back-dynamic";
+          else if (isSingleSurfaceWinder) compId = "winder-single-surface-only-dynamic";
+          else if (isAuto) compId = "winder-automatic-dynamic";
 
+          const winderComp = COMPONENTS_DATA["Winder"]?.find(c => c.id === compId);
+          const priceMap = winderComp?.prices || {};
+          
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
-          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0];
+          const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0] || 0;
           // Respect preset size
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : minSize;
@@ -1403,7 +1394,8 @@ export function ConfigProvider({ children }) {
       const selectedBC = (selected || []).find(s => s.category === "Bubble Cage");
       if (selectedBC) {
         const bcSize = parseInt(selectedBC.size) || 0;
-        const upDownPrice = UP_DOWN_BC_PRICES[bcSize.toString()] || 150000;
+        const upDownBcComponent = COMPONENTS_DATA["Bubble Cage"]?.find(c => c.id === "bc-up-down-dynamic" || c.name.includes("Up Down"));
+        const upDownPrice = upDownBcComponent?.prices?.[bcSize.toString()] || 150000;
         const currentPrice = selectedBC.price || 0;
         const upgradePrice = Math.max(0, upDownPrice - currentPrice);
 

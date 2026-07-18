@@ -32,15 +32,6 @@ const CARDS = [
     bg: 'linear-gradient(135deg,#059669 0%,#047857 100%)',
     stat: 'preset builder',
   },
-  {
-    href: '/admin/machines/pricing',
-    icon: '💰',
-    title: 'Price Tables',
-    desc: 'Edit size-to-price lookup tables for bubble cages, hauloffs, winders, and more. Changes reflect live in quotations.',
-    color: '#d97706',
-    bg: 'linear-gradient(135deg,#d97706 0%,#b45309 100%)',
-    stat: '7 price tables',
-  },
 ];
 
 export default function MachinesHub() {
@@ -93,7 +84,6 @@ export default function MachinesHub() {
               { label: 'Machine Models', value: stats.models },
               { label: 'Components', value: stats.components },
               { label: 'Presets', value: stats.presets },
-              { label: 'Price Tables', value: '7' },
             ].map(s => (
               <div key={s.label}>
                 <div style={{ fontSize: '24px', fontWeight: '900', color: '#f8fafc' }}>{s.value}</div>

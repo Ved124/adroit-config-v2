@@ -119,29 +119,9 @@ export function seedPresets() {
   console.log('[seed] presets.json created');
 }
 
-export function seedPricing() {
-  if (readAdminJson('pricing.json')) return;
-
-  const bcMod    = loadTsModule('src/data/bubbleCages');
-  const haulMod  = loadTsModule('src/data/hauloffs');
-  const winMod   = loadTsModule('src/data/winders');
-
-  writeAdminJson('pricing.json', {
-    MANUAL_BC_PRICES:       bcMod.MANUAL_BC_PRICES || {},
-    OPEN_CLOSE_BC_PRICES:   bcMod.OPEN_CLOSE_BC_PRICES || {},
-    UP_DOWN_BC_PRICES:      bcMod.UP_DOWN_BC_PRICES || {},
-    HAULOFF_PRICES:         haulMod.HAULOFF_PRICES || {},
-    MANUAL_BACK_TO_BACK_PRICES: winMod.MANUAL_BACK_TO_BACK_PRICES || {},
-    SURFACE_WINDER_PRICES:  winMod.SURFACE_WINDER_PRICES || {},
-    AUTOMATIC_WINDER_PRICES:winMod.AUTOMATIC_WINDER_PRICES || {},
-  });
-  console.log('[seed] pricing.json created');
-}
-
 export function seedAll() {
   ensureAdminDataDir();
   seedModels();
   seedComponents();
   seedPresets();
-  seedPricing();
 }

@@ -8,60 +8,10 @@ const NAV = [
   { href: '/admin/machines/models', label: '🏭 Machine Models' },
   { href: '/admin/machines/components', label: '🔧 Components' },
   { href: '/admin/machines/presets', label: '📋 Presets' },
-  { href: '/admin/machines/pricing', label: '💰 Price Tables' },
 ];
 
 export default function AdminLayout({ children, title }) {
   const router = useRouter();
-  const [auth, setAuth] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isAuth = sessionStorage.getItem('adroit_admin_auth') === 'true';
-      setAuth(isAuth);
-    }
-  }, []);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (password === 'adroit123' || password === 'admin') {
-      sessionStorage.setItem('adroit_admin_auth', 'true');
-      setAuth(true);
-      setError('');
-    } else {
-      setError('Incorrect password');
-    }
-  };
-
-  if (!auth) {
-    return (
-      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9', fontFamily: "'Inter', system-ui, sans-serif" }}>
-        <div style={{ background: 'white', padding: '40px', borderRadius: '16px', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0f172a', marginBottom: '8px' }}>Admin Access</h1>
-          <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '24px' }}>Please enter the password to continue.</p>
-          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={e => setPassword(e.target.value)} 
-              placeholder="Password" 
-              style={{ width: '100%', padding: '12px 16px', border: '1.5px solid #e2e8f0', borderRadius: '8px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
-              autoFocus
-            />
-            {error && <div style={{ color: '#dc2626', fontSize: '13px', fontWeight: '600' }}>{error}</div>}
-            <button type="submit" style={{ width: '100%', padding: '12px 16px', background: '#6366f1', color: 'white', border: 'none', borderRadius: '8px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>
-              Login
-            </button>
-          </form>
-          <div style={{ marginTop: '24px' }}>
-            <Link href="/customer" style={{ fontSize: '13px', color: '#6366f1', textDecoration: 'none', fontWeight: '600' }}>← Back to Configurator</Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', fontFamily: "'Inter', system-ui, sans-serif", background: '#f1f5f9' }}>
@@ -97,13 +47,16 @@ export default function AdminLayout({ children, title }) {
             );
           })}
         </nav>
-        <div style={{ padding: '12px 20px', borderTop: '1px solid #334155', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <Link href="/customer" style={{ fontSize: '12px', color: '#94a3b8', textDecoration: 'none' }}>
-            ← Back to Configurator
+        <div style={{ padding: '12px 20px', borderTop: '1px solid #334155', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <Link href="/customer" style={{ fontSize: '13px', color: '#94a3b8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span>←</span> Configurator
           </Link>
-          <Link href="/admin/leads" style={{ fontSize: '12px', color: '#64748b', textDecoration: 'none' }}>
-            ← Leads Dashboard
+          <Link href="/admin/leads" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span>←</span> Leads Dashboard
           </Link>
+          <a href="/api/admin/logout" style={{ fontSize: '13px', color: '#ef4444', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px', fontWeight: '600' }}>
+            <span>🚪</span> Secure Logout
+          </a>
         </div>
       </aside>
 

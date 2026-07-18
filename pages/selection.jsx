@@ -2,15 +2,6 @@ import { useContext, useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { G_AIR_RING_PRICES, AIR_RING_PRICES, DR_AIR_RING_PRICES } from "../src/data/airRing";
-import { MANUAL_BC_PRICES, OPEN_CLOSE_BC_PRICES, UP_DOWN_BC_PRICES } from "../src/data/bubbleCages";
-import { HAULOFF_PRICES } from "../src/data/hauloffs";
-import { TOWER_PRICES } from "../src/data/tower";
-import { MANUAL_BACK_TO_BACK_PRICES, SURFACE_WINDER_PRICES, AUTOMATIC_WINDER_PRICES, SINGLE_SURFACE_PRICES } from "../src/data/winders";
-import { PANEL_3LAYER_PRICES } from "../src/data/electricalPanel";
-import { COLLAPSING_FRAME_PRICES } from "../src/data/collapsingFrame";
-
-
 export default function SelectionPage() {
   const router = useRouter();
   const {
@@ -156,22 +147,9 @@ function ComponentCard({
   const is3LayerPanel = item.id === "panel-3layer-dynamic";
   const isCollapsingFrame = item.id === "cf-pbt-dynamic";
 
-  let prices = {};
-  if (isGAirRing) prices = G_AIR_RING_PRICES;
-  else if (isStandardAirRing) prices = AIR_RING_PRICES;
-  else if (isDRAirRing) prices = DR_AIR_RING_PRICES;
-  else if (isManualBC) prices = MANUAL_BC_PRICES;
-  else if (isOCBC) prices = OPEN_CLOSE_BC_PRICES;
-  else if (isUDBC) prices = UP_DOWN_BC_PRICES;
-  else if (isDynamicHauloff) prices = HAULOFF_PRICES;
-  else if (isDynamicMainNip) prices = HAULOFF_PRICES;
-  else if (isDynamicTower) prices = TOWER_PRICES;
-  else if (isManualWinder) prices = MANUAL_BACK_TO_BACK_PRICES;
-  else if (isSurfaceWinder) prices = SURFACE_WINDER_PRICES;
-  else if (isSingleSurfaceWinder) prices = SINGLE_SURFACE_PRICES;
-  else if (isAutoWinder) prices = AUTOMATIC_WINDER_PRICES;
-  else if (is3LayerPanel) prices = PANEL_3LAYER_PRICES;
-  else if (isCollapsingFrame) prices = COLLAPSING_FRAME_PRICES;
+  const prices = item.pricingType === 'size' || item.pricingType === 'brand' || item.pricingType === 'dropdown' 
+    ? (item.prices || {})
+    : {};
 
   const sizes = Object.keys(prices);
 

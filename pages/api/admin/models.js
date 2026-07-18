@@ -1,15 +1,25 @@
 // pages/api/admin/models.js
-// CRUD for machine models (mono, aba, 3layer)
+import clientPromise from '../../../src/lib/mongodb';
 
-import { seedModels, readAdminJson, writeAdminJson } from './seed';
+const DB_NAME = process.env.MONGODB_DB || 'adroit_configurator';
 
-export default function handler(req, res) {
+function familyKey(machineFamily) {
+  if (machineFamily === 'mono') return 'mono';
+  if (machineFamily === 'aba') return 'aba';
+  if (machineFamily === '3layer' || machineFamily === 'threeLayer') return 'threeLayer';
+  return 'mono';
+}
+
+export default async function handler(req, res) {
   try {
-    seedModels(); // no-op if already seeded
+    const client = await clientPromise;
+    const db = client.db(DB_NAME);
+    const collection = db.collection('models');
 
     if (req.method === 'GET') {
-      const data = readAdminJson('models.json') || { mono: [], aba: [], threeLayer: [] };
-      return res.status(200).json(data);
+      // Return a single document that has mono, aba, threeLayer arrays
+      const dataDoc = await collection.findOne({ _id: 'all_models' });
+      return res.status(200).json(dataDoc || { mono: [], aba: [], threeLayer: [] });
     }
 
     if (req.method === 'POST') {
@@ -17,15 +27,22 @@ export default function handler(req, res) {
       if (!machineFamily || !model || !model.code) {
         return res.status(400).json({ error: 'machineFamily and model.code are required' });
       }
-      const data = readAdminJson('models.json') || { mono: [], aba: [], threeLayer: [] };
+      
       const key = familyKey(machineFamily);
-      if (!data[key]) return res.status(400).json({ error: `Unknown family: ${machineFamily}` });
+      const dataDoc = await collection.findOne({ _id: 'all_models' }) || { mono: [], aba: [], threeLayer: [] };
+      if (!dataDoc[key]) dataDoc[key] = [];
 
-      if (data[key].find(m => m.code === model.code)) {
+      if (dataDoc[key].find(m => m.code === model.code)) {
         return res.status(409).json({ error: `Model with code "${model.code}" already exists` });
       }
-      data[key].push(model);
-      writeAdminJson('models.json', data);
+      
+      dataDoc[key].push(model);
+      await collection.updateOne(
+        { _id: 'all_models' },
+        { $set: { [key]: dataDoc[key] } },
+        { upsert: true }
+      );
+      
       return res.status(201).json({ success: true, model });
     }
 
@@ -34,15 +51,25 @@ export default function handler(req, res) {
       if (!machineFamily || !code || !updates) {
         return res.status(400).json({ error: 'machineFamily, code, and updates are required' });
       }
-      const data = readAdminJson('models.json') || { mono: [], aba: [], threeLayer: [] };
+      
       const key = familyKey(machineFamily);
-      const idx = data[key]?.findIndex(m => m.code === code);
-      if (idx === -1 || idx === undefined) {
+      const dataDoc = await collection.findOne({ _id: 'all_models' }) || { mono: [], aba: [], threeLayer: [] };
+      if (!dataDoc[key]) dataDoc[key] = [];
+      
+      const idx = dataDoc[key].findIndex(m => m.code === code);
+      if (idx === -1) {
         return res.status(404).json({ error: `Model "${code}" not found` });
       }
-      data[key][idx] = { ...data[key][idx], ...updates, code }; // preserve code
-      writeAdminJson('models.json', data);
-      return res.status(200).json({ success: true, model: data[key][idx] });
+      
+      dataDoc[key][idx] = { ...dataDoc[key][idx], ...updates, code }; // preserve code
+      
+      await collection.updateOne(
+        { _id: 'all_models' },
+        { $set: { [key]: dataDoc[key] } },
+        { upsert: true }
+      );
+      
+      return res.status(200).json({ success: true, model: dataDoc[key][idx] });
     }
 
     if (req.method === 'DELETE') {
@@ -50,27 +77,30 @@ export default function handler(req, res) {
       if (!machineFamily || !code) {
         return res.status(400).json({ error: 'machineFamily and code are required' });
       }
-      const data = readAdminJson('models.json') || { mono: [], aba: [], threeLayer: [] };
+      
       const key = familyKey(machineFamily);
-      const before = data[key]?.length || 0;
-      data[key] = (data[key] || []).filter(m => m.code !== code);
-      if (data[key].length === before) {
+      const dataDoc = await collection.findOne({ _id: 'all_models' }) || { mono: [], aba: [], threeLayer: [] };
+      if (!dataDoc[key]) dataDoc[key] = [];
+      
+      const idx = dataDoc[key].findIndex(m => m.code === code);
+      if (idx === -1) {
         return res.status(404).json({ error: `Model "${code}" not found` });
       }
-      writeAdminJson('models.json', data);
-      return res.status(200).json({ success: true });
+      
+      dataDoc[key].splice(idx, 1);
+      
+      await collection.updateOne(
+        { _id: 'all_models' },
+        { $set: { [key]: dataDoc[key] } },
+        { upsert: true }
+      );
+      
+      return res.status(200).json({ success: true, deleted: code });
     }
 
-    return res.status(405).json({ error: 'Method not allowed' });
-  } catch (err) {
-    console.error('[admin/models]', err);
-    return res.status(500).json({ error: err.message });
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  } catch (error) {
+    console.error('Models API error:', error);
+    return res.status(500).json({ error: error.message });
   }
-}
-
-function familyKey(family) {
-  if (family === 'mono') return 'mono';
-  if (family === 'aba') return 'aba';
-  if (family === '3layer' || family === 'threeLayer') return 'threeLayer';
-  return family;
 }

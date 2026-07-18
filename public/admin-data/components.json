@@ -725,6 +725,22 @@
       "image": "/images/Bubble Cage/Manual Cage.png",
       "cardDesc": "Select size to add manual bubble cage.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "550": 15000,
+        "850": 25000,
+        "1000": 35000,
+        "1250": 55000,
+        "1350": 70000,
+        "1500": 85000,
+        "1750": 125000,
+        "1850": 150000,
+        "2000": 175000,
+        "2250": 225000,
+        "2500": 300000,
+        "2750": 350000,
+        "3000": 500000
+      },
       "isDynamic": true,
       "techDesc": {
         "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
@@ -744,6 +760,22 @@
       "image": "/images/Bubble Cage/Manual Cage.png",
       "cardDesc": "Select size to add manual bubble cage.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "550": 15000,
+        "850": 25000,
+        "1000": 35000,
+        "1250": 55000,
+        "1350": 70000,
+        "1500": 85000,
+        "1750": 125000,
+        "1850": 150000,
+        "2000": 175000,
+        "2250": 225000,
+        "2500": 300000,
+        "2750": 350000,
+        "3000": 500000
+      },
       "isDynamic": true,
       "techDesc": {
         "Type": "Arms to support the bubble."
@@ -764,6 +796,22 @@
       "image": "/images/Bubble Cage/OC Bubble Cage.png",
       "cardDesc": "Select size to add motorized open-close bubble cage.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "550": 125000,
+        "850": 150000,
+        "1000": 175000,
+        "1250": 250000,
+        "1350": 250000,
+        "1500": 275000,
+        "1750": 300000,
+        "1850": 350000,
+        "2000": 450000,
+        "2250": 550000,
+        "2500": 650000,
+        "2750": 750000,
+        "3000": 850000
+      },
       "isDynamic": true,
       "techDesc": {
         "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through Silicon Sleeve rollers for minimum drag.",
@@ -786,6 +834,21 @@
       "image": "/images/Bubble Cage/UD Bubble Cage.png",
       "cardDesc": "Select size to add motorized up-down & open-close bubble cage.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "550": 250000,
+        "850": 300000,
+        "1000": 350000,
+        "1250": 450000,
+        "1500": 550000,
+        "1750": 650000,
+        "1850": 700000,
+        "2000": 750000,
+        "2250": 850000,
+        "2500": 950000,
+        "2750": 1050000,
+        "3000": 1150000
+      },
       "isDynamic": true,
       "techDesc": {
         "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
@@ -832,6 +895,20 @@
       "image": "/images/hauloff/Horizontal Hauloff.png",
       "cardDesc": "Select size and technical specifications will update automatically.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "1000": 1100000,
+        "1250": 1100000,
+        "1350": 1150000,
+        "1500": 1200000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2500000,
+        "2500": 2700000,
+        "2750": 3200000,
+        "3000": 3500000
+      },
       "isDynamic": true,
       "techDesc": {
         "Construction": "The haul off will be shipped in assembled parts.",
@@ -858,6 +935,20 @@
       "image": "/images/MainNip/MainNip.png",
       "cardDesc": "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "1000": 1100000,
+        "1250": 1100000,
+        "1350": 1150000,
+        "1500": 1200000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2500000,
+        "2500": 2700000,
+        "2750": 3200000,
+        "3000": 3500000
+      },
       "techDesc": {
         "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
         "Nip roller width": "TBD mm",
@@ -907,8 +998,7 @@
         "Die Size": "Diameter as per width and lip gap.",
         "Die setting": "Die adjusting bolts will be provided.",
         "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters",
-        "Die Lip": "2.3mm"
+        "Heating System": "Ceramic band heaters"
       },
       "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
     },
@@ -2387,6 +2477,22 @@
       "image": "/images/winder/Back to Back Winder.png",
       "cardDesc": "Secondary Nip & Manual Back to Back Surface Winder. Select size to add.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "850": 500000,
+        "950": 600000,
+        "1000": 700000,
+        "1250": 700000,
+        "1350": 800000,
+        "1500": 1000000,
+        "1750": 1200000,
+        "1850": 1325000,
+        "2000": 1500000,
+        "2250": 2400000,
+        "2500": 2800000,
+        "2750": 3200000,
+        "3000": 4000000
+      },
       "isDynamic": true,
       "techDesc": {
         "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -2414,6 +2520,20 @@
       "image": "/images/winder/Single Surface.png",
       "cardDesc": "Single Surface Winder. Select size to add.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "200": 0,
+        "300": 0,
+        "450": 0,
+        "500": 0,
+        "550": 0,
+        "600": 0,
+        "750": 0,
+        "850": 0,
+        "1000": 0,
+        "1250": 0,
+        "1500": 0
+      },
       "isDynamic": true,
       "techDesc": {
         "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
@@ -2436,6 +2556,20 @@
       "image": "/images/winder/Separate_Winder.png",
       "cardDesc": "Secondary Nip & two separate surface winders. Select size to add.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "1000": 850000,
+        "1250": 850000,
+        "1350": 1000000,
+        "1500": 1120000,
+        "1750": 1350000,
+        "1850": 1450000,
+        "2000": 1650000,
+        "2250": 2575000,
+        "2500": 2950000,
+        "2750": 3350000,
+        "3000": 4150000
+      },
       "isDynamic": true,
       "techDesc": {
         "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -2464,6 +2598,19 @@
       "image": "/images/winder/5_layer_winder.png",
       "cardDesc": "Secondary Nip & two separate surface winders with fully automatic changeover. Select size to add.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "1250": 1400000,
+        "1350": 1500000,
+        "1500": 1700000,
+        "1750": 2100000,
+        "1850": 2300000,
+        "2000": 2500000,
+        "2250": 3200000,
+        "2500": 3800000,
+        "2750": 4200000,
+        "3000": 5000000
+      },
       "isDynamic": true,
       "techDesc": {
         "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -2716,6 +2863,16 @@
       "image": "/images/Acessories/Hopper Loader Trio.png",
       "cardDesc": "Single component automatic material loader for feeding system.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "U20\"": 62000,
+        "U24\"": 62000,
+        "U32\"": 62000,
+        "U40\"": 62000,
+        "U50\"": 62000,
+        "U72\"": 75000,
+        "U110\"": 75000
+      },
       "isDynamic": true,
       "qty": 1,
       "techDesc": {
@@ -2738,6 +2895,14 @@
       "image": "/images/Acessories/Hopper Loader Trio.png",
       "cardDesc": "Dual component automatic material loader for feeding system.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "D26\"": 120000,
+        "D32\"": 120000,
+        "D40\"": 120000,
+        "D50\"": 105000,
+        "D60\"": 135000
+      },
       "isDynamic": true,
       "qty": 1,
       "techDesc": {
@@ -2767,7 +2932,8 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
-      }
+      },
+      "pricingType": "size"
     },
     {
       "id": "hopper-dryer-b",
@@ -2782,6 +2948,14 @@
       "image": "/images/Acessories/Hopper Loader Trio.png",
       "cardDesc": "Hopper Dryer specifically for layer B.",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "D26\"": 65000,
+        "D32\"": 65000,
+        "D40\"": 90000,
+        "D50\"": 90000,
+        "D60\"": 105000
+      },
       "isDynamic": true,
       "qty": 1,
       "techDesc": {
@@ -2802,6 +2976,13 @@
       "image": "/images/Acessories/Vertical Granule Mixer with Dryer.png",
       "cardDesc": "Dynamic Vertical Granule Mixer (Adroit make)",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "100": 140000,
+        "200": 225000,
+        "300": 285000,
+        "500": 350000
+      },
       "isDynamic": true,
       "qty": 1,
       "techDesc": {
@@ -2825,6 +3006,13 @@
       "image": "/images/Acessories/Vertical Granule Mixer with Dryer.png",
       "cardDesc": "Dynamic Vertical Granule Mixer with Integrated Dryer system. (Adroit make)",
       "price": 0,
+      "pricingType": "size",
+      "prices": {
+        "100": 165000,
+        "200": 250000,
+        "300": 310000,
+        "500": 375000
+      },
       "isDynamic": true,
       "qty": 1,
       "techDesc": {
@@ -3142,7 +3330,30 @@
       "shortDesc": "Dancer system for mechanical web tension stabilization, reducing wrinkles and improving roll quality in monolayer and ABA extrusion lines."
     }
   ],
-  "corona": [],
+  "corona": [
+    {
+      "id": "corona-dynamic",
+      "name": "Corona Treater",
+      "type": "single",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/coronatreater.jpg",
+      "cardDesc": "Select Brand and Max Roller Width to add.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Brand": "Selectable (Jain Electro / IEEC)",
+        "Size": "Selectable (U20\" - U110\")",
+        "System": "Surface treatment system for plastic films."
+      },
+      "shortDesc": "High performance corona treater for superior surface treatment."
+    }
+  ],
   "ibc": [
     {
       "id": "ibc-system",
@@ -3198,88 +3409,6 @@
         "2125": 1250000,
         "2370": 1250000,
         "2620": 1250000
-      }
-    }
-  ],
-  "mdo": [
-    {
-      "id": "mdo-compact",
-      "name": "MDO Unit – Compact",
-      "type": "compact",
-      "machineTypes": [
-        "mono",
-        "aba"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1000_1250",
-        "DUOFLEX-750",
-        "DUOFLEX-1000"
-      ],
-      "image": "/images/addons/mdo/mdo-compact.png",
-      "cardDesc": "Compact MDO unit for basic film orientation and gauge reduction on small/medium lines.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Machine direction orientation of thin films for strength and stiffness improvement.",
-        "Configuration": "Pre-heating zone + stretching zone + cooling zone in a compact frame.",
-        "Stretch Ratio": "Typical 2:1 to 4:1 (application dependent).",
-        "Rollers": "Chrome plated and rubber covered rollers with temperature control on heating section.",
-        "Drive": "Individual AC drive for main stretching section with speed ratio control.",
-        "Installation": "Mounted after blown film take-off / collapsing then re-wound at separate winder."
-      }
-    },
-    {
-      "id": "mdo-inline-std",
-      "name": "MDO Unit – Inline (Standard)",
-      "type": "inline",
-      "machineTypes": [
-        "aba",
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1120",
-        "Innoflex-1350",
-        "Innoflex-1620"
-      ],
-      "image": "/images/addons/mdo/mdo-inline.png",
-      "cardDesc": "Inline MDO unit for ABA / 3-layer lamination and high dart FFS films.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Orientation of co-extruded film for lamination, FFS and high dart applications.",
-        "Zones": "Multiple pre-heat rollers, stretching roller pair and post-cooling rollers.",
-        "Temperature Control": "Electrical heating on pre-heat rolls with PID temperature controllers.",
-        "Stretch Ratio": "Adjustable ratio via independent drives on pre- and post-stretch sections.",
-        "Web Handling": "Precise nip control, edge guides and tension control through the MDO frame.",
-        "Integration": "Integrated with main line speed reference; coordinated ramp up/down."
-      }
-    },
-    {
-      "id": "mdo-high-output",
-      "name": "MDO Unit – High Output / Wide Web",
-      "type": "high-output",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1870",
-        "Innoflex-2120",
-        "Innoflex-2370",
-        "Innoflex-2620"
-      ],
-      "image": "/images/addons/mdo/mdo-high-output.png",
-      "cardDesc": "Heavy duty MDO unit for wide web multilayer film, designed for high line speeds.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Production of oriented films for stretch hood, high strength lamination and industrial packaging.",
-        "Working Width": "Up to machine layflat (e.g. 1750–2500 mm, model dependent).",
-        "Rollers": "Large diameter chrome plated rolls, supported on heavy duty bearings.",
-        "Drive System": "Multiple AC vector drives with closed loop synchronization between sections.",
-        "Stretch Ratio": "Wide adjustment range with recipe-based setpoints from HMI.",
-        "Cooling": "Efficient post-cooling zone with chilled water rollers / air knives (depending on configuration).",
-        "Integration": "Fully integrated into main PLC/HMI with recipe management, alarms and trending."
       }
     }
   ],
@@ -3395,116 +3524,6 @@
       "shortDesc": "Efficient heat exchanger for ABA and Multilayer models."
     }
   ],
-  "trim": [
-    {
-      "id": "trim-blower-standard",
-      "name": "Trim Suction Blower – Standard",
-      "type": "trim-blower",
-      "machineTypes": [
-        "mono",
-        "aba"
-      ],
-      "usedInModels": [
-        "UNOFLEX-750_900",
-        "UNOFLEX-1000_1250",
-        "DUOFLEX-750"
-      ],
-      "image": "/images/addons/trim/trim_blower_standard.png",
-      "cardDesc": "Trim suction blower for conveying edge trims from secondary nip to trim winder / collection.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Used to extract side trims generated at secondary nip or slitting station.",
-        "Blower Type": "Centrifugal air blower with sheet metal housing.",
-        "Power": "Approx. 2–3 HP AC motor (model dependent).",
-        "Ducting": "Flexible / rigid duct from slitting point to cyclonic separator / trim winder.",
-        "Installation": "Mounted near winder or at convenient location; includes necessary bends and duct supports.",
-        "Benefit": "Keeps working area clean, reduces manual handling of trims."
-      }
-    },
-    {
-      "id": "trim-blower-heavy",
-      "name": "Trim Suction Blower – Heavy Duty",
-      "type": "trim-blower",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1620",
-        "Innoflex-1870",
-        "Innoflex-2120",
-        "Innoflex-2370",
-        "Innoflex-2620"
-      ],
-      "image": "/images/addons/trim/trim-blower-heavy.png",
-      "cardDesc": "Heavy duty trim blower for wide 3-layer / 5-layer lines with higher trim load.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Blower Type": "Heavy duty centrifugal blower with high static pressure.",
-        "Power": "3–5 HP AC motor with starter / VFD as required.",
-        "Trim Capacity": "Designed to handle continuous side trims from both edges at high line speeds.",
-        "Discharge": "Trim can be directed to trim winder, baler or collection bin.",
-        "Additional Features": "Filter / separator where required to avoid dust in trim area."
-      }
-    },
-    {
-      "id": "trim-winder-standard",
-      "name": "Trim Winder – Standard",
-      "type": "trim-winder",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1000_1250",
-        "DUOFLEX-1000",
-        "Innoflex-1120",
-        "Innoflex-1350"
-      ],
-      "image": "/images/addons/trim/trim-winder-standard.png",
-      "cardDesc": "Single station trim winder for narrow edge trims, driven by small AC motor.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Used for winding edge trims coming from side slitters / secondary nip.",
-        "Stations": "Typically single station narrow width winder.",
-        "Drive": "Small AC motor with torque control / VFD.",
-        "Maximum Trim Width": "Up to ~100 mm per side (model dependent).",
-        "Core Sizes": "Normally 3\" paper core (others on request).",
-        "Control": "Manual speed control; can be synchronized with line speed if required."
-      }
-    },
-    {
-      "id": "trim-winder-heavy",
-      "name": "Trim Winder – Heavy Duty",
-      "type": "trim-winder",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1620",
-        "Innoflex-1870",
-        "Innoflex-2120",
-        "Innoflex-2370",
-        "Innoflex-2620"
-      ],
-      "image": "/images/addons/trim/trim-winder-heavy.png",
-      "cardDesc": "Heavy duty trim winder for wide, high-speed lines with continuous trims.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "For continuous winding of trims at high speed and higher trim thickness.",
-        "Stations": "Single / dual station configuration depending on requirement.",
-        "Drive": "AC motor with torque mode operation; basic tension control included.",
-        "Integration": "Can be interlocked with trim blower for automatic start/stop.",
-        "Roll Diameter": "Up to ~500 mm trim roll (depending on trim thickness and width)."
-      }
-    }
-  ],
   "webGuide": [
     {
       "id": "webguide-dynamic",
@@ -3550,85 +3569,6 @@
       }
     }
   ],
-  "hydraulicUnloader": [
-    {
-      "id": "hyd-unloader-basic",
-      "name": "Hydraulic Roll Unloader – Basic",
-      "type": "basic",
-      "machineTypes": [
-        "mono",
-        "aba"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1000_1250",
-        "DUOFLEX-750",
-        "DUOFLEX-1000"
-      ],
-      "image": "/images/addons/hydraulic/unloader-basic.png",
-      "cardDesc": "Basic hydraulic roll unloader for safely unloading finished rolls from surface winder.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Assists operator in unloading finished film rolls from winder without manual lifting.",
-        "Operation": "Hydraulic lifting platform raises/lower to winder level to receive roll.",
-        "Capacity": "Suitable for medium rolls (typically up to ~400 kg).",
-        "Control": "Simple up/down push button station near winder.",
-        "Benefit": "Improves safety and reduces operator fatigue."
-      }
-    },
-    {
-      "id": "hyd-unloader-swingarm",
-      "name": "Hydraulic Swing Arm Roll Unloader",
-      "type": "swing-arm",
-      "machineTypes": [
-        "aba",
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1120",
-        "Innoflex-1350",
-        "Innoflex-1620"
-      ],
-      "image": "/images/addons/hydraulic/unloader-swingarm.png",
-      "cardDesc": "Swing arm type hydraulic unloader for heavier rolls and wider web lines.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Operation": "Hydraulically actuated swing arm picks roll from winder shafts and lowers to operator height.",
-        "Capacity": "Designed for rolls up to approx. 400–600 kg (model dependent).",
-        "Interface": "Mounted adjacent to winder frame; arm movement synchronized for safe operation.",
-        "Controls": "Local control box with joystick / push buttons and emergency stop.",
-        "Benefit": "Enables single operator handling for heavy rolls, reduces risk of injury."
-      }
-    },
-    {
-      "id": "hyd-unloader-trolley",
-      "name": "Hydraulic Roll Unloader with Floor Trolley",
-      "type": "floor-trolley",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1870",
-        "Innoflex-2120",
-        "Innoflex-2370",
-        "Innoflex-2620"
-      ],
-      "image": "/images/addons/hydraulic/unloader-trolley.png",
-      "cardDesc": "Heavy duty hydraulic unloader with floor level trolley for very large rolls.",
-      "price": 0,
-      "qty": 1,
-      "techDesc": {
-        "Application": "Used for unloading wide, heavy rolls from turret / surface winder and transferring to storage.",
-        "Construction": "Hydraulic lifting cradle integrated with movable trolley or rail-guided platform.",
-        "Capacity": "For rolls up to approx. 600 kg or more (model dependent).",
-        "Operation": "Lift-lower and clamp release via hydraulic power pack; trolley moved manually or with drive.",
-        "Safety": "Mechanical locks and safety valves provided as per standard practice.",
-        "Benefit": "Essential for safe handling on high output industrial lines."
-      }
-    }
-  ],
   "printer": [
     {
       "id": "printer-addon",
@@ -3651,149 +3591,6 @@
         "Benefit": "Ideal for basic branding, logos, or barcode printing."
       },
       "shortDesc": "Inline printer for film branding and coding."
-    }
-  ],
-  "bimetallic": [
-    {
-      "id": "bimetallic-upgrade",
-      "name": "Bi-metallic Screw Barrel Upgrade",
-      "category": "Extruder Addons",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ],
-      "image": "/images/Acessories/bimetallic_sb.jpg",
-      "cardDesc": "Upgrade to premium wear-resistant Bi-metallic screw and barrel.",
-      "price": 0,
-      "isDynamic": true,
-      "techDesc": {
-        "Material": "Bi-metallic screw and barrel",
-        "Application": "Suitable for abrasive materials like CaCO3, Carbon Black, etc.",
-        "Benefit": "Enhanced life and consistent melt quality over time."
-      }
-    }
-  ],
-  "dieAddons": [
-    {
-      "id": "die-rotation-addon",
-      "name": "Die Rotation System",
-      "category": "Die Addons",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ],
-      "image": "/images/Acessories/DieRotation.png",
-      "cardDesc": "Revolving die head system for even distribution of thickness variation.",
-      "price": 0,
-      "isDynamic": true,
-      "techDesc": {
-        "Die Rotation": "Provided"
-      }
-    },
-    {
-      "id": "additional-lip-set-addon",
-      "name": "Additional Lip Set with Inserts",
-      "category": "Die Addons",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ],
-      "image": "/images/Acessories/die_lip.png",
-      "cardDesc": "Additional Lip Set with Inserts for versatile production.",
-      "price": 0,
-      "isDynamic": true,
-      "techDesc": {
-        "Additional Lip Set": "Provided with Inserts"
-      }
-    }
-  ],
-  "extruderAddons": [
-    {
-      "id": "addon-lever-screen-changer",
-      "name": "Lever type Manual Screen Changer Upgrade",
-      "category": "Extruder Addons",
-      "price": 100000,
-      "image": "/images/Acessories/lever_sc.jpg",
-      "cardDesc": "Upgrade to high-efficiency lever type screen changer.",
-      "description": "Upgrades standard candle type screen changers to high-efficiency lever type for faster screen replacement.",
-      "supportedTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ]
-    }
-  ],
-  "winderAddons": [
-    {
-      "id": "winder-manual-back-to-back-dynamic",
-      "name": "Back to back Surface Winder",
-      "category": "Winder Addons",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ],
-      "image": "/images/winder/Back to Back Winder.png",
-      "cardDesc": "Add a Back-to-back surface winder for efficient winding.",
-      "price": 0,
-      "isDynamic": true,
-      "techDesc": {
-        "Two Surface Winder": "Maximum web width of [W] mm with Manual Changeover.",
-        "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
-        "Surface winder drive": "02 HP AC motor with variable frequency drive.",
-        "Tension control": "Through Torque mode.",
-        "Type of winder": "Two back to back type.",
-        "Length counter meter": "Provided",
-        "Trim Suction Blower": "Provided"
-      }
-    },
-    {
-      "id": "addon-loadcell-tension",
-      "name": "Loadcell with HMI for Tension Control",
-      "category": "Winder Addons",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ],
-      "image": "/images/Acessories/loadcell.png",
-      "cardDesc": "Loadcell with HMI for Tension Control",
-      "price": 325000,
-      "techDesc": {
-        "Type": "Loadcell feedback based automatic tension control.",
-        "HMI Panel": "Tension Display on HMI Panel",
-        "Loadcells": "Loadcells, amplifier, and PLC integration.",
-        "Application": "Suitable for high tension applications"
-      }
-    },
-    {
-      "id": "addon-air-shaft-dynamic",
-      "name": "Air Shaft Upgrade",
-      "category": "Winder Addons",
-      "machineTypes": [
-        "mono",
-        "aba",
-        "3layer",
-        "5layer"
-      ],
-      "image": "/images/Acessories/loadcell.png",
-      "cardDesc": "Upgrade to Air Shaft for quick and easy roll changes, providing consistent tension and better grip.",
-      "price": 0,
-      "isDynamic": true,
-      "techDesc": {
-        "Air Shaft": "Provided for quick and easy roll changes.",
-        "Benefit": "Ensures consistent tension and provides a better grip on the core.",
-        "Material": "High-strength alloy or aluminum construction."
-      }
     }
   ]
 }

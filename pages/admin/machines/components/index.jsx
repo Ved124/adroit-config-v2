@@ -8,38 +8,30 @@ import TechDescEditor from '../../../../components/admin/TechDescEditor';
 import ConfirmDialog from '../../../../components/admin/ConfirmDialog';
 
 const CATEGORIES = [
-  { key: 'extruders', label: 'Extruders' },
-  { key: 'bubbleCages', label: 'Bubble Cages' },
-  { key: 'hauloffs', label: 'Hauloffs / Main Nip' },
-  { key: 'dies', label: 'Die Heads' },
-  { key: 'winders', label: 'Winders' },
-  { key: 'airRing', label: 'Air Rings' },
-  { key: 'collapsingFrame', label: 'Collapsing Frames' },
-  { key: 'tower', label: 'Tower / Platform' },
-  { key: 'electricalPanel', label: 'Electrical Panels' },
-  { key: 'materialHandling', label: 'Material Handling' },
-  { key: 'optionalFeatures', label: 'Optional Features' },
-  { key: 'gauge', label: 'Gauge / Measurement' },
-  { key: 'corona', label: 'Corona Treatment' },
-  { key: 'ibc', label: 'IBC (Internal Bubble)' },
-  { key: 'epc', label: 'EPC / Web Guide' },
-  { key: 'mdo', label: 'MDO' },
-  { key: 'chiller', label: 'Chiller' },
-  { key: 'heatExchanger', label: 'Heat Exchanger' },
-  { key: 'trim', label: 'Trim / Edge' },
-  { key: 'webGuide', label: 'Web Guide' },
-  { key: 'hydraulicUnloader', label: 'Hydraulic Unloader' },
-  { key: 'printer', label: 'Printer' },
-  { key: 'bimetallic', label: 'Bimetallic' },
-  { key: 'dieAddons', label: 'Die Addons' },
-  { key: 'extruderAddons', label: 'Extruder Addons' },
-  { key: 'winderAddons', label: 'Winder Addons' },
+  { key: 'extruders', label: 'Extruder', group: 'Basic Components' },
+  { key: 'bubbleCages', label: 'Bubble Cage', group: 'Basic Components' },
+  { key: 'hauloffs', label: 'Haul-Off / Main Nip', group: 'Basic Components' },
+  { key: 'dies', label: 'Die Head', group: 'Basic Components' },
+  { key: 'winders', label: 'Winder', group: 'Basic Components' },
+  { key: 'airRing', label: 'Air Ring', group: 'Basic Components' },
+  { key: 'collapsingFrame', label: 'Collapsing Frame', group: 'Basic Components' },
+  { key: 'tower', label: 'Tower / Platform', group: 'Basic Components' },
+  { key: 'electricalPanel', label: 'Electrical & Control Panel', group: 'Basic Components' },
+  { key: 'ibc', label: 'IBC', group: 'Basic Components' },
+  { key: 'materialHandling', label: 'Material Handling', group: 'Addons' },
+  { key: 'optionalFeatures', label: 'Optional Features', group: 'Addons' },
+  { key: 'corona', label: 'Corona', group: 'Addons' },
+  { key: 'epc', label: 'EPC', group: 'Addons' },
+  { key: 'chiller', label: 'Chiller', group: 'Addons' },
+  { key: 'heatExchanger', label: 'Heat Exchanger', group: 'Addons' },
+  { key: 'webGuide', label: 'Web Guide', group: 'Addons' },
+  { key: 'printer', label: 'Printer', group: 'Addons' },
 ];
 
 const MACHINE_TYPES = ['mono', 'aba', '3layer', '5layer'];
 
 const EMPTY_COMPONENT = {
-  id: '', name: '', price: 0, image: '', cardDesc: '', shortDesc: '',
+  id: '', name: '', price: 0, pricingType: 'single', prices: {}, image: '', cardDesc: '', shortDesc: '',
   machineTypes: ['mono'], techDesc: {}, isDynamic: false,
 };
 
@@ -56,6 +48,72 @@ function Label({ children, required }) {
     <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: '#64748b', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
       {children}{required && <span style={{ color: '#dc2626' }}> *</span>}
     </label>
+  );
+}
+
+function PricingEditor({ pricingType, price, prices, onPricingTypeChange, onPriceChange, onPricesChange }) {
+  const [newKey, setNewKey] = useState('');
+  const [newVal, setNewVal] = useState('');
+
+  const handleAdd = () => {
+    if (!newKey.trim() || !newVal.trim()) return;
+    onPricesChange({ ...prices, [newKey.trim()]: Number(newVal) });
+    setNewKey('');
+    setNewVal('');
+  };
+
+  const handleRemove = (k) => {
+    const copy = { ...prices };
+    delete copy[k];
+    onPricesChange(copy);
+  };
+
+  return (
+    <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '14px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '12px' }}>
+        <div>
+          <Label>Pricing Type</Label>
+          <select value={pricingType || 'single'} onChange={e => onPricingTypeChange(e.target.value)} style={inp()}>
+            <option value="single">Single Price (Fixed)</option>
+            <option value="size">Size-based (e.g. 1200, 1500)</option>
+            <option value="brand">Brand-wise (e.g. Siemens, ABB)</option>
+            <option value="dropdown">Dropdown Options (e.g. Standard, Premium)</option>
+          </select>
+        </div>
+        <div>
+          {(!pricingType || pricingType === 'single') ? (
+            <>
+              <Label>Price (₹)</Label>
+              <input type="number" value={price || 0} onChange={e => onPriceChange(Number(e.target.value))} placeholder="0" style={inp()} />
+            </>
+          ) : (
+            <div style={{ padding: '8px 12px', background: '#e0f2fe', color: '#0369a1', borderRadius: '8px', fontSize: '12px', fontWeight: '600' }}>
+              Using dynamic table pricing below
+            </div>
+          )}
+        </div>
+      </div>
+
+      {pricingType && pricingType !== 'single' && (
+        <div style={{ marginTop: '16px', borderTop: '1px solid #cbd5e1', paddingTop: '16px' }}>
+          <Label>Dynamic Prices ({pricingType})</Label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '12px' }}>
+            {Object.entries(prices || {}).map(([k, v]) => (
+              <div key={k} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <input value={k} readOnly style={{ ...inp(), background: '#f1f5f9', flex: 1 }} />
+                <input value={v} onChange={e => onPricesChange({ ...prices, [k]: Number(e.target.value) })} type="number" style={{ ...inp(), flex: 1 }} />
+                <button type="button" onClick={() => handleRemove(k)} style={{ background: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '8px', padding: '8px 12px', cursor: 'pointer', fontWeight: '700' }}>✕</button>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <input value={newKey} onChange={e => setNewKey(e.target.value)} placeholder={`e.g. ${pricingType === 'size' ? '1200' : pricingType === 'brand' ? 'Siemens' : 'Premium'}`} style={{ ...inp(), flex: 1 }} />
+            <input value={newVal} onChange={e => setNewVal(e.target.value)} placeholder="Price (₹)" type="number" style={{ ...inp(), flex: 1 }} />
+            <button type="button" onClick={handleAdd} style={{ background: '#6366f1', color: 'white', border: 'none', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontWeight: '700' }}>+ Add</button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -77,18 +135,46 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
       if (sibling.techDesc) {
         defaultForm.techDesc = { ...sibling.techDesc }; // copy keys AND values
       }
+      if (sibling.pricingType) {
+        defaultForm.pricingType = sibling.pricingType;
+      }
     }
     return defaultForm;
   };
 
   const [form, setForm] = useState(getInitialForm);
-  const [saving, setSaving] = useState(false);
   const [err, setErr] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
-  const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const toggleMachineType = (mt) => {
     const cur = form.machineTypes || [];
     set('machineTypes', cur.includes(mt) ? cur.filter(x => x !== mt) : [...cur, mt]);
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    setErr('');
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/admin/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Upload failed');
+      set('image', data.url);
+    } catch (err) {
+      setErr(err.message || 'Upload failed');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
   };
 
   const handleSave = async () => {
@@ -110,7 +196,7 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 1000, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '32px 20px' }}>
-      <div style={{ background: 'white', borderRadius: '20px', width: '100%', maxWidth: '640px', padding: '32px', boxShadow: '0 24px 64px rgba(0,0,0,0.3)' }}>
+      <div style={{ background: 'white', borderRadius: '20px', width: '100%', maxWidth: '720px', padding: '32px', boxShadow: '0 24px 64px rgba(0,0,0,0.3)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: '#0f172a' }}>
             {isEdit ? `Edit: ${component.id}` : 'Add Component'}
@@ -118,7 +204,7 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
           <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: '#94a3b8' }}>×</button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px', marginBottom: '14px' }}>
           <div>
             <Label required>ID</Label>
             <input value={form.id} onChange={e => set('id', e.target.value)} placeholder={sibling ? `e.g. ${sibling.id}` : "ext-45-mono-short"} style={inp(isEdit ? { background: '#f8fafc', color: '#94a3b8' } : {})} readOnly={isEdit} />
@@ -128,14 +214,28 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
             <input value={form.name} onChange={e => set('name', e.target.value)} placeholder={sibling ? `e.g. ${sibling.name}` : "Extruder 45 mm"} style={inp()} />
           </div>
           <div>
-            <Label>Price (₹)</Label>
-            <input type="number" value={form.price} onChange={e => set('price', e.target.value)} placeholder="0" style={inp()} />
-          </div>
-          <div>
-            <Label>Image Path</Label>
-            <input value={form.image || ''} onChange={e => set('image', e.target.value)} placeholder={sibling ? `e.g. ${sibling.image || '/images/...'}` : "/images/Extruder/Extruder Mono.png"} style={inp()} />
+            <Label>Image (Cloudinary URL or Upload)</Label>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input value={form.image || ''} onChange={e => set('image', e.target.value)} placeholder="https://res.cloudinary.com/..." style={{ ...inp(), flex: 1 }} />
+              <label style={{
+                background: '#6366f1', color: 'white', padding: '0 12px', borderRadius: '8px', 
+                fontWeight: '600', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                {uploading ? '...' : 'Upload'}
+                <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} disabled={uploading} />
+              </label>
+            </div>
           </div>
         </div>
+        
+        <PricingEditor 
+          pricingType={form.pricingType} 
+          price={form.price} 
+          prices={form.prices || {}} 
+          onPricingTypeChange={pt => set('pricingType', pt)}
+          onPriceChange={p => set('price', p)}
+          onPricesChange={p => set('prices', p)}
+        />
 
         <div style={{ marginBottom: '14px' }}>
           <Label>Card Description</Label>
@@ -171,7 +271,7 @@ function ComponentModal({ component, categoryKey, existingComponents, onSave, on
         <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <input type="checkbox" id="isDynamic" checked={!!form.isDynamic} onChange={e => set('isDynamic', e.target.checked)} style={{ width: '16px', height: '16px', cursor: 'pointer' }} />
           <label htmlFor="isDynamic" style={{ fontSize: '13px', fontWeight: '600', color: '#475569', cursor: 'pointer' }}>
-            Dynamic component (size selected by user at configuration time)
+            Dynamic component (legacy check, mainly for PDF rendering logic)
           </label>
         </div>
 
@@ -242,99 +342,121 @@ export default function ComponentsManager() {
 
       <div style={{ display: 'flex', gap: '24px' }}>
         {/* Sidebar: category picker */}
-        <div style={{ width: '200px', flexShrink: 0 }}>
+        <div style={{ width: '220px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          
           <div style={{ background: 'white', borderRadius: '12px', border: '1.5px solid #e2e8f0', overflow: 'hidden' }}>
-            {CATEGORIES.map(cat => {
+            <div style={{ padding: '12px 14px', fontSize: '11px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>Basic Components</div>
+            {CATEGORIES.filter(c => c.group === 'Basic Components').map(cat => {
               const count = (allData[cat.key] || []).length;
               const isActive = cat.key === activeCategory;
               return (
-                <button key={cat.key} onClick={() => { setActiveCategory(cat.key); setSearch(''); }} style={{
-                  width: '100%', textAlign: 'left', padding: '10px 14px',
-                  border: 'none', borderBottom: '1px solid #f1f5f9',
-                  background: isActive ? '#eff6ff' : 'transparent',
-                  color: isActive ? '#1d4ed8' : '#475569',
-                  fontWeight: isActive ? '700' : '500', fontSize: '12px', cursor: 'pointer',
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  borderLeft: isActive ? '3px solid #3b82f6' : '3px solid transparent',
-                  transition: 'all 0.1s'
-                }}>
-                  <span>{cat.label}</span>
-                  <span style={{ background: isActive ? '#dbeafe' : '#f1f5f9', color: isActive ? '#1d4ed8' : '#94a3b8', padding: '1px 6px', borderRadius: '10px', fontSize: '10px', fontWeight: '800' }}>
+                <button
+                  key={cat.key}
+                  onClick={() => setActiveCategory(cat.key)}
+                  style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
+                    padding: '10px 14px', border: 'none', background: isActive ? '#f8fafc' : 'white',
+                    borderLeft: isActive ? '3px solid #6366f1' : '3px solid transparent',
+                    cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s',
+                    borderBottom: '1px solid #f1f5f9'
+                  }}
+                >
+                  <span style={{ fontSize: '13px', fontWeight: isActive ? '700' : '500', color: isActive ? '#0f172a' : '#475569' }}>
+                    {cat.label}
+                  </span>
+                  <span style={{ fontSize: '11px', background: isActive ? '#e0e7ff' : '#f1f5f9', color: isActive ? '#4f46e5' : '#64748b', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
                     {count}
                   </span>
                 </button>
               );
             })}
           </div>
+
+          <div style={{ background: 'white', borderRadius: '12px', border: '1.5px solid #e2e8f0', overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', fontSize: '11px', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>Addons</div>
+            {CATEGORIES.filter(c => c.group === 'Addons').map(cat => {
+              const count = (allData[cat.key] || []).length;
+              const isActive = cat.key === activeCategory;
+              return (
+                <button
+                  key={cat.key}
+                  onClick={() => setActiveCategory(cat.key)}
+                  style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
+                    padding: '10px 14px', border: 'none', background: isActive ? '#f8fafc' : 'white',
+                    borderLeft: isActive ? '3px solid #6366f1' : '3px solid transparent',
+                    cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s',
+                    borderBottom: '1px solid #f1f5f9'
+                  }}
+                >
+                  <span style={{ fontSize: '13px', fontWeight: isActive ? '700' : '500', color: isActive ? '#0f172a' : '#475569' }}>
+                    {cat.label}
+                  </span>
+                  <span style={{ fontSize: '11px', background: isActive ? '#e0e7ff' : '#f1f5f9', color: isActive ? '#4f46e5' : '#64748b', padding: '2px 6px', borderRadius: '4px', fontWeight: '700' }}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
         </div>
 
-        {/* Main panel */}
+        {/* Main list */}
         <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'center' }}>
-            <div style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a' }}>{catLabel}</div>
-            <input
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search…"
-              style={{ ...inp({ maxWidth: '240px' }) }}
-            />
-            <button onClick={() => setModal({ mode: 'add' })} style={{
-              marginLeft: 'auto', padding: '8px 18px', background: '#0891b2', color: 'white',
-              border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer'
-            }}>
-              + Add Component
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <div>
+              <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a', margin: '0 0 4px 0' }}>{catLabel}</h2>
+              <p style={{ margin: 0, fontSize: '13px', color: '#64748b' }}>Manage {catLabel.toLowerCase()} available for models</p>
+            </div>
+            <button onClick={() => setModal({ mode: 'add' })} style={{ background: '#6366f1', color: 'white', border: 'none', padding: '10px 16px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <span>+</span> Add {catLabel}
             </button>
           </div>
 
+          <div style={{ marginBottom: '20px' }}>
+            <input
+              type="text"
+              placeholder="Search components..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{ width: '100%', maxWidth: '300px', ...inp({ padding: '10px 14px' }) }}
+            />
+          </div>
+
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>Loading…</div>
-          ) : items.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px', color: '#94a3b8', background: 'white', borderRadius: '12px', border: '1.5px dashed #e2e8f0' }}>
-              <div style={{ fontSize: '36px', marginBottom: '12px' }}>🔧</div>
-              <p style={{ fontWeight: '600' }}>No components in {catLabel} yet.</p>
-              <button onClick={() => setModal({ mode: 'add' })} style={{ marginTop: '8px', padding: '8px 18px', background: '#0891b2', color: 'white', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}>
-                + Add First Component
-              </button>
-            </div>
+            <div style={{ textAlign: 'center', padding: '60px', color: '#94a3b8', fontWeight: '600' }}>Loading components...</div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
-              {items.map(comp => (
-                <div key={comp.id} style={{ background: 'white', borderRadius: '12px', border: '1.5px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
-                  {comp.image && (
-                    <div style={{ height: '100px', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                      <img src={comp.image} alt={comp.name} style={{ maxHeight: '90px', maxWidth: '100%', objectFit: 'contain' }} onError={e => e.target.style.display = 'none'} />
-                    </div>
-                  )}
-                  <div style={{ padding: '14px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
-                      <div style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a' }}>{comp.name}</div>
-                      {comp.isDynamic && <span style={{ fontSize: '9px', fontWeight: '800', background: '#fef3c7', color: '#d97706', padding: '2px 6px', borderRadius: '4px' }}>DYNAMIC</span>}
-                    </div>
-                    <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#94a3b8', marginBottom: '6px' }}>{comp.id}</div>
-                    <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '10px', lineHeight: '1.5' }}>
-                      {comp.cardDesc?.slice(0, 80)}{comp.cardDesc?.length > 80 ? '…' : ''}
-                    </div>
-                    <div style={{ display: 'flex', gap: '4px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                      {(comp.machineTypes || []).map(mt => (
-                        <span key={mt} style={{ fontSize: '9px', fontWeight: '800', background: '#f1f5f9', color: '#64748b', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>{mt}</span>
-                      ))}
-                    </div>
-                    {comp.price > 0 && (
-                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#059669', marginBottom: '10px' }}>
-                        ₹{Number(comp.price).toLocaleString('en-IN')}
-                      </div>
+              {items.map(c => (
+                <div key={c.id} style={{ background: 'white', borderRadius: '14px', border: '1.5px solid #e2e8f0', padding: '16px', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '6px' }}>
+                    <button onClick={() => setModal({ mode: 'edit', component: c })} style={{ background: '#f1f5f9', border: 'none', padding: '6px', borderRadius: '6px', cursor: 'pointer', color: '#0f172a' }}>✏️</button>
+                    <button onClick={() => setDeleteTarget(c.id)} style={{ background: '#fee2e2', border: 'none', padding: '6px', borderRadius: '6px', cursor: 'pointer', color: '#dc2626' }}>🗑️</button>
+                  </div>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#94a3b8', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{c.id}</div>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', marginBottom: '8px', paddingRight: '60px', lineHeight: '1.3' }}>{c.name}</div>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                    {(c.machineTypes || []).map(mt => (
+                      <span key={mt} style={{ fontSize: '10px', background: '#f8fafc', color: '#64748b', padding: '2px 6px', borderRadius: '4px', border: '1px solid #e2e8f0', fontWeight: '600', textTransform: 'uppercase' }}>
+                        {mt}
+                      </span>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: '15px', fontWeight: '800', color: '#10b981' }}>
+                    {c.pricingType && c.pricingType !== 'single' ? (
+                      <span style={{ fontSize: '12px', color: '#0369a1', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px' }}>Dynamic ({c.pricingType})</span>
+                    ) : (
+                      <>₹ {Number(c.price || 0).toLocaleString('en-IN')}</>
                     )}
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <button onClick={() => setModal({ mode: 'edit', component: comp })} style={{ flex: 1, padding: '6px', border: '1px solid #e2e8f0', borderRadius: '6px', background: 'white', cursor: 'pointer', fontSize: '12px', fontWeight: '700', color: '#475569' }}>
-                        ✎ Edit
-                      </button>
-                      <button onClick={() => setDeleteTarget(comp.id)} style={{ padding: '6px 10px', border: '1px solid #fecaca', borderRadius: '6px', background: '#fef2f2', cursor: 'pointer', fontSize: '12px', fontWeight: '700', color: '#dc2626' }}>
-                        ✕
-                      </button>
-                    </div>
                   </div>
                 </div>
               ))}
+              {items.length === 0 && (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px', background: 'white', borderRadius: '12px', border: '1.5px dashed #cbd5e1', color: '#94a3b8', fontSize: '14px', fontWeight: '600' }}>
+                  No components found.
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -342,20 +464,23 @@ export default function ComponentsManager() {
 
       {modal && (
         <ComponentModal
-          component={modal.mode === 'edit' ? modal.component : null}
+          component={modal.component}
           categoryKey={activeCategory}
-          existingComponents={items}
-          onSave={() => { setModal(null); showToast(modal.mode === 'edit' ? 'Component updated!' : 'Component added!'); load(); }}
+          existingComponents={allData[activeCategory] || []}
+          onSave={() => { setModal(null); showToast('Saved successfully.'); load(); }}
           onClose={() => setModal(null)}
         />
       )}
-      <ConfirmDialog
-        open={!!deleteTarget}
-        title="Delete Component?"
-        message={`"${deleteTarget}" will be removed from ${catLabel}.`}
-        onConfirm={handleDelete}
-        onCancel={() => setDeleteTarget(null)}
-      />
+
+      {deleteTarget && (
+        <ConfirmDialog
+          title="Delete Component"
+          message={`Are you sure you want to delete ${deleteTarget}? This cannot be undone.`}
+          confirmLabel="Delete"
+          onConfirm={handleDelete}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
     </AdminLayout>
   );
 }

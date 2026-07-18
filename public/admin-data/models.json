@@ -3,7 +3,7 @@
     {
       "code": "UNOFLEX-20",
       "family": "Monolayer",
-      "label": "UNOFLEX - 20\"",
+      "label": "UNOFLEX_20\"_35mm",
       "machineType": "mono",
       "screwDiameter": "35 MM",
       "layflatWidthMm": 450,
@@ -203,7 +203,7 @@
     {
       "code": "DUOFLEX-20",
       "family": "ABA",
-      "label": "DUOFLEX-20",
+      "label": "DUOFLEX_20\"_35*35mm",
       "machineType": "aba",
       "screwDiameter": "35/35 MM",
       "layflatWidthMm": 450,
@@ -217,7 +217,8 @@
       "winderType": "Single Manual",
       "winderMotorKw": "0.37",
       "totalConnectedLoadKw": "40 KW",
-      "specificPowerConsumption": "0.40 kW/KG/HR"
+      "specificPowerConsumption": "0.40 kW/KG/HR",
+      "spaceRequired": "3.5 x 3.0 x 4.5 m"
     },
     {
       "code": "DUOFLEX-24",

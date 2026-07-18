@@ -9,13 +9,11 @@ import { CORONA_PRICES, CORONA_BRANDS } from "../src/data/corona";
 import { WEB_GUIDE_PRICES, WEB_GUIDE_BRANDS } from "../src/data/webGuide";
 import { PRASAD_AIR_CHILLER_PRICES, PRASAD_WATER_CHILLER_PRICES, CHILLER_BRANDS, CONAIR_AIR_CHILLER_PRICES, CONAIR_WATER_CHILLER_PRICES } from "../src/data/chiller";
 import { HEAT_EXCHANGER_PRICES, HEAT_EXCHANGER_BRANDS, HEAT_EXCHANGER_UNO_PRICES, HEAT_EXCHANGER_DUO_PRICES } from "../src/data/heatExchanger";
-import { MIXER_DRYER_PRICES, MIXER_DRYER_BRANDS, MIXER_PRICES } from "../src/data/materialHandling";
+import { MIXER_DRYER_BRANDS } from "../src/data/materialHandling";
 import { BIMETALLIC_PRICES } from "../src/data/bimetallic";
 import { DIE_ROTATION_PRICES, ADDITIONAL_LIP_PRICES } from "../src/data/dieAddons";
 import { EPC_COMPONENTS } from "../src/data/epc";
 import { BACK_TO_BACK_PRICES, AIR_SHAFT_PRICES } from "../src/data/winderAddons";
-import { HOPPER_LOADER_UNO_PRICES, HOPPER_LOADER_DUO_PRICES, HOPPER_LOADER_MULTI, HOPPER_DRYER_B_PRICES } from "../src/data/materialHandling";
-
 export default function AddonsPage() {
   const router = useRouter();
   const {
@@ -193,7 +191,7 @@ function AddonCard({
   const isOptionalFeature = item.category === "Optional Features";
   const isGravimetric = item.id === "optional-gravimetric-system";
 
-  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : ((isMixerDryer || isMixer) ? MIXER_DRYER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : [])))));
+  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : []))));
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
@@ -216,8 +214,6 @@ function AddonCard({
   if (isCorona) prices = CORONA_PRICES;
   else if (isWebGuide) prices = WEB_GUIDE_PRICES;
   else if (isChiller) prices = chillerPrices;
-  else if (isMixerDryer) prices = MIXER_DRYER_PRICES;
-  else if (isMixer) prices = MIXER_PRICES;
   else if (isHeatExchanger) {
     if (item.name === "Heat Exchanger Uno") prices = HEAT_EXCHANGER_UNO_PRICES;
     else if (item.name === "Heat Exchanger Duo") prices = HEAT_EXCHANGER_DUO_PRICES;
@@ -230,10 +226,6 @@ function AddonCard({
   }
   else if (isBackToBack) prices = BACK_TO_BACK_PRICES;
   else if (isAirShaft) prices = AIR_SHAFT_PRICES;
-  else if (isHopperLoaderUno) prices = HOPPER_LOADER_UNO_PRICES;
-  else if (isHopperLoaderDuo) prices = HOPPER_LOADER_DUO_PRICES;
-  else if (isHopperLoaderTrio) prices = HOPPER_LOADER_MULTI;
-  else if (isHopperDryerB) prices = HOPPER_DRYER_B_PRICES;
   else if (isAdditionalLip) prices = ADDITIONAL_LIP_PRICES;
   // Generic fallback: use item.prices if supplied on the data object
   else if (item.prices && Object.keys(item.prices).length > 0) prices = item.prices;
@@ -243,7 +235,7 @@ function AddonCard({
   const isCapacityBased = isChiller && Object.keys(prices).length > 0 && Object.keys(prices)[0].includes("TR");
   const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Size")));
   
-  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHopperLoaderUno || isHopperLoaderDuo || isHopperLoaderTrio || isHopperDryerB || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature || isGravimetric;
+  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature || isGravimetric;
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
   // For optional features the key is now a plain mm size — uses the standard formatter below
   const formatSize = (s) => (s && (s.includes("TR") || s.includes('"'))) ? s : `${s} ${unit}`;

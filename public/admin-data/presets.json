@@ -99,11 +99,6 @@
         "metadata": {
           "price": 0
         }
-      },
-      {
-        "category": "Chiller",
-        "id": "chiller-air-dynamic",
-        "qty": 1
       }
     ]
   },

@@ -3075,7 +3075,7 @@ export function ConfigProvider({ children }) {
       });
 
       // Ensure all images are loaded
-      const element = container.querySelector("#quotation-template-container");
+      const element = container.querySelector("#adroit-quotation-root");
       if (element) {
         const images = element.querySelectorAll('img');
         await Promise.all(
@@ -3774,7 +3774,7 @@ export function ConfigProvider({ children }) {
         );
       });
 
-      const element = container.querySelector("#quotation-template-container");
+      const element = container.querySelector("#adroit-quotation-root");
       if (!element) throw new Error("Template Element not found");
 
       // 2. Generate PDF with LIGHTER settings (Scale 1 = 10x faster)

@@ -8,7 +8,6 @@ const NAV = [
   { href: '/admin/machines/models', label: '🏭 Machine Models' },
   { href: '/admin/machines/components', label: '🔧 Components' },
   { href: '/admin/machines/presets', label: '📋 Presets' },
-  { href: '/admin/machines/pricing', label: '💰 Price Tables' },
 ];
 
 export default function AdminLayout({ children, title }) {

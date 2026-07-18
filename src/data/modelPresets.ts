@@ -1788,7 +1788,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "ext-mono-40",
         qty: 1,
         metadata: {
-          image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362135/adroit_configurator/Airring/Airring.png",
+          image: "/images/Extruder/Extruder Mono.png",
           customName: "40 mm Extruder",
           scopeDesc: "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 40 mm Extruders.",
           techDesc: {

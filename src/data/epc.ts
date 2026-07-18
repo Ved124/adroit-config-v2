@@ -57,7 +57,7 @@ export const EPC_COMPONENTS: EPC[] = [
         name: "Single Component Gravimetric System",
         category: "EPC",
         machineTypes: ["mono", "aba", "3layer", "5layer"],
-        image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362011/adroit_configurator/Acessories/EPC.png",
+        image: "/images/Acessories/EPC.png",
         cardDesc: "Gravimetric blending and dosing system for accurate single-component material feeding based on weight, ensuring consistent film quality.",
         price: 0,
         isDynamic: true,

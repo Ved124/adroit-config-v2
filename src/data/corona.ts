@@ -53,7 +53,7 @@ export const CORONA_TREATER_COMPONENTS: CoronaTreater[] = [
     name: "Corona Treater",
     type: "single",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784361987/adroit_configurator/Acessories/coronatreater.jpg",
+    image: "/images/Acessories/coronatreater.jpg",
     cardDesc: "Select Brand and Max Roller Width to add.",
     price: 0,
     qty: 1,

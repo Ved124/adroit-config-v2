@@ -42,7 +42,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     variant: "vertical",
     machineTypes: ["mono", "3layer"],
     usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "Innoflex-1350A"],
-    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362405/adroit_configurator/hauloff/Vertical%20Hauloff.png",
+    image: "/images/hauloff/Vertical Hauloff.png",
     cardDesc:
       "Compact vertical haul-off for small and medium monolayer lines.",
     price: 0,
@@ -62,7 +62,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     name: "Horizontal Haul-Off",
     variant: "oscillating",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362388/adroit_configurator/hauloff/Horizontal%20Hauloff.png",
+    image: "/images/hauloff/Horizontal Hauloff.png",
     cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,
     isDynamic: true,
@@ -86,7 +86,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     isDynamic: true,
     machineTypes: ["mono", "aba"],
     usedInModels: [],
-    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362454/adroit_configurator/MainNip/MainNip.png",
+    image: "/images/MainNip/MainNip.png",
     cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
     price: 0,
     techDesc: {
@@ -105,7 +105,7 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     isDynamic: true,
     machineTypes: ["3layer", "5layer"],
     usedInModels: [],
-    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362458/adroit_configurator/MainNip/MainNipMultiL.png",
+    image: "/images/MainNip/MainNipMultiL.png",
     cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
     price: 0,
     techDesc: {

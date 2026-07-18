@@ -282,6 +282,21 @@ function AddonCard({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.id]);
 
+  // Sync selectedSize/selectedBrand if options are loaded asynchronously and current values are empty
+  const sizesString = Object.keys(prices).join(',');
+  useEffect(() => {
+    if (!isSelected && item.isDynamic && !isChiller) {
+      if (brands.length > 0 && !brands.includes(selectedBrand)) {
+        setSelectedBrand(brands[0]);
+      }
+      const validSizes = Object.keys(prices);
+      if (validSizes.length > 0 && !validSizes.includes(selectedSize)) {
+        setSelectedSize(item.metadata?.size || validSizes[0]);
+      }
+    }
+  }, [sizesString, brands.join(','), isSelected, selectedSize, selectedBrand, item.isDynamic, isChiller, item.metadata?.size]);
+
+
   const currentPrice = item.isDynamic
     ? (isEpC ? (epcPrice || 0) : (prices[effectiveSize] || 0))
     : item.price || 0;

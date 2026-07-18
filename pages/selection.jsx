@@ -133,7 +133,7 @@ function ComponentCard({
   // Air Ring Size Mappings
   const isGAirRing = item.id === "airring-g-dynamic";
   const isStandardAirRing = item.id === "airring-standard-dynamic";
-  const isDRAirRing = item.id === "airring-dr-dynamic";
+  const isDRAirRing = item.id.startsWith("airring-dr-dynamic");
   const isManualBC = item.id === "bc-manual-dynamic";
   const isOCBC = item.id === "bc-open-close-dynamic";
   const isUDBC = item.id === "bc-up-down-dynamic";
@@ -163,6 +163,14 @@ function ComponentCard({
       setSelectedSize(activeSize);
     }
   }, [isSelected, item.isDynamic, line?.size, line?.metadata?.size]);
+
+  // Sync selectedSize if sizes are loaded asynchronously and selectedSize is empty
+  const sizesString = sizes.join(',');
+  useEffect(() => {
+    if (!isSelected && sizes.length > 0 && !sizes.includes(selectedSize)) {
+      setSelectedSize(sizes[0]);
+    }
+  }, [sizesString, isSelected, selectedSize]);
 
   const currentPrice = item.isDynamic ? (prices[selectedSize] || 0) : (item.price || 0);
 

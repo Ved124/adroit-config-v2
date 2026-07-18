@@ -2840,6 +2840,18 @@
       "price": 0,
       "qty": 1,
       "isDynamic": true,
+      "pricingType": "size",
+      "prices": {
+        "1120": 1100000,
+        "1350": 1350000,
+        "1450": 1450000,
+        "1620": 1650000,
+        "1870": 1870000,
+        "1970": 1970000,
+        "2120": 2120000,
+        "2370": 2370000,
+        "2620": 2620000
+      },
       "techDesc": {
         "Panel Type": "Floor mounted, compartmentalized panel with segregated power & control wiring.",
         "Drives": "Individual AC drives for extruders, haul-off, winder and auxiliary motors.",

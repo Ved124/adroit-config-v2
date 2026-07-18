@@ -39,7 +39,7 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
     isDynamic: true,
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     usedInModels: [],
-    image: "/images/tower.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362511/adroit_configurator/tower.png",
     cardDesc: "Heavy duty MS structure with service platform and safety rails.",
     price: 1000000,
     techDesc: {
@@ -56,7 +56,7 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
     isDynamic: false,
     machineTypes: ["mono", "aba"],
     usedInModels: [],
-    image: "/images/tower.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362511/adroit_configurator/tower.png",
     cardDesc: "Standard MS tower structure with walk-around platform, staircase and safety handrails for ABA / mono lines.",
     price: 600000,
     techDesc: {

@@ -41,7 +41,7 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     name: "Collapsing Frame – PBT Rollers",
     style: "PBT",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/Acessories/Gusset Board Assembly.jpeg",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362022/adroit_configurator/Acessories/Gusset%20Board%20Assembly.jpg",
     cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,
     isDynamic: true,

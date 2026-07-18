@@ -37,7 +37,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "100 mm",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-20"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -59,7 +59,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "150 mm",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-32"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -81,7 +81,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "200 mm",
     machineTypes: ["mono"],
     usedInModels: [],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -103,7 +103,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "250 mm",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-40"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -125,7 +125,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "300 mm",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-50"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -147,7 +147,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "400 mm",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-72"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -169,7 +169,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "600 mm",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-110"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "One Chrome plated Mono Layer Spiral Mandrel Die.",
     price: 0,
     techDesc: {
@@ -193,7 +193,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "50 / 100 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-450"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Monolayer die 50 / 100 for narrow web film up to ~450 mm layflat.",
     price: 0,
     techDesc: {
@@ -219,7 +219,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "90 / 175 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-750_900"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Monolayer die 90 / 175 for 750–900 mm layflat widths.",
     price: 0,
     techDesc: {
@@ -244,7 +244,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "150 / 275 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-1000_1250"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Monolayer die 150 / 275 for mid-width film 1000–1250 mm.",
     price: 0,
     techDesc: {
@@ -269,7 +269,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "200 / 325 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-1250_1500"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Monolayer die 200 / 325 for 1250–1500 mm layflat film.",
     price: 0,
     techDesc: {
@@ -291,7 +291,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "300 / 475 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-2000"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Monolayer die 300 / 475 for 2000 mm layflat film.",
     price: 900000,
     techDesc: {
@@ -314,7 +314,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "400 / 600 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-2500"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Large mono die 400 / 600 for 2500 mm layflat widths.",
     price: 1400000,
     techDesc: {
@@ -335,7 +335,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "450 / 700 (HM / LD)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-3000"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "Largest mono die 450 / 700 for 3000 mm layflat.",
     price: 1800000,
     techDesc: {
@@ -357,7 +357,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "70 / 150 (HM / LD)",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-750"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "ABA / AB die 70 / 150 for Duoflex 750.",
     price: 0,
     techDesc: {
@@ -380,7 +380,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "125 / 250 (HM / LD)",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-1000"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "ABA / AB die 125 / 250 for mid-width Duoflex.",
     price: 0,
     techDesc: {
@@ -403,7 +403,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "150 / 300 (HM / LD)",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-1250"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "ABA / AB die 150 / 300 for 1250 mm layflat.",
     price: 0,
     techDesc: {
@@ -426,7 +426,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "225 / 375 (HM / LD)",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-1750"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "Large ABA / AB die 225 / 375 for 1750 mm layflat.",
     price: 0,
     techDesc: {
@@ -448,7 +448,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "350",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-60"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "Large ABA / AB die 350 for 1500 mm layflat.",
     price: 0,
     techDesc: {
@@ -472,7 +472,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "225 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1120"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 225 mm.",
     price: 0,
     techDesc: {
@@ -495,7 +495,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "275 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350 HO"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 275 mm stationary for oscillating haul-off lines.",
     price: 0,
     techDesc: {
@@ -520,7 +520,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "275 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350 DR"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 275 mm.",
     price: 0,
     techDesc: {
@@ -546,7 +546,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "300 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1120"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 300 mm.",
     price: 900000,
     techDesc: {
@@ -570,7 +570,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "325 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350A"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 325 mm for Innoflex-1350.",
     price: 1100000,
     techDesc: {
@@ -594,7 +594,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "350 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350B"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 350 mm for 1350 mm layflat.",
     price: 1150000,
     techDesc: {
@@ -618,7 +618,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "375 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350B"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 375 mm for 1350 mm layflat.",
     price: 1200000,
     techDesc: {
@@ -642,7 +642,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "400 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350B"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 400 mm for 1350 mm layflat.",
     price: 1400000,
     techDesc: {
@@ -666,7 +666,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "425 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1620"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 425 mm for 1500 mm layflat.",
     price: 1600000,
     techDesc: {
@@ -690,7 +690,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "450 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1870"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 450 mm for 1750 mm layflat.",
     price: 1800000,
     techDesc: {
@@ -714,7 +714,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "500 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1870"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 500 mm for 1850 mm layflat.",
     price: 2000000,
     techDesc: {
@@ -738,7 +738,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "525 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-2370"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer die 525 mm for 2250 mm layflat.",
     price: 2100000,
     techDesc: {
@@ -762,7 +762,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "550 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-2120"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer die 550 mm for 2000 mm layflat.",
     price: 2200000,
     techDesc: {
@@ -786,7 +786,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "600 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-2370"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer die 600 mm for 2250 mm layflat.",
     price: 2500000,
     techDesc: {
@@ -810,7 +810,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "650 mm, 3-layer spiral die",
     machineTypes: ["3layer", "5layer"], // can be reused for future 5-layer
     usedInModels: ["Innoflex-2620"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer die 650 mm for 2500 mm layflat.",
     price: 2800000,
     techDesc: {
@@ -834,7 +834,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "700 mm, 3-layer spiral die",
     machineTypes: ["3layer", "5layer"], // can be reused for future 5-layer
     usedInModels: ["Innoflex-2620"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer die 700 mm for 3000 mm layflat.",
     price: 3400000,
     techDesc: {
@@ -857,7 +857,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "750 mm, 3-layer spiral die",
     machineTypes: ["3layer", "5layer"], // can be reused for future 5-layer
     usedInModels: ["Innoflex-2620"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer die 750 mm for 3000 mm layflat.",
     price: 3600000,
     techDesc: {
@@ -880,7 +880,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "300 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1120"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 300 mm with IBC.",
     price: 1800000,
     techDesc: {
@@ -905,7 +905,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "325 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350A"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 325 mm with IBC.",
     price: 1800000,
     techDesc: {
@@ -930,7 +930,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "350 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350B"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 350 mm with IBC.",
     price: 1900000,
     techDesc: {
@@ -955,7 +955,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "375 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350B"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 375 mm with IBC.",
     price: 2000000,
     techDesc: {
@@ -980,7 +980,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "400 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1350B"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 400 mm with IBC.",
     price: 2100000,
     techDesc: {
@@ -1005,7 +1005,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "425 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1620"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 425 mm with IBC.",
     price: 2300000,
     techDesc: {
@@ -1030,7 +1030,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "450 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1870"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 450 mm with IBC.",
     price: 2500000,
     techDesc: {
@@ -1055,7 +1055,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "500 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-1870"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer spiral die 500 mm with IBC.",
     price: 3000000,
     techDesc: {
@@ -1080,7 +1080,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "550 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-2120"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer IBC die 550 mm with IBC.",
     price: 3200000,
     techDesc: {
@@ -1105,7 +1105,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "600 mm, 3-layer spiral die",
     machineTypes: ["3layer"],
     usedInModels: ["Innoflex-2370"],
-    image: "/images/Die/Die.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362256/adroit_configurator/Die/Die.png",
     cardDesc: "3-layer IBC die 600 mm with IBC.",
     price: 3500000,
     techDesc: {
@@ -1129,7 +1129,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "75 mm (ABA)",
     machineTypes: ["aba"],
     usedInModels: ["DUOFLEX-500"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "75 mm ABA die for co-extrusion lines.",
     price: 0,
     techDesc: {
@@ -1151,7 +1151,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "100 mm (ABA)",
     machineTypes: ["aba"],
     usedInModels: ["ABA-26"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "100 mm ABA die for basic co-extrusion lines.",
     price: 0,
     techDesc: {
@@ -1173,7 +1173,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "150 mm (ABA)",
     machineTypes: ["aba"],
     usedInModels: ["ABA-32"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "150 mm ABA die for basic co-extrusion lines.",
     price: 0,
     techDesc: {
@@ -1195,7 +1195,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "200 mm (ABA)",
     machineTypes: ["aba"],
     usedInModels: ["ABA-40"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "200 mm ABA die for basic co-extrusion lines.",
     price: 0,
     techDesc: {
@@ -1217,7 +1217,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "300 mm (ABA)",
     machineTypes: ["aba"],
     usedInModels: ["ABA-50"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "300 mm ABA die for co-extrusion lines.",
     price: 900000,
     techDesc: {
@@ -1239,7 +1239,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "600 mm (ABA)",
     machineTypes: ["aba"],
     usedInModels: ["ABA-60"],
-    image: "/images/Die/DieABA.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362283/adroit_configurator/Die/DieABA.png",
     cardDesc: "600 mm ABA die for co-extrusion lines.",
     price: 2500000,
     techDesc: {
@@ -1261,7 +1261,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "100 mm (Mono)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-20"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "100 mm monolayer die head.",
     price: 0,
     techDesc: {
@@ -1277,7 +1277,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "200 mm (Mono)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-32"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "200 mm monolayer die head.",
     price: 0,
     techDesc: {
@@ -1294,7 +1294,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "250 mm (Mono)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-40"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "250 mm monolayer die head.",
     price: 0,
     techDesc: {
@@ -1311,7 +1311,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "300 mm (Mono)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-50"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "300 mm monolayer die head.",
     price: 900000,
     techDesc: {
@@ -1328,7 +1328,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "400 mm (Mono)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-72"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "400 mm monolayer die head.",
     price: 1400000,
     techDesc: {
@@ -1345,7 +1345,7 @@ export const DIE_COMPONENTS: DieComponent[] = [
     lipsDesc: "600 mm (Mono)",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-110"],
-    image: "/images/Die/DieMono.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362288/adroit_configurator/Die/DieMono.png",
     cardDesc: "600 mm monolayer die head.",
     price: 2500000,
     techDesc: {

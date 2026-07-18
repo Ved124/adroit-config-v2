@@ -61,7 +61,7 @@ export const WINDER_ADDONS: WinderAddon[] = [
     name: "Back to back Surface Winder",
     category: "Winder Addons",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/winder/Back to Back Winder.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362546/adroit_configurator/winder/Back%20to%20Back%20Winder.png",
     cardDesc: "Add a Back-to-back surface winder for efficient winding.",
     price: 0,
     isDynamic: true,

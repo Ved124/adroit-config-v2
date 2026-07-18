@@ -23,7 +23,7 @@ export const PRINTER_ADDONS: PrinterAddon[] = [
     name: "Printer",
     type: "printer",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/Acessories/printer.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362075/adroit_configurator/Acessories/printer.png",
     cardDesc: "Add an inline printer for branding and coding.",
     price: 40000,
     qty: 1,

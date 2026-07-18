@@ -42,7 +42,7 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     type: "basic-panel",
     machineTypes: ["mono", "aba"],
     usedInModels: [],
-    image: "/images/Panel/Panel.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362497/adroit_configurator/Panel/Panel.png",
     cardDesc:
       "Basic control panel with DOL starters and PID temperature controllers for small mono/ABA lines.",
     price: 0,
@@ -71,7 +71,7 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     type: "basic-panel",
     machineTypes: ["mono"],
     usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900"],
-    image: "/images/Panel/Panel.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362497/adroit_configurator/Panel/Panel.png",
     cardDesc:
       "Basic control panel with PID temperature controllers and AC drives for monolayer lines.",
     price: 0,
@@ -184,7 +184,7 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     name: "Electrical Control Panel",
     type: "ac-drive-panel",
     machineTypes: ["3layer"],
-    image: "/images/Panel/Panel.png",
+    image: "https://res.cloudinary.com/kqver3iv/image/upload/v1784362497/adroit_configurator/Panel/Panel.png",
     cardDesc: "Select size to add electrical control panel for 3-layer line.",
     price: 0,
     qty: 1,

@@ -177,7 +177,7 @@ function AddonCard({
   const isHeatExchanger = item.type === "heat-exchanger";
   const isHeatExchangerUno = item.id === "heat-exchanger-uno";
   const isHeatExchangerDuo = item.id === "heat-exchanger-duo";
-  const isBimetallic = item.id.startsWith("bimetallic-upgrade-");
+  const isBimetallic = item.id?.startsWith("bimetallic-upgrade-");
   const isDieRotation = item.id === "die-rotation-addon";
   const isEpC = false;
   

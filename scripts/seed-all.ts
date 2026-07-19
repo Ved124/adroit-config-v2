@@ -72,7 +72,10 @@ async function seed() {
 
   const componentsData = {};
   for (const [key, mod] of Object.entries(modules)) {
-    const arr = Object.values(mod as any).find(v => Array.isArray(v)) || [];
+    let arr = Object.values(mod as any).find(v => Array.isArray(v) && v.length > 0 && typeof v[0] === 'object' && ('id' in v[0] || 'code' in v[0]));
+    if (!arr) {
+      arr = Object.values(mod as any).find(v => Array.isArray(v)) || [];
+    }
     componentsData[key] = arr;
   }
 

@@ -2714,7 +2714,138 @@
     }
   ],
   "materialHandling": [
-    "Adroit"
+    {
+      "id": "hopper-loader-uno-dynamic",
+      "name": "Hopper Loader Uno",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Single component automatic material loader for feeding system.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Capacity": "Appropriate kg/hr loading speed.",
+        "Material Type": "Virgin / Reprocess Granules.",
+        "Conveying Method": "Vacuum conveying.",
+        "Filter": "Integrated easy-clean filter system."
+      }
+    },
+    {
+      "id": "hopper-loader-duo-dynamic",
+      "name": "Hopper Loader Duo",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Dual component automatic material loader for feeding system.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Capacity": "Appropriate kg/hr loading speed.",
+        "Material Type": "Virgin / Reprocess Granules.",
+        "Conveying Method": "Vacuum conveying.",
+        "Filter": "Integrated easy-clean filter system."
+      }
+    },
+    {
+      "id": "hopper-loader-300kg",
+      "name": "Hopper Loader Trio",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Robust automatic material loader for feeding system.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Capacity": "300 kg/hr loading speed.",
+        "Material Type": "Virgin / Reprocess Granules.",
+        "Conveying Method": "Vacuum conveying.",
+        "Filter": "Integrated easy-clean filter system."
+      }
+    },
+    {
+      "id": "hopper-dryer-b",
+      "name": "Hopper Dryer for B",
+      "type": "hopper-loader",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Hopper Loader Trio.png",
+      "cardDesc": "Hopper Dryer specifically for layer B.",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Type": "Hopper Dryer",
+        "Function": "Efficient moisture removal from granules."
+      }
+    },
+    {
+      "id": "mixer-dynamic",
+      "name": "Vertical Granule Mixer",
+      "type": "mixer",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Vertical Granule Mixer with Dryer.png",
+      "cardDesc": "Dynamic Vertical Granule Mixer (Adroit make)",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
+        "Switch Gear": "SCHNEIDER",
+        "Temp. Controller": "MULTISPAN",
+        "Material of Construction": "MS Painted",
+        "Drive": "Through belt and Pulley"
+      }
+    },
+    {
+      "id": "mixer-dryer-dynamic",
+      "name": "Vertical Granule Mixer with Dryer",
+      "type": "mixer-dryer",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Vertical Granule Mixer with Dryer.png",
+      "cardDesc": "Dynamic Vertical Granule Mixer with Integrated Dryer system. (Adroit make)",
+      "price": 0,
+      "isDynamic": true,
+      "qty": 1,
+      "techDesc": {
+        "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
+        "Switch Gear": "SCHNEIDER",
+        "Temp. Controller": "MULTISPAN",
+        "Material of Construction": "MS Painted",
+        "Drive": "Through belt and Pulley"
+      }
+    }
   ],
   "optionalFeatures": [
     {
@@ -3023,8 +3154,28 @@
     }
   ],
   "corona": [
-    "Jain Electrotech",
-    "IEEC"
+    {
+      "id": "corona-dynamic",
+      "name": "Corona Treater",
+      "type": "single",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/coronatreater.jpg",
+      "cardDesc": "Select Brand and Max Roller Width to add.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Brand": "Selectable (Jain Electro / IEEC)",
+        "Size": "Selectable (U20\" - U110\")",
+        "System": "Surface treatment system for plastic films."
+      },
+      "shortDesc": "High performance corona treater for superior surface treatment."
+    }
   ],
   "ibc": [
     {
@@ -3167,11 +3318,116 @@
     }
   ],
   "chiller": [
-    "Prasad",
-    "Con Air"
+    {
+      "id": "chiller-air-dynamic",
+      "name": "Air Cooled Air Chiller",
+      "type": "air-chiller",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/addons/chiller/air-chiller.png",
+      "cardDesc": "Select Brand and Machine Size.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Refrigerated Air Cooling",
+        "Function": "Cooling for main air ring and internal bubble cooling (IBC) air circuits.",
+        "Control": "Automatic temperature regulation."
+      }
+    },
+    {
+      "id": "chiller-water-dynamic",
+      "name": "Air Cooled Water Chiller",
+      "type": "water-chiller",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/addons/chiller/water-chiller.png",
+      "cardDesc": "Select Brand and Machine Size.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Refrigerated Water Cooling",
+        "Function": "Supplies chilled water for die-head cooling and IBC heat exchangers.",
+        "Portability": "Self-contained with pump and tank."
+      }
+    }
   ],
   "heatExchanger": [
-    "Adroit"
+    {
+      "id": "heat-exchanger-dynamic",
+      "name": "Heat Exchanger",
+      "type": "heat-exchanger",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Heat Exchanger.png",
+      "cardDesc": "Select Capacity (kg).",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Air-to-Water Heat Exchanger",
+        "Function": "Efficient heat transfer for process air cooling.",
+        "Construction": "Copper tubes with aluminum fins."
+      },
+      "shortDesc": "Efficient heat transfer for process air cooling."
+    },
+    {
+      "id": "heat-exchanger-uno",
+      "name": "Heat Exchanger Uno",
+      "type": "heat-exchanger",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Heat Exchanger.png",
+      "cardDesc": "Select Capacity for Mono/ABA machines.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Air-to-Water Heat Exchanger",
+        "Function": "Efficient heat transfer for process air cooling.",
+        "Construction": "Copper tubes with aluminum fins."
+      },
+      "shortDesc": "Efficient heat exchanger for Mono models."
+    },
+    {
+      "id": "heat-exchanger-duo",
+      "name": "Heat Exchanger Duo",
+      "type": "heat-exchanger",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/Heat Exchanger.png",
+      "cardDesc": "Select Capacity for ABA and Multilayer machines.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Air-to-Water Heat Exchanger",
+        "Function": "Efficient heat transfer for process air cooling.",
+        "Construction": "Copper tubes with aluminum fins."
+      },
+      "shortDesc": "Efficient heat exchanger for ABA and Multilayer models."
+    }
   ],
   "trim": [
     {
@@ -3284,8 +3540,49 @@
     }
   ],
   "webGuide": [
-    "Adroit",
-    "E+L"
+    {
+      "id": "webguide-dynamic",
+      "name": "Web Guide",
+      "type": "standard-epc",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/e+l_webguide.jpg",
+      "cardDesc": "Digital Edge Positioning Control (EPC) system.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Function": "Maintains film edge position before winding / slitting to ensure neat roll edges.",
+        "Sensor": "High resolution edge sensors with adjustable bracket.",
+        "Actuator": "Heavy duty linear actuator with position feedback.",
+        "Installation": "Typically mounted before secondary nip or winder infeed."
+      }
+    },
+    {
+      "id": "webguide-hydro-pneumatic-dynamic",
+      "name": "Hydro Pneumatic Webguide",
+      "type": "standard-epc",
+      "machineTypes": [
+        "aba"
+      ],
+      "image": "/images/Acessories/e+l_webguide.jpg",
+      "cardDesc": "Hydro Pneumatic Webguide system for ABA machine.",
+      "price": 0,
+      "qty": 1,
+      "isDynamic": true,
+      "techDesc": {
+        "Type": "Hydro Pneumatic Webguide",
+        "Application": "Suitable for high tension applications.",
+        "Features": "Hydro-pneumatic system ensures smooth and precise web guiding.",
+        "Sensor": "High resolution edge sensors with adjustable bracket.",
+        "Actuator": "Heavy duty linear actuator with position feedback.",
+        "Installation": "Typically mounted before secondary nip or winder infeed."
+      }
+    }
   ],
   "hydraulicUnloader": [
     {
@@ -3398,23 +3695,42 @@
     "75"
   ],
   "dieAddons": [
-    "200",
-    "225",
-    "275",
-    "300",
-    "325",
-    "350",
-    "375",
-    "400",
-    "425",
-    "450",
-    "500",
-    "525",
-    "550",
-    "600",
-    "650",
-    "700",
-    "750"
+    {
+      "id": "die-rotation-addon",
+      "name": "Die Rotation System",
+      "category": "Die Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/DieRotation.png",
+      "cardDesc": "Revolving die head system for even distribution of thickness variation.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Die Rotation": "Provided"
+      }
+    },
+    {
+      "id": "additional-lip-set-addon",
+      "name": "Additional Lip Set with Inserts",
+      "category": "Die Addons",
+      "machineTypes": [
+        "mono",
+        "aba",
+        "3layer",
+        "5layer"
+      ],
+      "image": "/images/Acessories/die_lip.png",
+      "cardDesc": "Additional Lip Set with Inserts for versatile production.",
+      "price": 0,
+      "isDynamic": true,
+      "techDesc": {
+        "Additional Lip Set": "Provided with Inserts"
+      }
+    }
   ],
   "extruderAddons": [
     {

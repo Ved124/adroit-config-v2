@@ -3,7 +3,10 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 
-import { MONO_MODELS, ABA_MODELS, THREE_LAYER_MODELS, MODEL_PRESETS } from '../src/data/modelPresets.ts';
+import { MONO_MODELS } from '../data/monoModels.ts';
+import { ABA_MODELS } from '../data/abaModels.ts';
+import { THREE_LAYER_MODELS } from '../data/threeLayerModels.ts';
+import { MODEL_PRESETS } from '../src/data/modelPresets.ts';
 
 import * as extruders from '../src/data/extruders.ts';
 import * as bubbleCages from '../src/data/bubbleCages.ts';

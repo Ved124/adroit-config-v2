@@ -731,7 +731,23 @@
         "Actuation of arms": "Manual open-close operation.",
         "Bubble width range": "750 to 1250 mm"
       },
-      "shortDesc": "Universal manual bubble cage with adjustable diameter."
+      "shortDesc": "Universal manual bubble cage with adjustable diameter.",
+      "pricingType": "size",
+      "prices": {
+        "550": 15000,
+        "850": 25000,
+        "1000": 35000,
+        "1250": 55000,
+        "1350": 70000,
+        "1500": 85000,
+        "1750": 125000,
+        "1850": 150000,
+        "2000": 175000,
+        "2250": 225000,
+        "2500": 300000,
+        "2750": 350000,
+        "3000": 500000
+      }
     },
     {
       "id": "bc-manual-dynamic-aba",
@@ -748,7 +764,23 @@
       "techDesc": {
         "Type": "Arms to support the bubble."
       },
-      "shortDesc": "Universal manual bubble cage with adjustable diameter for ABA."
+      "shortDesc": "Universal manual bubble cage with adjustable diameter for ABA.",
+      "pricingType": "size",
+      "prices": {
+        "550": 15000,
+        "850": 25000,
+        "1000": 35000,
+        "1250": 55000,
+        "1350": 70000,
+        "1500": 85000,
+        "1750": 125000,
+        "1850": 150000,
+        "2000": 175000,
+        "2250": 225000,
+        "2500": 300000,
+        "2750": 350000,
+        "3000": 500000
+      }
     },
     {
       "id": "bc-open-close-dynamic",
@@ -770,7 +802,23 @@
         "Actuation of arms": "Motorized Open-Close operation.",
         "Film width range": "800 to 1600 mm"
       },
-      "shortDesc": "Motorized open-close bubble cage for precision control."
+      "shortDesc": "Motorized open-close bubble cage for precision control.",
+      "pricingType": "size",
+      "prices": {
+        "550": 125000,
+        "850": 150000,
+        "1000": 175000,
+        "1250": 250000,
+        "1350": 250000,
+        "1500": 275000,
+        "1750": 300000,
+        "1850": 350000,
+        "2000": 450000,
+        "2250": 550000,
+        "2500": 650000,
+        "2750": 750000,
+        "3000": 850000
+      }
     },
     {
       "id": "bc-up-down-dynamic",
@@ -792,7 +840,22 @@
         "Actuation of arms": "Motorized Up Down & Open-Close with Liner Actuator.",
         "Bubble width range": "1300 to 2250 mm"
       },
-      "shortDesc": "Full motorized bubble cage with vertical and radial adjustment."
+      "shortDesc": "Full motorized bubble cage with vertical and radial adjustment.",
+      "pricingType": "size",
+      "prices": {
+        "550": 250000,
+        "850": 300000,
+        "1000": 350000,
+        "1250": 450000,
+        "1500": 550000,
+        "1750": 650000,
+        "1850": 700000,
+        "2000": 750000,
+        "2250": 850000,
+        "2500": 950000,
+        "2750": 1050000,
+        "3000": 1150000
+      }
     }
   ],
   "hauloffs": [
@@ -843,6 +906,20 @@
         "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
         "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
         "Max linespeed": "TBD"
+      },
+      "pricingType": "size",
+      "prices": {
+        "1000": 1100000,
+        "1250": 1100000,
+        "1350": 1150000,
+        "1500": 1200000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2500000,
+        "2500": 2700000,
+        "2750": 3200000,
+        "3000": 3500000
       }
     },
     {
@@ -862,6 +939,20 @@
         "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
         "Nip roller width": "TBD mm",
         "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
+      },
+      "pricingType": "size",
+      "prices": {
+        "1000": 1100000,
+        "1250": 1100000,
+        "1350": 1150000,
+        "1500": 1200000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2500000,
+        "2500": 2700000,
+        "2750": 3200000,
+        "3000": 3500000
       }
     },
     {
@@ -881,6 +972,20 @@
         "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
         "Nip roller width": "TBD mm",
         "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
+      },
+      "pricingType": "size",
+      "prices": {
+        "1000": 1100000,
+        "1250": 1100000,
+        "1350": 1150000,
+        "1500": 1200000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2500000,
+        "2500": 2700000,
+        "2750": 3200000,
+        "3000": 3500000
       }
     }
   ],
@@ -2399,6 +2504,22 @@
         "Tension control ": "Through Torque mode.",
         "Length counter meter": "Provided",
         "Trim Suction Blower": "Provided"
+      },
+      "pricingType": "size",
+      "prices": {
+        "850": 500000,
+        "950": 600000,
+        "1000": 700000,
+        "1250": 700000,
+        "1350": 800000,
+        "1500": 1000000,
+        "1750": 1200000,
+        "1850": 1325000,
+        "2000": 1500000,
+        "2250": 2400000,
+        "2500": 2800000,
+        "2750": 3200000,
+        "3000": 4000000
       }
     },
     {
@@ -2419,6 +2540,20 @@
         "Surface winder drive": "1 HP AC motor with variable frequency drive.",
         "Tension control": "Through Torque mode.",
         "Winder Type": "Single Surface type."
+      },
+      "pricingType": "size",
+      "prices": {
+        "200": 0,
+        "300": 0,
+        "450": 0,
+        "500": 0,
+        "550": 0,
+        "600": 0,
+        "750": 0,
+        "850": 0,
+        "1000": 0,
+        "1250": 0,
+        "1500": 0
       }
     },
     {
@@ -2448,6 +2583,20 @@
         "Tension control ": "Through Loadcell.",
         "Length counter meter": "Provided",
         "Trim Suction Blower": "Provided"
+      },
+      "pricingType": "size",
+      "prices": {
+        "1000": 850000,
+        "1250": 850000,
+        "1350": 1000000,
+        "1500": 1120000,
+        "1750": 1350000,
+        "1850": 1450000,
+        "2000": 1650000,
+        "2250": 2575000,
+        "2500": 2950000,
+        "2750": 3350000,
+        "3000": 4150000
       }
     },
     {
@@ -2476,6 +2625,19 @@
         "Tension control ": "Through Loadcell.",
         "Length counter meter": "Provided",
         "Trim Suction Blower": "Provided"
+      },
+      "pricingType": "size",
+      "prices": {
+        "1250": 1400000,
+        "1350": 1500000,
+        "1500": 1700000,
+        "1750": 2100000,
+        "1850": 2300000,
+        "2000": 2500000,
+        "2250": 3200000,
+        "2500": 3800000,
+        "2750": 4200000,
+        "3000": 5000000
       }
     }
   ],
@@ -2500,7 +2662,35 @@
         "Construction": "Precision machined aluminum body.",
         "Cooling": "High efficiency lip profile."
       },
-      "shortDesc": "Gamma Air Ring for optimal bubble cooling."
+      "shortDesc": "Gamma Air Ring for optimal bubble cooling.",
+      "pricingType": "size",
+      "prices": {
+        "50": 0,
+        "70": 0,
+        "90": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "250": 0,
+        "275": 0,
+        "300": 350000,
+        "325": 375000,
+        "350": 400000,
+        "375": 425000,
+        "400": 450000,
+        "425": 0,
+        "450": 0,
+        "475": 0,
+        "500": 0,
+        "525": 0,
+        "550": 0,
+        "600": 0,
+        "650": 0,
+        "700": 0,
+        "750": 0
+      }
     },
     {
       "id": "airring-standard-dynamic",
@@ -2522,7 +2712,35 @@
         "Construction": "Robust aluminum alloy structure.",
         "Cooling": "Uniform air distribution for stable bubble."
       },
-      "shortDesc": "Standard high performance air ring."
+      "shortDesc": "Standard high performance air ring.",
+      "pricingType": "size",
+      "prices": {
+        "50": 0,
+        "70": 0,
+        "90": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "250": 0,
+        "275": 0,
+        "300": 350000,
+        "325": 375000,
+        "350": 400000,
+        "375": 425000,
+        "400": 450000,
+        "425": 0,
+        "450": 0,
+        "475": 0,
+        "500": 0,
+        "525": 0,
+        "550": 0,
+        "600": 0,
+        "650": 0,
+        "700": 0,
+        "750": 0
+      }
     },
     {
       "id": "airring-dr-dynamic",
@@ -2542,7 +2760,35 @@
         "Blower": "20 HP AC variable frequency drive.",
         "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor."
       },
-      "shortDesc": "Dual lip air ring for high capacity co-extruded films."
+      "shortDesc": "Dual lip air ring for high capacity co-extruded films.",
+      "pricingType": "size",
+      "prices": {
+        "50": 0,
+        "70": 0,
+        "90": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "250": 0,
+        "275": 0,
+        "300": 500000,
+        "325": 600000,
+        "350": 650000,
+        "375": 700000,
+        "400": 725000,
+        "425": 800000,
+        "450": 800000,
+        "475": 0,
+        "500": 950000,
+        "525": 0,
+        "550": 0,
+        "600": 1000000,
+        "650": 0,
+        "700": 0,
+        "750": 0
+      }
     },
     {
       "id": "airring-dr-dynamic-aba",
@@ -2560,7 +2806,35 @@
         "Construcion": "Aluminum body aerodynamic type dual lip air cooling ring.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
         "Blower": "7.5 HP with inlet air filter."
       },
-      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films."
+      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films.",
+      "pricingType": "size",
+      "prices": {
+        "50": 0,
+        "70": 0,
+        "90": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "250": 0,
+        "275": 0,
+        "300": 500000,
+        "325": 600000,
+        "350": 650000,
+        "375": 700000,
+        "400": 725000,
+        "425": 800000,
+        "450": 800000,
+        "475": 0,
+        "500": 950000,
+        "525": 0,
+        "550": 0,
+        "600": 1000000,
+        "650": 0,
+        "700": 0,
+        "750": 0
+      }
     }
   ],
   "collapsingFrame": [
@@ -2584,7 +2858,22 @@
         "Adjustment": "Manual width adjustment with locking system.",
         "Width Capability": "TBD mm"
       },
-      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat."
+      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
+      "pricingType": "size",
+      "prices": {
+        "550": 0,
+        "1000": 0,
+        "1250": 0,
+        "1350": 0,
+        "1500": 0,
+        "1750": 0,
+        "1850": 0,
+        "2000": 0,
+        "2250": 0,
+        "2500": 0,
+        "2750": 0,
+        "3000": 0
+      }
     }
   ],
   "tower": [
@@ -2608,6 +2897,20 @@
         "Staircase": "Staircase with hand rails.",
         "Safety": "Hand rails and kick plates according to European safety standards.",
         "Idler rollers": "Set of idler aluminium rollers as per nip size."
+      },
+      "pricingType": "size",
+      "prices": {
+        "1000": 1000000,
+        "1250": 1000000,
+        "1350": 1150000,
+        "1500": 1300000,
+        "1750": 1400000,
+        "1850": 1500000,
+        "2000": 1800000,
+        "2250": 2200000,
+        "2500": 2500000,
+        "2750": 3000000,
+        "3000": 3500000
       }
     },
     {
@@ -2734,6 +3037,16 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
+      },
+      "pricingType": "size",
+      "prices": {
+        "U20\"": 62000,
+        "U24\"": 62000,
+        "U32\"": 62000,
+        "U40\"": 62000,
+        "U50\"": 62000,
+        "U72\"": 75000,
+        "U110\"": 75000
       }
     },
     {
@@ -2756,6 +3069,14 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
+      },
+      "pricingType": "size",
+      "prices": {
+        "D26\"": 120000,
+        "D32\"": 120000,
+        "D40\"": 120000,
+        "D50\"": 105000,
+        "D60\"": 135000
       }
     },
     {
@@ -2778,7 +3099,8 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
-      }
+      },
+      "pricingType": "size"
     },
     {
       "id": "hopper-dryer-b",
@@ -2798,6 +3120,14 @@
       "techDesc": {
         "Type": "Hopper Dryer",
         "Function": "Efficient moisture removal from granules."
+      },
+      "pricingType": "size",
+      "prices": {
+        "D26\"": 65000,
+        "D32\"": 65000,
+        "D40\"": 90000,
+        "D50\"": 90000,
+        "D60\"": 105000
       }
     },
     {
@@ -2821,6 +3151,13 @@
         "Temp. Controller": "MULTISPAN",
         "Material of Construction": "MS Painted",
         "Drive": "Through belt and Pulley"
+      },
+      "pricingType": "size",
+      "prices": {
+        "100": 140000,
+        "200": 225000,
+        "300": 285000,
+        "500": 350000
       }
     },
     {
@@ -2844,6 +3181,13 @@
         "Temp. Controller": "MULTISPAN",
         "Material of Construction": "MS Painted",
         "Drive": "Through belt and Pulley"
+      },
+      "pricingType": "size",
+      "prices": {
+        "100": 165000,
+        "200": 250000,
+        "300": 310000,
+        "500": 375000
       }
     }
   ],

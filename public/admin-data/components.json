@@ -1,716 +1,488 @@
 {
   "extruders": [
     {
-      "id": "ext-35-mono-short",
-      "name": "Extruder 35 mm",
-      "sizeMm": 35,
-      "variant": "short",
+      "id": "extruder-mono-dynamic",
+      "name": "Extruder",
+      "isDynamic": true,
+      "pricingType": "size",
       "machineTypes": [
         "mono"
       ],
-      "usedInModels": [
-        "UNOFLEX-450"
-      ],
       "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "35 mm monolayer extruder. Motor 7.5 kW, L/D 30:1.",
+      "cardDesc": "Select extruder size. Specs and price update automatically.",
       "price": 0,
-      "techDesc": {
-        "Screw Diameter": "35 mm single screw extruder mounted on a sturdy fabricated frame.",
-        "L/D ratio": "28:1",
-        "Type": "Barrier type screw with grooved feed section.",
-        "Barrel": "Screw & barrel",
-        "Material": "Bimetallic screw and barrel, suitable for PE / LD / LLD blends.",
-        "Screw Speed": "Approx. 115 RPM (variable with AC drive).",
-        "Heating System": "Ceramic Heater",
-        "No. of Heating Zones": "4 zones on barrel + die adapter zone.",
-        "Main Drive": "7.5 HP AC Motor & AC variable frequency Drive.",
-        "Transmission System": "Through Belt and Pulley.",
-        "Hopper": "MS fabricated hopper with sight glass and magnetic grill for metal trapping.",
-        "Screen Changer": "One Candle type Manual Screen Changers for 35 mm Extruders."
+      "prices": {
+        "35": 0,
+        "40": 0,
+        "45": 0,
+        "55": 0,
+        "60": 0,
+        "65": 1600000,
+        "75": 0,
+        "90": 0,
+        "100": 0
       },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      "sizeDetails": {
+        "35": {
+          "name": "Extruder 35 mm",
+          "techDesc": {
+            "Screw Diameter": "35 mm single screw extruder mounted on a sturdy fabricated frame.",
+            "L/D ratio": "28:1",
+            "Type": "Barrier type screw with grooved feed section.",
+            "Material": "Bimetallic screw and barrel, suitable for PE / LD / LLD blends.",
+            "Screw Speed": "Approx. 115 RPM (variable with AC drive).",
+            "Heating System": "Ceramic Heater",
+            "No. of Heating Zones": "4 zones on barrel + die adapter zone.",
+            "Main Drive": "7.5 HP AC Motor & AC variable frequency Drive.",
+            "Transmission System": "Through Belt and Pulley.",
+            "Hopper": "MS fabricated hopper with sight glass and magnetic grill for metal trapping.",
+            "Screen Changer": "One Candle type Manual Screen Changers for 35 mm Extruders."
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "40": {
+          "name": "Extruder 40 mm",
+          "techDesc": {
+            "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "28:1",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters",
+            "No. of Zones": "02 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Through Belt and Pulley.",
+            "Gearbox": "Zeal or equivalent make.",
+            "Screen Changer": "Candle type"
+          },
+          "shortDesc": "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive."
+        },
+        "45": {
+          "name": "Extruder 45 mm",
+          "techDesc": {
+            "Screw Diameter": "45 mm single screw extruder for Unoflex monolayer range.",
+            "L/D ratio": "30:1 short barrel for medium output 50–60 kg/hr.",
+            "Type": "Barrier screw profile optimised for thin gauge film.",
+            "Barrel": "Water-cooled grooved feed section with bimetallic wear-resistant liner.",
+            "Screw Speed": "Up to 115 RPM with closed-loop speed control.",
+            "Heating System": "9.7 kW ceramic band heater load with PID temperature controllers.",
+            "No. of Heating Zones": "4 barrel zones + adapter.",
+            "Main Drive": "15 kW AC motor with VFD.",
+            "Transmission System": "Helical gear box with thrust bearing housing.",
+            "Hopper": "Fabricated hopper with glass window for visual inspection and magnetic grill.",
+            "Screen Changer": "Manual candle type (optional hydraulic on request)."
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "55": {
+          "name": "Extruder 55 mm",
+          "techDesc": {
+            "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters (Hitco or equivalent)",
+            "No. of Heating Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Through Belt and Pulley.",
+            "Gearbox": "Premium / Zeal or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "60": {
+          "name": "Extruder 60 mm",
+          "techDesc": {
+            "Screw Diameter": "60 mm single screw extruder.",
+            "L/D ratio": "30:1 short barrel.",
+            "Main Drive": "30 kW AC motor with vector drive.",
+            "Heating System": "Approx. 15 kW total heater load on barrel.",
+            "Type": "Barrier screw, medium duty.",
+            "Hopper": "MS hopper with magnetic grill and level window.",
+            "Screen Changer": "Manual candle type.",
+            "Application": "For general purpose blown film, shopping bags and liners."
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "65": {
+          "name": "Extruder 65 mm",
+          "techDesc": {
+            "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "75": {
+          "name": "Extruder 75 mm",
+          "techDesc": {
+            "Screw Diameter": "75 mm single screw extruder for high output monolayer line.",
+            "L/D ratio": "30:1 short barrel.",
+            "Main Drive": "45 kW AC motor with VFD.",
+            "Heating System": "Approx. 22.4 kW heater load.",
+            "Type": "Barrier type screw, bimetallic barrel.",
+            "Applications": "Heavy duty liner film, shrink film and high width shopping bags.",
+            "Screen Changer": "Optional hydraulic screen changer."
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "90": {
+          "name": "Extruder 90 mm",
+          "techDesc": {
+            "Screw Diameter": "90 mm single screw extruder.",
+            "L/D ratio": "30:1.",
+            "Main Drive": "50 kW AC motor with inverter.",
+            "Heating System": "29.5 kW total barrel heater load.",
+            "Applications": "Wide width film for construction and agricultural use."
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "100": {
+          "name": "Extruder 100 mm",
+          "techDesc": {
+            "Screw Diameter": "100 mm single screw extruder.",
+            "L/D ratio": "30:1.",
+            "Main Drive": "60 kW AC motor with VFD.",
+            "Heating System": "31.5 kW heater load.",
+            "Applications": "Very wide width liner and greenhouse film."
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        }
+      }
     },
     {
-      "id": "ext-mono-40",
-      "name": "Extruder 40 mm",
-      "sizeMm": 40,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-24"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "40 mm monolayer extruder. Motor 10 HP, L/D 28:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "28:1",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy.",
-        "Heating System": "Ceramic Band type Heaters",
-        "No. of Zones": "02 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-        "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Through Belt and Pulley.",
-        "Gearbox": "Zeal or equivalent make.",
-        "Screen Changer": "Candle type"
-      },
-      "shortDesc": "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive."
-    },
-    {
-      "id": "ext-45-mono-short",
-      "name": "Extruder 45 mm",
-      "sizeMm": 45,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-750_900"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "45 mm monolayer extruder. Motor 15 kW, L/D 30:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "45 mm single screw extruder for Unoflex monolayer range.",
-        "L/D ratio": "30 : 1 short barrel for medium output 50–60 kg/hr.",
-        "Type": "Barrier screw profile optimised for thin gauge film.",
-        "Barrel": "Water-cooled grooved feed section with bimetallic wear-resistant liner.",
-        "Screw Speed": "Up to 115 RPM with closed-loop speed control.",
-        "Heating System": "9.7 kW ceramic band heater load with PID temperature controllers.",
-        "No. of Heating Zones": "4 barrel zones + adapter.",
-        "Main Drive": "15 kW AC motor with VFD.",
-        "Transmission System": "Helical gear box with thrust bearing housing.",
-        "Hopper": "Fabricated hopper with glass window for visual inspection and magnetic grill.",
-        "Screen Changer": "Manual candle type (optional hydraulic on request)."
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-55-mono-short",
-      "name": "Extruder 55 mm",
-      "sizeMm": 55,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1000_1250"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "55 mm monolayer extruder. Motor 22.5 kW, L/D 30:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30:1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy.",
-        "Heating System": "Ceramic Band type Heaters (Hitco or equivalent)",
-        "No. of Heating Zones": "04 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-        "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Through Belt and Pulley.",
-        "Gearbox": "Premium / Zeal or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-60-mono-short",
-      "name": "Extruder 60 mm",
-      "sizeMm": 60,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1250_1500"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "60 mm monolayer extruder. Motor 30 kW, L/D 30:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "60 mm single screw extruder.",
-        "L/D ratio": "30 : 1 short barrel.",
-        "Main Drive": "30 kW AC motor with vector drive.",
-        "Heating System": "Approx. 15 kW total heater load on barrel.",
-        "Type": "Barrier screw, medium duty.",
-        "Hopper": "MS hopper with magnetic grill and level window.",
-        "Screen Changer": "Manual candle type.",
-        "Application": "For general purpose blown film, shopping bags and liners."
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-75-mono-short",
-      "name": "Extruder 75 mm",
-      "sizeMm": 75,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-2000"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "75 mm monolayer extruder. Motor 45 kW, L/D 30:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "75 mm single screw extruder for high output monolayer line.",
-        "L/D ratio": "30 : 1 short barrel.",
-        "Main Drive": "45 kW AC motor with VFD.",
-        "Heating System": "Approx. 22.4 kW heater load.",
-        "Type": "Barrier type screw, bimetallic barrel.",
-        "Applications": "Heavy duty liner film, shrink film and high width shopping bags.",
-        "Screen Changer": "Optional hydraulic screen changer."
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-90-mono-short",
-      "name": "Extruder 90 mm",
-      "sizeMm": 90,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-2500"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "90 mm monolayer extruder. Motor 50 kW, L/D 30:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "90 mm single screw extruder.",
-        "L/D ratio": "30 : 1.",
-        "Main Drive": "50 kW AC motor with inverter.",
-        "Heating System": "29.5 kW total barrel heater load.",
-        "Applications": "Wide width film for construction and agricultural use."
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-100-mono-short",
-      "name": "Extruder 100 mm",
-      "sizeMm": 100,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-3000"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "100 mm monolayer extruder. Motor 60 kW, L/D 30:1.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "100 mm single screw extruder.",
-        "L/D ratio": "30 : 1.",
-        "Main Drive": "60 kW AC motor with VFD.",
-        "Heating System": "31.5 kW heater load.",
-        "Applications": "Very wide width liner and greenhouse film."
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-35-aba",
-      "name": "Extruder 35 mm",
-      "sizeMm": 35,
-      "variant": "long",
+      "id": "extruder-aba-dynamic",
+      "name": "Extruder",
+      "isDynamic": true,
+      "pricingType": "size",
       "machineTypes": [
         "aba"
       ],
-      "usedInModels": [
-        "DUOFLEX-20"
-      ],
       "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "35 mm screw co-extruder for skin layer (ABA).",
+      "cardDesc": "Select extruder size for ABA co-extrusion. Specs and price update automatically.",
       "price": 0,
-      "techDesc": {
-        "Screw Diameter": "35 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "28:1",
-        "Screw Speed": "95 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy steel",
-        "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
-        "No. of Zones": "02 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-        "Main Drive": "7.5 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor coupled with helical gearbox.",
-        "Gearbox": "Premium or Equivalent Make.",
-        "Screen changer": "Candle type"
+      "prices": {
+        "35": 0,
+        "40": 0,
+        "45": 700000,
+        "50": 1000000,
+        "55": 1350000,
+        "65": 1600000,
+        "75": 2400000,
+        "90": 3000000
       },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      "sizeDetails": {
+        "35": {
+          "name": "Extruder 35 mm",
+          "techDesc": {
+            "Screw Diameter": "35 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "28:1",
+            "Screw Speed": "95 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy steel",
+            "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
+            "No. of Zones": "02 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "7.5 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor coupled with helical gearbox.",
+            "Gearbox": "Premium or Equivalent Make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "40": {
+          "name": "Extruder 40 mm",
+          "techDesc": {
+            "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "45": {
+          "name": "Extruder 45 mm",
+          "techDesc": {
+            "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy steel",
+            "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor coupled with helical gearbox.",
+            "Gearbox": "Helical Type. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "50": {
+          "name": "Extruder 50 mm",
+          "techDesc": {
+            "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "55": {
+          "name": "Extruder 55 mm",
+          "techDesc": {
+            "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Type": "Barrier",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy.",
+            "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "30 HP AC motor (ABB or Equivalent) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox (Zeal).",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "65": {
+          "name": "Extruder 65 mm",
+          "techDesc": {
+            "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "75": {
+          "name": "Extruder 75 mm",
+          "techDesc": {
+            "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "105 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "90": {
+          "name": "Extruder 90 mm",
+          "techDesc": {
+            "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "90 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        }
+      }
     },
     {
-      "id": "ext-40-coex-long",
-      "name": "Extruder 40 mm",
-      "sizeMm": 40,
-      "variant": "long",
+      "id": "extruder-3layer-dynamic",
+      "name": "Extruder",
+      "isDynamic": true,
+      "pricingType": "size",
       "machineTypes": [
         "3layer",
         "5layer"
       ],
-      "usedInModels": [
-        "Innoflex-1120"
-      ],
       "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "40 mm co-extruder for 3-layer machines.",
+      "cardDesc": "Select extruder size for 3-layer co-extrusion. Specs and price update automatically.",
       "price": 0,
-      "techDesc": {
-        "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
-        "No. of Zones": "03 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "15 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox.",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
+      "prices": {
+        "40": 0,
+        "45": 800000,
+        "50": 1115000,
+        "55": 1470000,
+        "65": 1730000,
+        "75": 2550000,
+        "90": 3185000
       },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-40-aba",
-      "name": "Extruder 40 mm",
-      "sizeMm": 40,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-750"
-      ],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "40 mm screw co-extruder for ABA machines.",
-      "price": 0,
-      "techDesc": {
-        "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
-        "No. of Zones": "03 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox.",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-45-coex-long",
-      "name": "Extruder 45 mm",
-      "sizeMm": 45,
-      "variant": "long",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350A"
-      ],
-      "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "45 mm co-extruder for 3-layer / 5-layer machines.",
-      "price": 800000,
-      "techDesc": {
-        "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30 : 1",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
-        "No. of Zones": "03 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-        "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox.",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-45-aba",
-      "name": "Extruder 45 mm",
-      "sizeMm": 45,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-750",
-        "DUOFLEX-1000"
-      ],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "45 mm screw co-extruder for ABA machines.",
-      "price": 700000,
-      "techDesc": {
-        "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30:1",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy steel",
-        "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
-        "No. of Zones": "03 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-        "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor coupled with helical gearbox.",
-        "Gearbox": "Helical Type. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-50-coex-long",
-      "name": "Extruder 50 mm",
-      "sizeMm": 50,
-      "variant": "long",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B",
-        "Innoflex-1620",
-        "Innoflex-1870"
-      ],
-      "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "50 mm single screw extruder for 3-layer / 5-layer machines.",
-      "price": 1115000,
-      "techDesc": {
-        "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "04 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-50-aba",
-      "name": "Extruder 50 mm",
-      "sizeMm": 50,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "50 mm single screw extruder for ABA machines.",
-      "price": 1000000,
-      "techDesc": {
-        "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "04 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-55-coex-long",
-      "name": "Extruder 55 mm",
-      "sizeMm": 55,
-      "variant": "long",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350A",
-        "Innoflex-1870"
-      ],
-      "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "55 mm co-extruder for 3-layer / 5-layer machines.",
-      "price": 1470000,
-      "techDesc": {
-        "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
-        "No. of Zones": "04 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "40 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox.",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-55-aba",
-      "name": "Extruder 55 mm",
-      "sizeMm": 55,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-1000",
-        "DUOFLEX-1250",
-        "DUOFLEX-1750"
-      ],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "55 mm screw co-extruder for core or skin layer (ABA).",
-      "price": 1350000,
-      "techDesc": {
-        "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30:1",
-        "Type": "Barrier",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy.",
-        "Heating System": "Ceramic Band type Heaters (Heatsun or equivalent)",
-        "No. of Zones": "04 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-        "Main Drive": "30 HP AC motor (ABB or Equivalent) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox (Zeal).",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-65-coex-long",
-      "name": "Extruder 65 mm",
-      "sizeMm": 65,
-      "variant": "long",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1620",
-        "Innoflex-1870",
-        "Innoflex-2120",
-        "Innoflex-2370"
-      ],
-      "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "65 mm co-extruder for high output 3-layer / 5-layer lines.",
-      "price": 1730000,
-      "techDesc": {
-        "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "05 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "60 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-65-aba",
-      "name": "Extruder 65 mm",
-      "sizeMm": 65,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-1750"
-      ],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "65 mm co-extruder for high output ABA lines.",
-      "price": 1600000,
-      "techDesc": {
-        "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "05 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-65-mono-short",
-      "name": "Extruder 65 mm",
-      "sizeMm": 65,
-      "variant": "short",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-72"
-      ],
-      "image": "/images/Extruder/Extruder Mono.png",
-      "cardDesc": "65 mm co-extruder for high output monolayer lines.",
-      "price": 1600000,
-      "techDesc": {
-        "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "115 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "04 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-75-coex-long",
-      "name": "Extruder 75 mm",
-      "sizeMm": 75,
-      "variant": "long",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2120",
-        "Innoflex-2370",
-        "Innoflex-2620"
-      ],
-      "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "75 mm long screw extruder for large 3-layer machines.",
-      "price": 2550000,
-      "techDesc": {
-        "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "30 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "105 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "05 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-75-aba",
-      "name": "Extruder 75 mm",
-      "sizeMm": 75,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "75 mm screw co-extruder for large ABA machines.",
-      "price": 2400000,
-      "techDesc": {
-        "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "105 RPM",
-        "Barrel": "Water cooled semi grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum)",
-        "No. of Zones": "05 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-90-coex-long",
-      "name": "Extruder 90 mm",
-      "sizeMm": 90,
-      "variant": "long",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2620"
-      ],
-      "image": "/images/Extruder/Extruder.png",
-      "cardDesc": "90 mm long screw extruder for very high output 3-layer / 5-layer machines.",
-      "price": 3185000,
-      "techDesc": {
-        "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "90 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
-        "No. of Zones": "05 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox.",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-    },
-    {
-      "id": "ext-90-aba",
-      "name": "Extruder 90 mm",
-      "sizeMm": 90,
-      "variant": "long",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [],
-      "image": "/images/Extruder/Extruder ABA.png",
-      "cardDesc": "90 mm screw co-extruder for core layer (ABA).",
-      "price": 3000000,
-      "techDesc": {
-        "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
-        "L/D ratio": "32 : 1",
-        "Type": "Barrier",
-        "Screw Speed": "90 RPM",
-        "Barrel": "Water cooled grooved feed section",
-        "Material": "Nitro Alloy",
-        "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
-        "No. of Zones": "05 Nos. on barrel",
-        "Hopper": "MS fabricated with glass window for visual inspection.",
-        "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
-        "Transmission System": "Motor directly coupled with helical gearbox.",
-        "Gearbox": "Premium or equivalent make.",
-        "Screen changer": "Candle type"
-      },
-      "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      "sizeDetails": {
+        "40": {
+          "name": "Extruder 40 mm",
+          "techDesc": {
+            "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "15 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "45": {
+          "name": "Extruder 45 mm",
+          "techDesc": {
+            "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+            "No. of Zones": "03 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
+            "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "50": {
+          "name": "Extruder 50 mm",
+          "techDesc": {
+            "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "55": {
+          "name": "Extruder 55 mm",
+          "techDesc": {
+            "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+            "No. of Zones": "04 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "40 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "65": {
+          "name": "Extruder 65 mm",
+          "techDesc": {
+            "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "115 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "60 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "75": {
+          "name": "Extruder 75 mm",
+          "techDesc": {
+            "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "30:1",
+            "Type": "Barrier",
+            "Screw Speed": "105 RPM",
+            "Barrel": "Water cooled semi grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        },
+        "90": {
+          "name": "Extruder 90 mm",
+          "techDesc": {
+            "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
+            "L/D ratio": "32:1",
+            "Type": "Barrier",
+            "Screw Speed": "90 RPM",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy",
+            "Heating System": "Ceramic Band type Heaters (Aum or Heatsun)",
+            "No. of Zones": "05 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual inspection.",
+            "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
+            "Transmission System": "Motor directly coupled with helical gearbox.",
+            "Gearbox": "Premium or equivalent make.",
+            "Screen changer": "Candle type"
+          },
+          "shortDesc": "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+        }
+      }
     }
   ],
   "bubbleCages": [
@@ -731,23 +503,7 @@
         "Actuation of arms": "Manual open-close operation.",
         "Bubble width range": "750 to 1250 mm"
       },
-      "shortDesc": "Universal manual bubble cage with adjustable diameter.",
-      "pricingType": "size",
-      "prices": {
-        "550": 15000,
-        "850": 25000,
-        "1000": 35000,
-        "1250": 55000,
-        "1350": 70000,
-        "1500": 85000,
-        "1750": 125000,
-        "1850": 150000,
-        "2000": 175000,
-        "2250": 225000,
-        "2500": 300000,
-        "2750": 350000,
-        "3000": 500000
-      }
+      "shortDesc": "Universal manual bubble cage with adjustable diameter."
     },
     {
       "id": "bc-manual-dynamic-aba",
@@ -764,23 +520,7 @@
       "techDesc": {
         "Type": "Arms to support the bubble."
       },
-      "shortDesc": "Universal manual bubble cage with adjustable diameter for ABA.",
-      "pricingType": "size",
-      "prices": {
-        "550": 15000,
-        "850": 25000,
-        "1000": 35000,
-        "1250": 55000,
-        "1350": 70000,
-        "1500": 85000,
-        "1750": 125000,
-        "1850": 150000,
-        "2000": 175000,
-        "2250": 225000,
-        "2500": 300000,
-        "2750": 350000,
-        "3000": 500000
-      }
+      "shortDesc": "Universal manual bubble cage with adjustable diameter for ABA."
     },
     {
       "id": "bc-open-close-dynamic",
@@ -802,23 +542,7 @@
         "Actuation of arms": "Motorized Open-Close operation.",
         "Film width range": "800 to 1600 mm"
       },
-      "shortDesc": "Motorized open-close bubble cage for precision control.",
-      "pricingType": "size",
-      "prices": {
-        "550": 125000,
-        "850": 150000,
-        "1000": 175000,
-        "1250": 250000,
-        "1350": 250000,
-        "1500": 275000,
-        "1750": 300000,
-        "1850": 350000,
-        "2000": 450000,
-        "2250": 550000,
-        "2500": 650000,
-        "2750": 750000,
-        "3000": 850000
-      }
+      "shortDesc": "Motorized open-close bubble cage for precision control."
     },
     {
       "id": "bc-up-down-dynamic",
@@ -840,22 +564,7 @@
         "Actuation of arms": "Motorized Up Down & Open-Close with Liner Actuator.",
         "Bubble width range": "1300 to 2250 mm"
       },
-      "shortDesc": "Full motorized bubble cage with vertical and radial adjustment.",
-      "pricingType": "size",
-      "prices": {
-        "550": 250000,
-        "850": 300000,
-        "1000": 350000,
-        "1250": 450000,
-        "1500": 550000,
-        "1750": 650000,
-        "1850": 700000,
-        "2000": 750000,
-        "2250": 850000,
-        "2500": 950000,
-        "2750": 1050000,
-        "3000": 1150000
-      }
+      "shortDesc": "Full motorized bubble cage with vertical and radial adjustment."
     }
   ],
   "hauloffs": [
@@ -906,20 +615,6 @@
         "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
         "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
         "Max linespeed": "TBD"
-      },
-      "pricingType": "size",
-      "prices": {
-        "1000": 1100000,
-        "1250": 1100000,
-        "1350": 1150000,
-        "1500": 1200000,
-        "1750": 1400000,
-        "1850": 1500000,
-        "2000": 1800000,
-        "2250": 2500000,
-        "2500": 2700000,
-        "2750": 3200000,
-        "3000": 3500000
       }
     },
     {
@@ -939,20 +634,6 @@
         "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
         "Nip roller width": "TBD mm",
         "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
-      },
-      "pricingType": "size",
-      "prices": {
-        "1000": 1100000,
-        "1250": 1100000,
-        "1350": 1150000,
-        "1500": 1200000,
-        "1750": 1400000,
-        "1850": 1500000,
-        "2000": 1800000,
-        "2250": 2500000,
-        "2500": 2700000,
-        "2750": 3200000,
-        "3000": 3500000
       }
     },
     {
@@ -972,1509 +653,742 @@
         "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
         "Nip roller width": "TBD mm",
         "Nip roller drive": "1-2 HP AC motor with variable frequency drive."
-      },
-      "pricingType": "size",
-      "prices": {
-        "1000": 1100000,
-        "1250": 1100000,
-        "1350": 1150000,
-        "1500": 1200000,
-        "1750": 1400000,
-        "1850": 1500000,
-        "2000": 1800000,
-        "2250": 2500000,
-        "2500": 2700000,
-        "2750": 3200000,
-        "3000": 3500000
       }
     }
   ],
   "dies": [
     {
-      "id": "die-mono-100",
-      "name": "Monolayer Die 100 mm",
+      "id": "die-mono-dynamic",
+      "name": "Monolayer Die",
+      "isDynamic": true,
+      "pricingType": "size",
       "dieFamily": "mono",
-      "diameterMm": 100,
-      "lipsDesc": "100 mm",
       "machineTypes": [
         "mono"
       ],
-      "usedInModels": [
-        "UNOFLEX-20"
-      ],
       "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
+      "cardDesc": "Select die size. Specs and price update automatically.",
       "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
+      "prices": {
+        "50": 0,
+        "90": 0,
+        "100": 0,
+        "150": 0,
+        "200": 0,
+        "250": 0,
+        "300": 900000,
+        "400": 1400000,
+        "450": 1800000,
+        "600": 2500000
       },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+      "sizeDetails": {
+        "50": {
+          "name": "Monolayer Die 50 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "50 mm diameter.",
+            "Application": "Narrow web film up to ~450 mm layflat.",
+            "Lip Gap": "Adjustable, typical gap 0.8–1.2 mm.",
+            "Heating Zones": "2–3 zones."
+          },
+          "shortDesc": "Compact monolayer die for narrow web blown films."
+        },
+        "90": {
+          "name": "Monolayer Die 90 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "90 mm diameter.",
+            "Application": "Monolayer shopping bag and liner film, 750–900 mm layflat.",
+            "Lip Design": "Adjustable circular lips with fine-thread bolts.",
+            "Heating Zones": "3–4 zones."
+          },
+          "shortDesc": "Mid-size monolayer die for medium-width blown film applications."
+        },
+        "100": {
+          "name": "Monolayer Die 100 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "100 mm diameter.",
+            "Heating Zones": "02 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "150": {
+          "name": "Monolayer Die 150 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "150 mm diameter.",
+            "Application": "General packaging film, liners and surface printing film — 1000–1250 mm layflat.",
+            "Lip Gap": "Typical gap 1.0–1.5 mm, adjustable.",
+            "Heating Zones": "4–5 zones."
+          },
+          "shortDesc": "Versatile monolayer die for a wide range of blown film applications."
+        },
+        "200": {
+          "name": "Monolayer Die 200 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "200 mm diameter.",
+            "Application": "Medium to wide web monolayer films — 1250–1500 mm layflat.",
+            "Heating Zones": "4–6 zones with individual temperature control."
+          },
+          "shortDesc": "Large monolayer die for wider blown film production."
+        },
+        "250": {
+          "name": "Monolayer Die 250 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "250 mm diameter.",
+            "Heating Zones": "02 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "300": {
+          "name": "Monolayer Die 300 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "300 mm diameter.",
+            "Application": "Heavy duty liner and shrink film — 2000 mm layflat.",
+            "Heating Zones": "Multiple zones along body and lips."
+          },
+          "shortDesc": "High capacity monolayer die for large blown film applications."
+        },
+        "400": {
+          "name": "Monolayer Die 400 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "400 mm diameter.",
+            "Application": "Construction film, agricultural cover and wide width liners — 2500 mm layflat.",
+            "Lip Gap": "Approx. 2.0–2.5 mm adjustable.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Spiral die head for even melt distribution and consistent film thickness."
+        },
+        "450": {
+          "name": "Monolayer Die 450 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "450 mm diameter.",
+            "Application": "Very wide width film, greenhouse and silo covers — 3000 mm layflat.",
+            "Heating Zones": "6+ zones with PID controllers."
+          },
+          "shortDesc": "Heavy-duty spiral die for maximum-width blown film applications."
+        },
+        "600": {
+          "name": "Monolayer Die 600 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "600 mm diameter.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        }
+      }
     },
     {
-      "id": "die-mono-150",
-      "name": "Monolayer Die 150 mm",
-      "dieFamily": "mono",
-      "diameterMm": 150,
-      "lipsDesc": "150 mm",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-32"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
-      "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-200",
-      "name": "Monolayer Die 200 mm",
-      "dieFamily": "mono",
-      "diameterMm": 200,
-      "lipsDesc": "200 mm",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
-      "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-250",
-      "name": "Monolayer Die 250 mm",
-      "dieFamily": "mono",
-      "diameterMm": 250,
-      "lipsDesc": "250 mm",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-40"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
-      "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-300",
-      "name": "Monolayer Die 300 mm",
-      "dieFamily": "mono",
-      "diameterMm": 300,
-      "lipsDesc": "300 mm",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-50"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
-      "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-400",
-      "name": "Monolayer Die 400 mm",
-      "dieFamily": "mono",
-      "diameterMm": 400,
-      "lipsDesc": "400 mm",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-72"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
-      "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-600",
-      "name": "Monolayer Die 600 mm",
-      "dieFamily": "mono",
-      "diameterMm": 600,
-      "lipsDesc": "600 mm",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-110"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "One Chrome plated Mono Layer Spiral Mandrel Die.",
-      "price": 0,
-      "techDesc": {
-        "Type": "hidden",
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Nickel / plated & highly polished melt paths.",
-        "Die Size": "Diameter as per width and lip gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-50-100",
-      "name": "Unoflex Die 50 / 100",
-      "dieFamily": "mono",
-      "diameterMm": 50,
-      "lipsDesc": "50 / 100 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-450"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Monolayer die 50 / 100 for narrow web film up to ~450 mm layflat.",
-      "price": 0,
-      "techDesc": {
-        "Application": "Monolayer blown film for narrow web general purpose film.",
-        "Die Size": "50 / 100 (HM / LD configuration).",
-        "Construction": "Hardened alloy steel body with polished melt flow paths.",
-        "Surface Treatment": "Electroless Chrome plated internal flow passages for corrosion resistance.",
-        "Lip Gap": "Adjustable lips with typical gap 0.8–1.2 mm.",
-        "Heating": "Band heaters with independent temperature zones.",
-        "Heating Zones": "2–3 zones depending on configuration.",
-        "Thermocouples": "Multiple TC points for uniform die temperature."
-      },
-      "shortDesc": "Compact monolayer die for producing narrow web blown films."
-    },
-    {
-      "id": "die-mono-90-175",
-      "name": "Unoflex Die 90 / 175",
-      "dieFamily": "mono",
-      "diameterMm": 90,
-      "lipsDesc": "90 / 175 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-750_900"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Monolayer die 90 / 175 for 750–900 mm layflat widths.",
-      "price": 0,
-      "techDesc": {
-        "Application": "Monolayer shopping bag and liner film.",
-        "Die Size": "90 / 175 (HM / LD).",
-        "Material of Construction": "Hardened high-strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plating, highly polished die lips.",
-        "Lip Design": "Adjustable circular lips with fine-thread bolts.",
-        "Heating System": "Ceramic band heaters with PID temperature control.",
-        "Heating Zones": "3–4 zones around die body and lips.",
-        "Distribution": "Spiral flow distribution for uniform gauge."
-      },
-      "shortDesc": "Mid-size monolayer die for medium-width blown film applications."
-    },
-    {
-      "id": "die-mono-150-275",
-      "name": "Unoflex Die 150 / 275",
-      "dieFamily": "mono",
-      "diameterMm": 150,
-      "lipsDesc": "150 / 275 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1000_1250"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Monolayer die 150 / 275 for mid-width film 1000–1250 mm.",
-      "price": 0,
-      "techDesc": {
-        "Application": "General packaging film, liners and surface printing film.",
-        "Die Size": "150 / 275 (HM / LD).",
-        "Material of Construction": "Hardened alloy steel with nitrided surfaces.",
-        "Surface Treatment": "Electroless Chrome plated with mirror finished flow paths.",
-        "Lip Gap": "Typical gap 1.0–1.5 mm, adjustable.",
-        "Heating System": "Band heaters with separate zones for body and lips.",
-        "Heating Zones": "4–5 zones.",
-        "Distribution": "Spiral distribution with balanced flow channels."
-      },
-      "shortDesc": "Versatile monolayer die for a wide range of blown film applications."
-    },
-    {
-      "id": "die-mono-200-325",
-      "name": "Unoflex Die 200 / 325",
-      "dieFamily": "mono",
-      "diameterMm": 200,
-      "lipsDesc": "200 / 325 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-1250_1500"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Monolayer die 200 / 325 for 1250–1500 mm layflat film.",
-      "price": 0,
-      "techDesc": {
-        "Application": "Medium to wide web monolayer films.",
-        "Die Size": "200 / 325 (HM / LD).",
-        "Design": "Center fed spiral die with balanced flow passages.",
-        "Lip Design": "Adjustable lip bolts around circumference.",
-        "Heating System": "High capacity ceramic heaters on body and lips.",
-        "Heating Zones": "4–6 zones with individual temperature control."
-      },
-      "shortDesc": "Large monolayer die for wider blown film production."
-    },
-    {
-      "id": "die-mono-300-475",
-      "name": "Unoflex Die 300 / 475",
-      "dieFamily": "mono",
-      "diameterMm": 300,
-      "lipsDesc": "300 / 475 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-2000"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Monolayer die 300 / 475 for 2000 mm layflat film.",
-      "price": 900000,
-      "techDesc": {
-        "Application": "Heavy duty liner and shrink film.",
-        "Die Size": "300 / 475 (HM / LD).",
-        "Material of Construction": "High strength alloy steel.",
-        "Surface Treatment": "Chrome plated and highly polished.",
-        "Distribution": "Spiral type distribution for uniform gauge.",
-        "Heating System": "Ceramic band heaters with PID control.",
-        "Heating Zones": "Multiple zones along body and lips."
-      },
-      "shortDesc": "High capacity monolayer die for large blown film applications."
-    },
-    {
-      "id": "die-mono-400-600",
-      "name": "Unoflex Die 400 / 600",
-      "dieFamily": "mono",
-      "diameterMm": 400,
-      "lipsDesc": "400 / 600 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-2500"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Large mono die 400 / 600 for 2500 mm layflat widths.",
-      "price": 1400000,
-      "techDesc": {
-        "Application": "Construction film, agricultural cover and wide width liners.",
-        "Die Size": "400 / 600 (HM / LD).",
-        "Lip Gap": "Approx. 2.0–2.5 mm adjustable.",
-        "Distribution": "Spiral distribution ensuring even melt flow.",
-        "Heating System": "High capacity heaters with multi-zone control."
-      },
-      "shortDesc": "Spiral die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-mono-450-700",
-      "name": "Unoflex Die 450 / 700",
-      "dieFamily": "mono",
-      "diameterMm": 450,
-      "lipsDesc": "450 / 700 (HM / LD)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-3000"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "Largest mono die 450 / 700 for 3000 mm layflat.",
-      "price": 1800000,
-      "techDesc": {
-        "Application": "Very wide width film, greenhouse and silo covers.",
-        "Die Size": "450 / 700 (HM / LD).",
-        "Design": "Heavy duty spiral die with stiffening ribs.",
-        "Heating": "Segmented band heaters for uniform temperature.",
-        "Heating Zones": "6+ zones with PID controllers."
-      },
-      "shortDesc": "Spiral die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-aba-70-150",
-      "name": "ABA / AB Die 70 / 150",
+      "id": "die-aba-dynamic",
+      "name": "ABA / AB Die",
+      "isDynamic": true,
+      "pricingType": "size",
       "dieFamily": "aba",
-      "diameterMm": 70,
-      "lipsDesc": "70 / 150 (HM / LD)",
       "machineTypes": [
         "aba"
       ],
-      "usedInModels": [
-        "DUOFLEX-750"
-      ],
       "image": "/images/Die/DieABA.png",
-      "cardDesc": "ABA / AB die 70 / 150 for Duoflex 750.",
+      "cardDesc": "Select die size for ABA co-extrusion. Specs and price update automatically.",
       "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "70 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
+      "prices": {
+        "70": 0,
+        "75": 0,
+        "100": 0,
+        "125": 0,
+        "150": 0,
+        "200": 0,
+        "225": 0,
+        "300": 900000,
+        "350": 0,
+        "600": 2500000
       },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+      "sizeDetails": {
+        "70": {
+          "name": "ABA / AB Die 70 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "70 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "75": {
+          "name": "ABA Die 75 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "75 mm.",
+            "Heating Zones": "02 Nos."
+          },
+          "shortDesc": "ABA die head."
+        },
+        "100": {
+          "name": "ABA Die 100 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "100 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Basic ABA die head."
+        },
+        "125": {
+          "name": "ABA / AB Die 125 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "125 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "150": {
+          "name": "ABA Die 150 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "150 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Basic ABA die head."
+        },
+        "200": {
+          "name": "ABA Die 200 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "200 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Basic ABA die head."
+        },
+        "225": {
+          "name": "ABA / AB Die 225 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "225 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "300": {
+          "name": "ABA Die 300 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "300 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "ABA die head."
+        },
+        "350": {
+          "name": "ABA / AB Die 350 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "350 mm.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "600": {
+          "name": "ABA Die 600 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters",
+            "Die Size": "600 mm.",
+            "Heating Zones": "03 Nos."
+          },
+          "shortDesc": "Large ABA die head."
+        }
+      }
     },
     {
-      "id": "die-aba-125-250",
-      "name": "ABA / AB Die 125 / 250",
-      "dieFamily": "aba",
-      "diameterMm": 125,
-      "lipsDesc": "125 / 250 (HM / LD)",
+      "id": "die-3layer-dynamic",
+      "name": "Three Layer Die",
+      "isDynamic": true,
+      "pricingType": "size",
+      "dieFamily": "3layer",
       "machineTypes": [
-        "aba"
+        "3layer"
       ],
-      "usedInModels": [
-        "DUOFLEX-1000"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "ABA / AB die 125 / 250 for mid-width Duoflex.",
+      "image": "/images/Die/Die.png",
+      "cardDesc": "Select die size for 3-layer co-extrusion. Specs and price update automatically.",
       "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "125 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
+      "prices": {
+        "225": 0,
+        "275": 0,
+        "300": 900000,
+        "325": 1100000,
+        "350": 1150000,
+        "375": 1200000,
+        "400": 1400000,
+        "425": 1600000,
+        "450": 1800000,
+        "500": 2000000,
+        "525": 2100000,
+        "550": 2200000,
+        "600": 2500000,
+        "650": 2800000,
+        "700": 3400000,
+        "750": 3600000
       },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+      "sizeDetails": {
+        "225": {
+          "name": "Three Layer Die 225 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "225 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "275": {
+          "name": "Three Layer Die 275 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "300": {
+          "name": "Three Layer Die 300 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "325": {
+          "name": "Three Layer Die 325 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "350": {
+          "name": "Three Layer Die 350 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "375": {
+          "name": "Three Layer Die 375 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "400": {
+          "name": "Three Layer Die 400 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "425": {
+          "name": "Three Layer Die 425 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "450": {
+          "name": "Three Layer Die 450 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "500": {
+          "name": "Three Layer Die 500 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "525": {
+          "name": "Three Layer Die 525 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "525 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "550": {
+          "name": "Three Layer Die 550 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "600": {
+          "name": "Three Layer Die 600 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "650": {
+          "name": "Three Layer Die 650 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "650 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "700": {
+          "name": "Three Layer Die 700 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (Hitco or equivalent).",
+            "Die Size": "700 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "05 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "750": {
+          "name": "Three Layer Die 750 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (Hitco or equivalent).",
+            "Die Size": "750 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "05 Nos."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        }
+      }
     },
     {
-      "id": "die-aba-150-300",
-      "name": "ABA / AB Die 150 / 300",
-      "dieFamily": "aba",
-      "diameterMm": 150,
-      "lipsDesc": "150 / 300 (HM / LD)",
+      "id": "die-3layer-ibc-dynamic",
+      "name": "Three Layer IBC Die",
+      "isDynamic": true,
+      "pricingType": "size",
+      "dieFamily": "3layer-ibc",
       "machineTypes": [
-        "aba"
+        "3layer"
       ],
-      "usedInModels": [
-        "DUOFLEX-1250"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "ABA / AB die 150 / 300 for 1250 mm layflat.",
+      "image": "/images/Die/Die.png",
+      "cardDesc": "Select die size for 3-layer IBC co-extrusion. Internal Bubble Cooling provision included.",
       "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "150 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
+      "prices": {
+        "300": 1800000,
+        "325": 1800000,
+        "350": 1900000,
+        "375": 2000000,
+        "400": 2100000,
+        "425": 2300000,
+        "450": 2500000,
+        "500": 3000000,
+        "550": 3200000,
+        "600": 3500000
       },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-aba-225-375",
-      "name": "ABA / AB Die 225 / 375",
-      "dieFamily": "aba",
-      "diameterMm": 225,
-      "lipsDesc": "225 / 375 (HM / LD)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-1750"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "Large ABA / AB die 225 / 375 for 1750 mm layflat.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "225 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-aba-350",
-      "name": "ABA / AB Die 350",
-      "dieFamily": "aba",
-      "diameterMm": 350,
-      "lipsDesc": "350",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-60"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "Large ABA / AB die 350 for 1500 mm layflat.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "350 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-225",
-      "name": "Three Layer Die 225 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 225,
-      "lipsDesc": "225 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1120"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 225 mm.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "225 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-275-stationary",
-      "name": "Three Layer Die 275 mm (Stationary)",
-      "dieFamily": "3layer",
-      "diameterMm": 275,
-      "lipsDesc": "275 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350 HO"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 275 mm stationary for oscillating haul-off lines.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-275",
-      "name": "Three Layer Die 275 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 275,
-      "lipsDesc": "275 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350 DR"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 275 mm.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "275 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-300",
-      "name": "Three Layer Die 300 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 300,
-      "lipsDesc": "300 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1120"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 300 mm.",
-      "price": 900000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-325",
-      "name": "Three Layer Die 325 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 325,
-      "lipsDesc": "325 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350A"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 325 mm for Innoflex-1350.",
-      "price": 1100000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-350",
-      "name": "Three Layer Die 350 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 350,
-      "lipsDesc": "350 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 350 mm for 1350 mm layflat.",
-      "price": 1150000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-375",
-      "name": "Three Layer Die 375 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 375,
-      "lipsDesc": "375 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 375 mm for 1350 mm layflat.",
-      "price": 1200000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-400",
-      "name": "Three Layer Die 400 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 400,
-      "lipsDesc": "400 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 400 mm for 1350 mm layflat.",
-      "price": 1400000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-425",
-      "name": "Three Layer Die 425 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 425,
-      "lipsDesc": "425 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1620"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 425 mm for 1500 mm layflat.",
-      "price": 1600000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-450",
-      "name": "Three Layer Die 450 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 450,
-      "lipsDesc": "450 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1870"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 450 mm for 1750 mm layflat.",
-      "price": 1800000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-500",
-      "name": "Three Layer Die 500 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 500,
-      "lipsDesc": "500 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1870"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 500 mm for 1850 mm layflat.",
-      "price": 2000000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-525",
-      "name": "Three Layer Die 525 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 525,
-      "lipsDesc": "525 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2370"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer die 525 mm for 2250 mm layflat.",
-      "price": 2100000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "525 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-550",
-      "name": "Three Layer Die 550 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 550,
-      "lipsDesc": "550 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2120"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer die 550 mm for 2000 mm layflat.",
-      "price": 2200000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-600",
-      "name": "Three Layer Die 600 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 600,
-      "lipsDesc": "600 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2370"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer die 600 mm for 2250 mm layflat.",
-      "price": 2500000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-650",
-      "name": "Three Layer Die 650 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 650,
-      "lipsDesc": "650 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2620"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer die 650 mm for 2500 mm layflat.",
-      "price": 2800000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "650 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-700",
-      "name": "Three Layer Die 700 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 700,
-      "lipsDesc": "700 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2620"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer die 700 mm for 3000 mm layflat.",
-      "price": 3400000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "700 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "05 Nos.",
-        "Heating System": "Ceramic band heaters (Hitco or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layer-750",
-      "name": "Three Layer Die 750 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 750,
-      "lipsDesc": "750 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer",
-        "5layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2620"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer die 750 mm for 3000 mm layflat.",
-      "price": 3600000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "750 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "05 Nos.",
-        "Heating System": "Ceramic band heaters (Hitco or equivalent)."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-300",
-      "name": "Three Layer IBC Die 300 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 300,
-      "lipsDesc": "300 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1120"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 300 mm with IBC.",
-      "price": 1800000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-325",
-      "name": "Three Layer IBC Die 325 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 325,
-      "lipsDesc": "325 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350A"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 325 mm with IBC.",
-      "price": 1800000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-350",
-      "name": "Three Layer IBC Die 350 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 350,
-      "lipsDesc": "350 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 350 mm with IBC.",
-      "price": 1900000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-375",
-      "name": "Three Layer IBC Die 375 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 375,
-      "lipsDesc": "375 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 375 mm with IBC.",
-      "price": 2000000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-400",
-      "name": "Three Layer IBC Die 400 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 400,
-      "lipsDesc": "400 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1350B"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 400 mm with IBC.",
-      "price": 2100000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "04 Nos.",
-        "Heating System": "Ceramic band heaters (AUM or Heatsun).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-425",
-      "name": "Three Layer IBC Die 425 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 425,
-      "lipsDesc": "425 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1620"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 425 mm with IBC.",
-      "price": 2300000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-450",
-      "name": "Three Layer IBC Die 450 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 450,
-      "lipsDesc": "450 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1870"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 450 mm with IBC.",
-      "price": 2500000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-500",
-      "name": "Three Layer IBC Die 500 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 500,
-      "lipsDesc": "500 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-1870"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer spiral die 500 mm with IBC.",
-      "price": 3000000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-550",
-      "name": "Three Layer IBC Die 550 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 550,
-      "lipsDesc": "550 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2120"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer IBC die 550 mm with IBC.",
-      "price": 3200000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-3layeribc-600",
-      "name": "Three Layer IBC Die 600 mm",
-      "dieFamily": "3layer",
-      "diameterMm": 600,
-      "lipsDesc": "600 mm, 3-layer spiral die",
-      "machineTypes": [
-        "3layer"
-      ],
-      "usedInModels": [
-        "Innoflex-2370"
-      ],
-      "image": "/images/Die/Die.png",
-      "cardDesc": "3-layer IBC die 600 mm with IBC.",
-      "price": 3500000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
-        "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution for three layer structure.",
-        "Heating Zones": "4 zones with independent temperature control.",
-        "Heating System": "Ceramic band heaters (AUM or equivalent).",
-        "IBC Provision": "Die with IBC provision."
-      },
-      "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
-    },
-    {
-      "id": "die-aba-75",
-      "name": "ABA Die 75 mm",
-      "dieFamily": "aba",
-      "diameterMm": 75,
-      "lipsDesc": "75 mm (ABA)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "DUOFLEX-500"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "75 mm ABA die for co-extrusion lines.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "75 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "02 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "ABA die head."
-    },
-    {
-      "id": "die-aba-100",
-      "name": "ABA Die 100 mm",
-      "dieFamily": "aba",
-      "diameterMm": 100,
-      "lipsDesc": "100 mm (ABA)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "ABA-26"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "100 mm ABA die for basic co-extrusion lines.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "100 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Basic ABA die head."
-    },
-    {
-      "id": "die-aba-150",
-      "name": "ABA Die 150 mm",
-      "dieFamily": "aba",
-      "diameterMm": 150,
-      "lipsDesc": "150 mm (ABA)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "ABA-32"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "150 mm ABA die for basic co-extrusion lines.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "150 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Basic ABA die head."
-    },
-    {
-      "id": "die-aba-200",
-      "name": "ABA Die 200 mm",
-      "dieFamily": "aba",
-      "diameterMm": 200,
-      "lipsDesc": "200 mm (ABA)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "ABA-40"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "200 mm ABA die for basic co-extrusion lines.",
-      "price": 0,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "200 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Basic ABA die head."
-    },
-    {
-      "id": "die-aba-300",
-      "name": "ABA Die 300 mm",
-      "dieFamily": "aba",
-      "diameterMm": 300,
-      "lipsDesc": "300 mm (ABA)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "ABA-50"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "300 mm ABA die for co-extrusion lines.",
-      "price": 900000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "300 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "ABA die head."
-    },
-    {
-      "id": "die-aba-600",
-      "name": "ABA Die 600 mm",
-      "dieFamily": "aba",
-      "diameterMm": 600,
-      "lipsDesc": "600 mm (ABA)",
-      "machineTypes": [
-        "aba"
-      ],
-      "usedInModels": [
-        "ABA-60"
-      ],
-      "image": "/images/Die/DieABA.png",
-      "cardDesc": "600 mm ABA die for co-extrusion lines.",
-      "price": 2500000,
-      "techDesc": {
-        "Material of Construction": "Hardened high strength alloy steel.",
-        "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
-        "Die Size": "600 mm.",
-        "Die setting": "Die adjusting bolts will be provided.",
-        "Distribution": "Spiral distribution.",
-        "Heating Zones": "03 Nos.",
-        "Heating System": "Ceramic band heaters"
-      },
-      "shortDesc": "Large ABA die head."
-    },
-    {
-      "id": "die-mono-100",
-      "name": "Unoflex Die 100 mm",
-      "dieFamily": "mono",
-      "diameterMm": 100,
-      "lipsDesc": "100 mm (Mono)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-20"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "100 mm monolayer die head.",
-      "price": 0,
-      "techDesc": {
-        "Type": "One Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of as per widths, complete with die adapters and carriage."
-      },
-      "shortDesc": "Basic monolayer die head."
-    },
-    {
-      "id": "die-mono-200",
-      "name": "Unoflex Die 200 mm",
-      "dieFamily": "mono",
-      "diameterMm": 200,
-      "lipsDesc": "200 mm (Mono)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-32"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "200 mm monolayer die head.",
-      "price": 0,
-      "techDesc": {
-        "Material": "Hardened alloy steel.",
-        "Heating Zones": "2 Nos."
-      },
-      "shortDesc": "Basic monolayer die head."
-    },
-    {
-      "id": "die-mono-250",
-      "name": "Unoflex Die 250 mm",
-      "dieFamily": "mono",
-      "diameterMm": 250,
-      "lipsDesc": "250 mm (Mono)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-40"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "250 mm monolayer die head.",
-      "price": 0,
-      "techDesc": {
-        "Material": "Hardened alloy steel.",
-        "Heating Zones": "2 Nos."
-      },
-      "shortDesc": "Basic monolayer die head."
-    },
-    {
-      "id": "die-mono-300",
-      "name": "Unoflex Die 300 mm",
-      "dieFamily": "mono",
-      "diameterMm": 300,
-      "lipsDesc": "300 mm (Mono)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-50"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "300 mm monolayer die head.",
-      "price": 900000,
-      "techDesc": {
-        "Material": "Hardened alloy steel.",
-        "Heating Zones": "3 Nos."
-      },
-      "shortDesc": "Basic monolayer die head."
-    },
-    {
-      "id": "die-mono-400",
-      "name": "Unoflex Die 400 mm",
-      "dieFamily": "mono",
-      "diameterMm": 400,
-      "lipsDesc": "400 mm (Mono)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-72"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "400 mm monolayer die head.",
-      "price": 1400000,
-      "techDesc": {
-        "Material": "Hardened alloy steel.",
-        "Heating Zones": "4 Nos."
-      },
-      "shortDesc": "Large monolayer die head."
-    },
-    {
-      "id": "die-mono-600",
-      "name": "Unoflex Die 600 mm",
-      "dieFamily": "mono",
-      "diameterMm": 600,
-      "lipsDesc": "600 mm (Mono)",
-      "machineTypes": [
-        "mono"
-      ],
-      "usedInModels": [
-        "UNOFLEX-110"
-      ],
-      "image": "/images/Die/DieMono.png",
-      "cardDesc": "600 mm monolayer die head.",
-      "price": 2500000,
-      "techDesc": {
-        "Material": "Hardened alloy steel.",
-        "Heating Zones": "5 Nos."
-      },
-      "shortDesc": "Large monolayer die head."
+      "sizeDetails": {
+        "300": {
+          "name": "Three Layer IBC Die 300 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "300 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "325": {
+          "name": "Three Layer IBC Die 325 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "325 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "350": {
+          "name": "Three Layer IBC Die 350 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "350 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "375": {
+          "name": "Three Layer IBC Die 375 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "375 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "400": {
+          "name": "Three Layer IBC Die 400 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "400 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "04 Nos.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "425": {
+          "name": "Three Layer IBC Die 425 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "425 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "450": {
+          "name": "Three Layer IBC Die 450 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "450 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "500": {
+          "name": "Three Layer IBC Die 500 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "500 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "550": {
+          "name": "Three Layer IBC Die 550 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "550 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        },
+        "600": {
+          "name": "Three Layer IBC Die 600 mm",
+          "techDesc": {
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Distribution": "Spiral distribution.",
+            "Heating System": "Ceramic band heaters (AUM or Heatsun).",
+            "Die Size": "600 mm diameter with lips of 2.3 mm gap.",
+            "Heating Zones": "4 zones with independent temperature control.",
+            "IBC Provision": "Die with IBC provision."
+          },
+          "shortDesc": "Die head that provides even melt distribution and consistent film thickness."
+        }
+      }
     }
   ],
   "winders": [
@@ -2504,22 +1418,6 @@
         "Tension control ": "Through Torque mode.",
         "Length counter meter": "Provided",
         "Trim Suction Blower": "Provided"
-      },
-      "pricingType": "size",
-      "prices": {
-        "850": 500000,
-        "950": 600000,
-        "1000": 700000,
-        "1250": 700000,
-        "1350": 800000,
-        "1500": 1000000,
-        "1750": 1200000,
-        "1850": 1325000,
-        "2000": 1500000,
-        "2250": 2400000,
-        "2500": 2800000,
-        "2750": 3200000,
-        "3000": 4000000
       }
     },
     {
@@ -2540,20 +1438,6 @@
         "Surface winder drive": "1 HP AC motor with variable frequency drive.",
         "Tension control": "Through Torque mode.",
         "Winder Type": "Single Surface type."
-      },
-      "pricingType": "size",
-      "prices": {
-        "200": 0,
-        "300": 0,
-        "450": 0,
-        "500": 0,
-        "550": 0,
-        "600": 0,
-        "750": 0,
-        "850": 0,
-        "1000": 0,
-        "1250": 0,
-        "1500": 0
       }
     },
     {
@@ -2583,20 +1467,6 @@
         "Tension control ": "Through Loadcell.",
         "Length counter meter": "Provided",
         "Trim Suction Blower": "Provided"
-      },
-      "pricingType": "size",
-      "prices": {
-        "1000": 850000,
-        "1250": 850000,
-        "1350": 1000000,
-        "1500": 1120000,
-        "1750": 1350000,
-        "1850": 1450000,
-        "2000": 1650000,
-        "2250": 2575000,
-        "2500": 2950000,
-        "2750": 3350000,
-        "3000": 4150000
       }
     },
     {
@@ -2625,19 +1495,6 @@
         "Tension control ": "Through Loadcell.",
         "Length counter meter": "Provided",
         "Trim Suction Blower": "Provided"
-      },
-      "pricingType": "size",
-      "prices": {
-        "1250": 1400000,
-        "1350": 1500000,
-        "1500": 1700000,
-        "1750": 2100000,
-        "1850": 2300000,
-        "2000": 2500000,
-        "2250": 3200000,
-        "2500": 3800000,
-        "2750": 4200000,
-        "3000": 5000000
       }
     }
   ],
@@ -2662,35 +1519,7 @@
         "Construction": "Precision machined aluminum body.",
         "Cooling": "High efficiency lip profile."
       },
-      "shortDesc": "Gamma Air Ring for optimal bubble cooling.",
-      "pricingType": "size",
-      "prices": {
-        "50": 0,
-        "70": 0,
-        "90": 0,
-        "100": 0,
-        "125": 0,
-        "150": 0,
-        "200": 0,
-        "225": 0,
-        "250": 0,
-        "275": 0,
-        "300": 350000,
-        "325": 375000,
-        "350": 400000,
-        "375": 425000,
-        "400": 450000,
-        "425": 0,
-        "450": 0,
-        "475": 0,
-        "500": 0,
-        "525": 0,
-        "550": 0,
-        "600": 0,
-        "650": 0,
-        "700": 0,
-        "750": 0
-      }
+      "shortDesc": "Gamma Air Ring for optimal bubble cooling."
     },
     {
       "id": "airring-standard-dynamic",
@@ -2712,35 +1541,7 @@
         "Construction": "Robust aluminum alloy structure.",
         "Cooling": "Uniform air distribution for stable bubble."
       },
-      "shortDesc": "Standard high performance air ring.",
-      "pricingType": "size",
-      "prices": {
-        "50": 0,
-        "70": 0,
-        "90": 0,
-        "100": 0,
-        "125": 0,
-        "150": 0,
-        "200": 0,
-        "225": 0,
-        "250": 0,
-        "275": 0,
-        "300": 350000,
-        "325": 375000,
-        "350": 400000,
-        "375": 425000,
-        "400": 450000,
-        "425": 0,
-        "450": 0,
-        "475": 0,
-        "500": 0,
-        "525": 0,
-        "550": 0,
-        "600": 0,
-        "650": 0,
-        "700": 0,
-        "750": 0
-      }
+      "shortDesc": "Standard high performance air ring."
     },
     {
       "id": "airring-dr-dynamic",
@@ -2760,35 +1561,7 @@
         "Blower": "20 HP AC variable frequency drive.",
         "Additional details": "Differential pressure gauge and temperature gauge to record and setting the bubble. Aerodynamic shaped Air distributor."
       },
-      "shortDesc": "Dual lip air ring for high capacity co-extruded films.",
-      "pricingType": "size",
-      "prices": {
-        "50": 0,
-        "70": 0,
-        "90": 0,
-        "100": 0,
-        "125": 0,
-        "150": 0,
-        "200": 0,
-        "225": 0,
-        "250": 0,
-        "275": 0,
-        "300": 500000,
-        "325": 600000,
-        "350": 650000,
-        "375": 700000,
-        "400": 725000,
-        "425": 800000,
-        "450": 800000,
-        "475": 0,
-        "500": 950000,
-        "525": 0,
-        "550": 0,
-        "600": 1000000,
-        "650": 0,
-        "700": 0,
-        "750": 0
-      }
+      "shortDesc": "Dual lip air ring for high capacity co-extruded films."
     },
     {
       "id": "airring-dr-dynamic-aba",
@@ -2806,35 +1579,7 @@
         "Construcion": "Aluminum body aerodynamic type dual lip air cooling ring.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
         "Blower": "7.5 HP with inlet air filter."
       },
-      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films.",
-      "pricingType": "size",
-      "prices": {
-        "50": 0,
-        "70": 0,
-        "90": 0,
-        "100": 0,
-        "125": 0,
-        "150": 0,
-        "200": 0,
-        "225": 0,
-        "250": 0,
-        "275": 0,
-        "300": 500000,
-        "325": 600000,
-        "350": 650000,
-        "375": 700000,
-        "400": 725000,
-        "425": 800000,
-        "450": 800000,
-        "475": 0,
-        "500": 950000,
-        "525": 0,
-        "550": 0,
-        "600": 1000000,
-        "650": 0,
-        "700": 0,
-        "750": 0
-      }
+      "shortDesc": "Dual lip air ring for high capacity ABA co-extruded films."
     }
   ],
   "collapsingFrame": [
@@ -2858,22 +1603,7 @@
         "Adjustment": "Manual width adjustment with locking system.",
         "Width Capability": "TBD mm"
       },
-      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
-      "pricingType": "size",
-      "prices": {
-        "550": 0,
-        "1000": 0,
-        "1250": 0,
-        "1350": 0,
-        "1500": 0,
-        "1750": 0,
-        "1850": 0,
-        "2000": 0,
-        "2250": 0,
-        "2500": 0,
-        "2750": 0,
-        "3000": 0
-      }
+      "shortDesc": "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat."
     }
   ],
   "tower": [
@@ -2897,20 +1627,6 @@
         "Staircase": "Staircase with hand rails.",
         "Safety": "Hand rails and kick plates according to European safety standards.",
         "Idler rollers": "Set of idler aluminium rollers as per nip size."
-      },
-      "pricingType": "size",
-      "prices": {
-        "1000": 1000000,
-        "1250": 1000000,
-        "1350": 1150000,
-        "1500": 1300000,
-        "1750": 1400000,
-        "1850": 1500000,
-        "2000": 1800000,
-        "2250": 2200000,
-        "2500": 2500000,
-        "2750": 3000000,
-        "3000": 3500000
       }
     },
     {
@@ -3037,16 +1753,6 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
-      },
-      "pricingType": "size",
-      "prices": {
-        "U20\"": 62000,
-        "U24\"": 62000,
-        "U32\"": 62000,
-        "U40\"": 62000,
-        "U50\"": 62000,
-        "U72\"": 75000,
-        "U110\"": 75000
       }
     },
     {
@@ -3069,14 +1775,6 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
-      },
-      "pricingType": "size",
-      "prices": {
-        "D26\"": 120000,
-        "D32\"": 120000,
-        "D40\"": 120000,
-        "D50\"": 105000,
-        "D60\"": 135000
       }
     },
     {
@@ -3099,8 +1797,7 @@
         "Material Type": "Virgin / Reprocess Granules.",
         "Conveying Method": "Vacuum conveying.",
         "Filter": "Integrated easy-clean filter system."
-      },
-      "pricingType": "size"
+      }
     },
     {
       "id": "hopper-dryer-b",
@@ -3120,14 +1817,6 @@
       "techDesc": {
         "Type": "Hopper Dryer",
         "Function": "Efficient moisture removal from granules."
-      },
-      "pricingType": "size",
-      "prices": {
-        "D26\"": 65000,
-        "D32\"": 65000,
-        "D40\"": 90000,
-        "D50\"": 90000,
-        "D60\"": 105000
       }
     },
     {
@@ -3151,13 +1840,6 @@
         "Temp. Controller": "MULTISPAN",
         "Material of Construction": "MS Painted",
         "Drive": "Through belt and Pulley"
-      },
-      "pricingType": "size",
-      "prices": {
-        "100": 140000,
-        "200": 225000,
-        "300": 285000,
-        "500": 350000
       }
     },
     {
@@ -3181,13 +1863,6 @@
         "Temp. Controller": "MULTISPAN",
         "Material of Construction": "MS Painted",
         "Drive": "Through belt and Pulley"
-      },
-      "pricingType": "size",
-      "prices": {
-        "100": 165000,
-        "200": 250000,
-        "300": 310000,
-        "500": 375000
       }
     }
   ],

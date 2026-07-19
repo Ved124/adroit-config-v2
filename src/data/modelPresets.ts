@@ -30,10 +30,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     basePrice: 6125000,
     components: [
       // 3-layer extruder package – 40/40/40
-      { category: "Extruder", id: "ext-40-coex-long", qty: 3 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "40", customName: "Extruder 40 mm" }, qty: 3 },
 
       // 225 mm three-layer die
-      { category: "Die Head", id: "die-3layer-225", qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "225", customName: "Three Layer Die 225 mm" }, qty: 1 },
 
       // Bubble cage & collapsing frame
       {
@@ -109,12 +109,12 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 6750000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 3 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       {
         category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1,
         metadata: {
-          size: "1350",
+          size: "1250",
           price: 250000,
           customName: "Motorised Bubble Cage - 1370 mm",
           techDesc: { "Type": "Motorized open-close operation with PBT rollers.", "Cage Size": "1370 mm" }
@@ -191,8 +191,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 7875000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 3 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       {
         category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1,
         metadata: {
@@ -259,8 +259,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 7651000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 3 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -314,9 +314,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 8451000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -370,9 +370,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 8551000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -458,8 +458,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 8850000,
     components: [
-      { category: "Extruder", id: "ext-50-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "50", customName: "Extruder 50 mm" }, qty: 3 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic",
@@ -524,9 +524,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 8971000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -580,9 +580,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 8951000,
     components: [
-      { category: "Extruder", id: "ext-45-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-55-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-300", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "300", customName: "Three Layer Die 300 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-manual-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -636,9 +636,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 9875000,
     components: [
-      { category: "Extruder", id: "ext-50-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-325", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "50", customName: "Extruder 50 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "325", customName: "Three Layer Die 325 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -657,8 +657,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
         id: "haul-horizontal-dynamic",
         qty: 1,
         metadata: {
-          size: "1750",
-          price: 1400000,
+          size: "1500",
+          price: 1200000,
           customName: "HORIZONTAL HAULOFF - 1620 mm",
           techDesc: {
             "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
@@ -689,9 +689,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 11275000,
     components: [
-      { category: "Extruder", id: "ext-55-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-400", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "400", customName: "Three Layer Die 400 mm" }, qty: 1 },
       {
         category: "Bubble Cage",
         id: "bc-open-close-dynamic",
@@ -752,8 +752,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 10651000,
     components: [
-      { category: "Extruder", id: "ext-55-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-375", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 3 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "375", customName: "Three Layer Die 375 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -802,9 +802,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 11875000,
     components: [
-      { category: "Extruder", id: "ext-55-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-65-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-400", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "400", customName: "Three Layer Die 400 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-open-close-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -853,8 +853,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 13750000,
     components: [
-      { category: "Extruder", id: "ext-65-coex-long", qty: 3 },
-      { category: "Die Head", id: "die-3layer-450", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 3 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "450", customName: "Three Layer Die 450 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -903,9 +903,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 18750000,
     components: [
-      { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-525", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "525", customName: "Three Layer Die 525 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -954,9 +954,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 21575000,
     components: [
-      { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layer-550", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-dynamic", metadata: { size: "550", customName: "Three Layer Die 550 mm" }, qty: 1 },
       { category: "Bubble Cage", id: "bc-up-down-dynamic", qty: 1 },
       { category: "Collapsing Frame", id: "cf-pbt-dynamic", qty: 1 },
       {
@@ -1010,16 +1010,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-35-aba",
+        id: "extruder-aba-dynamic", metadata: { size: "35", customName: "Extruder 35 mm" },
         qty: 1,
         metadata: {
           scopeDesc: "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders."
         }
       },
-      { category: "Extruder", id: "ext-45-aba", qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 1 },
       {
         category: "Die Head",
-        id: "die-aba-150",
+        id: "die-aba-dynamic", metadata: { size: "150", customName: "ABA Die 150 mm" },
         qty: 1,
         metadata: {
         }
@@ -1105,16 +1105,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-35-aba",
+        id: "extruder-aba-dynamic", metadata: { size: "35", customName: "Extruder 35 mm" },
         qty: 1,
         metadata: {
           scopeDesc: "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders."
         }
       },
-      { category: "Extruder", id: "ext-45-aba", qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 1 },
       {
         category: "Die Head",
-        id: "die-aba-150",
+        id: "die-aba-dynamic", metadata: { size: "150", customName: "ABA Die 150 mm" },
         qty: 1,
         metadata: {
         }
@@ -1200,16 +1200,16 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-40-aba",
+        id: "extruder-aba-dynamic", metadata: { size: "40", customName: "Extruder 40 mm" },
         qty: 1,
         metadata: {
           scopeDesc: "Two Nos. Extruders of 40/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 10/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 40/45 mm Extruders."
         }
       },
-      { category: "Extruder", id: "ext-45-aba", qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 1 },
       {
         category: "Die Head",
-        id: "die-aba-200",
+        id: "die-aba-dynamic", metadata: { size: "200", customName: "ABA Die 200 mm" },
         qty: 1,
         metadata: {
         }
@@ -1294,9 +1294,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "aba",
     basePrice: 3675000,
     components: [
-      { category: "Extruder", id: "ext-45-aba", qty: 1 },
-      { category: "Extruder", id: "ext-55-aba", qty: 1 },
-      { category: "Die Head", id: "die-aba-300", qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-aba-dynamic", metadata: { size: "300", customName: "ABA Die 300 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic-aba",
@@ -1376,9 +1376,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "aba",
     basePrice: 7625000,
     components: [
-      { category: "Extruder", id: "ext-55-aba", qty: 1 },
-      { category: "Extruder", id: "ext-65-aba", qty: 1 },
-      { category: "Die Head", id: "die-aba-350", qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-aba-dynamic", metadata: { size: "350", customName: "ABA Die 350 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic-aba",
@@ -1440,8 +1440,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "aba",
     basePrice: 1385000,
     components: [
-      { category: "Extruder", id: "ext-35-aba", qty: 2 },
-      { category: "Die Head", id: "die-aba-75", qty: 1 },
+      { category: "Extruder", id: "extruder-aba-dynamic", metadata: { size: "35", customName: "Extruder 35 mm" }, qty: 2 },
+      { category: "Die Head", id: "die-aba-dynamic", metadata: { size: "75", customName: "ABA Die 75 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-dr-dynamic-aba",
@@ -1528,7 +1528,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-35-aba",
+        id: "extruder-aba-dynamic", metadata: { size: "35", customName: "Extruder 35 mm" },
         qty: 1,
         metadata: {
           customName: "Extruder 35 mm",
@@ -1544,7 +1544,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Extruder",
-        id: "ext-40-aba",
+        id: "extruder-aba-dynamic", metadata: { size: "40", customName: "Extruder 40 mm" },
         qty: 1,
         metadata: {
           customName: "Extruder 40 mm",
@@ -1561,7 +1561,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Die Head",
-        id: "die-aba-100",
+        id: "die-aba-dynamic", metadata: { size: "100", customName: "ABA Die 100 mm" },
         qty: 1,
         metadata: {
 
@@ -1660,7 +1660,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-35-mono-short",
+        id: "extruder-mono-dynamic", metadata: { size: "35", customName: "Extruder 35 mm" },
         qty: 1,
         metadata: {
           scopeDesc: "One Nos. Extruders of 35 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 7.5 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 35 mm Extruders.",
@@ -1684,7 +1684,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Die Head",
-        id: "die-mono-100",
+        id: "die-mono-dynamic", metadata: { size: "100", customName: "Monolayer Die 100 mm" },
         qty: 1,
         metadata: {
 
@@ -1785,7 +1785,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-mono-40",
+        id: "extruder-mono-dynamic", metadata: { size: "40", customName: "Extruder 40 mm" },
         qty: 1,
         metadata: {
           image: "/images/Extruder/Extruder Mono.png",
@@ -1808,7 +1808,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Die Head",
-        id: "die-mono-100",
+        id: "die-mono-dynamic", metadata: { size: "100", customName: "Monolayer Die 100 mm" },
         qty: 1,
         metadata: {
 
@@ -1913,7 +1913,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-45-mono-short",
+        id: "extruder-mono-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" },
         qty: 1,
         metadata: {
           scopeDesc: "One Nos. Extruders of 45 mm screw diameter and L/D ratio of 28:1, Nitro Alloy Screw & barrel, Ceramic Heater, 15 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 45 mm Extruders.",
@@ -1936,7 +1936,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Die Head",
-        id: "die-mono-150",
+        id: "die-mono-dynamic", metadata: { size: "150", customName: "Monolayer Die 150 mm" },
         qty: 1,
         metadata: {
 
@@ -2039,8 +2039,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "mono",
     basePrice: 1225000,
     components: [
-      { category: "Extruder", id: "ext-45-mono-short", qty: 1 },
-      { category: "Die Head", id: "die-mono-250", qty: 1 },
+      { category: "Extruder", id: "extruder-mono-dynamic", metadata: { size: "45", customName: "Extruder 45 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-mono-dynamic", metadata: { size: "250", customName: "Monolayer Die 250 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-g-dynamic",
@@ -2086,8 +2086,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "mono",
     basePrice: 1650000,
     components: [
-      { category: "Extruder", id: "ext-55-mono-short", qty: 1 },
-      { category: "Die Head", id: "die-mono-300", qty: 1 },
+      { category: "Extruder", id: "extruder-mono-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-mono-dynamic", metadata: { size: "300", customName: "Monolayer Die 300 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-g-dynamic",
@@ -2143,10 +2143,10 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "mono",
     basePrice: 3974000,
     components: [
-      { category: "Extruder", id: "ext-65-mono-short", qty: 1 },
+      { category: "Extruder", id: "extruder-mono-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 1 },
       {
         category: "Die Head",
-        id: "die-mono-300",
+        id: "die-mono-dynamic", metadata: { size: "300", customName: "Monolayer Die 300 mm" },
         qty: 1,
         metadata: {
 
@@ -2230,7 +2230,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     components: [
       {
         category: "Extruder",
-        id: "ext-55-mono-short",
+        id: "extruder-mono-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" },
         qty: 1,
         metadata: {
           techDesc: {
@@ -2244,7 +2244,7 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
       },
       {
         category: "Die Head",
-        id: "die-mono-250",
+        id: "die-mono-dynamic", metadata: { size: "250", customName: "Monolayer Die 250 mm" },
         qty: 1,
         metadata: {
 
@@ -2336,8 +2336,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "mono",
     basePrice: 4800000,
     components: [
-      { category: "Extruder", id: "ext-65-mono-short", qty: 1 },
-      { category: "Die Head", id: "die-mono-400", qty: 1 },
+      { category: "Extruder", id: "extruder-mono-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-mono-dynamic", metadata: { size: "400", customName: "Monolayer Die 400 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-standard-dynamic",
@@ -2383,8 +2383,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "mono",
     basePrice: 6500000,
     components: [
-      { category: "Extruder", id: "ext-90-mono-short", qty: 1 },
-      { category: "Die Head", id: "die-mono-600", qty: 1 },
+      { category: "Extruder", id: "extruder-mono-dynamic", metadata: { size: "90", customName: "Extruder 90 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-mono-dynamic", metadata: { size: "600", customName: "Monolayer Die 600 mm" }, qty: 1 },
       {
         category: "Air Ring",
         id: "airring-standard-dynamic",
@@ -2445,9 +2445,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 17951000,
     components: [
-      { category: "Extruder", id: "ext-65-coex-long", qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
-      { category: "Extruder", id: "ext-75-coex-long", qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
-      { category: "Die Head", id: "die-3layeribc-375", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Die Head", id: "die-3layer-ibc-dynamic", metadata: { size: "375", customName: "Three Layer IBC Die 375 mm" }, qty: 1 },
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
@@ -2495,9 +2495,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 20850000,
     components: [
-      { category: "Extruder", id: "ext-55-coex-long", qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "50 HP AC motor (ABB)" } } },
-      { category: "Extruder", id: "ext-75-coex-long", qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "100 HP AC motor (ABB)" } } },
-      { category: "Die Head", id: "die-3layeribc-350", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "55", customName: "Extruder 55 mm" }, qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "50 HP AC motor (ABB)" } } },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "100 HP AC motor (ABB)" } } },
+      { category: "Die Head", id: "die-3layer-ibc-dynamic", metadata: { size: "350", customName: "Three Layer IBC Die 350 mm" }, qty: 1 },
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
@@ -2545,9 +2545,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 22751000,
     components: [
-      { category: "Extruder", id: "ext-65-coex-long", qty: 2 },
-      { category: "Extruder", id: "ext-75-coex-long", qty: 1 },
-      { category: "Die Head", id: "die-3layeribc-450", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 2 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 1 },
+      { category: "Die Head", id: "die-3layer-ibc-dynamic", metadata: { size: "450", customName: "Three Layer IBC Die 450 mm" }, qty: 1 },
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
@@ -2594,9 +2594,9 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 25851000,
     components: [
-      { category: "Extruder", id: "ext-65-coex-long", qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
-      { category: "Extruder", id: "ext-75-coex-long", qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
-      { category: "Die Head", id: "die-3layeribc-500", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "65", customName: "Extruder 65 mm" }, qty: 2, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 1, metadata: { techDesc: { "Material": "Bimetallic screw and barrel" } } },
+      { category: "Die Head", id: "die-3layer-ibc-dynamic", metadata: { size: "500", customName: "Three Layer IBC Die 500 mm" }, qty: 1 },
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
@@ -2644,8 +2644,8 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     machineType: "3layer",
     basePrice: 26045000,
     components: [
-      { category: "Extruder", id: "ext-75-coex-long", qty: 3, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "100 HP AC motor (ABB)" } } },
-      { category: "Die Head", id: "die-3layeribc-500", qty: 1 },
+      { category: "Extruder", id: "extruder-3layer-dynamic", metadata: { size: "75", customName: "Extruder 75 mm" }, qty: 3, metadata: { techDesc: { "Material": "Bimetallic screw and barrel", "Main Drive": "100 HP AC motor (ABB)" } } },
+      { category: "Die Head", id: "die-3layer-ibc-dynamic", metadata: { size: "500", customName: "Three Layer IBC Die 500 mm" }, qty: 1 },
       { category: "IBC", id: "ibc-system", qty: 1 },
       {
         category: "Air Ring",
@@ -2690,3 +2690,6 @@ export const MODEL_PRESETS: Record<string, PresetConfig> = {
     ],
   },
 };
+
+
+

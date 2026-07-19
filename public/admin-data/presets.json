@@ -5,12 +5,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-40-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "40",
+          "customName": "Extruder 40 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-225",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "225",
+          "customName": "Three Layer Die 225 mm"
+        },
         "qty": 1
       },
       {
@@ -108,12 +116,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -121,7 +137,7 @@
         "id": "bc-open-close-dynamic",
         "qty": 1,
         "metadata": {
-          "size": "1350",
+          "size": "1250",
           "price": 250000,
           "customName": "Motorised Bubble Cage - 1370 mm",
           "techDesc": {
@@ -225,12 +241,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -320,12 +344,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -403,17 +435,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -491,17 +535,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -606,12 +662,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-50-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "50",
+          "customName": "Extruder 50 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -700,17 +764,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -788,17 +864,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-300",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Three Layer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -876,17 +964,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-50-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "50",
+          "customName": "Extruder 50 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-325",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "325",
+          "customName": "Three Layer Die 325 mm"
+        },
         "qty": 1
       },
       {
@@ -919,8 +1019,8 @@
         "id": "haul-horizontal-dynamic",
         "qty": 1,
         "metadata": {
-          "size": "1750",
-          "price": 1400000,
+          "size": "1500",
+          "price": 1200000,
           "customName": "HORIZONTAL HAULOFF - 1620 mm",
           "techDesc": {
             "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry."
@@ -961,17 +1061,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-400",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "400",
+          "customName": "Three Layer Die 400 mm"
+        },
         "qty": 1
       },
       {
@@ -1063,12 +1175,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-375",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "375",
+          "customName": "Three Layer Die 375 mm"
+        },
         "qty": 1
       },
       {
@@ -1140,17 +1260,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-400",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "400",
+          "customName": "Three Layer Die 400 mm"
+        },
         "qty": 1
       },
       {
@@ -1222,12 +1354,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-450",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "450",
+          "customName": "Three Layer Die 450 mm"
+        },
         "qty": 1
       },
       {
@@ -1299,17 +1439,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "75",
+          "customName": "Extruder 75 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-525",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "525",
+          "customName": "Three Layer Die 525 mm"
+        },
         "qty": 1
       },
       {
@@ -1381,17 +1533,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "75",
+          "customName": "Extruder 75 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layer-550",
+        "id": "die-3layer-dynamic",
+        "metadata": {
+          "size": "550",
+          "customName": "Three Layer Die 550 mm"
+        },
         "qty": 1
       },
       {
@@ -1463,22 +1627,26 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-35-aba",
-        "qty": 1,
+        "id": "extruder-aba-dynamic",
         "metadata": {
           "scopeDesc": "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders."
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Extruder",
-        "id": "ext-45-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-aba-150",
-        "qty": 1,
-        "metadata": {}
+        "id": "die-aba-dynamic",
+        "metadata": {},
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -1560,22 +1728,26 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-35-aba",
-        "qty": 1,
+        "id": "extruder-aba-dynamic",
         "metadata": {
           "scopeDesc": "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders."
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Extruder",
-        "id": "ext-45-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-aba-150",
-        "qty": 1,
-        "metadata": {}
+        "id": "die-aba-dynamic",
+        "metadata": {},
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -1656,22 +1828,26 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-40-aba",
-        "qty": 1,
+        "id": "extruder-aba-dynamic",
         "metadata": {
           "scopeDesc": "Two Nos. Extruders of 40/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 10/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 40/45 mm Extruders."
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Extruder",
-        "id": "ext-45-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-aba-200",
-        "qty": 1,
-        "metadata": {}
+        "id": "die-aba-dynamic",
+        "metadata": {},
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -1753,17 +1929,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 1
       },
       {
         "category": "Extruder",
-        "id": "ext-55-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-aba-300",
+        "id": "die-aba-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "ABA Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -1852,17 +2040,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Extruder",
-        "id": "ext-65-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-aba-350",
+        "id": "die-aba-dynamic",
+        "metadata": {
+          "size": "350",
+          "customName": "ABA Die 350 mm"
+        },
         "qty": 1
       },
       {
@@ -1927,12 +2127,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-35-aba",
+        "id": "extruder-aba-dynamic",
+        "metadata": {
+          "size": "35",
+          "customName": "Extruder 35 mm"
+        },
         "qty": 2
       },
       {
         "category": "Die Head",
-        "id": "die-aba-75",
+        "id": "die-aba-dynamic",
+        "metadata": {
+          "size": "75",
+          "customName": "ABA Die 75 mm"
+        },
         "qty": 1
       },
       {
@@ -2009,8 +2217,7 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-35-aba",
-        "qty": 1,
+        "id": "extruder-aba-dynamic",
         "metadata": {
           "customName": "Extruder 35 mm",
           "techDesc": {
@@ -2021,12 +2228,12 @@
             "Transmission System": "Motor directly coupled / Belt with helical gearbox.",
             "Gearbox": "Premium or equivalent make."
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Extruder",
-        "id": "ext-40-aba",
-        "qty": 1,
+        "id": "extruder-aba-dynamic",
         "metadata": {
           "customName": "Extruder 40 mm",
           "techDesc": {
@@ -2038,12 +2245,12 @@
             "Transmission System": "Motor directly coupled / Belt with helical gearbox.",
             "Gearbox": "Zeal or equivalent make."
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-aba-100",
-        "qty": 1,
+        "id": "die-aba-dynamic",
         "metadata": {
           "techDesc": {
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
@@ -2053,7 +2260,8 @@
             "Heating Zones": "hidden",
             "Distribution": "hidden"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -2142,8 +2350,7 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-35-mono-short",
-        "qty": 1,
+        "id": "extruder-mono-dynamic",
         "metadata": {
           "scopeDesc": "One Nos. Extruders of 35 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 7.5 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 35 mm Extruders.",
           "techDesc": {
@@ -2162,12 +2369,12 @@
             "Gearbox": "Zeal or equivalent make.",
             "Screen Changer": "Candle type"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-100",
-        "qty": 1,
+        "id": "die-mono-dynamic",
         "metadata": {
           "techDesc": {
             "Type": "hidden",
@@ -2178,7 +2385,8 @@
             "Heating Zones": "02 Nos.",
             "Heating System": "Ceramic band heaters"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -2265,8 +2473,7 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-mono-40",
-        "qty": 1,
+        "id": "extruder-mono-dynamic",
         "metadata": {
           "image": "/images/Extruder/Extruder Mono.png",
           "customName": "40 mm Extruder",
@@ -2284,12 +2491,12 @@
             "Gearbox": "Zeal or equivalent make.",
             "Screen Changer": "Candle type"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-100",
-        "qty": 1,
+        "id": "die-mono-dynamic",
         "metadata": {
           "techDesc": {
             "Type": "hidden",
@@ -2300,7 +2507,8 @@
             "Heating Zones": "02 Nos.",
             "Heating System": "Ceramic band heaters"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -2393,8 +2601,7 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-mono-short",
-        "qty": 1,
+        "id": "extruder-mono-dynamic",
         "metadata": {
           "scopeDesc": "One Nos. Extruders of 45 mm screw diameter and L/D ratio of 28:1, Nitro Alloy Screw & barrel, Ceramic Heater, 15 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 45 mm Extruders.",
           "techDesc": {
@@ -2412,12 +2619,12 @@
             "Transmission System": "Motor coupled with helical gearbox.",
             "Screen Changer": "Candle type"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-150",
-        "qty": 1,
+        "id": "die-mono-dynamic",
         "metadata": {
           "techDesc": {
             "Type": "hidden",
@@ -2428,7 +2635,8 @@
             "Heating Zones": "02 Nos.",
             "Heating System": "Ceramic band heaters (Hitco or equivalent)"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -2521,12 +2729,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-45-mono-short",
+        "id": "extruder-mono-dynamic",
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-250",
+        "id": "die-mono-dynamic",
+        "metadata": {
+          "size": "250",
+          "customName": "Monolayer Die 250 mm"
+        },
         "qty": 1
       },
       {
@@ -2585,12 +2801,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-mono-short",
+        "id": "extruder-mono-dynamic",
+        "metadata": {
+          "size": "55",
+          "customName": "Extruder 55 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-300",
+        "id": "die-mono-dynamic",
+        "metadata": {
+          "size": "300",
+          "customName": "Monolayer Die 300 mm"
+        },
         "qty": 1
       },
       {
@@ -2658,18 +2882,22 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-mono-short",
+        "id": "extruder-mono-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-300",
-        "qty": 1,
+        "id": "die-mono-dynamic",
         "metadata": {
           "techDesc": {
             "Die Size": "300 mm"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -2751,8 +2979,7 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-mono-short",
-        "qty": 1,
+        "id": "extruder-mono-dynamic",
         "metadata": {
           "techDesc": {
             "No. of Heating Zones": "hidden",
@@ -2761,19 +2988,20 @@
             "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
             "Gearbox": "Premium / Zeal or equivalent make."
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-250",
-        "qty": 1,
+        "id": "die-mono-dynamic",
         "metadata": {
           "techDesc": {
             "Surface Treatment": "Chrome plated and highly polished.",
             "Die Size": "Diameter as per width and lip gap.",
             "Heating System": "Ceramic band heaters (DHE or equivalent)"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Air Ring",
@@ -2861,12 +3089,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-mono-short",
+        "id": "extruder-mono-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-400",
+        "id": "die-mono-dynamic",
+        "metadata": {
+          "size": "400",
+          "customName": "Monolayer Die 400 mm"
+        },
         "qty": 1
       },
       {
@@ -2925,12 +3161,20 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-90-mono-short",
+        "id": "extruder-mono-dynamic",
+        "metadata": {
+          "size": "90",
+          "customName": "Extruder 90 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-mono-600",
+        "id": "die-mono-dynamic",
+        "metadata": {
+          "size": "600",
+          "customName": "Monolayer Die 600 mm"
+        },
         "qty": 1
       },
       {
@@ -2998,27 +3242,31 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
-        "qty": 2,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel"
           }
-        }
+        },
+        "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
-        "qty": 1,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layeribc-375",
+        "id": "die-3layer-ibc-dynamic",
+        "metadata": {
+          "size": "375",
+          "customName": "Three Layer IBC Die 375 mm"
+        },
         "qty": 1
       },
       {
@@ -3110,29 +3358,33 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-55-coex-long",
-        "qty": 2,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel",
             "Main Drive": "50 HP AC motor (ABB)"
           }
-        }
+        },
+        "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
-        "qty": 1,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel",
             "Main Drive": "100 HP AC motor (ABB)"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layeribc-350",
+        "id": "die-3layer-ibc-dynamic",
+        "metadata": {
+          "size": "350",
+          "customName": "Three Layer IBC Die 350 mm"
+        },
         "qty": 1
       },
       {
@@ -3221,17 +3473,29 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "65",
+          "customName": "Extruder 65 mm"
+        },
         "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
+        "id": "extruder-3layer-dynamic",
+        "metadata": {
+          "size": "75",
+          "customName": "Extruder 75 mm"
+        },
         "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layeribc-450",
+        "id": "die-3layer-ibc-dynamic",
+        "metadata": {
+          "size": "450",
+          "customName": "Three Layer IBC Die 450 mm"
+        },
         "qty": 1
       },
       {
@@ -3315,27 +3579,31 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-65-coex-long",
-        "qty": 2,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel"
           }
-        }
+        },
+        "qty": 2
       },
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
-        "qty": 1,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel"
           }
-        }
+        },
+        "qty": 1
       },
       {
         "category": "Die Head",
-        "id": "die-3layeribc-500",
+        "id": "die-3layer-ibc-dynamic",
+        "metadata": {
+          "size": "500",
+          "customName": "Three Layer IBC Die 500 mm"
+        },
         "qty": 1
       },
       {
@@ -3424,18 +3692,22 @@
     "components": [
       {
         "category": "Extruder",
-        "id": "ext-75-coex-long",
-        "qty": 3,
+        "id": "extruder-3layer-dynamic",
         "metadata": {
           "techDesc": {
             "Material": "Bimetallic screw and barrel",
             "Main Drive": "100 HP AC motor (ABB)"
           }
-        }
+        },
+        "qty": 3
       },
       {
         "category": "Die Head",
-        "id": "die-3layeribc-500",
+        "id": "die-3layer-ibc-dynamic",
+        "metadata": {
+          "size": "500",
+          "customName": "Three Layer IBC Die 500 mm"
+        },
         "qty": 1
       },
       {

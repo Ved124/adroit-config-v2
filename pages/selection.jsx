@@ -164,18 +164,27 @@ function ComponentCard({
     }
   }, [isSelected, item.isDynamic, line?.size, line?.metadata?.size]);
 
+  // Per-size detail (name, techDesc) for extruders, dies, etc.
+  const sizeDetail = item.sizeDetails?.[selectedSize];
+  const activeName = sizeDetail?.name || item.name;
+  const activeTechDesc = sizeDetail?.techDesc ? { ...item.techDesc, ...sizeDetail.techDesc } : item.techDesc;
+
   const currentPrice = item.isDynamic ? (prices[selectedSize] || 0) : (item.price || 0);
+
+  const isExtruder = item.id?.includes('extruder-') && item.isDynamic;
+  const isDie = item.id?.includes('die-') && item.isDynamic;
 
   const handleAdd = () => {
     if (item.isDynamic) {
-      const customName = `${item.name} - ${selectedSize} mm`;
+      // Use per-size name if available (extruders, dies), else build generic name
+      const customName = sizeDetail?.name || `${item.name} - ${selectedSize} mm`;
       addComponent(category, item, {
         size: selectedSize,
         price: currentPrice,
         customName: customName,
         techDesc: {
-          ...item.techDesc,
-          [isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))]: `${selectedSize} mm`,
+          ...activeTechDesc,
+          [isGAirRing || isStandardAirRing || isDRAirRing || isDie ? "Die Size" : (isExtruder ? "Screw Diameter" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size")))))))]: `${selectedSize} mm`,
           ...(item.category === "Winder" ? { 
             "film width": `${selectedSize} mm`,
             "Winder Size": `${selectedSize} mm`,
@@ -219,8 +228,8 @@ function ComponentCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <div className="text-[13px] font-bold text-slate-900 leading-tight truncate" title={isSelected && item.isDynamic ? line.customName : item.name}>
-              {isSelected && item.isDynamic ? line.customName : item.name}
+            <div className="text-[13px] font-bold text-slate-900 leading-tight truncate" title={isSelected && item.isDynamic ? line.customName : activeName}>
+              {isSelected && item.isDynamic ? line.customName : activeName}
             </div>
             {item.isRecommended && !customMode && selectedMachineModelLabel && (
               <span className="shrink-0 bg-blue-100 text-brand-blue text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter">
@@ -243,7 +252,7 @@ function ComponentCard({
       {item.isDynamic && (
         <div className="mt-4 p-2.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-1.5 animate-in fade-in slide-in-from-top-1 duration-300">
           <label className="text-[9px] font-bold text-slate-500 uppercase tracking-widest px-1">
-            {isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))}
+            {isExtruder ? "Extruder Size" : (isDie ? "Die Size" : (isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))))}
           </label>
           <select
             disabled={isSelected}

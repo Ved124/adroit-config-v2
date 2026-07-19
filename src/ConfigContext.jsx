@@ -626,9 +626,18 @@ export function ConfigProvider({ children }) {
         }
         return;
       }
-      // Deep merge techDesc if it exists in metadata
-      const mergedTechDesc = sanitizeTechDesc(category, { ...(base.techDesc || {}), ...(metadata.techDesc || {}) });
-      nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata, techDesc: mergedTechDesc });
+      // For dynamic cards (Extruder, Die Head etc.), resolve per-size detail from sizeDetails
+      const activeSize = metadata.size;
+      const sizeDetail = (base.sizeDetails && activeSize) ? base.sizeDetails[activeSize] : null;
+      // Per-size name takes priority over generic card name
+      const resolvedName = metadata.customName || sizeDetail?.name || base.name;
+      // Merge priority: preset metadata.techDesc > sizeDetail.techDesc > base.techDesc
+      const mergedTechDesc = sanitizeTechDesc(category, {
+        ...(base.techDesc || {}),
+        ...(sizeDetail?.techDesc || {}),
+        ...(metadata.techDesc || {}),
+      });
+      nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata, name: resolvedName, techDesc: mergedTechDesc });
     });
 
     // 3) Build selected add-ons

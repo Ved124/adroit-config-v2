@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('');
@@ -128,6 +129,12 @@ export default function AdminLogin() {
             {loading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
+        
+        <div style={{ marginTop: '24px', textAlign: 'center' }}>
+          <Link href="/" style={{ color: '#94a3b8', fontSize: '14px', textDecoration: 'none' }}>
+            &larr; Back to Configurator
+          </Link>
+        </div>
       </div>
     </div>
   );

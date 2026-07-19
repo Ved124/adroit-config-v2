@@ -191,7 +191,7 @@ function AddonCard({
   const isOptionalFeature = item.category === "Optional Features";
   const isGravimetric = item.id === "optional-gravimetric-system";
 
-  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation ? ["Adroit"] : []))));
+  const brands = isCorona ? CORONA_BRANDS : (isWebGuide ? WEB_GUIDE_BRANDS : (isChiller ? CHILLER_BRANDS : (isHeatExchanger ? HEAT_EXCHANGER_BRANDS : (isDieRotation || isMixer || isMixerDryer ? ["Adroit"] : []))));
 
   // Local state for dynamic config
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
@@ -211,7 +211,9 @@ function AddonCard({
   }
 
   let prices = {};
-  if (isCorona) prices = CORONA_PRICES;
+  if (item.prices && Object.keys(item.prices).length > 0) {
+    prices = item.prices;
+  } else if (isCorona) prices = CORONA_PRICES;
   else if (isWebGuide) prices = WEB_GUIDE_PRICES;
   else if (isChiller) prices = chillerPrices;
   else if (isHeatExchanger) {
@@ -227,15 +229,13 @@ function AddonCard({
   else if (isBackToBack) prices = BACK_TO_BACK_PRICES;
   else if (isAirShaft) prices = AIR_SHAFT_PRICES;
   else if (isAdditionalLip) prices = ADDITIONAL_LIP_PRICES;
-  // Generic fallback: use item.prices if supplied on the data object
-  else if (item.prices && Object.keys(item.prices).length > 0) prices = item.prices;
 
   // UI customization based on component type
   const isOutputBased = isMixerDryer || isMixer || isHeatExchanger;
   const isCapacityBased = isChiller && Object.keys(prices).length > 0 && Object.keys(prices)[0].includes("TR");
   const selectorLabel = isChiller ? (isCapacityBased ? "Cooling Capacity" : "Machine Size") : (isOutputBased ? "Output" : (isBimetallic ? "Screw Size" : (isDieRotation ? "Die Size" : "Size")));
   
-  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature || isGravimetric;
+  const hideBrandDropdown = isDieRotation || isBimetallic || isBackToBack || isAirShaft || isAdditionalLip || isHeatExchangerUno || isHeatExchangerDuo || isOptionalFeature || isGravimetric || isHopperLoaderUno || isHopperLoaderDuo || isHopperLoaderTrio || isHopperDryerB;
   const unit = isHeatExchanger || isMixerDryer || isMixer ? "kg" : (isOutputBased ? "kg/hr" : "mm");
   // For optional features the key is now a plain mm size — uses the standard formatter below
   const formatSize = (s) => (s && (s.includes("TR") || s.includes('"'))) ? s : `${s} ${unit}`;
@@ -281,21 +281,6 @@ function AddonCard({
     // Only reset when item.id changes (user switches item), not when isSelected changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.id]);
-
-  // Sync selectedSize/selectedBrand if options are loaded asynchronously and current values are empty
-  const sizesString = Object.keys(prices).join(',');
-  useEffect(() => {
-    if (!isSelected && item.isDynamic && !isChiller) {
-      if (brands.length > 0 && !brands.includes(selectedBrand)) {
-        setSelectedBrand(brands[0]);
-      }
-      const validSizes = Object.keys(prices);
-      if (validSizes.length > 0 && !validSizes.includes(selectedSize)) {
-        setSelectedSize(item.metadata?.size || validSizes[0]);
-      }
-    }
-  }, [sizesString, brands.join(','), isSelected, selectedSize, selectedBrand, item.isDynamic, isChiller, item.metadata?.size]);
-
 
   const currentPrice = item.isDynamic
     ? (isEpC ? (epcPrice || 0) : (prices[effectiveSize] || 0))

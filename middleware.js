@@ -8,7 +8,7 @@ export async function middleware(request) {
 
   // We only care about /admin and /api/admin routes
   // Bypass middleware for public catalog endpoints
-  const publicApiPaths = ['/api/admin/login', '/api/admin/models', '/api/admin/presets', '/api/admin/components', '/api/admin/seed-now'];
+  const publicApiPaths = ['/api/admin/login', '/api/admin/models', '/api/admin/presets', '/api/admin/components', '/api/admin/trigger-seed', '/api/admin/seed-now'];
   if (publicApiPaths.some(p => pathname.startsWith(p)) && request.method === 'GET') {
     return NextResponse.next();
   }
@@ -23,7 +23,7 @@ export async function middleware(request) {
   }
 
   // Allow unrestricted access to the login pages/APIs
-  if (pathname === '/admin/login' || pathname === '/api/admin/login' || pathname === '/api/admin/logout') {
+  if (pathname === '/admin/login' || pathname === '/api/admin/login' || pathname === '/api/admin/logout' || pathname.startsWith('/admin/leads')) {
     return NextResponse.next();
   }
 

@@ -14,15 +14,15 @@ const EMPTY_MODEL = {
   code: '', family: '', label: '', machineType: 'mono',
   screwDiameter: '', layflatWidthMm: '', thicknessRange: '',
   maxOutputKgHr: '', screwLdRatio: '30:1',
-  extruderMotorKw: '', extruderHeaterKw: '',
-  dieSizeHmLd: '', dieHeaterKw: '', airRingBlowerKw: '',
+  extruderMotorKw: '',
+  dieSizeHmLd: '', airRingBlowerKw: '',
   mainNipLineSpeed: '', mainNipKw: '',
   winderType: '', winderMotorKw: '',
   totalHeatingLoadKw: '', totalConnectedLoadKw: '',
   specificPowerConsumption: '', spaceRequired: '',
 };
 
-const FIELD_GROUPS = [
+const MONO_ABA_FORM_SECTIONS = [
   {
     label: 'Basic Info',
     fields: [
@@ -38,14 +38,12 @@ const FIELD_GROUPS = [
       { key: 'screwDiameter', label: 'Screw Diameter', placeholder: '45 MM' },
       { key: 'screwLdRatio', label: 'L/D Ratio', placeholder: '30:1' },
       { key: 'extruderMotorKw', label: 'Extruder Motor (kW)', placeholder: '11.2' },
-      { key: 'extruderHeaterKw', label: 'Extruder Heater (kW)', placeholder: '14' },
     ]
   },
   {
     label: 'Die & Air Ring',
     fields: [
       { key: 'dieSizeHmLd', label: 'Die Size (HM/LD)', placeholder: '200 MM' },
-      { key: 'dieHeaterKw', label: 'Die Heater (kW)', placeholder: '6.7' },
       { key: 'airRingBlowerKw', label: 'Air Ring Blower (kW)', placeholder: '2.2' },
     ]
   },
@@ -78,6 +76,65 @@ const FIELD_GROUPS = [
       { key: 'totalConnectedLoadKw', label: 'Total Connected Load', placeholder: '37 KW' },
       { key: 'specificPowerConsumption', label: 'Specific Power Consump.', placeholder: '0.45 kW/KG/HR' },
       { key: 'spaceRequired', label: 'Space Required', placeholder: '3.5 × 3.0 × 4.5 m' },
+    ]
+  },
+];
+
+const THREE_LAYER_FORM_SECTIONS = [
+  {
+    label: 'Basic Info',
+    fields: [
+      { key: 'code', label: 'Code (unique)', placeholder: 'INNOFLEX-1120', required: true },
+      { key: 'family', label: 'Family', placeholder: '3-Layer' },
+      { key: 'label', label: 'Display Label', placeholder: 'INNOFLEX-1120' },
+      { key: 'machineType', label: 'Machine Type', type: 'select', options: ['mono', 'aba', '3layer', '5layer'] },
+    ]
+  },
+  {
+    label: 'Extruder',
+    fields: [
+      { key: 'extruder', label: 'Extruder (mm)', placeholder: '40/40/40' },
+      { key: 'ldRatio', label: 'L/D Ratio', placeholder: '30:1' },
+      { key: 'motorsHp', label: 'Motors (HP)', placeholder: '15/15/15' },
+    ]
+  },
+  {
+    label: 'Die & Air Ring',
+    fields: [
+      { key: 'die', label: 'Die Size', placeholder: '225 mm' },
+      { key: 'airRingBlower', label: 'Air Ring Blower', placeholder: '5 HP' },
+    ]
+  },
+  {
+    label: 'Main Nip / Haul-Off',
+    fields: [
+      { key: 'mainNipDrive', label: 'Main Nip Drive', placeholder: '1.5 HP' },
+      { key: 'collapsingFrame', label: 'Collapsing Frame', placeholder: 'PBT ROLLERS' },
+    ]
+  },
+  {
+    label: 'Output & Layflat',
+    fields: [
+      { key: 'widthMm', label: 'Layflat Width (mm)', placeholder: '1000', type: 'number' },
+      { key: 'thickness', label: 'Thickness Range', placeholder: '20–150 µ' },
+      { key: 'outputKgHr', label: 'Max Output (kg/hr)', placeholder: '90-100 KG/HR' },
+      { key: 'variation', label: 'Variation', placeholder: '+/- 8%' },
+    ]
+  },
+  {
+    label: 'Winder',
+    fields: [
+      { key: 'surfaceWinder', label: 'Winder Type', placeholder: 'MANUAL' },
+      { key: 'winderDrive', label: 'Winder Drive', placeholder: '2 HP' },
+      { key: 'rollCapacity', label: 'Roll Capacity', placeholder: '400 KG / 600 MM' },
+    ]
+  },
+  {
+    label: 'Power & Space',
+    fields: [
+      { key: 'totalConnectedLoad', label: 'Total Connected Load', placeholder: '67 KW' },
+      { key: 'powerConsumption', label: 'Specific Power Consump.', placeholder: '0.35 kW/KG/HR' },
+      { key: 'overallDimensions', label: 'Space Required', placeholder: '7.8m L x 5.1m W x 6.5m H' },
     ]
   },
 ];
@@ -126,7 +183,7 @@ function ModelFormModal({ model, familyKey, onSave, onClose }) {
           <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: '#94a3b8' }}>×</button>
         </div>
 
-        {FIELD_GROUPS.map(group => (
+        {((form.machineType === '3layer' || form.machineType === '5layer') ? THREE_LAYER_FORM_SECTIONS : MONO_ABA_FORM_SECTIONS).map(group => (
           <div key={group.label} style={{ marginBottom: '20px' }}>
             <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '10px', paddingBottom: '6px', borderBottom: '1px solid #f1f5f9' }}>
               {group.label}
@@ -291,16 +348,16 @@ export default function ModelsManager() {
                     {m.label || <span style={{ color: '#cbd5e1' }}>—</span>}
                   </td>
                   <td style={{ padding: '12px 14px', fontSize: '13px', color: '#334155', fontWeight: '600' }}>
-                    {m.screwDiameter || '—'}
+                    {m.screwDiameter || m.extruder || '—'}
                   </td>
                   <td style={{ padding: '12px 14px', fontSize: '12px', color: '#64748b' }}>
-                    {m.maxOutputKgHr || '—'}
+                    {m.maxOutputKgHr || m.outputKgHr || '—'}
                   </td>
                   <td style={{ padding: '12px 14px', fontSize: '13px', color: '#334155', fontWeight: '600' }}>
-                    {m.layflatWidthMm ? `${m.layflatWidthMm} mm` : '—'}
+                    {m.layflatWidthMm ? `${m.layflatWidthMm} mm` : (m.widthMm ? `${m.widthMm} mm` : '—')}
                   </td>
                   <td style={{ padding: '12px 14px', fontSize: '12px', color: '#64748b' }}>
-                    {m.spaceRequired || '—'}
+                    {m.spaceRequired || m.overallDimensions || '—'}
                   </td>
                   <td style={{ padding: '12px 14px' }}>
                     <div style={{ display: 'flex', gap: '6px' }}>

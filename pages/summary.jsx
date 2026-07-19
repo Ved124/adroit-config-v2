@@ -267,7 +267,7 @@ function buildProposalData({
     const c = (item.category || "").toLowerCase();
     const isTrim = n.includes("trim");
     const isControl = n.includes("panel") || c.includes("panel") || n.includes("control") || c.includes("control");
-    return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !isTrim && !isControl && item.id !== "addon-loadcell-tension";
+    return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower") || n.includes("ibc") || c.includes("ibc")) && !isTrim && !isControl && item.id !== "addon-loadcell-tension";
   });
   const realAddonsRaw = selectedAddonsSafe.filter(item => {
     if (!item || !item.name) return false;
@@ -365,6 +365,18 @@ function buildProposalData({
           filled[materialKey] = "Bi-metallic screw and barrel";
         } else {
           filled["Material"] = "Bi-metallic screw and barrel";
+        }
+      }
+    }
+
+    // --- IBC LOGIC FOR DIES ---
+    const isDie = (item.category || "").toLowerCase().includes("die") || nameLc.includes("die");
+    if (isDie) {
+      const hasIbcAddon = (selectedAddons || []).some(a => (a.id || "").toLowerCase().includes("ibc") || (a.name || "").toLowerCase().includes("ibc"));
+      if (hasIbcAddon) {
+        const ibcKey = Object.keys(filled).find(k => k.toLowerCase().includes("ibc provision"));
+        if (!ibcKey) {
+          filled["IBC Provision"] = "Die with IBC provision.";
         }
       }
     }

@@ -1,4 +1,5 @@
 // src/utils/generateScopeDesc.js
+import { resolveTechDesc } from "./mergeCatalogItem";
 // ─────────────────────────────────────────────────────────────────────────────
 // Hybrid Scope-of-Supply description generator.
 //
@@ -30,7 +31,7 @@ function td(source, ...keyHints) {
   // Consolidate search target: merge base techDesc and metadata overrides
   const baseTD = source.techDesc || (typeof source === "object" && !source.id ? source : {});
   const metaTD = (source.metadata && source.metadata.techDesc) ? source.metadata.techDesc : {};
-  const techDesc = { ...baseTD, ...metaTD };
+  const techDesc = resolveTechDesc({ baseTechDesc: baseTD, metadataTechDesc: metaTD });
 
   if (!techDesc || typeof techDesc !== "object") return null;
 
@@ -99,20 +100,13 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
       const kwMatch = driveStr.match(/(\d+(?:\.\d+)?)\s*kW/i);
       if (kwMatch) return kwToHp(kwMatch[1]) || kwMatch[1];
 
-      // Fallback: If techDesc is missing, try to parse from machineModel.motorsHp (e.g. "50/100/50")
-      if (machineModel && machineModel.motorsHp) {
-        const hpParts = machineModel.motorsHp.split("/");
-        if (hpParts.length === totalQty) {
-          const part = hpParts[idx].trim();
-          const pm = part.match(/(\d+)/);
+      // Fallback: If techDesc is missing, try machineModel.extruderMotorRating,
+      // which is in HP uniformly across all machine families.
+      if (machineModel && machineModel.extruderMotorRating) {
+        const parts = machineModel.extruderMotorRating.split("/");
+        if (parts.length === totalQty) {
+          const pm = parts[idx].trim().match(/(\d+(?:\.\d+)?)/);
           return pm ? pm[1] : null;
-        }
-      }
-      // Last resort: use machineModel.extruderMotorKw and convert to HP
-      if (machineModel && machineModel.extruderMotorKw) {
-        const kwParts = machineModel.extruderMotorKw.split("/");
-        if (kwParts.length === totalQty) {
-          return kwToHp(kwParts[idx].trim());
         }
       }
       return null;
@@ -133,7 +127,7 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
       // Use machine model's authoritative screw diameter
       sz = modelSizes[idx];
     } else {
-      sz = ext.sizeMm;
+      sz = ext.size || ext.sizeMm;
       if (!sz) {
         const m = (ext.name || "").match(/\b(\d{2,3})\s*mm/i);
         if (m) sz = parseInt(m[1], 10);
@@ -173,7 +167,7 @@ function generateExtruder(firstItem, allSelected, machineModel, selectedAddons =
   const plural = totalQty > 1;
 
   // L/D from first extruder's techDesc, machineModel fallback, or default
-  const ldRaw = td(firstItem, "l/d", "ld ratio") || (machineModel ? machineModel.ldRatio : "") || "30:1";
+  const ldRaw = td(firstItem, "l/d", "ld ratio") || (machineModel ? machineModel.screwLdRatio : "") || "30:1";
   // clean up to bare ratio e.g. "30 : 1" → "30:1"
   const ld = ldRaw.replace(/\s*:\s*/g, ":").split(" ")[0];
 
@@ -242,10 +236,10 @@ function generateFilter(item) {
   return `${numWord(qty)} No${qty > 1 ? "s" : ""}. ${type}.`;
 }
 
-function generateDieHead(item, machineModel) {
+function generateDieHead(item, machineModel, selectedAddons = []) {
   const qty = item.qty || 1;
-  // diameter — prefer diameterMm field, else parse from techDesc or name
-  let diam = item.diameterMm ? `${item.diameterMm} mm` : null;
+  // diameter — prefer size/diameterMm field, else parse from techDesc or name
+  let diam = (item.size || item.diameterMm) ? `${item.size || item.diameterMm} mm` : null;
   if (!diam) {
     const raw = td(item.techDesc, "die size", "diameter") || item.lipsDesc || "";
     const m = raw.match(/(\d+)\s*mm/i);
@@ -280,7 +274,8 @@ function generateDieHead(item, machineModel) {
   const ibcSuffix = isIbc ? " and IBC provision" : "";
 
   const isRotationModel = machineModel && ((machineModel.code || "").toLowerCase().includes("dr") || (machineModel.label || "").toLowerCase().includes("dr"));
-  const isRotation = item.isRotationSelected || name.toLowerCase().includes("rotation") || (item.id || "").toLowerCase().includes("-dr") || (item.id || "").includes("dr-") || isRotationModel;
+  const hasDieRotationAddon = (selectedAddons || []).some(a => a.id === "die-rotation-addon");
+  const isRotation = item.isRotationSelected || name.toLowerCase().includes("rotation") || (item.id || "").toLowerCase().includes("-dr") || (item.id || "").includes("dr-") || isRotationModel || hasDieRotationAddon;
   const rotationSuffix = isRotation ? " Die with Rotation." : "";
 
   const isMonoOrAba = machineModel && (machineModel.machineType === "mono" || machineModel.machineType === "aba" || (machineModel.code && (machineModel.code.includes("UNO") || machineModel.code.includes("DUO"))));
@@ -445,7 +440,7 @@ function generateHaulOff(item, machineModel) {
     : `${numWord(qty)} Haul Off.`;
 
   const lineSpeedFromTech = td(item, "line speed");
-  const lineSpeed = lineSpeedFromTech || (machineModel ? machineModel.lineSpeed : "") || "";
+  const lineSpeed = lineSpeedFromTech || (machineModel ? machineModel.mainNipLineSpeed : "") || "";
   const speedSuffix = lineSpeed ? ` Linespeed is ${lineSpeed}.` : "";
 
   return (
@@ -610,7 +605,7 @@ function generateIBC(item) {
 const GENERATORS = {
   Extruder: generateExtruder,
   Filter: (item) => generateFilter(item),
-  "Die Head": (item, allSelected, machineModel) => generateDieHead(item, machineModel),
+  "Die Head": (item, allSelected, machineModel, selectedAddons) => generateDieHead(item, machineModel, selectedAddons),
   "Air Ring": (item) => generateAirRing(item),
   "Bubble Cage": (item) => generateBubbleCage(item),
   "Collapsing Frame": (item) => generateCollapsingFrame(item),
@@ -636,7 +631,14 @@ const GENERATORS = {
 export function generateScopeDesc(item, allSelected = [], machineModel = null, selectedAddons = []) {
   if (!item) return "";
 
-  // ① Manual scopeDesc always wins
+  const result = computeBaseScopeDesc(item, allSelected, machineModel, selectedAddons);
+  return applyAddonEffects(result, item, selectedAddons);
+}
+
+function computeBaseScopeDesc(item, allSelected, machineModel, selectedAddons) {
+  // ① Manual scopeDesc always wins as the BASE text — addon effects are still
+  // layered on afterward (see applyAddonEffects), since a hardcoded per-model
+  // override otherwise has no way to reflect an addon the user toggles at runtime.
   if (item.scopeDesc && typeof item.scopeDesc === "string" && item.scopeDesc.trim()) {
     return item.scopeDesc.trim();
   }
@@ -683,7 +685,7 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null, s
       return generateIBC(item);
     }
     if (nameLc.includes("die")) {
-      return generateDieHead(item, machineModel);
+      return generateDieHead(item, machineModel, selectedAddons);
     }
     if (nameLc.includes("air ring")) {
       return generateAirRing(item);
@@ -697,4 +699,61 @@ export function generateScopeDesc(item, allSelected = [], machineModel = null, s
 
   // ④ Fallback to existing static fields
   return item.shortDesc || item.cardDesc || item.desc || item.name || "";
+}
+
+/**
+ * Layered addon effects — applied AFTER the base text is resolved (whether that
+ * base came from a hardcoded per-model scopeDesc override or a category
+ * generator), so a relevant addon always visibly changes the printed text
+ * regardless of which path produced the base. Each rule is idempotent (checks
+ * before mutating) so toggling the addon on/off/on doesn't double-apply.
+ */
+function applyAddonEffects(desc, item, selectedAddons) {
+  if (!desc || !selectedAddons || selectedAddons.length === 0) return desc;
+  const category = item.category || "";
+
+  if (category === "Die Head") {
+    const hasDieRotation = selectedAddons.some((a) => a.id === "die-rotation-addon");
+    if (hasDieRotation && !/rotation/i.test(desc)) {
+      desc = desc.trim().replace(/\.?\s*$/, ".") + " Die with Rotation.";
+    }
+  }
+
+  if (category === "Extruder") {
+    const hasLever = selectedAddons.some((a) => a.id === "addon-lever-screen-changer");
+    if (hasLever) {
+      desc = desc.replace(/Candle type/gi, "Lever type");
+    }
+    const hasBimetallic = selectedAddons.some((a) => (a.id || "").startsWith("bimetallic-upgrade-"));
+    if (hasBimetallic) {
+      desc = desc.replace(/Nitro Alloy/gi, "Bi-metallic");
+    }
+  }
+
+  if (category === "Winder") {
+    const hasLoadcell = selectedAddons.some((a) => a.id === "addon-loadcell-tension");
+    if (hasLoadcell) {
+      desc = desc.replace(/Through Torque mode\.?/gi, "Through Loadcell.");
+    }
+    const hasAirShaft = selectedAddons.some((a) => a.id === "addon-air-shaft-dynamic");
+    if (hasAirShaft) {
+      desc = desc.replace(/Mechanical shaft/gi, "Air shaft");
+    }
+    // "Back to back" describes the winder's roller configuration (one physical
+    // unit with two rollers mounted back to back), not a quantity of two winders —
+    // so the count word stays "One". Matches the "Two Surface Winder" (maximum web
+    // width) / "Two back to back type" / "02 HP" values already hardcoded on this
+    // addon's own catalog techDesc (winderAddons.ts) and mirrored in
+    // ConfigContext.jsx's processedSelected transform, so the scope line and the
+    // techDesc/name (which already update) stay consistent.
+    const hasBackToBack = selectedAddons.some((a) => a.id === "winder-manual-back-to-back-dynamic");
+    if (hasBackToBack && !/back to back/i.test(desc)) {
+      desc = desc
+        .replace(/\bOne Surface Winders?\b/gi, "One Back to Back Surface Winder")
+        .replace(/\bSingle Surface Winders?\b/gi, "One Back to Back Surface Winder")
+        .replace(/\b0?2\s*nos\.?\s*-/gi, "04 nos.-");
+    }
+  }
+
+  return desc;
 }

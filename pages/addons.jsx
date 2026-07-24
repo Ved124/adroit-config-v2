@@ -14,6 +14,7 @@ import { BIMETALLIC_PRICES } from "../src/data/bimetallic";
 import { DIE_ROTATION_PRICES, ADDITIONAL_LIP_PRICES } from "../src/data/dieAddons";
 import { EPC_COMPONENTS } from "../src/data/epc";
 import { BACK_TO_BACK_PRICES, AIR_SHAFT_PRICES } from "../src/data/winderAddons";
+import { ALL_MODELS } from "../src/data/models";
 export default function AddonsPage() {
   const router = useRouter();
   const {
@@ -21,6 +22,7 @@ export default function AddonsPage() {
     filteredAddons,      // ✅ already filtered by machine type + model/custom
     customer,
     machineType,
+    rawSelected,
 
     // selection state
     selectedAddons,
@@ -46,6 +48,33 @@ export default function AddonsPage() {
 
   const getSelectedAddon = (id) =>
     selectedAddons?.find((x) => x.id === id) || null;
+
+  // The current machine's nip width, read off whichever already-sized dynamic base
+  // component we have selected (Haul-Off / Winder / Tower / Main Nip / Bubble Cage all
+  // share the same size once a model preset is applied). Used to default size-based
+  // addon dropdowns (Corona, Chiller, Web Guide, etc.) to the right value instead of
+  // whatever happens to be first in that addon's price table.
+  const modelSizeMm = (() => {
+    if (selectedMachineModelLabel) {
+      if (selectedMachineModelLabel.startsWith("UNOFLEX-")) {
+        return "U" + selectedMachineModelLabel.split("-")[1].split(" ")[0];
+      }
+      if (selectedMachineModelLabel.startsWith("DUOFLEX-")) {
+        return "D" + selectedMachineModelLabel.split("-")[1].split(" ")[0];
+      }
+      if (selectedMachineModelLabel.startsWith("INNOFLEX-")) {
+         const model = ALL_MODELS.find(m => m.code === selectedMachineModelLabel || m.label === selectedMachineModelLabel);
+         if (model && model.layflatWidthMm) return String(model.layflatWidthMm);
+      }
+    }
+    
+    const priority = ["Main Nip", "Haul-Off", "Winder", "Tower / Platform", "Bubble Cage", "Collapsing Frame"];
+    for (const cat of priority) {
+      const match = (rawSelected || []).find((s) => s.category === cat && s.size);
+      if (match) return String(match.size);
+    }
+    return null;
+  })();
 
   return (
     <div className="min-h-screen bg-brand-light text-slate-900 pt-24 sm:pt-28">
@@ -124,6 +153,7 @@ export default function AddonsPage() {
                       removeAddon={removeAddon}
                       setAddonQty={setAddonQty}
                       openModal={openModal}
+                      modelSizeMm={modelSizeMm}
                     />
                   ))}
                 </div>
@@ -161,6 +191,7 @@ function AddonCard({
   removeAddon,
   setAddonQty,
   openModal,
+  modelSizeMm,
 }) {
   const line = getSelectedAddon(item.id);
   const isSelected = !!line;
@@ -241,9 +272,56 @@ function AddonCard({
   const formatSize = (s) => (s && (s.includes("TR") || s.includes('"'))) ? s : `${s} ${unit}`;
   const epcPrice = null;
 
+  // Most dynamic addons are priced by machine model (U#/D# for mono/ABA, mm for 3-layer)
+  // regardless of what their dropdown is labeled — Die Rotation/Additional Lip say "Die
+  // Size" and Heat Exchanger says "Output", but both are actually keyed by U#/D#/mm
+  // machine codes, same as Corona/Web Guide/Chiller/etc. Only exclude the few that are
+  // genuinely keyed on something else: Bimetallic (extruder screw size, handled via its
+  // own targetExtruderId matching), Chiller's TR-based cooling capacity, and Mixer/
+  // Mixer-Dryer (a real kg/hr throughput capacity, unrelated to machine size).
+  const usesModelSize = item.isDynamic && !isBimetallic && !isCapacityBased && !isMixer && !isMixerDryer;
+  const nearestToModelSize = (priceMap) => {
+    if (!modelSizeMm) return null;
+    const keys = Object.keys(priceMap);
+
+    const exactMatch = keys.find(k => k === modelSizeMm || k === `${modelSizeMm}"` || k === `${modelSizeMm} mm`);
+    if (exactMatch) return exactMatch;
+
+    const targetPrefix = modelSizeMm.match(/^[UD]/)?.[0] || null;
+    const targetStr = modelSizeMm.replace(/[^UD0-9]/g, '');
+    const strMatch = keys.find(k => k.replace(/[^UD0-9]/g, '') === targetStr && (k.match(/^[UD]/)?.[0] || null) === targetPrefix);
+    if (strMatch) return strMatch;
+
+    const target = parseInt(modelSizeMm.replace(/[^\d]/g, ''), 10);
+    if (isNaN(target)) return null;
+
+    // When the target has a U/D prefix (mono/ABA), only match keys with the SAME
+    // prefix — otherwise a missing ABA (D) size could silently fall back to a mono
+    // (U) price (or vice versa) just because the numbers happen to be close.
+    const sizes = keys
+      .map(k => ({ key: k, num: parseInt(k.replace(/[^\d]/g, ''), 10), prefix: k.match(/^[UD]/)?.[0] || null }))
+      .filter(x => !isNaN(x.num) && (!targetPrefix || x.prefix === targetPrefix))
+      .sort((a, b) => a.num - b.num);
+
+    if (sizes.length === 0) return null;
+    const chosen = sizes.find((s) => s.num >= target) ?? sizes[sizes.length - 1];
+    return chosen.key;
+  };
+  const defaultSize = () =>
+    (usesModelSize && nearestToModelSize(prices)) || Object.keys(prices)[0] || "";
+
+  // item.metadata?.size is sometimes injected for an unrelated purpose (e.g. Die
+  // Rotation/Additional Lip carry the die's own mm diameter there, purely for the
+  // card's display text — it's never a valid key into their U#/D#-keyed price table).
+  // Only trust it as a size default when it's actually a real key in `prices`;
+  // otherwise the <select> silently shows its first DOM option since nothing matches
+  // the real state value, which looks like a wrong default even though `prices` and
+  // `defaultSize()` were computed correctly.
+  const validMetadataSize = (candidate) =>
+    candidate && Object.prototype.hasOwnProperty.call(prices, candidate) ? candidate : null;
 
   const [selectedSize, setSelectedSize] = useState(
-    line?.size || line?.metadata?.size || item.metadata?.size || Object.keys(prices)[0] || ""
+    validMetadataSize(line?.size) || validMetadataSize(line?.metadata?.size) || validMetadataSize(item.metadata?.size) || defaultSize()
   );
 
   // The EFFECTIVE size shown in UI: always prefer the saved value when selected
@@ -257,9 +335,10 @@ function AddonCard({
     if (!isSelected && isChiller) {
       const validSizes = Object.keys(prices);
       if (!validSizes.includes(selectedSize)) {
-        setSelectedSize(validSizes[0] || "");
+        setSelectedSize(defaultSize());
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBrand, prices, isChiller, isSelected, selectedSize]);
 
   // Sync local state when the saved addon changes (e.g. after localStorage loads)
@@ -276,11 +355,11 @@ function AddonCard({
   useEffect(() => {
     if (!isSelected && item.isDynamic && !isChiller) {
       setSelectedBrand(brands[0] || "Adroit");
-      setSelectedSize(item.metadata?.size || Object.keys(prices)[0] || "");
+      setSelectedSize(validMetadataSize(item.metadata?.size) || defaultSize());
     }
     // Only reset when item.id changes (user switches item), not when isSelected changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.id]);
+  }, [item.id, modelSizeMm]);
 
   const currentPrice = item.isDynamic
     ? (isEpC ? (epcPrice || 0) : (prices[effectiveSize] || 0))

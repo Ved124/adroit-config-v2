@@ -16,8 +16,11 @@ export interface AirRingComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
 }
 
 // Prices extracted from master list image
@@ -116,11 +119,14 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Select Die size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: G_AIR_RING_PRICES,
     techDesc: {
       "Design": "Gamma Air Ring",
       "Construction": "Precision machined aluminum body.",
       "Cooling": "High efficiency lip profile.",
     },
+    scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
     shortDesc: "Gamma Air Ring for optimal bubble cooling.",
   },
   {
@@ -133,6 +139,8 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Select Die size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: AIR_RING_PRICES,
     techDesc: {
       "Design": "Standard Series Air Ring",
       "Construction": "Robust aluminum alloy structure.",
@@ -150,6 +158,8 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Select Die size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: DR_AIR_RING_PRICES,
     techDesc: {
       "Construcion": "Aluminum body aerodynamic type Dual air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
       "Blower": "20 HP AC variable frequency drive.",
@@ -167,10 +177,13 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     cardDesc: "Select Die size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: DR_AIR_RING_PRICES,
     techDesc: {
       "Construcion": "Aluminum body aerodynamic type dual lip air cooling ring.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
       "Blower": "7.5 HP with inlet air filter.",
     },
+    scopeDesc: "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
     shortDesc: "Dual lip air ring for high capacity ABA co-extruded films.",
   },
 ];

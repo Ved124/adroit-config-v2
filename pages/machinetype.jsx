@@ -21,36 +21,25 @@ function getModelHighlights(model) {
 
   const lines = [];
 
-  // 1. Extruder size
-  if (model.extruder) {
-    lines.push(`Extruder: ${model.extruder} mm`);
-  } else if (model.screwDiameter) {
-    lines.push(`Extruder: ${model.screwDiameter}`);
+  // 1. Extruder size (3-layer's raw values never included a unit; mono/aba's do)
+  if (model.screwDiameter) {
+    const suffix = model.machineType === "3layer" ? " mm" : "";
+    lines.push(`Extruder: ${model.screwDiameter}${suffix}`);
   }
 
   // 2. Die Size
-  if (model.die) {
-    lines.push(`Die Size: ${model.die}`);
-  } else if (model.dieSizeHmLd) {
+  if (model.dieSizeHmLd) {
     lines.push(`Die Size: ${model.dieSizeHmLd}`);
   }
 
   // 3. L/D Ratio
-  if (model.ldRatio) {
-    lines.push(`L/D Ratio: ${model.ldRatio}`);
-  } else if (model.screwLdRatio) {
+  if (model.screwLdRatio) {
     lines.push(`L/D Ratio: ${model.screwLdRatio}`);
   }
 
   // Fallback if no specific extruder info found (unlikely)
   if (lines.length === 0) {
-    const candidates = [
-      "Max. Output (kg/hr)",
-      "Output",
-      "outputKgHr",
-      "widthMm",
-      "WIDTH",
-    ];
+    const candidates = ["maxOutputKgHr", "layflatWidthMm"];
     for (const key of candidates) {
       if (model[key] != null) {
         lines.push(`${key}: ${model[key]}`);
@@ -487,7 +476,7 @@ export default function MachineTypePage() {
               <table className="w-full border-separate border-spacing-y-2">
                 <tbody>
                   {Object.entries(modalModel.model)
-                    .filter(([k]) => !["image", "photo", "id", "family", "machineType"].includes(k))
+                    .filter(([k]) => !["image", "photo", "id", "family", "machineType", "components", "addons", "basePrice"].includes(k))
                     .map(([key, value]) => {
                       if (value === null || value === undefined || value === "") return null;
 

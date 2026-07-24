@@ -6,9 +6,6 @@
     "pages/api/save-kiosk-pdf.js": {
       "maxDuration": 30
     },
-    "pages/api/generate-docx.js": {
-      "maxDuration": 30
-    },
     "pages/api/list-leads.js": {
       "maxDuration": 15
     }

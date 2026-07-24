@@ -22,6 +22,7 @@ export interface TrimAddon {
 
 export const TRIM_ADDONS: TrimAddon[] = [
   // ---------- TRIM SUCTION BLOWER – SMALL / MEDIUM LINES ----------
+  /*
   {
     id: "trim-blower-standard",
     name: "Trim Suction Blower – Standard",
@@ -46,8 +47,10 @@ export const TRIM_ADDONS: TrimAddon[] = [
         "Keeps working area clean, reduces manual handling of trims.",
     },
   },
+  */
 
   // ---------- TRIM SUCTION BLOWER – WIDE WEB ----------
+  /*
   {
     id: "trim-blower-heavy",
     name: "Trim Suction Blower – Heavy Duty",
@@ -70,8 +73,10 @@ export const TRIM_ADDONS: TrimAddon[] = [
         "Filter / separator where required to avoid dust in trim area.",
     },
   },
+  */
 
   // ---------- TRIM WINDER – SMALL / MEDIUM ----------
+  /*
   {
     id: "trim-winder-standard",
     name: "Trim Winder – Standard",
@@ -94,8 +99,10 @@ export const TRIM_ADDONS: TrimAddon[] = [
         "Manual speed control; can be synchronized with line speed if required.",
     },
   },
+  */
 
   // ---------- TRIM WINDER – HEAVY DUTY / WIDE ----------
+  /*
   {
     id: "trim-winder-heavy",
     name: "Trim Winder – Heavy Duty",
@@ -119,4 +126,5 @@ export const TRIM_ADDONS: TrimAddon[] = [
         "Up to ~500 mm trim roll (depending on trim thickness and width).",
     },
   },
+  */
 ];

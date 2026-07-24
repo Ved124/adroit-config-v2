@@ -15,10 +15,28 @@ export interface TowerComponent {
   cardDesc: string;
   price: number;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
 }
 
 export const TOWER_PRICES: Record<string, number> = {
+  // Mono/ABA sizes, re-keyed from the mm tier below by each model's machineWidth
+  // (layflatWidthMm), same convention as MAIN_NIP_PRICES / PANEL_DYNAMIC_PRICES.
+  "U20": 1000000,  // UNOFLEX-20 (450mm -> 1000 tier)
+  "U24": 1000000,  // UNOFLEX-24 (550mm -> 1000 tier)
+  "U32": 1000000,  // UNOFLEX-32 (750mm -> 1000 tier)
+  "U40": 1000000,  // UNOFLEX-40 / UNOFLEX-40-55MM (1000mm tier)
+  "U50": 1000000,  // UNOFLEX-50 / UNOFLEX-50-65MM (1250mm tier, same price as 1000 tier)
+  "U72": 1500000,  // UNOFLEX-72 (1800mm -> 1850 tier)
+  "U110": 3500000, // UNOFLEX-110 (2800mm, beyond table range -> largest tier)
+  "D20": 1000000,  // DUOFLEX-20 (450mm -> 1000 tier)
+  "D24": 1000000,  // DUOFLEX-24 (550mm -> 1000 tier)
+  "D32": 1000000,  // DUOFLEX-32 (750mm -> 1000 tier)
+  "D36": 1000000,  // DUOFLEX-36 (850mm -> 1000 tier)
+  "D40": 1000000,  // DUOFLEX-40 (950mm -> 1000 tier)
+  "D50": 1000000,  // DUOFLEX-50 / DUOFLEX-50-65/55 (1250mm tier)
   "1000": 1000000,
   "1250": 1000000,
   "1350": 1150000,
@@ -37,6 +55,8 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
     id: "tower-dynamic",
     name: "Tower",
     isDynamic: true,
+    pricingType: "size",
+    prices: TOWER_PRICES,
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     usedInModels: [],
     image: "/images/tower.png",
@@ -48,23 +68,6 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
       "Staircase": "Staircase with hand rails.",
       "Safety": "Hand rails and kick plates according to European safety standards.",
       "Idler rollers": "Set of idler aluminium rollers as per nip size.",
-    },
-  },
-  {
-    id: "tower_std",
-    name: "Tower / Platform",
-    isDynamic: false,
-    machineTypes: ["mono", "aba"],
-    usedInModels: [],
-    image: "/images/tower.png",
-    cardDesc: "Standard MS tower structure with walk-around platform, staircase and safety handrails for ABA / mono lines.",
-    price: 600000,
-    techDesc: {
-      "Structure": "Knock-down type tower structure fabricated in mild steel.",
-      "Platforms": "Walk-around platform with grating.",
-      "Staircase": "Staircase with hand rails.",
-      "Safety": "Hand rails and kick plates.",
-      "Idler rollers": "Set of idler aluminium rollers as per layout.",
     },
   },
 ];

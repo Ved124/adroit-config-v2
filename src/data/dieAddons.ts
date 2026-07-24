@@ -10,7 +10,10 @@ export interface DieAddon {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
-  isDynamic: boolean;
+  scopeDesc?: string;
+  isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
   monoPrices?: Record<string, number>;
 }
 
@@ -24,8 +27,11 @@ export const DIE_ROTATION_PRICES: Record<string, number> = {
   "U50\"": 235000,
   "U72\"": 280000,
   "U110\"": 315000,
+  "D20\"": 350000, // flat across all ABA sizes
+  "D24\"": 350000,
   "D26\"": 350000,
   "D32\"": 350000,
+  "D36\"": 350000,
   "D40\"": 350000,
   "D50\"": 350000,
   "D60\"": 350000,
@@ -39,8 +45,11 @@ export const ADDITIONAL_LIP_PRICES: Record<string, number> = {
   "U50\"": 270000,
   "U72\"": 375000,
   "U110\"": 635000,
+  "D20\"": 95000, // matches D26 tier
+  "D24\"": 95000,
   "D26\"": 95000,
   "D32\"": 95000,
+  "D36\"": 110000, // interpolated between D32 (95000) and D40 (125000)
   "D40\"": 125000,
   "D50\"": 190000,
   "D60\"": 365000,
@@ -52,9 +61,11 @@ export const DIE_ROTATION_ADDON: DieAddon = {
   category: "Die Addons",
   machineTypes: ["mono", "aba", "3layer", "5layer"],
   image: "/images/Acessories/DieRotation.png",
-  cardDesc: "Revolving die head system for even distribution of thickness variation.",
+  cardDesc: "Add a die rotation system.",
   price: 0,
   isDynamic: true,
+  pricingType: "size",
+  prices: DIE_ROTATION_PRICES,
   techDesc: {
     "Die Rotation": "Provided"
   }
@@ -65,10 +76,12 @@ export const ADDITIONAL_LIP_SET_ADDON: DieAddon = {
   name: "Additional Lip Set with Inserts",
   category: "Die Addons",
   machineTypes: ["mono", "aba", "3layer", "5layer"],
-  image: "/images/Acessories/die_lip.png", // Or a relevant image
-  cardDesc: "Additional Lip Set with Inserts for versatile production.",
+  image: "/images/Acessories/die_lip.png",
+  cardDesc: "Add an additional lip set.",
   price: 0,
   isDynamic: true,
+  pricingType: "size",
+  prices: ADDITIONAL_LIP_PRICES,
   techDesc: {
     "Additional Lip Set": "Provided with Inserts"
   }

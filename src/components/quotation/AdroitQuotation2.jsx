@@ -543,7 +543,7 @@ function ScopePage2({ components, electricals, pageNum, total }) {
   const elec = electricals || {};
   const rows = [
     ...(components || []).map((item, i) => ({
-      sr: item.sr || (i + 1),
+      sr: i + 1,
       subject: item.name || "",
       description: item.description || item.shortDesc || item.cardDesc || "",
       qty: item.qty !== undefined ? item.qty : 1,

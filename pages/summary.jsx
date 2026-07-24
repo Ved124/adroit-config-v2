@@ -11,20 +11,7 @@ import { AdroitQuotation } from "../src/components/quotation/AdroitQuotation";
 import { AdroitQuotation2 } from "../src/components/quotation/AdroitQuotation2";
 import { Modal } from '../components/ui/Modal';
 import { QRCodeSVG } from 'qrcode.react';
-import dynamic from "next/dynamic";
-
-const PDFDownloadLink = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
-  {
-    ssr: false,
-    loading: () => (
-      <button className="bg-gray-400 text-white px-6 py-3 rounded-xl font-bold">
-        Loading PDF Engine...
-      </button>
-    ),
-  }
-);
-import { MasterQuotationPDF } from '../src/components/quotation/ProfessionalPDF/MasterQuotationPDF';
+import { useToast } from '../components/ui/Toast';
 
 // Module-level cache for heavy client-side libraries to avoid ChunkLoadErrors in Next.js dev server hot-reloads
 let html2canvasModule = null;
@@ -77,9 +64,10 @@ function buildMachineCode({ machineType, currentMachineModel, selectedMachineMod
     const sizes = [];
     extruders.forEach(ext => {
       const qty = ext.qty || 1;
-      let sz = ext.sizeMm;
+      let sz = ext.sizeMm || ext.size || ext.extruder;
+      if (sz) sz = parseInt(sz);
       if (!sz) {
-        const m = (ext.name || "").match(/\b(\d{2,3})\s*mm/i);
+        const m = (ext.customName || ext.name || "").match(/\b(\d{2,3})\s*mm/i);
         if (m) sz = parseInt(m[1]);
       }
       if (sz) {
@@ -147,10 +135,8 @@ function getMachineHeading(machineType, customer, currentMachineModel) {
   }
 
   let outputText = "";
-  if (currentMachineModel && typeof currentMachineModel === "object") {
-    for (const key of ["OUTPUT", "Output", "Max. Output (kg/hr)", "Max Output (kg/hr)"]) {
-      if (currentMachineModel[key]) { outputText = String(currentMachineModel[key]); break; }
-    }
+  if (currentMachineModel && currentMachineModel.maxOutputKgHr) {
+    outputText = String(currentMachineModel.maxOutputKgHr);
   }
 
   let text = familyLabel;
@@ -237,13 +223,11 @@ function buildProposalData({
     machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat, customRollerWidth,
   });
 
-  const maxOutput = customOutput?.trim() ||
-    m["Max. Output (kg/hr)"] || m["OUTPUT"] || m["Output"] || m["Max Output (kg/hr)"] || "";
-  const layflatWidth = customLayflat?.trim() ||
-    m["Layflat Width (mm)"] || m["Lay Flat Width"] || m["WIDTH"] || m["Width"] || m["layflat"] || "";
-  const dieSize = m["Die Size"] || m["DIE"] || m["Die"] || "";
-  const thicknessRange = m.thicknessRange || m.thickness || m["Thichness Range (micron)"] || m["Thickness Range (micron)"] || m["THICKNESS"] || "20 – 150 micron";
-  const thicknessVariation = m.variation || m["Thickness Variation"] || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.";
+  const maxOutput = customOutput?.trim() || m.maxOutputKgHr || "";
+  const layflatWidth = customLayflat?.trim() || m.layflatWidthMm || "";
+  const dieSize = m.dieSizeHmLd || "";
+  const thicknessRange = m.thicknessRange || "20 – 150 micron";
+  const thicknessVariation = m.thicknessVariation || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.";
 
   function autoScopeDesc(item) {
     const desc = item.shortDesc || item.cardDesc || "";
@@ -273,12 +257,17 @@ function buildProposalData({
     if (!item || !item.name) return false;
     const isGrandTotal = item.id === "grand-total-line";
     if (isGrandTotal) return false;
-    
+
+    // Die rotation is a standard pre-included item on every mono/ABA (and some
+    // 3-layer) presets now, not a genuine optional extra — don't list it in the
+    // Optional Equipments table alongside things the customer actually pays for.
+    if (item.id === "die-rotation-addon") return false;
+
     const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
     if (machineType === "material-handling" && isMixer) {
       return false;
     }
-    
+
     return true;
   });
 
@@ -289,7 +278,25 @@ function buildProposalData({
   const grandTotalLineItem = selectedAddonsSafe.find(a => a.id === "grand-total-line");
   const grandTotalForPdf = grandTotalLineItem ? grandTotalAmount : null;
 
-  const optItems = realAddonsRaw
+  // Bi-metallic upgrades are added as one dynamic addon per extruder
+  // (bimetallic-upgrade-1, -2, -3...) so each extruder's screw size can price
+  // independently, but the customer only needs to see one combined line item.
+  const bimetallicAddons = realAddonsRaw.filter(item => (item.id || "").startsWith("bimetallic-upgrade-"));
+  const nonBimetallicAddons = realAddonsRaw.filter(item => !(item.id || "").startsWith("bimetallic-upgrade-"));
+  const mergedBimetallic = bimetallicAddons.length > 0 ? [{
+    ...bimetallicAddons[0],
+    id: "bimetallic-upgrade-combined",
+    // qty stays 1 — price below is already the sum across all extruders
+    // (each extruder's screw size can price independently), so multiplying
+    // by a qty > 1 downstream would inflate the total.
+    name: `Bi-metallic Screw Barrel Upgrade (${bimetallicAddons.length} Extruders)`,
+    customName: `Bi-metallic Screw Barrel Upgrade (${bimetallicAddons.length} Extruders)`,
+    qty: 1,
+    price: bimetallicAddons.reduce((sum, it) => sum + (it.price || 0) * (it.qty || 1), 0),
+  }] : [];
+  const optItemsSource = [...nonBimetallicAddons, ...mergedBimetallic];
+
+  const optItems = optItemsSource
     .map(item => ({
       id: item.id || "",
       name: item.customName || item.name || "",
@@ -338,7 +345,7 @@ function buildProposalData({
       if (match) size = match[1];
     }
 
-    const layflatW = customLayflat ? customLayflat.replace(/[^0-9]/g, '') : (machineModel?.layflatWidthMm || machineModel?.widthMm || "1250");
+    const layflatW = customLayflat ? customLayflat.replace(/[^0-9]/g, '') : (machineModel?.layflatWidthMm || "1250");
 
     // Dynamically replace "TBD" with the extracted size if available, and [W] with layflat width
     Object.keys(filled).forEach(k => {
@@ -384,7 +391,7 @@ function buildProposalData({
     // --- TENSION CONTROL LOGIC FOR WINDERS ---
     if (isWinder) {
       const hasLoadcell = (selectedAddons || []).some(a => a.id === "addon-loadcell-tension");
-      const isIBC = (currentMachineModel?.name || "").toLowerCase().includes("ibc") ||
+      const isIBC = !!currentMachineModel?.isIbc ||
         (selectedMachineModelLabel || "").toLowerCase().includes("ibc");
 
       // Rule: IBC gets Loadcell by default. Non-IBC gets Loadcell only if addon is selected.
@@ -401,7 +408,7 @@ function buildProposalData({
       }
     }
 
-    // --- MACHINE MODEL OVERRIDES (from threeLayerModels.ts etc) ---
+    // --- MACHINE MODEL OVERRIDES (from src/data/models.ts) ---
     if (machineModel) {
       // 1. Winder specific overrides
       if (isWinder) {
@@ -437,28 +444,28 @@ function buildProposalData({
       }
 
       // 3. General overrides (Line speed, Output)
-      if (machineModel.lineSpeed) {
+      if (machineModel.mainNipLineSpeed) {
         const speedKey = Object.keys(filled).find(k => k.toLowerCase().includes("line speed"));
         if (speedKey) {
-          filled[speedKey] = machineModel.lineSpeed;
+          filled[speedKey] = machineModel.mainNipLineSpeed;
         }
       }
-      if (machineModel.outputKgHr) {
+      if (machineModel.maxOutputKgHr) {
         const outputKey = Object.keys(filled).find(k => k.toLowerCase().includes("output"));
         if (outputKey) {
-          filled[outputKey] = machineModel.outputKgHr;
+          filled[outputKey] = machineModel.maxOutputKgHr;
         }
       }
-      if (machineModel.thickness) {
+      if (machineModel.thicknessRange) {
         const thickKey = Object.keys(filled).find(k => k.toLowerCase().includes("thickness") && !k.toLowerCase().includes("variation"));
         if (thickKey) {
-          filled[thickKey] = machineModel.thickness;
+          filled[thickKey] = machineModel.thicknessRange;
         }
       }
-      if (machineModel.variation) {
+      if (machineModel.thicknessVariation) {
         const varKey = Object.keys(filled).find(k => k.toLowerCase().includes("variation"));
         if (varKey) {
-          filled[varKey] = machineModel.variation;
+          filled[varKey] = machineModel.thicknessVariation;
         }
       }
     }
@@ -540,6 +547,23 @@ function buildProposalData({
         }
       }
 
+      // 3-layer/5-layer only: when a Haul-Off is present, generateHaulOff() already
+      // bakes the full "...Collapsing frame with Segmented PBT Roller, side guides,
+      // Main Nip with X HP AC Drive." text into its own scope line (matches real
+      // quotation wording). A separate standalone "Main Nip" category component in
+      // the same preset would otherwise repeat that exact text as a redundant row.
+      if ((machineType === "3layer" || machineType === "5layer") && c.includes("main nip")) {
+        const hasHaulOffSibling = (selected || []).some(s => {
+          if (!s) return false;
+          const sC = (s.category || "").toLowerCase();
+          const sN = (s.name || "").toLowerCase();
+          return sC.includes("haul") || sN.includes("haul");
+        });
+        if (hasHaulOffSibling) {
+          return [];
+        }
+      }
+
       const key = item.id || item.name;
       const customDesc = overrides[key];
 
@@ -556,8 +580,6 @@ function buildProposalData({
           let nipWidth = 0;
           if (currentMachineModel && currentMachineModel.layflatWidthMm) {
             nipWidth = currentMachineModel.layflatWidthMm + 50;
-          } else if (currentMachineModel && currentMachineModel.widthMm) {
-            nipWidth = currentMachineModel.widthMm + 50;
           } else {
             nipWidth = (parseInt(item.size) || 0) + 50; // fallback
           }
@@ -732,7 +754,7 @@ function buildProposalData({
   const hasSelectedCF = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
     const n = (item.name || "").toLowerCase();
     const c = (item.category || "").toLowerCase();
-    return n.includes("collapsing") || c.includes("collapsing");
+    return n.includes("collapsing") || c.includes("collapsing") || c.includes("main nip") || n.includes("main nip");
   });
 
   const hasHaulOffItem = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
@@ -755,8 +777,27 @@ function buildProposalData({
     },
     _autoDesc: "Main Nip with AC Drive. Side mounted PBT rollers to collapse the layflat bubble."
   } : null;
+  const groupedSelected = [];
+  const extruderMap = new Map();
 
-  const annexureComponents = (selected || [])
+  (selected || []).forEach(item => {
+    if ((item?.category || "").toLowerCase().includes("extruder")) {
+      const sizeKey = item.size || item.sizeMm || item.id;
+      if (!extruderMap.has(sizeKey)) {
+        extruderMap.set(sizeKey, { ...item, name: "Extruder", qty: item.qty || 1 });
+      } else {
+        const existing = extruderMap.get(sizeKey);
+        existing.qty += (item.qty || 1);
+      }
+    } else {
+      groupedSelected.push(item);
+    }
+  });
+
+  const groupedExtruders = Array.from(extruderMap.values());
+  groupedSelected.unshift(...groupedExtruders);
+
+  const annexureComponents = groupedSelected
     .filter(item => item && item.name)
     .map(item => {
       const c = (item?.category || "").toLowerCase();
@@ -1036,8 +1077,7 @@ function buildProposalData({
       const combined = n + " " + c;
 
       if (is3or5Layer && mode === "sos") {
-        // 3/5-layer SOS: extruder -> control -> die -> air ring -> bubble cage ->
-        // haul-off -> collapsing frame (only if die rotation) -> idler -> secondary nip -> winder -> tower
+        // Restore original 3/5-layer SOS order
         if (n.includes("extruder")) return 1;
         if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
         if (n.includes("die")) return 3;
@@ -1045,7 +1085,6 @@ function buildProposalData({
         if (combined.includes("ibc")) return 4.5;
         if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 5;
         if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
-        // main nip and collapsing frame (may be combined into one entry for DR models)
         if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 7;
         if (combined.includes("idler")) return 8;
         if (combined.includes("secondary nip")) return 9;
@@ -1054,37 +1093,31 @@ function buildProposalData({
         return 90;
       }
 
-      if (is3or5Layer && mode === "annexure") {
-        // 3/5-layer detailed desc: Extruder -> Die/Air Ring -> Bubble Cage ->
-        // Main Nip + Collapsing Frame -> Haul-Off -> Winder -> Tower
-        if (n.includes("extruder")) return 1;
-        if (n.includes("die")) return 3;
-        if (combined.includes("air ring") || combined.includes("airring")) return 3;
-        if (combined.includes("ibc")) return 3.5;
-        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
-        if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
-        if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
-        if (combined.includes("secondary nip")) return 6.5;
-        if (combined.includes("winder")) return 7;
-        if (combined.includes("idler")) return 8.5;
-        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 9;
-        if (n.includes("tower") || n.includes("platform")) return 100;
-        return 90;
-      }
-
-      // Default order (mono / aba / other machine types)
+      // Detailed Description (Annexure) & Default Order (Mono/ABA)
+      // 1. Extruders
       if (n.includes("extruder")) return 1;
-      if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
-      if (n.includes("die")) return 3;
-      if (combined.includes("air ring") || combined.includes("airring")) return 4;
-      if (combined.includes("ibc")) return 5;
-      if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-      if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
-      if (combined.includes("idler")) return 8;
-      if (combined.includes("secondary nip")) return 9;
-      if (combined.includes("winder")) return 10;
-      if (n.includes("tower") || n.includes("platform")) return 100;
-      return 90;
+      // 2. Dies
+      if (n.includes("die")) return 2;
+      // 3. Air Rings
+      if (combined.includes("air ring") || combined.includes("airring") || combined.includes("ibc")) return 3;
+      // 4. Bubble Cage
+      if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
+      // 5. Main Nip and Collapsing Frame
+      if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
+      // 6. Haul-Off
+      if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
+      // 7. Winder
+      if (combined.includes("winder")) return 7;
+      // 8. Tower
+      if (n.includes("tower") || n.includes("platform")) return 8;
+      // 9. Panel
+      if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 9;
+
+      // Others
+      if (combined.includes("secondary nip")) return 90;
+      if (combined.includes("idler")) return 91;
+
+      return 100;
     };
 
     return [...items].sort((a, b) => {
@@ -1355,7 +1388,6 @@ export default function SummaryPage() {
     customRollerWidth, setCustomRollerWidth,
     buildWordContext,
     conversionRate, setConversionRate,
-    exportJsonOnly,
     quoteTemplate, setQuoteTemplate,
     showPricingFields, setShowPricingFields,
     showMarkupField, setShowMarkupField,
@@ -1370,6 +1402,28 @@ export default function SummaryPage() {
   } = useContext(ConfigContext);
 
   const [isClient, setIsClient] = useState(false);
+
+  const imageGroupedSelected = useMemo(() => {
+    const grouped = [];
+    const extruderMap = new Map();
+    (selected || []).forEach(item => {
+      if ((item?.category || "").toLowerCase().includes("extruder")) {
+        const sizeKey = item.size || item.sizeMm || item.id;
+        if (!extruderMap.has(sizeKey)) {
+          extruderMap.set(sizeKey, { ...item, name: "Extruder", qty: item.qty || 1 });
+        } else {
+          const existing = extruderMap.get(sizeKey);
+          existing.qty += (item.qty || 1);
+        }
+      } else {
+        grouped.push(item);
+      }
+    });
+    const groupedExtruders = Array.from(extruderMap.values());
+    grouped.unshift(...groupedExtruders);
+    return grouped;
+  }, [selected]);
+
   useEffect(() => {
     setIsClient(true);
     if (typeof window !== "undefined") {
@@ -1387,6 +1441,9 @@ export default function SummaryPage() {
   }, []);
   const [qrUrl, setQrUrl] = useState(null);
   const [showPdfPreview, setShowPdfPreview] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const toast = useToast();
 
 
   // Custom Add-on Inputs
@@ -1478,7 +1535,7 @@ export default function SummaryPage() {
     }
 
     if (machineType === "mono" || machineType === "aba") {
-      if (isGrandTotal) return false;
+      if (isGrandTotal || isDieRotation) return false;
       return true;
     }
 
@@ -1653,8 +1710,7 @@ export default function SummaryPage() {
                     value={customOutput || ""}
                     onChange={e => setCustomOutput(e.target.value)}
                     placeholder={
-                      currentMachineModel?.["Max. Output (kg/hr)"] ||
-                      currentMachineModel?.["OUTPUT"] ||
+                      currentMachineModel?.maxOutputKgHr ||
                       "e.g. 350 kg/hr"
                     }
                     className="w-full h-9 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue"
@@ -2125,16 +2181,35 @@ export default function SummaryPage() {
         <section className="glass-card p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-brand-blue">Selected Images</h3>
-            <div className="text-xs text-slate-500">{selected.length + selectedAddons.length} items</div>
+            <div className="text-xs text-slate-500">{[...imageGroupedSelected, ...selectedAddons].filter(i => i.id !== "grand-total-line").length} items</div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...selected, ...selectedAddons].map((item, idx) => (
+            {[...imageGroupedSelected, ...selectedAddons].filter(i => i.id !== "grand-total-line").map((item, idx) => {
+              // Fallback for stale local storage items that lost their image path
+              const fallbackImage = (name) => {
+                const n = (name || "").toLowerCase();
+                if (n.includes("extruder")) {
+                  if (machineType === "aba") return "/images/Extruder/Extruder ABA.png";
+                  if (machineType === "3layer" || machineType === "5layer") return "/images/Extruder/Extruder.png";
+                  return "/images/Extruder/Extruder Mono.png";
+                }
+                if (n.includes("die") && n.includes("3 layer")) return "/images/Die/Die.png";
+                if (n.includes("die") && n.includes("aba")) return "/images/Die/DieABA.png";
+                if (n.includes("die")) return "/images/Die/DieMono.png";
+                return "";
+              };
+              const finalImage = item.image || fallbackImage(item.name);
+
+              return (
               <div key={`${item.id || idx}-img`} className="rounded-2xl border border-slate-200 bg-white overflow-hidden hover:shadow-md transition-shadow">
-                <div className="h-40 bg-slate-50 flex items-center justify-center relative">
-                  {item.image ? (
+                <div 
+                  className="h-40 bg-slate-50 flex items-center justify-center relative cursor-pointer"
+                  onClick={() => finalImage ? setPreviewImage(finalImage) : null}
+                >
+                  {finalImage ? (
                     <>
                       <img
-                        src={item.image}
+                        src={finalImage}
                         alt={item.name}
                         className="max-h-full max-w-full object-contain"
                         onError={(e) => {
@@ -2159,10 +2234,37 @@ export default function SummaryPage() {
                   <div className="text-slate-500">Qty: {item.qty || 1}</div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </section>
       </main>
+
+      {/* ── IMAGE PREVIEW OVERLAY ───────────────────────────────────────────── */}
+      {previewImage && (
+        <div 
+          style={{
+            position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
+            zIndex: 10000, backgroundColor: "rgba(0,0,0,0.85)",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          }}
+          onClick={() => setPreviewImage(null)}
+        >
+          <div style={{ position: "absolute", top: 20, right: 20 }}>
+            <button 
+              onClick={() => setPreviewImage(null)}
+              className="bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-colors"
+            >
+              ✕ Close
+            </button>
+          </div>
+          <img 
+            src={previewImage} 
+            alt="Preview" 
+            style={{ maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain" }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
 
       {/* ── PDF PREVIEW OVERLAY ───────────────────────────────────────────── */}
       <div style={{
@@ -2189,61 +2291,89 @@ export default function SummaryPage() {
               {[{ k: "classic", label: "📄 Adroit Classic" }, { k: "v2", label: "✨ New Style" }]
                 .filter(opt => opt.k !== "v2" || process.env.NODE_ENV === "development")
                 .map(({ k, label }) => (
-                  <button key={k} onClick={() => setQuoteTemplate(k)}
-                    style={{ backgroundColor: quoteTemplate === k ? "#2563eb" : "transparent", color: "#fff", border: "none", borderRadius: "6px", padding: "5px 12px", fontWeight: quoteTemplate === k ? 700 : 400, cursor: "pointer", fontSize: "12px", transition: "background 0.2s" }}
+                  <button key={k} disabled={isDownloadingPdf} onClick={() => setQuoteTemplate(k)}
+                    style={{ backgroundColor: quoteTemplate === k ? "#2563eb" : "transparent", color: "#fff", border: "none", borderRadius: "6px", padding: "5px 12px", fontWeight: quoteTemplate === k ? 700 : 400, cursor: isDownloadingPdf ? "not-allowed" : "pointer", opacity: isDownloadingPdf ? 0.5 : 1, transition: "background 0.2s" }}
                   >{label}</button>
                 ))}
             </div>
             <button
+              disabled={isDownloadingPdf}
               onClick={async () => {
-                const el = quotationRef.current;
-                if (!el) { alert("Ref error"); return; }
-                const allImgs = Array.from(el.querySelectorAll("img"));
-                await Promise.all(allImgs.map(img =>
-                  img.complete ? Promise.resolve()
-                    : new Promise(res => { img.onload = res; img.onerror = res; })
-                ));
-                await new Promise(r => setTimeout(r, 200));
-                const html2canvas = html2canvasModule || (await import("html2canvas")).default;
-                const jsPDF = jsPDFModule || (await import("jspdf")).default;
-                const PAGE_W_PX = 794, PAGE_H_PX = 1123;
-                const A4_W_MM = 210, A4_H_MM = 297;
-                const pageDivs = Array.from(el.children || []).filter(
-                  c => c.style && (c.style.pageBreakAfter || c.style.breakAfter)
-                );
-                const pageList = pageDivs.length > 0 ? pageDivs : [el];
-                const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
-                for (let i = 0; i < pageList.length; i++) {
-                  const canvas = await html2canvas(pageList[i], {
-                    scale: 2, useCORS: true, allowTaint: true,
-                    backgroundColor: "#ffffff", logging: false,
-                    width: PAGE_W_PX, height: PAGE_H_PX,
-                    windowWidth: PAGE_W_PX, windowHeight: PAGE_H_PX,
-                    x: 0, y: 0,
-                  });
-                  const imgData = canvas.toDataURL("image/jpeg", 0.95);
-                  if (i > 0) pdf.addPage();
-                  pdf.addImage(imgData, "JPEG", 0, 0, A4_W_MM, A4_H_MM);
-                }
+                // Guard against double-clicks / re-entry while a download is already in progress
+                if (isDownloadingPdf) return;
+                setIsDownloadingPdf(true);
+                const loadingToast = toast.push({ title: "Generating PDF...", description: "Preparing pages...", variant: "loading", persist: true });
 
-                // Save lead in the background
                 try {
-                  const base64Pdf = pdf.output("datauristring");
-                  // Optional: Can add toast/loading indicator if desired, but user clicks 'download', we can just await it or not block download.
-                  // Awaiting ensures lead is saved but may delay download slightly.
-                  await saveLeadWithBase64Pdf(base64Pdf);
-                } catch (e) {
-                  console.error("Failed to save lead", e);
-                }
+                  const el = quotationRef.current;
+                  if (!el) { throw new Error("Ref error"); }
+                  const allImgs = Array.from(el.querySelectorAll("img"));
+                  await Promise.all(allImgs.map(img =>
+                    img.complete ? Promise.resolve()
+                      : new Promise(res => { img.onload = res; img.onerror = res; })
+                  ));
+                  await new Promise(r => setTimeout(r, 200));
+                  const html2canvas = html2canvasModule || (await import("html2canvas")).default;
+                  const jsPDF = jsPDFModule || (await import("jspdf")).default;
+                  const PAGE_W_PX = 794, PAGE_H_PX = 1123;
+                  const A4_W_MM = 210, A4_H_MM = 297;
+                  const pageDivs = Array.from(el.children || []).filter(
+                    c => c.style && (c.style.pageBreakAfter || c.style.breakAfter)
+                  );
+                  const pageList = pageDivs.length > 0 ? pageDivs : [el];
+                  const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+                  for (let i = 0; i < pageList.length; i++) {
+                    toast.update(loadingToast, { description: `Rendering page ${i + 1} of ${pageList.length}...` });
+                    const canvas = await html2canvas(pageList[i], {
+                      scale: 2, useCORS: true, allowTaint: true,
+                      backgroundColor: "#ffffff", logging: false,
+                      width: PAGE_W_PX, height: PAGE_H_PX,
+                      windowWidth: PAGE_W_PX, windowHeight: PAGE_H_PX,
+                      x: 0, y: 0,
+                    });
+                    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+                    if (i > 0) pdf.addPage();
+                    pdf.addImage(imgData, "JPEG", 0, 0, A4_W_MM, A4_H_MM);
+                  }
 
-                pdf.save(`Proposal for ${customer.company}_${customer?.quotationRef || "Draft"}.pdf`);
-                setShowPdfPreview(false);
+                  toast.update(loadingToast, { description: "Saving lead..." });
+                  // Save lead in the background — failure here shouldn't block the download itself
+                  try {
+                    const base64Pdf = pdf.output("datauristring");
+                    await saveLeadWithBase64Pdf(base64Pdf);
+                  } catch (e) {
+                    console.error("Failed to save lead", e);
+                  }
+
+                  pdf.save(`Proposal for ${customer.company}_${customer?.quotationRef || "Draft"}.pdf`);
+                  toast.dismiss(loadingToast);
+                  toast.push({ title: "Downloaded ✓", description: "Proposal PDF saved.", variant: "success" });
+                  setShowPdfPreview(false);
+                } catch (err) {
+                  console.error("PDF download failed", err);
+                  toast.dismiss(loadingToast);
+                  toast.push({ title: "Download failed", description: err.message || "Please try again.", variant: "error" });
+                } finally {
+                  setIsDownloadingPdf(false);
+                }
               }}
-              style={{ backgroundColor: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 20px", fontWeight: 700, cursor: "pointer", fontSize: "14px" }}
-            >⬇ Download PDF</button>
-            <button onClick={() => setShowPdfPreview(false)}
-              style={{ backgroundColor: "#475569", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 16px", cursor: "pointer", fontSize: "14px" }}
+              style={{ backgroundColor: isDownloadingPdf ? "#1d4ed8" : "#2563eb", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 20px", fontWeight: 700, cursor: isDownloadingPdf ? "not-allowed" : "pointer", fontSize: "14px", opacity: isDownloadingPdf ? 0.8 : 1, display: "inline-flex", alignItems: "center", gap: "8px" }}
+            >
+              {isDownloadingPdf && (
+                <span style={{
+                  width: 14, height: 14, borderRadius: "50%",
+                  border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff",
+                  display: "inline-block", animation: "spin 0.8s linear infinite",
+                }} />
+              )}
+              {isDownloadingPdf ? "Generating PDF..." : "⬇ Download PDF"}
+            </button>
+            <button disabled={isDownloadingPdf} onClick={() => setShowPdfPreview(false)}
+              style={{ backgroundColor: "#475569", color: "#fff", border: "none", borderRadius: "8px", padding: "8px 16px", cursor: isDownloadingPdf ? "not-allowed" : "pointer", opacity: isDownloadingPdf ? 0.5 : 1 }}
             >✕ Close</button>
+            <style jsx>{`
+              @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            `}</style>
           </div>
         )}
         <div style={{ marginTop: "16px", marginBottom: "40px" }}>

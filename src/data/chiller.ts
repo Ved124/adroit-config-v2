@@ -18,6 +18,7 @@ export interface ChillerAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
 }

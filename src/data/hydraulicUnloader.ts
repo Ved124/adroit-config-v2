@@ -18,6 +18,7 @@ export interface HydraulicUnloaderAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
 }
 
 export const HYDRAULIC_UNLOADER_ADDONS: HydraulicUnloaderAddon[] = [

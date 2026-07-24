@@ -17,6 +17,7 @@ export interface HeatExchangerAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
 }
@@ -39,8 +40,11 @@ export const HEAT_EXCHANGER_UNO_PRICES: { [key: string]: number } = {
 };
 
 export const HEAT_EXCHANGER_DUO_PRICES: { [key: string]: number } = {
+  "D20\"": 85000, // flat tier (26-40 all share 85000)
+  "D24\"": 85000,
   "D26\"": 85000,
   "D32\"": 85000,
+  "D36\"": 85000,
   "D40\"": 85000,
   "D50\"": 160000,
   "D60\"": 160000,

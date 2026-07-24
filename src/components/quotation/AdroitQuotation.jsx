@@ -426,7 +426,7 @@ function ScopePage({ components, refNo, date, price, basicInWords, discountedPri
                     )}
                     {allItems.map((item, i) => {
                         const rowText = item.description || item.shortDesc || item.name || "";
-                        const srNo = item.sr || (i + 1);
+                        const srNo = i + 1;
                         return (
                             <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#ffffff" : GRAY_BG }}>
                                 <td style={{ ...TD_SCOPE_CL, textAlign: "center", fontWeight: "bold", color: BLUE }}>
@@ -1328,38 +1328,73 @@ export const AdroitQuotation = memo(forwardRef(function AdroitQuotation({ data }
     const rawComponents = data.components || [];
     const rawAnnexure = data.annexure_components || rawComponents;
 
-    const getSortOrder = (item) => {
+    const getSortOrder = (item, mode = "sos") => {
         if (!item) return 99;
         const n = String(item.name || "").toLowerCase();
         const c = String(item.category || "").toLowerCase();
         const combined = n + " " + c;
 
-        if (n.includes("extruder")) return 1;
-        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
-        if (n.includes("die")) return 3;
-        if (combined.includes("air ring") || combined.includes("airring")) return 4;
-        if (combined.includes("ibc")) return 5;
-        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
-        if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
-        if (combined.includes("idler")) return 8;
-        if (combined.includes("secondary nip")) return 9;
-        if (combined.includes("winder")) return 10;
-        if (n.includes("tower") || n.includes("platform")) return 100;
+        if (mode === "sos") {
+          // Original SOS order
+          if (n.includes("extruder")) return 1;
+          if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 2;
+          if (n.includes("die")) return 3;
+          if (combined.includes("air ring") || combined.includes("airring")) return 4;
+          if (combined.includes("ibc")) return 5;
+          if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 6;
+          if (combined.includes("collapsing frame") || combined.includes("collapsing") || combined.includes("haul-off") || combined.includes("hauloff") || combined.includes("main nip") || (combined.includes("haul") && combined.includes("off"))) return 7;
+          if (combined.includes("idler")) return 8;
+          if (combined.includes("secondary nip")) return 9;
+          if (combined.includes("winder")) return 10;
+          if (n.includes("tower") || n.includes("platform")) return 100;
+          return 90;
+        }
 
-        return 90;
+        // Annexure / Detailed Description Order
+        // 1. Extruders
+        if (n.includes("extruder")) return 1;
+        // 2. Dies
+        if (n.includes("die")) return 2;
+        // 3. Air Rings
+        if (combined.includes("air ring") || combined.includes("airring") || combined.includes("ibc")) return 3;
+        // 4. Bubble Cage
+        if (combined.includes("bubble cage") || combined.includes("cage") || combined.includes("basket")) return 4;
+        // 5. Main Nip and Collapsing Frame
+        if (combined.includes("main nip") || combined.includes("collapsing frame") || combined.includes("collapsing")) return 5;
+        // 6. Haul-Off
+        if (combined.includes("haul-off") || combined.includes("hauloff") || (combined.includes("haul") && combined.includes("off"))) return 6;
+        // 7. Winder
+        if (combined.includes("winder")) return 7;
+        // 8. Tower
+        if (n.includes("tower") || n.includes("platform")) return 8;
+        // 9. Panel
+        if (n.includes("control") || n.includes("panel") || combined.includes("extrusion control")) return 9;
+
+        // Others
+        if (combined.includes("secondary nip")) return 90;
+        if (combined.includes("idler")) return 91;
+
+        return 100;
     };
 
-    const sortFn = (a, b) => {
-        const orderA = getSortOrder(a);
-        const orderB = getSortOrder(b);
+    const sortFnSOS = (a, b) => {
+        const orderA = getSortOrder(a, "sos");
+        const orderB = getSortOrder(b, "sos");
         if (orderA !== orderB) return orderA - orderB;
         return (a.name || "").localeCompare(b.name || "");
     };
 
-    const allComponents = [...rawComponents].sort(sortFn);
+    const sortFnAnnexure = (a, b) => {
+        const orderA = getSortOrder(a, "annexure");
+        const orderB = getSortOrder(b, "annexure");
+        if (orderA !== orderB) return orderA - orderB;
+        return (a.name || "").localeCompare(b.name || "");
+    };
+
+    const allComponents = [...rawComponents].sort(sortFnSOS);
     const annexureComponents = [...rawAnnexure]
         .filter(c => c.category !== "Electrical & Control Panel")
-        .sort(sortFn);
+        .sort(sortFnAnnexure);
 
     const optionalItems = data.optional_items || [];
     // All pricing comes from data.pricing (built by buildProposalData in summary.jsx)

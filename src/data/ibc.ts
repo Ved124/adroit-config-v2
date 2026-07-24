@@ -12,6 +12,7 @@ export interface IBCSystem {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
 }
 
 export const IBC_COMPONENTS: IBCSystem[] = [

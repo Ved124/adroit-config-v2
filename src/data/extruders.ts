@@ -1,6 +1,5 @@
 // data/extruders.ts
-// Dynamic master extruder cards — one per machine family.
-// Each card uses isDynamic: true and a sizeDetails map for per-size specs.
+// Dynamic master extruder cards. Each card uses isDynamic: true and sizeDetails map for per-size specs.
 
 export type MachineType = "mono" | "aba" | "3layer" | "5layer";
 
@@ -11,6 +10,7 @@ export interface TechSpecMap {
 export interface SizeDetail {
   name: string;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
 }
 
@@ -19,45 +19,45 @@ export interface ExtruderComponent {
   name: string;
   isDynamic: true;
   pricingType: "size";
+  variant: "short" | "long";
   machineTypes: MachineType[];
   image: string;
   cardDesc: string;
   price: number;
   prices: Record<string, number>;
   sizeDetails: Record<string, SizeDetail>;
+  scopeDesc?: string;
   shortDesc?: string;
 }
 
 export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
-
-  // ─────────────────── MONO ───────────────────
   {
-    id: "extruder-mono-dynamic",
-    name: "Extruder",
+    id: "ext-mono-dynamic",
+    name: "Monolayer Extruder",
     isDynamic: true,
     pricingType: "size",
+    variant: "short",
     machineTypes: ["mono"],
     image: "/images/Extruder/Extruder Mono.png",
     cardDesc: "Select extruder size. Specs and price update automatically.",
     price: 0,
     prices: {
       "35": 0,
-      "40": 0,
       "45": 0,
       "55": 0,
       "60": 0,
-      "65": 1600000,
       "75": 0,
       "90": 0,
       "100": 0,
+      "65": 1600000,
     },
     sizeDetails: {
       "35": {
         name: "Extruder 35 mm",
-        techDesc: {
-          "Screw Diameter": "35 mm single screw extruder mounted on a sturdy fabricated frame.",
+        techDesc: {"Screw Diameter": "35 mm single screw extruder mounted on a sturdy fabricated frame.",
           "L/D ratio": "28:1",
           "Type": "Barrier type screw with grooved feed section.",
+          "Barrel": "Screw & barrel",
           "Material": "Bimetallic screw and barrel, suitable for PE / LD / LLD blends.",
           "Screw Speed": "Approx. 115 RPM (variable with AC drive).",
           "Heating System": "Ceramic Heater",
@@ -65,32 +65,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "7.5 HP AC Motor & AC variable frequency Drive.",
           "Transmission System": "Through Belt and Pulley.",
           "Hopper": "MS fabricated hopper with sight glass and magnetic grill for metal trapping.",
-          "Screen Changer": "One Candle type Manual Screen Changers for 35 mm Extruders.",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
-      },
-      "40": {
-        name: "Extruder 40 mm",
-        techDesc: {
-          "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "28:1",
-          "Barrel": "Water cooled grooved feed section",
-          "Material": "Nitro Alloy.",
-          "Heating System": "Ceramic Band type Heaters",
-          "No. of Zones": "02 Nos. on barrel",
-          "Hopper": "MS fabricated with glass window for visual inspection. Magnetic grill provided.",
-          "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
-          "Transmission System": "Through Belt and Pulley.",
-          "Gearbox": "Zeal or equivalent make.",
-          "Screen Changer": "Candle type",
-        },
-        shortDesc: "One Nos. Extruders of 40 mm screw diameter and L/D ratio of 28:1, Screw & barrel, Ceramic Heater, 10 HP AC Motor & AC variable frequency Drive.",
+          "Screen Changer": "One Candle type Manual Screen Changers for 35 mm Extruders."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "45": {
         name: "Extruder 45 mm",
-        techDesc: {
-          "Screw Diameter": "45 mm single screw extruder for Unoflex monolayer range.",
-          "L/D ratio": "30:1 short barrel for medium output 50–60 kg/hr.",
+        techDesc: {"Screw Diameter": "45 mm single screw extruder for Unoflex monolayer range.",
+          "L/D ratio": "30 : 1 short barrel for medium output 50–60 kg/hr.",
           "Type": "Barrier screw profile optimised for thin gauge film.",
           "Barrel": "Water-cooled grooved feed section with bimetallic wear-resistant liner.",
           "Screw Speed": "Up to 115 RPM with closed-loop speed control.",
@@ -99,14 +80,12 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "15 kW AC motor with VFD.",
           "Transmission System": "Helical gear box with thrust bearing housing.",
           "Hopper": "Fabricated hopper with glass window for visual inspection and magnetic grill.",
-          "Screen Changer": "Manual candle type (optional hydraulic on request).",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Manual candle type (optional hydraulic on request)."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "55": {
         name: "Extruder 55 mm",
-        techDesc: {
-          "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+        techDesc: {"Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
           "L/D ratio": "30:1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
@@ -118,29 +97,54 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Through Belt and Pulley.",
           "Gearbox": "Premium / Zeal or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "60": {
         name: "Extruder 60 mm",
-        techDesc: {
-          "Screw Diameter": "60 mm single screw extruder.",
-          "L/D ratio": "30:1 short barrel.",
+        techDesc: {"Screw Diameter": "60 mm single screw extruder.",
+          "L/D ratio": "30 : 1 short barrel.",
           "Main Drive": "30 kW AC motor with vector drive.",
           "Heating System": "Approx. 15 kW total heater load on barrel.",
           "Type": "Barrier screw, medium duty.",
           "Hopper": "MS hopper with magnetic grill and level window.",
           "Screen Changer": "Manual candle type.",
-          "Application": "For general purpose blown film, shopping bags and liners.",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Application": "For general purpose blown film, shopping bags and liners."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      },
+      "75": {
+        name: "Extruder 75 mm",
+        techDesc: {"Screw Diameter": "75 mm single screw extruder for high output monolayer line.",
+          "L/D ratio": "30 : 1 short barrel.",
+          "Main Drive": "45 kW AC motor with VFD.",
+          "Heating System": "Approx. 22.4 kW heater load.",
+          "Type": "Barrier type screw, bimetallic barrel.",
+          "Applications": "Heavy duty liner film, shrink film and high width shopping bags.",
+          "Screen Changer": "Optional hydraulic screen changer."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      },
+      "90": {
+        name: "Extruder 90 mm",
+        techDesc: {"Screw Diameter": "90 mm single screw extruder.",
+          "L/D ratio": "30 : 1.",
+          "Main Drive": "50 kW AC motor with inverter.",
+          "Heating System": "29.5 kW total barrel heater load.",
+          "Applications": "Wide width film for construction and agricultural use."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      },
+      "100": {
+        name: "Extruder 100 mm",
+        techDesc: {"Screw Diameter": "100 mm single screw extruder.",
+          "L/D ratio": "30 : 1.",
+          "Main Drive": "60 kW AC motor with VFD.",
+          "Heating System": "31.5 kW heater load.",
+          "Applications": "Very wide width liner and greenhouse film."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "65": {
         name: "Extruder 65 mm",
-        techDesc: {
-          "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "30:1",
+        techDesc: {"Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "30 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -150,57 +154,20 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
-      },
-      "75": {
-        name: "Extruder 75 mm",
-        techDesc: {
-          "Screw Diameter": "75 mm single screw extruder for high output monolayer line.",
-          "L/D ratio": "30:1 short barrel.",
-          "Main Drive": "45 kW AC motor with VFD.",
-          "Heating System": "Approx. 22.4 kW heater load.",
-          "Type": "Barrier type screw, bimetallic barrel.",
-          "Applications": "Heavy duty liner film, shrink film and high width shopping bags.",
-          "Screen Changer": "Optional hydraulic screen changer.",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
-      },
-      "90": {
-        name: "Extruder 90 mm",
-        techDesc: {
-          "Screw Diameter": "90 mm single screw extruder.",
-          "L/D ratio": "30:1.",
-          "Main Drive": "50 kW AC motor with inverter.",
-          "Heating System": "29.5 kW total barrel heater load.",
-          "Applications": "Wide width film for construction and agricultural use.",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
-      },
-      "100": {
-        name: "Extruder 100 mm",
-        techDesc: {
-          "Screw Diameter": "100 mm single screw extruder.",
-          "L/D ratio": "30:1.",
-          "Main Drive": "60 kW AC motor with VFD.",
-          "Heating System": "31.5 kW heater load.",
-          "Applications": "Very wide width liner and greenhouse film.",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
     },
   },
-
-  // ─────────────────── ABA ───────────────────
   {
-    id: "extruder-aba-dynamic",
-    name: "Extruder",
+    id: "ext-aba-dynamic",
+    name: "ABA Extruder",
     isDynamic: true,
     pricingType: "size",
+    variant: "long",
     machineTypes: ["aba"],
     image: "/images/Extruder/Extruder ABA.png",
-    cardDesc: "Select extruder size for ABA co-extrusion. Specs and price update automatically.",
+    cardDesc: "Select extruder size. Specs and price update automatically.",
     price: 0,
     prices: {
       "35": 0,
@@ -215,8 +182,7 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     sizeDetails: {
       "35": {
         name: "Extruder 35 mm",
-        techDesc: {
-          "Screw Diameter": "35 mm single screw extruder mounted on a sturdy frame.",
+        techDesc: {"Screw Diameter": "35 mm single screw extruder mounted on a sturdy frame.",
           "L/D ratio": "28:1",
           "Screw Speed": "95 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -227,15 +193,14 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "7.5 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor coupled with helical gearbox.",
           "Gearbox": "Premium or Equivalent Make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        scopeDesc: "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders.",
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "40": {
         name: "Extruder 40 mm",
-        techDesc: {
-          "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "30:1",
+        techDesc: {"Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "30 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled grooved feed section",
@@ -246,14 +211,12 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "10 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox.",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "45": {
         name: "Extruder 45 mm",
-        techDesc: {
-          "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
+        techDesc: {"Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
           "L/D ratio": "30:1",
           "Barrel": "Water cooled grooved feed section",
           "Material": "Nitro Alloy steel",
@@ -263,15 +226,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor coupled with helical gearbox.",
           "Gearbox": "Helical Type. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "50": {
         name: "Extruder 50 mm",
-        techDesc: {
-          "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -281,14 +242,12 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "55": {
         name: "Extruder 55 mm",
-        techDesc: {
-          "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+        techDesc: {"Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
           "L/D ratio": "30:1",
           "Type": "Barrier",
           "Barrel": "Water cooled grooved feed section",
@@ -299,15 +258,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "30 HP AC motor (ABB or Equivalent) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox (Zeal).",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "65": {
         name: "Extruder 65 mm",
-        techDesc: {
-          "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -317,15 +274,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "50 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "75": {
         name: "Extruder 75 mm",
-        techDesc: {
-          "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "105 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -335,15 +290,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "90": {
         name: "Extruder 90 mm",
-        techDesc: {
-          "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "90 RPM",
           "Barrel": "Water cooled grooved feed section",
@@ -354,22 +307,20 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox.",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
     },
   },
-
-  // ─────────────────── 3-LAYER / 5-LAYER ───────────────────
   {
-    id: "extruder-3layer-dynamic",
-    name: "Extruder",
+    id: "ext-coex-dynamic",
+    name: "Coex Long Extruder",
     isDynamic: true,
     pricingType: "size",
+    variant: "long",
     machineTypes: ["3layer", "5layer"],
     image: "/images/Extruder/Extruder.png",
-    cardDesc: "Select extruder size for 3-layer co-extrusion. Specs and price update automatically.",
+    cardDesc: "Select extruder size. Specs and price update automatically.",
     price: 0,
     prices: {
       "40": 0,
@@ -383,9 +334,8 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     sizeDetails: {
       "40": {
         name: "Extruder 40 mm",
-        techDesc: {
-          "Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "30:1",
+        techDesc: {"Screw Diameter": "40 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "30 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled grooved feed section",
@@ -396,15 +346,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "15 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox.",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "45": {
         name: "Extruder 45 mm",
-        techDesc: {
-          "Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "30:1",
+        techDesc: {"Screw Diameter": "45 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "30 : 1",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled grooved feed section",
           "Material": "Nitro Alloy",
@@ -414,15 +362,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "20 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox.",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "50": {
         name: "Extruder 50 mm",
-        techDesc: {
-          "Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -432,15 +378,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "30 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "55": {
         name: "Extruder 55 mm",
-        techDesc: {
-          "Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "55 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled grooved feed section",
@@ -451,15 +395,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "40 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox.",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "65": {
         name: "Extruder 65 mm",
-        techDesc: {
-          "Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "65 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "115 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -469,15 +411,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "60 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "75": {
         name: "Extruder 75 mm",
-        techDesc: {
-          "Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "30:1",
+        techDesc: {"Screw Diameter": "75 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "30 : 1",
           "Type": "Barrier",
           "Screw Speed": "105 RPM",
           "Barrel": "Water cooled semi grooved feed section",
@@ -487,15 +427,13 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Hopper": "MS fabricated with glass window for visual inspection.",
           "Main Drive": "100 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox. (Zeal)",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "90": {
         name: "Extruder 90 mm",
-        techDesc: {
-          "Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
-          "L/D ratio": "32:1",
+        techDesc: {"Screw Diameter": "90 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "32 : 1",
           "Type": "Barrier",
           "Screw Speed": "90 RPM",
           "Barrel": "Water cooled grooved feed section",
@@ -506,9 +444,8 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "125 HP AC motor (ABB) with frequency variable drive.",
           "Transmission System": "Motor directly coupled with helical gearbox.",
           "Gearbox": "Premium or equivalent make.",
-          "Screen changer": "Candle type",
-        },
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output.",
+          "Screen Changer": "Candle type"},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
     },
   },

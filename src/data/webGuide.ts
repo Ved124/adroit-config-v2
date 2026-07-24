@@ -18,20 +18,20 @@ export interface WebGuideAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   isDynamic?: boolean;
 }
 
 export const WEB_GUIDE_PRICES = {
-  "1120": 160000,
-  "1350": 200000,
-  "1450": 200000,
-  "1550": 240000,
-  "1620": 290000,
-  "1870": 290000,
-  "1970": 290000,
-  "2120": 325000,
-  "2370": 380000,
-  "2620": 425000,
+  "1000": 160000,
+  "1250": 200000,
+  "1350": 240000,
+  "1500": 290000,
+  "1750": 290000,
+  "1850": 290000,
+  "2000": 325000,
+  "2250": 380000,
+  "2500": 425000,
 };
 
 export const WEB_GUIDE_BRANDS = ["Adroit", "E+L"];

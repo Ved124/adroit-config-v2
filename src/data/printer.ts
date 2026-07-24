@@ -13,6 +13,7 @@ export interface PrinterAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
 }

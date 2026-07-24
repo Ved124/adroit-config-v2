@@ -18,7 +18,10 @@ export interface WinderComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
 }
 
 // Prices extracted from spreadsheet image
@@ -99,6 +102,8 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     cardDesc: "Secondary Nip & Manual Back to Back Surface Winder. Select size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: MANUAL_BACK_TO_BACK_PRICES,
     techDesc: {
       "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
       "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
@@ -124,6 +129,8 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     cardDesc: "Single Surface Winder. Select size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: SINGLE_SURFACE_PRICES,
     techDesc: {
       "Roll diameter": "Bow roller prior to drum roller for wrinkle free winding.",
       "Surface winder drive": "1 HP AC motor with variable frequency drive.",
@@ -142,6 +149,8 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     cardDesc: "Secondary Nip & two separate surface winders. Select size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: SURFACE_WINDER_PRICES,
     techDesc: {
       "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
       "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",
@@ -167,6 +176,8 @@ export const WINDER_COMPONENTS: WinderComponent[] = [
     cardDesc: "Secondary Nip & two separate surface winders with fully automatic changeover. Select size to add.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: AUTOMATIC_WINDER_PRICES,
     techDesc: {
       "Additional Nip": "02 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
       "Edge slit assembly": "Highly efficient design for trouble free operation reduces trim wastage.",

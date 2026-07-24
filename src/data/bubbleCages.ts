@@ -19,8 +19,11 @@ export interface BubbleCageComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
 }
 
 export const MANUAL_BC_PRICES: Record<string, number> = {
@@ -77,11 +80,13 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     name: "Manual Bubble Cage",
     variant: "manual",
     segments: 6,
-    machineTypes: ["mono"],
+    machineTypes: ["mono", "3layer", "5layer"],
     image: "/images/Bubble Cage/Manual Cage.png",
     cardDesc: "Select size to add manual bubble cage.",
     price: 0,
     isDynamic: true,
+      pricingType: "size",
+      prices: MANUAL_BC_PRICES,
     techDesc: {
       "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
       "Actuation of arms": "Manual open-close operation.",
@@ -99,6 +104,8 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     cardDesc: "Select size to add manual bubble cage.",
     price: 0,
     isDynamic: true,
+      pricingType: "size",
+      prices: MANUAL_BC_PRICES,
     techDesc: {
       "Type": "Arms to support the bubble.",
     },
@@ -114,6 +121,8 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     cardDesc: "Select size to add motorized open-close bubble cage.",
     price: 0,
     isDynamic: true,
+      pricingType: "size",
+      prices: OPEN_CLOSE_BC_PRICES,
     techDesc: {
       "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through Silicon Sleeve rollers for minimum drag.",
       "Actuation of arms": "Motorized Open-Close operation.",
@@ -131,6 +140,8 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     cardDesc: "Select size to add motorized up-down & open-close bubble cage.",
     price: 0,
     isDynamic: true,
+      pricingType: "size",
+      prices: UP_DOWN_BC_PRICES,
     techDesc: {
       "Type": "Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.",
       "Actuation of arms": "Motorized Up Down & Open-Close with Liner Actuator.",

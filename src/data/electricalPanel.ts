@@ -19,186 +19,71 @@ export interface ElectricalAddon {
   qty?: number;
   isDynamic?: boolean;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   pricingType?: "size" | "brand" | "dropdown";
   prices?: Record<string, number>;
 }
 
-export const PANEL_3LAYER_PRICES: Record<string, number> = {
-  "1120": 1100000,
-  "1350": 1350000,
-  "1450": 1450000,
-  "1620": 1650000,
-  "1870": 1870000,
-  "1970": 1970000,
-  "2120": 2120000,
-  "2370": 2370000,
-  "2620": 2620000,
+export const PANEL_DYNAMIC_PRICES: Record<string, number> = {
+  // Mono/ABA sizes, re-keyed from the mm tier below by each model's machineWidth
+  // (layflatWidthMm), the same way the dynamic-sizing logic looks them up automatically.
+  "U20": 1100000,  // UNOFLEX-20 (450mm -> 1000 tier)
+  "U24": 1100000,  // UNOFLEX-24 (550mm -> 1000 tier)
+  "U32": 1100000,  // UNOFLEX-32 (750mm -> 1000 tier)
+  "U40": 1100000,  // UNOFLEX-40 / UNOFLEX-40-55MM (1000mm tier)
+  "U50": 1350000,  // UNOFLEX-50 / UNOFLEX-50-65MM (1250mm tier)
+  "U72": 1970000,  // UNOFLEX-72 (1800mm -> 1850 tier)
+  "U110": 2620000, // UNOFLEX-110 (2800mm, beyond table range -> largest tier)
+  "D20": 1100000,  // DUOFLEX-20 (450mm -> 1000 tier)
+  "D24": 1100000,  // DUOFLEX-24 (550mm -> 1000 tier)
+  "D32": 1100000,  // DUOFLEX-32 (750mm -> 1000 tier)
+  "D36": 1100000,  // DUOFLEX-36 (850mm -> 1000 tier)
+  "D40": 1100000,  // DUOFLEX-40 (950mm -> 1000 tier)
+  "D50": 1350000,  // DUOFLEX-50 / DUOFLEX-50-65/55 (1250mm tier)
+  // Existing 3/5 layer sizes
+  "1000": 1100000,
+  "1250": 1350000,
+  "1350": 1450000,
+  "1500": 1650000,
+  "1750": 1870000,
+  "1850": 1970000,
+  "2000": 2120000,
+  "2250": 2370000,
+  "2500": 2620000,
 };
 
 export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
-  // ---------------- DOL STARTER PANEL – SMALL MONO / ABA ----------------
   {
-    id: "panel-dol-starter",
-    name: "Electrical Control Panel – DOL Starter",
-    type: "basic-panel",
-    machineTypes: ["mono", "aba"],
-    usedInModels: [],
+    id: "panel-dynamic",
+    name: "Electrical & Control Panel",
+    type: "advanced-plc",
+    machineTypes: ["mono", "aba", "3layer", "5layer"],
     image: "/images/Panel/Panel.png",
     cardDesc:
-      "Basic control panel with DOL starters and PID temperature controllers for small mono/ABA lines.",
-    price: 0,
-    qty: 1,
-    techDesc: {
-      "Panel Type":
-        "Floor mounted MS powder coated enclosure with front door.",
-      "Temperature Control":
-        "PID temperature controllers for barrel and die zones.",
-      "Drives":
-        "DOL / Star-Delta starters for extruder and auxiliary motors; AC VFD for haul-off and winder.",
-      "Protection":
-        "MCBs, contactors, overload relays and emergency stop circuits.",
-      "Indicators":
-        "Digital temperature indicators and ammeters as required.",
-      "Supply":
-        "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified).",
-    },
-    shortDesc: "DOL starter panel with PID temp control for small mono/ABA lines.",
-  },
-
-  // ---------------- BASIC PANEL – MONO ----------------
-  {
-    id: "panel-basic-mono",
-    name: "Electrical Control Panel – Basic",
-    type: "basic-panel",
-    machineTypes: ["mono"],
-    usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900"],
-    image: "/images/Panel/Panel.png",
-    cardDesc:
-      "Basic control panel with PID temperature controllers and AC drives for monolayer lines.",
-    price: 0,
-    qty: 1,
-    techDesc: {
-      "Panel Type":
-        "Floor mounted MS powder coated enclosure with front door.",
-      "Temperature Control":
-        "PID temperature controllers for barrel, die and air ring zones.",
-      "Drives":
-        "AC variable frequency drives for extruder, haul-off and winder motors.",
-      "Protection":
-        "MCBs, contactors, overload relays and emergency stop circuits.",
-      "Indicators":
-        "Digital temperature indicators, ammeters and voltmeters as required.",
-      "Supply":
-        "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified).",
-    },
-    shortDesc: "Basic panel with PID temp control & AC drives for mono lines.",
-  },
-
-  // ---------------- STANDARD AC DRIVE PANEL – ABA / 3-LAYER MID SIZE ----------------
-  // {
-  //   id: "panel-acdrive-standard",
-  //   name: "AC Drive Control Panel – Standard",
-  //   type: "ac-drive-panel",
-  //   machineTypes: ["aba", "3layer"],
-  //   usedInModels: ["DUOFLEX-750", "DUOFLEX-1000", "Innoflex-1120", "Innoflex-1350"],
-  //   image: "/images/Panel/Panel.png",
-  //   cardDesc:
-  //     "Central AC drive panel with coordinated speed reference for co-ex lines.",
-  //   price: 0,
-  //   qty: 1,
-  //   techDesc: {
-  //     "Panel Type":
-  //       "Floor mounted, compartmentalized panel with segregated power & control wiring.",
-  //     "Drives":
-  //       "Individual AC drives for extruders, haul-off, winder and auxiliary motors.",
-  //     "Speed Reference":
-  //       "Master line speed reference with follower drives for coordinated speed control.",
-  //     "Temperature Control":
-  //       "PID temperature controllers for each heating zone, with digital display.",
-  //     "Interlocks":
-  //       "Safety interlocks for heaters, motors, emergency stop and doors.",
-  //     "Wiring":
-  //       "Numbered wiring, ferruled terminations, cable entry from bottom/top as per layout.",
-  //   },
-  //   shortDesc: "AC drive panel with coordinated speed reference for co-ex lines.",
-  // },
-
-  // ---------------- PLC + HMI PANEL – 3-LAYER / HIGHER END ----------------
-  // {
-  //   id: "panel-plc-hmi",
-  //   name: "PLC + HMI Control Panel",
-  //   type: "plc-hmi",
-  //   machineTypes: ["aba", "3layer"],
-  //   usedInModels: ["Innoflex-1350", "Innoflex-1620", "Innoflex-1870"],
-  //   image: "/images/Panel/Panel.png",
-  //   cardDesc:
-  //     "PLC based automation panel with touch screen HMI for recipe and line control.",
-  //   price: 0,
-  //   qty: 1,
-  //   techDesc: {
-  //     "Automation":
-  //       "Central PLC with distributed I/O for machine, temperature and drive control.",
-  //     "HMI":
-  //       "Color touch screen HMI for parameter setting, recipes and alarms.",
-  //     "Drives":
-  //       "Vector / VFD drives with communication (Modbus / Profinet, model dependent).",
-  //     "Recipes":
-  //       "Recipe storage for different film structures (layer ratio, temperatures, speeds).",
-  //     "Diagnostics":
-  //       "Alarm history, event logging and status pages for easy troubleshooting.",
-  //     "Integration":
-  //       "Provision to interface with gravimetric system, gauge control and IBC (where selected).",
-  //   },
-  //   shortDesc: "PLC automation panel with touch HMI for recipe & line control.",
-  // },
-
-  // // ---------------- ADVANCED PLC PANEL – WIDE WEB / FUTURE 5-LAYER ----------------
-  // {
-  //   id: "panel-advanced-plc",
-  //   name: "Advanced PLC + Drive Panel",
-  //   type: "advanced-plc",
-  //   machineTypes: ["3layer", "5layer"],
-  //   usedInModels: ["Innoflex-2120", "Innoflex-2370", "Innoflex-2620"],
-  //   image: "/images/Panel/Panel.png",
-  //   cardDesc:
-  //     "High-end PLC/drive panel for wide web industrial blown film lines with full integration.",
-  //   price: 0,
-  //   qty: 1,
-  //   techDesc: {
-  //     "System":
-  //       "Central PLC system with integrated motion/drives platform (brand/model as per final offer).",
-  //     "HMI":
-  //       "Large touch panel HMI at main operator station plus remote panels as required.",
-  //     "Networking":
-  //       "Industrial Ethernet network for drives, I/O, gravimetric, gauge system and IBC.",
-  //     "Features":
-  //       "Recipe management, trend logging, production reports and maintenance reminders.",
-  //     "Safety":
-  //       "Emergency stop chain, safety relays, door interlocks and safety category components (as applicable).",
-  //     "Remote Access":
-  //       "Option for remote diagnostics / support via VPN or secure link (if offered).",
-  //   },
-  //   shortDesc: "High-end PLC/drive panel for wide web lines with full integration.",
-  // },
-  {
-    id: "panel-3layer-dynamic",
-    name: "Electrical Control Panel",
-    type: "ac-drive-panel",
-    machineTypes: ["3layer"],
-    image: "/images/Panel/Panel.png",
-    cardDesc: "Select size to add electrical control panel for 3-layer line.",
+      "Advanced control panel for all lines. Select size/model to match your machine.",
     price: 0,
     qty: 1,
     isDynamic: true,
     pricingType: "size",
-    prices: PANEL_3LAYER_PRICES,
+    prices: PANEL_DYNAMIC_PRICES,
     techDesc: {
-      "Panel Type": "Floor mounted, compartmentalized panel with segregated power & control wiring.",
-      "Drives": "Individual AC drives for extruders, haul-off, winder and auxiliary motors.",
-      "Temperature Control": "PID temperature controllers for each heating zone, with digital display.",
-      "Interlocks": "Safety interlocks for heaters, motors, emergency stop and doors."
+      "Panel Type":
+        "Floor mounted MS powder coated enclosure with integrated cooling.",
+      "Temperature Control":
+        "PID temperature controllers (brand specific).",
+      "Drives":
+        "AC variable frequency drives for extruder and downstream equipment.",
+      "Automation":
+        "Relay logic / PLC based automation depending on model size.",
+      "Protection":
+        "MCBs, contactors, overload relays, SSRs, and emergency stop circuits.",
+      "Indicators":
+        "Comprehensive digital monitoring for all critical parameters.",
+      "Supply":
+        "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified).",
     },
-    shortDesc: "Dynamic control panel with model-specific size selection.",
+    scopeDesc: "Complete extrusion controls on main panel with Cold start protection.",
+    shortDesc: "Advanced control panel with sizing.",
   },
 ];

@@ -10,6 +10,7 @@ export interface BimetallicAddon {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   isDynamic: boolean;
 }
 

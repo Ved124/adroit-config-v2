@@ -1,5 +1,5 @@
 // data/hauloffs.ts
-// Beta component data for Haul-Off / Main Nip units.
+// Component data for Haul-Off / Main Nip units.
 
 export type MachineType = "mono" | "aba" | "3layer" | "5layer";
 
@@ -17,10 +17,13 @@ export interface HauloffComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
 }
 
-// Prices extracted from master list image
+// Prices for Horizontal Haul-Off (oscillating tower units)
 export const HAULOFF_PRICES: Record<string, number> = {
   "1000": 1100000,
   "1250": 1100000,
@@ -43,16 +46,12 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     machineTypes: ["mono", "3layer"],
     usedInModels: ["UNOFLEX-450", "UNOFLEX-750_900", "Innoflex-1350A"],
     image: "/images/hauloff/Vertical Hauloff.png",
-    cardDesc:
-      "Compact vertical haul-off for small and medium monolayer lines.",
+    cardDesc: "Compact vertical haul-off for small and medium monolayer lines.",
     price: 0,
     techDesc: {
-      "Construction":
-        "The haul-off will be supplied as a compact assembly mounted above the die with adjustable platform.",
-      "Collapsing Frames":
-        "Side-mounted slat / PBT roller collapsing frame (as per configuration).",
-      "Oscillation":
-        "Optional manual oscillation arrangement for better roll geometry.",
+      "Construction": "The haul-off will be supplied as a compact assembly mounted above the die with adjustable platform.",
+      "Collapsing Frames": "Side-mounted slat / PBT roller collapsing frame (as per configuration).",
+      "Oscillation": "Optional manual oscillation arrangement for better roll geometry.",
       "Turnbars": "Optional aluminium turn bars for edge trimming / gusseting.",
     },
   },
@@ -66,6 +65,8 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
     cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: HAULOFF_PRICES,
     techDesc: {
       "Construction": "The haul off will be shipped in assembled parts.",
       "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
@@ -76,44 +77,6 @@ export const HAULOFF_COMPONENTS: HauloffComponent[] = [
       "Oscillation": "360 degree with end limit switch sensing and override protection ensuring even thickness variation distribution on rolls giving excellent roll geometry.",
       "Turnbars": "02 Nos. Hard Anodized Aluminum roller mounted in haul off.",
       "Max linespeed": "TBD",
-    },
-  },
-
-  {
-    id: "main-nip-dynamic",
-    name: "Main Nip",
-    variant: "horizontal",
-    isDynamic: true,
-    machineTypes: ["mono", "aba"],
-    usedInModels: [],
-    image: "/images/MainNip/MainNip.png",
-    cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
-    price: 0,
-    techDesc: {
-      "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-      "Nip roller width": "TBD mm",
-      "Nip roller drive": "1-2 HP AC motor with variable frequency drive.",
-
-
-    },
-  },
-
-  {
-    id: "main-nip-dynamic-multi",
-    name: "Main Nip",
-    variant: "horizontal",
-    isDynamic: true,
-    machineTypes: ["3layer", "5layer"],
-    usedInModels: [],
-    image: "/images/MainNip/MainNipMultiL.png",
-    cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
-    price: 0,
-    techDesc: {
-      "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-      "Nip roller width": "TBD mm",
-      "Nip roller drive": "1-2 HP AC motor with variable frequency drive.",
-
-
     },
   }
 ];

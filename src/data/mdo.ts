@@ -18,6 +18,7 @@ export interface MDOAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
 }
 
 export const MDO_ADDONS: MDOAddon[] = [

@@ -10,9 +10,7 @@ import React, {
   useState,
 } from "react";
 
-import { MONO_MODELS } from "../data/monoModels";
-import { ABA_MODELS } from "../data/abaModels";
-import { THREE_LAYER_MODELS } from "../data/threeLayerModels";
+import { ALL_MODELS, MONO_MODELS, ABA_MODELS, THREE_LAYER_MODELS } from "./data/models";
 import { EXTRUDER_COMPONENTS } from "./data/extruders";
 import { DIE_COMPONENTS } from "./data/dies";
 import { BUBBLE_CAGE_COMPONENTS } from "./data/bubbleCages";
@@ -22,6 +20,7 @@ import { WINDER_COMPONENTS } from "./data/winders";
 import { AIR_RING_COMPONENTS } from "./data/airRing";
 import { IBC_COMPONENTS } from "./data/ibc";
 import { COLLAPSING_FRAME_COMPONENTS, COLLAPSING_FRAME_PRICES } from "./data/collapsingFrame";
+import { MAIN_NIP_COMPONENTS } from "./data/mainNip";
 import { CORONA_TREATER_COMPONENTS } from "./data/corona";
 import { TRIM_ADDONS } from "./data/trim";
 import { MATERIAL_HANDLING_ADDONS } from "./data/materialHandling";
@@ -34,12 +33,12 @@ import { PRINTER_ADDONS } from "./data/printer";
 import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
 import { MDO_ADDONS } from "./data/mdo";
 import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
-import { BIMETALLIC_BASE, SCREW_SIZES } from "./data/bimetallic";
+import { BIMETALLIC_BASE, BIMETALLIC_PRICES, SCREW_SIZES } from "./data/bimetallic";
 import { WINDER_ADDONS } from "./data/winderAddons";
 import { DIE_ADDONS, DIE_ROTATION_ADDON } from "./data/dieAddons";
 import { EPC_COMPONENTS } from "./data/epc";
 import { OPTIONAL_FEATURE_ADDONS } from "./data/optionalFeatures";
-import { MODEL_PRESETS } from "./data/modelPresets";
+import { resolveTechDesc, resolveScopeDesc, toTechRows } from "./utils/mergeCatalogItem";
 
 import { Modal } from "../components/ui/Modal"; // ← keep your existing Modal
 import { useToast } from "../components/ui/Toast"; // ← same hook you already use
@@ -72,31 +71,23 @@ const STORAGE_KEY = "adroit_configurator_v4";
 
 // Module-level cache for heavy client-side libraries to avoid ChunkLoadErrors in Next.js dev server hot-reloads
 let html2pdfModule = null;
-let html2canvasModule = null;
-let jsPDFModule = null;
 
 // 💡 Base components – extend this as you like
 // Machine types we use in "supported"
 export const MACHINE_TYPE_KEYS = ["mono", "aba", "3layer", "5layer"];
-const MACHINE_MODELS = {
-  mono: MONO_MODELS,
-  aba: ABA_MODELS,
-  "3layer": THREE_LAYER_MODELS,
-  // 5layer: [] // keep for future if you add 5-layer data
-};
 
 export const COMPONENTS_DATA = {
   Extruder: EXTRUDER_COMPONENTS,
   "Die Head": DIE_COMPONENTS,
   "Air Ring": AIR_RING_COMPONENTS,
-  IBC: IBC_COMPONENTS,
-  "Collapsing Frame": COLLAPSING_FRAME_COMPONENTS,
-  "Haul-Off": HAULOFF_COMPONENTS.filter(c => !c.id.includes("main-nip")),
-  "Main Nip": HAULOFF_COMPONENTS.filter(c => c.id.includes("main-nip")),
+  IBC: IBC_COMPONENTS, // Will group with Air Ring based on sorting logic if it's there
   "Bubble Cage": BUBBLE_CAGE_COMPONENTS,
-  "Tower / Platform": TOWER_COMPONENTS,
+  "Main Nip": MAIN_NIP_COMPONENTS,
+  "Haul-Off": HAULOFF_COMPONENTS.filter(c => !c.id.includes("main-nip")),
   Winder: WINDER_COMPONENTS,
+  "Tower / Platform": TOWER_COMPONENTS,
   "Electrical & Control Panel": ELECTRICAL_ADDONS,
+  "Trim Blower": TRIM_ADDONS,
 };
 
 export const ADDONS_DATA = {
@@ -131,82 +122,12 @@ export function ConfigProvider({ children }) {
           html2pdfModule = mod.default;
         }).catch(() => { });
       }
-
-      if (!html2canvasModule) {
-        import("html2canvas").then((mod) => {
-          html2canvasModule = mod.default;
-        }).catch(() => { });
-      }
-
-      if (!jsPDFModule) {
-        import("jspdf").then((mod) => {
-          jsPDFModule = mod.default;
-        }).catch(() => { });
-      }
     }
   }, []);
 
   const [adminDataLoaded, setAdminDataLoaded] = useState(false);
 
-  useEffect(() => {
-    // Fetch dynamic admin overrides so the Configurator reflects the Hub's CRUD edits live
-    // Adding a timestamp prevents the browser from caching the old JSON files.
-    // We run this whenever the route changes so navigating from Admin Hub -> Configurator updates immediately.
-    const t = Date.now();
-    Promise.all([
-      fetch(`/api/admin/models?t=${t}`).then(r => r.json()).catch(() => null),
-      fetch(`/api/admin/presets?t=${t}`).then(r => r.json()).catch(() => null),
-      fetch(`/api/admin/components?t=${t}`).then(r => r.json()).catch(() => null),
-    ]).then(([models, presets, components]) => {
-      let changed = false;
 
-      if (models && Object.keys(models).length > 0) {
-        if (models.mono && models.mono.length > 0) { MONO_MODELS.splice(0, MONO_MODELS.length, ...models.mono); }
-        if (models.aba && models.aba.length > 0) { ABA_MODELS.splice(0, ABA_MODELS.length, ...models.aba); }
-        if (models.threeLayer && models.threeLayer.length > 0) { THREE_LAYER_MODELS.splice(0, THREE_LAYER_MODELS.length, ...models.threeLayer); }
-        changed = true;
-      }
-      
-      if (presets && Object.keys(presets).length > 0) {
-        Object.keys(MODEL_PRESETS).forEach(k => delete MODEL_PRESETS[k]);
-        Object.assign(MODEL_PRESETS, presets);
-        changed = true;
-      }
-
-      if (components && Object.keys(components).length > 0) {
-        if (components.extruders) COMPONENTS_DATA.Extruder = components.extruders;
-        if (components.dies) COMPONENTS_DATA["Die Head"] = components.dies;
-        if (components.airRing) COMPONENTS_DATA["Air Ring"] = components.airRing;
-        if (components.ibc) COMPONENTS_DATA.IBC = components.ibc;
-        if (components.collapsingFrame) COMPONENTS_DATA["Collapsing Frame"] = components.collapsingFrame;
-        if (components.hauloffs) {
-          COMPONENTS_DATA["Haul-Off"] = components.hauloffs.filter(c => !c.id.includes("main-nip"));
-          COMPONENTS_DATA["Main Nip"] = components.hauloffs.filter(c => c.id.includes("main-nip"));
-        }
-        if (components.bubbleCages) COMPONENTS_DATA["Bubble Cage"] = components.bubbleCages;
-        if (components.tower) COMPONENTS_DATA["Tower / Platform"] = components.tower;
-        if (components.winders) COMPONENTS_DATA.Winder = components.winders;
-        if (components.electricalPanel) COMPONENTS_DATA["Electrical & Control Panel"] = components.electricalPanel;
-
-        if (components.corona) ADDONS_DATA["Corona"] = components.corona;
-        if (components.materialHandling) ADDONS_DATA["Material Handling"] = components.materialHandling;
-        if (components.webGuide) ADDONS_DATA["Web Guide"] = components.webGuide;
-        if (components.chiller) ADDONS_DATA["Chiller"] = components.chiller;
-        if (components.heatExchanger) ADDONS_DATA["Heat Exchanger"] = components.heatExchanger;
-        if (components.epc) ADDONS_DATA["EPC"] = components.epc;
-        if (components.printer) ADDONS_DATA["Printer"] = components.printer;
-        if (components.optionalFeatures) ADDONS_DATA["Optional Features"] = components.optionalFeatures;
-        if (components.ibc) ADDONS_DATA["IBC"] = components.ibc;
-        changed = true;
-      }
-
-
-
-      if (changed) {
-        setAdminDataLoaded(prev => !prev);
-      }
-    });
-  }, [router.asPath]);
 
   const [customer, setCustomer] = useState({
     quotationRef: "Loading...", // Temporary initial state
@@ -230,6 +151,7 @@ export function ConfigProvider({ children }) {
   const [quoteTemplate, setQuoteTemplate] = useState(defaultTemplate);
   const [showPricingFields, setShowPricingFields] = useState(false);
   const [presetBasePrice, setPresetBasePrice] = useState(0); // ← NEW: stores fixed price from modelPreset
+  const [presetBaseComponents, setPresetBaseComponents] = useState([]); // ← NEW: tracks base preset components for differential pricing
 
   // --- Export Conversion States ---
   const [conversionRate, setConversionRate] = useState(94);
@@ -247,7 +169,7 @@ export function ConfigProvider({ children }) {
       customer, machineType, selected, selectedAddons, discount, markup,
       customOutput, customLayflat, customRollerWidth, scopeOverrides,
       quoteTemplate, showPricingFields, showPrices, showAddonPricing,
-      showMarkupField, showDiscountField, conversionRate, presetBasePrice
+      showMarkupField, showDiscountField, conversionRate, presetBasePrice, presetBaseComponents
     });
 
     // If we haven't set a base snapshot yet, set it now (likely just after import)
@@ -274,7 +196,7 @@ export function ConfigProvider({ children }) {
     customer, machineType, selected, selectedAddons, discount, markup,
     customOutput, customLayflat, customRollerWidth, scopeOverrides,
     quoteTemplate, showPricingFields, showPrices, showAddonPricing,
-    showMarkupField, showDiscountField, conversionRate, presetBasePrice,
+    showMarkupField, showDiscountField, conversionRate, presetBasePrice, presetBaseComponents,
     quotationDate // included so we only check if a date is present
   ]);
 
@@ -394,6 +316,9 @@ export function ConfigProvider({ children }) {
       }
       if (typeof savedData.presetBasePrice === "number") {
         setPresetBasePrice(savedData.presetBasePrice);
+      }
+      if (Array.isArray(savedData.presetBaseComponents)) {
+        setPresetBaseComponents(savedData.presetBaseComponents);
       }
       if (typeof savedData.conversionRate === "number") {
         setConversionRate(savedData.conversionRate);
@@ -545,7 +470,13 @@ export function ConfigProvider({ children }) {
     if (!base) return row; // fallback to existing row data if not found in library
 
     // Deep merge techDesc: prioritize base data but keep overrides from row
-    const mergedTechDesc = sanitizeTechDesc(row.category, { ...(base.techDesc || {}), ...(row.techDesc || {}) });
+    const mergedTechDesc = resolveTechDesc({
+      category: row.category,
+      baseTechDesc: base.techDesc,
+      metadataTechDesc: row.techDesc,
+      sanitize: sanitizeTechDesc,
+    });
+    const scopeDesc = resolveScopeDesc({ base, size: row.size, metadataScopeDesc: row.scopeDesc });
 
     return {
       ...base,
@@ -553,6 +484,7 @@ export function ConfigProvider({ children }) {
       category: row.category,
       qty: row.qty || 1,
       techDesc: mergedTechDesc,
+      ...(scopeDesc !== undefined ? { scopeDesc } : {}),
       // If row has an image, keep it, otherwise use base image
       image: row.image || base.image
     };
@@ -563,7 +495,25 @@ export function ConfigProvider({ children }) {
     const list = ADDONS_DATA[row.category] || [];
     const base = list.find(a => a.id === row.id) || list.find(a => a.name === row.name);
     if (!base) return row;
-    return { ...base, ...row, category: row.category, qty: row.qty || 1 };
+    const mergedTechDesc = resolveTechDesc({
+      category: row.category,
+      baseTechDesc: base.techDesc,
+      metadataTechDesc: row.techDesc || row.metadata?.techDesc,
+      sanitize: sanitizeTechDesc,
+    });
+    const scopeDesc = resolveScopeDesc({
+      base,
+      size: row.size || row.metadata?.size,
+      metadataScopeDesc: row.scopeDesc || row.metadata?.scopeDesc,
+    });
+    return {
+      ...base,
+      ...row,
+      category: row.category,
+      qty: row.qty || 1,
+      techDesc: mergedTechDesc,
+      ...(scopeDesc !== undefined ? { scopeDesc } : {}),
+    };
   }
 
 
@@ -588,9 +538,9 @@ export function ConfigProvider({ children }) {
   }
 
   function applyModelPreset(modelLabel) {
-    const preset = MODEL_PRESETS[modelLabel];
+    const preset = ALL_MODELS.find((m) => m.code === modelLabel);
     if (!preset) {
-      console.warn("No MODEL_PRESETS entry for", modelLabel);
+      console.warn("No model found for", modelLabel);
       return false;
     }
 
@@ -604,6 +554,9 @@ export function ConfigProvider({ children }) {
     setPresetBasePrice(preset.basePrice || 0);
 
     // 2) Build selected base components
+    let extruderCount = 0;
+    const labels = ["A", "B", "C", "D", "E"];
+
     preset.components.forEach((comp) => {
       const { category, id, qty, metadata = {} } = comp;
       const list = components[category] || [];
@@ -612,7 +565,12 @@ export function ConfigProvider({ children }) {
         // Allow preset-only components (e.g. "Main Nip" for DR models) that carry all
         // their info in metadata.customName / metadata.techDesc without a registry entry.
         if (metadata.customName) {
-          const mergedTechDesc = sanitizeTechDesc(category, metadata.techDesc || {});
+          const mergedTechDesc = resolveTechDesc({
+            category,
+            baseTechDesc: null,
+            metadataTechDesc: metadata.techDesc,
+            sanitize: sanitizeTechDesc,
+          });
           nextSelected.push({
             id,
             category,
@@ -626,45 +584,247 @@ export function ConfigProvider({ children }) {
         }
         return;
       }
-      // For dynamic cards (Extruder, Die Head etc.), resolve per-size detail from sizeDetails
-      const activeSize = metadata.size;
-      const sizeDetail = (base.sizeDetails && activeSize) ? base.sizeDetails[activeSize] : null;
-      // Per-size name takes priority over generic card name
-      const resolvedName = metadata.customName || sizeDetail?.name || base.name;
-      // Merge priority: preset metadata.techDesc > sizeDetail.techDesc > base.techDesc
-      const mergedTechDesc = sanitizeTechDesc(category, {
-        ...(base.techDesc || {}),
-        ...(sizeDetail?.techDesc || {}),
-        ...(metadata.techDesc || {}),
+      // Smart default for web-width components if size is missing
+      if (base.isDynamic && !metadata.size && base.prices) {
+        if (["Winder", "Main Nip", "Haul-Off", "Bubble Cage", "Electrical & Control Panel", "Air Ring", "Tower", "Tower / Platform"].includes(category)) {
+          let targetSize = null;
+          
+          if (preset.code) {
+            let directCodeSize = null;
+            if (preset.code.startsWith("UNOFLEX-")) {
+              directCodeSize = "U" + preset.code.split("-")[1].split(" ")[0];
+            } else if (preset.code.startsWith("DUOFLEX-")) {
+              directCodeSize = "D" + preset.code.split("-")[1].split(" ")[0];
+            }
+            if (directCodeSize) {
+              const exactKey = Object.keys(base.prices).find(k => k === directCodeSize || k === `${directCodeSize}"`);
+              if (exactKey) {
+                targetSize = exactKey;
+              }
+            }
+          }
+
+          if (!targetSize) {
+            if (["Electrical & Control Panel", "Main Nip"].includes(category) && preset.code) {
+               const code = preset.code;
+               if (code.startsWith("UNOFLEX-")) {
+                 targetSize = "U" + code.split("-")[1].split(" ")[0]; // UNOFLEX-40-55MM -> U40
+               } else if (code.startsWith("DUOFLEX-")) {
+                 targetSize = "D" + code.split("-")[1].split(" ")[0]; // DUOFLEX-50-65/55 -> D50
+               }
+            } else if (category === "Air Ring" && preset.dieSizeHmLd) {
+               const dieNumMatch = preset.dieSizeHmLd.match(/\d+/);
+               if (dieNumMatch) targetSize = dieNumMatch[0];
+            } else if (["Winder", "Haul-Off", "Bubble Cage", "Tower", "Tower / Platform"].includes(category) && preset.code) {
+               const code = preset.code;
+               if (code.startsWith("UNOFLEX-") || code.startsWith("DUOFLEX-")) {
+                 const inchesStr = code.split("-")[1].split(" ")[0].replace(/[^\d]/g, '');
+                 if (inchesStr) {
+                   const inches = parseInt(inchesStr, 10);
+                   targetSize = String(Math.round((inches * 25.4) / 50) * 50);
+                 }
+               }
+            }
+            
+            if (!targetSize && preset.layflatWidthMm) {
+               targetSize = String(preset.layflatWidthMm);
+            }
+          }
+          
+          if (targetSize) {
+            const availableSizes = Object.keys(base.prices);
+            if (availableSizes.includes(targetSize)) {
+              metadata.size = targetSize;
+            } else {
+              // fallback to closest if numeric
+              const numericSizes = availableSizes.filter(s => !isNaN(Number(s)));
+              if (numericSizes.length > 0 && !isNaN(Number(targetSize))) {
+                const closest = numericSizes.reduce((prev, curr) => 
+                  Math.abs(Number(curr) - Number(targetSize)) < Math.abs(Number(prev) - Number(targetSize)) ? curr : prev
+                );
+                metadata.size = closest;
+              } else {
+                 metadata.size = availableSizes[0];
+              }
+            }
+          }
+        }
+      }
+
+      // Resolve base techDesc from sizeDetails if dynamic
+      let baseTechDesc = base.techDesc || {};
+      if (base.isDynamic && metadata.size && base.sizeDetails && base.sizeDetails[metadata.size]) {
+        baseTechDesc = base.sizeDetails[metadata.size].techDesc || baseTechDesc;
+      }
+
+      // Deep merge techDesc if it exists in metadata
+      const mergedTechDesc = resolveTechDesc({
+        category,
+        baseTechDesc,
+        metadataTechDesc: metadata.techDesc,
+        sanitize: sanitizeTechDesc,
       });
-      nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata, name: resolvedName, techDesc: mergedTechDesc });
+      const resolvedScopeDesc = resolveScopeDesc({ base, size: metadata.size, metadataScopeDesc: metadata.scopeDesc });
+      const scopeDescPatch = resolvedScopeDesc !== undefined ? { scopeDesc: resolvedScopeDesc } : {};
+      if (category === "Extruder" && base.isDynamic) {
+        const q = qty || 1;
+        for (let i = 0; i < q; i++) {
+          const label = labels[extruderCount] || `${extruderCount + 1}`;
+          nextSelected.push({
+            ...base,
+            category,
+            qty: 1,
+            ...metadata,
+            ...scopeDescPatch,
+            id: `${base.id}-${label}`,
+            name: `${base.name} ${label}`,
+            techDesc: mergedTechDesc
+          });
+          extruderCount++;
+        }
+      } else {
+        nextSelected.push({ ...base, category, qty: qty ?? 1, ...metadata, ...scopeDescPatch, techDesc: mergedTechDesc });
+      }
     });
 
     // 3) Build selected add-ons
     const isPackage = (preset.basePrice || 0) > 0;
     (preset.addons || []).forEach(({ category, id, qty }) => {
+      // Bimetallic upgrades are per-extruder dynamic addons (bimetallic-upgrade-1/-2/-3...,
+      // one per selected extruder, each targeting that extruder's id) — there's no single
+      // static catalog entry to look up by id. A preset asking for "bimetallic-upgrade-N"
+      // with qty=Q means "pre-select the upgrade on the first Q extruders".
+      if (category === "Extruder Addons" && id.startsWith("bimetallic-upgrade")) {
+        const selectedExtruders = nextSelected.filter((s) => s.category === "Extruder");
+        const q = Math.min(qty ?? selectedExtruders.length, selectedExtruders.length);
+        for (let i = 0; i < q; i++) {
+          const ext = selectedExtruders[i];
+          const sizeStr = String(ext.sizeMm || ext.size || ext.extruder || "45");
+          nextAddons.push({
+            ...BIMETALLIC_BASE,
+            id: `bimetallic-upgrade-${i + 1}`,
+            name: `Bi-metallic Screw Barrel (Extruder ${i + 1})`,
+            category,
+            qty: 1,
+            isDynamic: true,
+            price: isPackage ? 0 : (BIMETALLIC_PRICES[sizeStr] ?? BIMETALLIC_BASE.price),
+            isIncluded: isPackage,
+            metadata: { ...BIMETALLIC_BASE.metadata, size: sizeStr, targetExtruderId: ext.id },
+          });
+        }
+        return;
+      }
+
       const list = addons[category] || [];
       const base = list.find((a) => a.id === id);
       if (!base) {
         console.warn("Add-on not found for preset:", category, id);
         return;
       }
+
+      let metadata = { ...qty.metadata } || {};
+      if (base.isDynamic && !metadata.size && base.prices) {
+        if (["Winder", "Main Nip", "Haul-Off", "Bubble Cage", "Electrical & Control Panel", "Air Ring", "Tower", "Tower / Platform", "Corona", "Material Handling"].includes(category)) {
+          let targetSize = null;
+          
+          if (preset.code) {
+            let directCodeSize = null;
+            if (preset.code.startsWith("UNOFLEX-")) {
+              directCodeSize = "U" + preset.code.split("-")[1].split(" ")[0];
+            } else if (preset.code.startsWith("DUOFLEX-")) {
+              directCodeSize = "D" + preset.code.split("-")[1].split(" ")[0];
+            }
+            if (directCodeSize) {
+              const exactKey = Object.keys(base.prices).find(k => k === directCodeSize || k === `${directCodeSize}"`);
+              if (exactKey) {
+                targetSize = exactKey;
+              }
+            }
+          }
+
+          if (!targetSize) {
+            if (["Electrical & Control Panel", "Main Nip"].includes(category) && preset.code) {
+               const code = preset.code;
+               if (code.startsWith("UNOFLEX-")) {
+                 targetSize = "U" + code.split("-")[1].split(" ")[0];
+               } else if (code.startsWith("DUOFLEX-")) {
+                 targetSize = "D" + code.split("-")[1].split(" ")[0];
+               }
+            } else if (category === "Air Ring" && preset.dieSizeHmLd) {
+               const dieNumMatch = preset.dieSizeHmLd.match(/\d+/);
+               if (dieNumMatch) targetSize = dieNumMatch[0];
+            } else if (["Winder", "Haul-Off", "Bubble Cage", "Tower", "Tower / Platform", "Corona"].includes(category) && preset.code) {
+               const code = preset.code;
+               if (code.startsWith("UNOFLEX-") || code.startsWith("DUOFLEX-")) {
+                 const inchesStr = code.split("-")[1].split(" ")[0].replace(/[^\d]/g, '');
+                 if (inchesStr) {
+                   const inches = parseInt(inchesStr, 10);
+                   targetSize = String(Math.round((inches * 25.4) / 50) * 50);
+                 }
+               }
+            }
+            
+            if (!targetSize && preset.layflatWidthMm) {
+               targetSize = String(preset.layflatWidthMm);
+            }
+          }
+          
+          if (targetSize) {
+            const availableSizes = Object.keys(base.prices);
+            if (availableSizes.includes(targetSize)) {
+              metadata.size = targetSize;
+            } else {
+              const numericSizes = availableSizes.filter(s => !isNaN(Number(s)));
+              if (numericSizes.length > 0 && !isNaN(Number(targetSize))) {
+                const closest = numericSizes.reduce((prev, curr) => 
+                  Math.abs(Number(curr) - Number(targetSize)) < Math.abs(Number(prev) - Number(targetSize)) ? curr : prev
+                );
+                metadata.size = closest;
+              } else {
+                 metadata.size = availableSizes[0];
+              }
+            }
+          }
+        }
+      }
+
+      // For dynamically-sized addons (Electrical Panel, Corona, etc. when pre-added by a
+      // preset), the size was just resolved above — look its real price up from
+      // base.prices rather than falling back to the flat (usually 0) base.price.
+      const resolvedPrice = (base.isDynamic && base.prices && metadata.size && base.prices[metadata.size] != null)
+        ? base.prices[metadata.size]
+        : base.price;
+
+      // Resolve techDesc/scopeDesc the same way the components path does. `metadata`
+      // stays nested (other code reads item.metadata.size elsewhere) but the resolved
+      // values are also promoted to the top level so a model's metadata.scopeDesc on an
+      // addon is no longer silently ignored (it previously never got read by anything).
+      let addonBaseTechDesc = base.techDesc || {};
+      if (base.isDynamic && metadata.size && base.sizeDetails && base.sizeDetails[metadata.size]) {
+        addonBaseTechDesc = base.sizeDetails[metadata.size].techDesc || addonBaseTechDesc;
+      }
+      const resolvedAddonTechDesc = resolveTechDesc({
+        category,
+        baseTechDesc: addonBaseTechDesc,
+        metadataTechDesc: metadata.techDesc,
+        sanitize: sanitizeTechDesc,
+      });
+      const resolvedAddonScopeDesc = resolveScopeDesc({ base, size: metadata.size, metadataScopeDesc: metadata.scopeDesc });
+
       nextAddons.push({
         ...base,
         category,
         qty: qty ?? 1,
-        price: isPackage ? 0 : base.price,
-        isIncluded: isPackage
+        price: isPackage ? 0 : resolvedPrice,
+        isIncluded: isPackage,
+        techDesc: resolvedAddonTechDesc,
+        ...(resolvedAddonScopeDesc !== undefined ? { scopeDesc: resolvedAddonScopeDesc } : {}),
+        metadata
       });
     });
 
-    // 4) Sync specifications (Roller Width, Layflat & Output) from the source model data
-    let models = [];
-    if (preset.machineType === "mono") models = MONO_MODELS || [];
-    else if (preset.machineType === "aba") models = ABA_MODELS || [];
-    else if (preset.machineType === "3layer") models = THREE_LAYER_MODELS || [];
-
-    const modelObj = models.find(m => m.code === modelLabel);
+    // 4) Sync specifications (Roller Width, Layflat & Output) from the same unified model record
+    const modelObj = preset;
     const isMonoOrAba = preset.machineType === "mono" || preset.machineType === "aba";
 
     // Extract Roller Width from label (e.g., "32" from "MONOLAYER - 32\"")
@@ -676,7 +836,7 @@ export function ConfigProvider({ children }) {
       const diff = isMonoOrAba ? 50 : ((rollerNum === 1450) ? 100 : 120);
       if (isMonoOrAba) {
         setCustomRollerWidth(`${rollerNum} inch`);
-        machineWidth = modelObj?.layflatWidthMm || modelObj?.widthMm || ((rollerNum * 25) - diff);
+        machineWidth = modelObj?.layflatWidthMm || ((rollerNum * 25) - diff);
         setCustomLayflat(`${machineWidth} mm`);
       } else {
         setCustomRollerWidth(`${rollerNum} mm`);
@@ -694,7 +854,7 @@ export function ConfigProvider({ children }) {
         return { ...prev, quotationRef: newRef, ref: newRef };
       });
     } else if (modelObj) {
-      machineWidth = modelObj.layflatWidthMm || modelObj.widthMm || 0;
+      machineWidth = modelObj.layflatWidthMm || 0;
       if (machineWidth) setCustomLayflat(`${machineWidth} mm`);
     }
 
@@ -731,8 +891,19 @@ export function ConfigProvider({ children }) {
 
           const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
-          const maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
-          const minRange = Math.round((maxFilmWidth * minRatio) / 10) * 10;
+          const isMultiLayer = preset.machineType === "3layer" || preset.machineType === "5layer";
+
+          let maxFilmWidth, minRange;
+          if (isMultiLayer && modelObj?.layflatWidthMm) {
+            // 3-layer/5-layer: max = model's max layflat width; min = ceil((die size * 1.5) / 0.637), rounded up to nearest 10.
+            maxFilmWidth = modelObj.layflatWidthMm;
+            const dieSizeMatch = (modelObj.dieSizeHmLd || "").match(/\d+/);
+            const dieSize = dieSizeMatch ? parseInt(dieSizeMatch[0]) : 0;
+            minRange = dieSize > 0 ? Math.ceil((dieSize * 1.5) / 0.637 / 10) * 10 : Math.round((maxFilmWidth * minRatio) / 10) * 10;
+          } else {
+            maxFilmWidth = (isMonoOrAba && modelObj?.layflatWidthMm) ? modelObj.layflatWidthMm : ((rollerNum > 0) ? (displaySize - diff) : chosenSize);
+            minRange = Math.round((maxFilmWidth * minRatio) / 10) * 10;
+          }
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
           const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
@@ -775,7 +946,12 @@ export function ConfigProvider({ children }) {
         const isHaulOffId = ["haul-horizontal-standard", "haul-horizontal-heavy", "haul-oscillating", "haul-horizontal-dynamic"].includes(item.id);
 
         if (item.category === "Haul-Off" && (isHaulOffId || item.isDynamic)) {
-          const hauloffComp = COMPONENTS_DATA["Haul-Off"]?.find(c => c.id === "haul-horizontal-dynamic" || c.name.toLowerCase().includes("haul-off"));
+          // Match by id only — a broad name-substring fallback here previously matched
+          // "haul-vertical-compact" (name "Vertical Haul-Off (Compact)" contains "haul-off")
+          // before ever reaching this dynamic entry, since it's the earlier array element.
+          // That static component has no price table, so Haul-Off silently priced at $0
+          // for every model regardless of any preset size override.
+          const hauloffComp = COMPONENTS_DATA["Haul-Off"]?.find(c => c.id === "haul-horizontal-dynamic");
           const priceMap = hauloffComp?.prices || {};
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
@@ -853,10 +1029,11 @@ export function ConfigProvider({ children }) {
       // 4.9) DYNAMIC MAIN NIP LOGIC
       nextSelected.forEach((item, index) => {
         if (item.category === "Main Nip" && item.isDynamic) {
-          const mainNipId = (machineType === "3layer" || machineType === "5layer") ? "main-nip-dynamic-multi" : "main-nip-dynamic";
-          const mainNipComp = COMPONENTS_DATA["Main Nip"]?.find(c => c.id === mainNipId) || COMPONENTS_DATA["Haul-Off"]?.find(c => c.id === "haul-horizontal-dynamic");
+          const mainNipComp = COMPONENTS_DATA["Main Nip"]?.find(c => c.id === "main-nip-cf-dynamic");
           const priceMap = mainNipComp?.prices || {};
-          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
+          // priceMap has both mm keys (used here) and U#/D# keys (used by the Selection
+          // page's manual dropdown) — ignore the non-numeric ones for this lookup.
+          const availableSizes = Object.keys(priceMap).map(Number).filter(n => !isNaN(n)).sort((a, b) => a - b);
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0] || 0;
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : minSize;
@@ -1000,17 +1177,20 @@ export function ConfigProvider({ children }) {
 
 
     // 5) Apply into state
+    setPresetBaseComponents(nextSelected);
     setSelected(nextSelected);
     setSelectedAddons(nextAddons);
     setCustomMode(false);
     setSelectedMachineModelLabel(modelLabel);
 
     if (modelObj) {
-      const output = modelObj.maxOutputKgHr || modelObj.outputKgHr;
+      const output = modelObj.maxOutputKgHr;
       if (output) setCustomOutput(output);
 
-      // Ensure machineModelIndex is synchronized so currentMachineModel works
-      const idx = models.findIndex(m => m.code === modelLabel);
+      // Ensure machineModelIndex is synchronized so currentMachineModel works.
+      // Filtered fresh from preset.machineType (not the component's machineType state,
+      // which won't reflect setMachineTypeState() above until the next render).
+      const idx = ALL_MODELS.filter(m => m.machineType === preset.machineType).findIndex(m => m.code === modelLabel);
       if (idx !== -1) setMachineModelIndex(idx);
     }
 
@@ -1076,9 +1256,14 @@ export function ConfigProvider({ children }) {
         durationMs: 700,
       });
 
-      setPresetBasePrice(0); // Revert to sum of parts if modified
+      // Removed setPresetBasePrice(0) to maintain base price for differentials
 
-      const mergedTechDesc = sanitizeTechDesc(category, { ...(item.techDesc || {}), ...(metadata?.techDesc || {}) });
+      const mergedTechDesc = resolveTechDesc({
+        category,
+        baseTechDesc: item.techDesc,
+        metadataTechDesc: metadata?.techDesc,
+        sanitize: sanitizeTechDesc,
+      });
       const newItem = { ...item, category, qty: 1, ...metadata, techDesc: mergedTechDesc };
 
       if (foundIndex !== -1) {
@@ -1101,14 +1286,14 @@ export function ConfigProvider({ children }) {
           variant: "error",
         });
       }
-      setPresetBasePrice(0); // Revert to sum of parts if modified
+      // Removed setPresetBasePrice(0) to maintain base price for differentials
       return prev.filter((p) => p.id !== id);
     });
   }
 
   function setQty(id, qty) {
     if (qty < 1) return;
-    setPresetBasePrice(0); // Revert to sum of parts if modified
+    // Removed setPresetBasePrice(0) to maintain base price for differentials
     setSelected((prev) => prev.map((p) => (p.id === id ? { ...p, qty } : p)));
   }
 
@@ -1503,40 +1688,69 @@ export function ConfigProvider({ children }) {
         }
       }
 
-      // 3. Winder Updates (Back to Back Winder replacement)
+      // 3. Winder Updates (station-count label + Back to Back Winder replacement)
+      // Scoped to mono/ABA only — 3-layer models use their own "(0X Nos.)" plural
+      // convention and their winder logic must not be touched.
       const isBackToBackSelected = selectedAddons.some(a => a.id === "winder-manual-back-to-back-dynamic");
-      if (category === "winder" && isBackToBackSelected) {
-        const addon = selectedAddons.find(a => a.id === "winder-manual-back-to-back-dynamic");
-        if (addon) {
-          const layflatW = customLayflat ? customLayflat.replace(/[^0-9]/g, '') : (machineDetails?.layflatWidthMm || machineDetails?.widthMm || "1250");
-          const newWinderTechDesc = {
-            ...updatedItem.techDesc,
-            "Two Surface Winder": `Maximum web width of ${layflatW} mm with Manual Changeover.`,
-            "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
-            "Surface winder drive": (machineType === "mono" || machineType === "aba") ? "02 HP AC motor with variable frequency drive." : "02 HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
-            "Tension control": "Through Torque mode.",
-            "Type of winder": "Two back to back type.",
-            "Length counter meter": "Provided",
-            "Trim Suction Blower": "Provided"
-          };
-          delete newWinderTechDesc["Winder Type"];
-          delete newWinderTechDesc["Type"];
-          delete newWinderTechDesc["Actuation"];
-          
-          // Remove old winder designation lines that cause duplicate type lines in the PDF
-          Object.keys(newWinderTechDesc).forEach(k => {
-            if (k.toLowerCase().includes("surface winder (") || k.toLowerCase().includes("surface winders (")) {
-              delete newWinderTechDesc[k];
-            }
-          });
+      const isMonoOrAbaWinder = category === "winder" && (machineType === "mono" || machineType === "aba");
+      if (isMonoOrAbaWinder) {
+        // Station-count label: "(01 No.)" only for a genuine single-surface winder
+        // with no back-to-back upgrade; "(02 No.)" for every other winder variant,
+        // including a single-surface winder that's had the back-to-back addon
+        // applied. Always recomputed as exactly one key — any stale "Surface
+        // Winder(s) (0X No(s).)" variant (from a hardcoded per-model override, or
+        // left over from a previous addon toggle) is removed first so there's never
+        // more than one station-count line shown at once.
+        const isSingleSurfaceBase = item.id === "winder-single-surface-only-dynamic";
+        const stationLabel = (isSingleSurfaceBase && !isBackToBackSelected)
+          ? "Surface Winder (01 No.)"
+          : "Surface Winder (02 No.)";
 
-          updatedItem = {
-            ...updatedItem,
-            name: addon.name || "Two back to back Surface Winder",
-            customName: addon.customName || addon.name || "Two back to back Surface Winder",
-            image: addon.image || updatedItem.image,
-            techDesc: newWinderTechDesc
-          };
+        const cleanedTechDesc = { ...updatedItem.techDesc };
+        Object.keys(cleanedTechDesc).forEach(k => {
+          if (k.toLowerCase().includes("surface winder (") || k.toLowerCase().includes("surface winders (")) {
+            delete cleanedTechDesc[k];
+          }
+        });
+        const existingMaxWidth = updatedItem.techDesc?.["Maximum web width"];
+        const stationText = existingMaxWidth
+          ? `Maximum web width of ${existingMaxWidth} with ${isBackToBackSelected ? "Manual" : "Manual"} Changeover.`
+          : (isBackToBackSelected ? "Maximum web width with Manual Changeover." : undefined);
+
+        updatedItem = {
+          ...updatedItem,
+          techDesc: {
+            ...cleanedTechDesc,
+            ...(stationText ? { [stationLabel]: stationText } : { [stationLabel]: cleanedTechDesc[stationLabel] || "" }),
+          }
+        };
+
+        if (isBackToBackSelected) {
+          const addon = selectedAddons.find(a => a.id === "winder-manual-back-to-back-dynamic");
+          if (addon) {
+            const layflatW = customLayflat ? customLayflat.replace(/[^0-9]/g, '') : (currentMachineModel?.layflatWidthMm || "1250");
+            const newWinderTechDesc = {
+              ...updatedItem.techDesc,
+              "Surface Winder (02 No.)": `Maximum web width of ${layflatW} mm with Manual Changeover.`,
+              "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+              "Surface winder drive": (machineType === "mono" || machineType === "aba") ? "02 HP AC motor with variable frequency drive." : "02 HP AC motor with variable frequency drive. Gear motor-Bon Vario, Italy or Equivalent.",
+              "Tension control": "Through Torque mode.",
+              "Type of winder": "Two back to back type.",
+              "Length counter meter": "Provided",
+              "Trim Suction Blower": "Provided"
+            };
+            delete newWinderTechDesc["Winder Type"];
+            delete newWinderTechDesc["Type"];
+            delete newWinderTechDesc["Actuation"];
+
+            updatedItem = {
+              ...updatedItem,
+              name: addon.name || "Back to Back Surface Winder",
+              customName: addon.customName || addon.name || "Back to Back Surface Winder",
+              image: addon.image || updatedItem.image,
+              techDesc: newWinderTechDesc
+            };
+          }
         }
       }
 
@@ -1595,7 +1809,7 @@ export function ConfigProvider({ children }) {
         };
       }
 
-      console.log("updatedItem:", updatedItem.category, updatedItem.name, updatedItem.customName); return updatedItem;
+      return updatedItem;
     });
   }, [selected, selectedAddons]);
 
@@ -1613,11 +1827,7 @@ export function ConfigProvider({ children }) {
 
     let model =
       models.find((m) => m.code === selectedCode || m.label === selectedCode) ||
-      models.find(
-        (m) =>
-          (m.layflatWidthMm || m.widthMm || m.width) ===
-          safeCustomer.machineWidth
-      ) ||
+      models.find((m) => m.layflatWidthMm === safeCustomer.machineWidth) ||
       null;
 
     return model || null;
@@ -1628,14 +1838,35 @@ export function ConfigProvider({ children }) {
 
   const computePriceSummary = React.useCallback(() => {
     // 1. Calculate Standard Components Total
-    let basicTotal = selected.reduce(
-      (sum, item) => sum + (item.price || 0) * (item.qty || 1),
-      0
-    );
+    let basicTotal = 0;
 
-    // If a preset base price is active, use it instead of sum of parts
+    // If a preset base price is active, calculate differential
     if (presetBasePrice > 0) {
       basicTotal = presetBasePrice;
+
+      // Subtract removed preset components
+      (presetBaseComponents || []).forEach(presetComp => {
+        const stillSelected = selected.find(s => s.id === presetComp.id);
+        if (!stillSelected) {
+          basicTotal -= (presetComp.price || 0) * (presetComp.qty || 1);
+        }
+      });
+
+      // Add new components not in preset
+      selected.forEach(currComp => {
+        const inPreset = (presetBaseComponents || []).find(p => p.id === currComp.id);
+        if (!inPreset) {
+          basicTotal += (currComp.price || 0) * (currComp.qty || 1);
+        } else if (inPreset.qty !== currComp.qty) {
+          // If quantity changed, add the difference
+          basicTotal += (currComp.price || 0) * ((currComp.qty || 1) - (inPreset.qty || 1));
+        }
+      });
+    } else {
+      basicTotal = selected.reduce(
+        (sum, item) => sum + (item.price || 0) * (item.qty || 1),
+        0
+      );
     }
 
     // 2. Split Optional Addons into Visible and Hidden (e.g. Bimetallic Upgrades, Loadcell)
@@ -1729,62 +1960,6 @@ export function ConfigProvider({ children }) {
     };
   }, [selected, selectedAddons, markup, discount, presetBasePrice, customer.region, conversionRate]);
 
-  function getMachineDetailsForWord(machineType, safeCustomer) {
-    if (!machineType) return null;
-
-    let models = [];
-    if (machineType === "mono") models = MONO_MODELS || [];
-    else if (machineType === "aba") models = ABA_MODELS || [];
-    else if (machineType === "3layer") models = THREE_LAYER_MODELS || [];
-    else models = [];
-
-    if (!models || models.length === 0) return null;
-
-    const modelCode = safeCustomer.machineModelCode || safeCustomer.machineModelCodeAlt || "";
-    const modelLabel = safeCustomer.machineModel || "";
-
-    let found = null;
-
-    // 1) Try by explicit code
-    if (modelCode) {
-      found =
-        models.find((m) => m.code === modelCode) ||
-        models.find((m) => m.MODEL_CODE === modelCode);
-    }
-
-    // 2) Try by label / equipment name
-    if (!found && modelLabel) {
-      found =
-        models.find((m) => m.label === modelLabel) ||
-        models.find((m) => m.EQUIPMENT === modelLabel) ||
-        models.find((m) => m.model === modelLabel);
-    }
-
-    // 3) Last fallback: first model
-    if (!found) {
-      found = models[0] || null;
-    }
-
-    if (!found) return null;
-
-    // Build a normalized "specs table" for Word
-    const specs_table = Object.entries(found)
-      .filter(([key, value]) => {
-        if (value == null || value === "") return false;
-        if (key === "image" || key === "photo") return false;
-        return true;
-      })
-      .map(([key, value]) => ({
-        label: key,
-        value: String(value),
-      }));
-
-    return {
-      raw: found,
-      specs_table,
-    };
-  }
-
   // Generate a quotation reference number similar to your proposals
   function generateQuotationRef() {
     const now = new Date();
@@ -1873,8 +2048,6 @@ export function ConfigProvider({ children }) {
             let nipWidth = 0;
             if (currentMachineModel && currentMachineModel.layflatWidthMm) {
               nipWidth = currentMachineModel.layflatWidthMm + 50;
-            } else if (currentMachineModel && currentMachineModel.widthMm) {
-              nipWidth = currentMachineModel.widthMm + 50;
             } else {
               nipWidth = (parseInt(item.size) || 0) + 50; // fallback
             }
@@ -1996,7 +2169,7 @@ export function ConfigProvider({ children }) {
     const hasSelectedCF = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
       const n = (item.name || "").toLowerCase();
       const c = (item.category || "").toLowerCase();
-      return n.includes("collapsing") || c.includes("collapsing");
+      return n.includes("collapsing") || c.includes("collapsing") || c.includes("main nip") || n.includes("main nip");
     });
     const hasHaulOffItem = [...selectedScopeItems, ...winderTowerScopeItems].some(item => {
       const n = (item.name || "").toLowerCase();
@@ -2199,7 +2372,9 @@ export function ConfigProvider({ children }) {
         }
 
         if (machineType === "mono" || machineType === "aba") {
-          if (a.id === "die-rotation-addon") return true;
+          // Die rotation is a standard pre-included item on every mono/ABA preset,
+          // not a genuine optional extra — never list it as optional equipment.
+          if (a.id === "die-rotation-addon") return false;
           if (a.id === "winder-manual-back-to-back-dynamic") return true;
         }
 
@@ -2261,7 +2436,7 @@ export function ConfigProvider({ children }) {
           safeCustomer.productToMake ||
           "High Quality Monolayer / ABA / Three Layer Film",
         max_pumping_capacity:
-          machineDetails.outputKgHr || safeCustomer.maxPump || "",
+          machineDetails.maxOutputKgHr || safeCustomer.maxPump || "",
         max_output: customOutput || safeCustomer.maxOutput || "As per screw design",
       },
 
@@ -2324,808 +2499,7 @@ export function ConfigProvider({ children }) {
     };
   }, [customer, selected, selectedAddons, markup, discount, machineType, customOutput, conversionRate, currentMachineModel, scopeOverrides, customLayflat, customRollerWidth]);
 
-  // ---------------- EXPORT: JSON (template-style, for re-import) ----------------
-
-  function exportJsonOnly() {
-    try {
-      // This builds the full structured object:
-      // {
-      //   company,
-      //   customer,
-      //   quotation,
-      //   machine,
-      //   components,
-      //   optional_items,
-      //   pricing,
-      //   indicative_performance,
-      //   prepared_by,
-      //   date
-      // }
-      const ctx = buildWordContext();
-
-      const payload = {
-        schema: "adroit_quotation_v1",
-        generated_at: new Date().toISOString(),
-        ...ctx,
-        _restore: {
-          schema: "adroit_v2",
-          machineType,
-          customer,
-          selected: selected, // Save full object to preserve dynamic techDesc and headers
-          selectedAddons: selectedAddons, // Save full object
-          markup_percent: markup,
-          discount_percent: discount,
-          machineModelIndex,
-          selectedMachineModelLabel,
-          customMode,
-          customOutput,
-          customLayflat,
-          customRollerWidth,
-          scopeOverrides,
-          conversionRate,
-          quoteTemplate,
-          showPricingFields,
-          showMarkupField,
-          showDiscountField,
-          showAddonPricing,
-          showPrices,
-          presetBasePrice,
-          quotationDate,
-        }
-      };
-
-      const blob = new Blob([JSON.stringify(payload, null, 2)], {
-        type: "application/json",
-      });
-
-      // Nice filename: YYYYMMDD_Ref_Customer_Quotation.json
-      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-
-      // we stored quotation ref in customer.ref / quotation.ref_no earlier
-      const ref =
-        (ctx.customer && (ctx.customer.ref || ctx.customer.quotationRef)) ||
-        (ctx.quotation && ctx.quotation.ref_no) ||
-        "";
-
-      const refSafe = ref ? String(ref).replace(/[^\w\-]/g, "_") : "NOREF";
-      const nameSafe = (ctx.customer.contact_name || "Customer")
-        .toString()
-        .replace(/\s+/g, "_");
-
-      const fileName = `${dateStr}_${refSafe}_${nameSafe}_Quotation.json`;
-
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      console.error("JSON export failed:", e);
-      alert("Could not export JSON configuration.");
-    }
-  }
-
-  // ---------------- EXPORT: WORD (template-based) ----------------
-  async function exportWordOnly() {
-    try {
-      // Helpers / safe names
-      const safeCustomer = customer || {};
-      const safeName = (safeCustomer.name || "customer").replace(/\s+/g, "_");
-      const safeCity = (safeCustomer.city || "city").replace(/\s+/g, "_");
-
-      const { withMarkup, afterDiscount, currency, rate, isPackagePrice } = computePriceSummary();
-
-      function formatCurrency(n) {
-        const num = Number(n || 0);
-        if (currency === "USD") return `$${num.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
-        return `₹${num.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
-      }
-
-      // Convert image URL to DataURL for embedding
-      async function imageToDataUrl(url) {
-        if (!url) return "";
-        try {
-          const resp = await fetch(url, { mode: "cors" });
-          if (!resp.ok) return "";
-          const blob = await resp.blob();
-          return await new Promise((res, rej) => {
-            const reader = new FileReader();
-            reader.onload = () => res(reader.result);
-            reader.onerror = (e) => rej(e);
-            reader.readAsDataURL(blob);
-          });
-        } catch (e) {
-          console.warn("imageToDataUrl failed:", url, e);
-          return "";
-        }
-      }
-
-      // Preload letterhead and selected images
-      const letterheadUrl = "/images/letterhead-bg.png"; // adjust path if necessary
-      const letterheadData = await imageToDataUrl(letterheadUrl);
-
-      const allItems = [...(selected || []), ...(selectedAddons || [])];
-      const imagesMap = {};
-      await Promise.all(
-        allItems.map(async (it) => {
-          if (!it || !it.image) return;
-          imagesMap[it.image] = await imageToDataUrl(it.image);
-        })
-      );
-
-      // Price math (Refactored to use computePriceSummary)
-      const finalTotal = afterDiscount;
-      const priceWithMarkup = withMarkup;
-
-      // CSS tuned to match your sample (red headings, spaced totals, inner borders)
-      const css = `
-      @page { size: A4; margin: 0; }
-      body { font-family: "Arial", "Helvetica", sans-serif; color:#222; margin:0; padding:0; background: #fff; }
-      .page { padding: 28mm 18mm 18mm 18mm; box-sizing:border-box; }
-      .letterhead { width:100%; margin-bottom:8px; }
-      .letterhead img { width:100%; height:auto; display:block; }
-
-      h1.title { color:#c62828; font-size:20px; letter-spacing:1px; margin:4px 0 8px 0; }
-      h2.section-heading { color:#c62828; font-size:13px; margin:14px 0 8px 0; letter-spacing:0.8px; }
-      p.opening { font-size:12.2px; color:#333; line-height:1.45; margin:8px 0 12px 0; }
-
-      .customer-block { margin-bottom:10px; font-size:12px; }
-      .customer-block strong { color:#111; }
-
-      table.tbl { width:100%; border-collapse: collapse; margin-bottom:8px; }
-      table.tbl thead th { background:#f7f7f7; padding:10px 10px; border:1px solid #cfcfcf; font-size:12px; text-align:left; color:#111; }
-      table.tbl tbody td { padding:10px 10px; border:1px solid #e0e0e0; vertical-align:top; font-size:12px; color:#222; }
-      table.tbl tbody tr + tr td { /* spacing is the border, padding gives breathing room */ }
-
-      /* slightly larger left column for component name */
-      .col-name { width:35%; }
-      .col-desc { width:55%; }
-      .col-qty { width:10%; text-align:center; }
-
-      /* Addons table price column */
-      .col-price { width:120px; text-align:right; }
-
-      /* Component detail blocks */
-      .component-block { display:flex; gap:16px; align-items:flex-start; margin-bottom:18px; }
-      .component-block .imgwrap { width:220px; flex:0 0 220px; border:1px solid #e2e2e2; padding:6px; background:#fff; }
-      .component-block .imgwrap img { width:100%; height:auto; display:block; }
-      .component-block .spec { flex:1; font-size:12px; color:#222; line-height:1.45; }
-      .component-block .spec h3 { color:#c62828; margin:0 0 6px 0; font-size:13px; }
-
-      .price-lines { margin-top:8px; }
-      .price-lines .line { color:#c62828; font-weight:700; font-size:16px; letter-spacing:2px; margin:6px 0; }
-      .inwords { font-size:12px; color:#333; margin-top:6px; }
-
-      .terms { margin-top:14px; font-size:12px; color:#222; line-height:1.45; }
-      .terms p { margin:10px 0; }
-
-      .signature { margin-top:24px; font-size:12px; }
-      .signature .sign-line { margin-top:26px; border-top:1px solid #111; display:inline-block; padding-top:8px; }
-
-      /* keep content comfortable for Word */
-      img { max-width:100%; }
-    `;
-
-      // Opening paragraph (as in Aeromat style)
-      const openingPara = `
-      <p class="opening">
-        We thank you for your enquiry and are pleased to submit our detailed proposal for the supply of equipment as listed below. The scope, pricing and terms contained in this quotation are subject to the conditions stated and are valid for 30 days from the quotation date.
-      </p>
-    `;
-
-      // Build components table rows (NO prices per your request for components table)
-      const basicRowsHtml = (selected || []).map((it) => {
-        const shortDesc = it.shortDesc || it.desc || (Array.isArray(it.techDesc) ? it.techDesc.join(" | ") : (it.techDesc || ""));
-        return `
-        <tr>
-          <td class="col-name">${it.name || "-"}</td>
-          <td class="col-desc">${shortDesc || "-"}</td>
-          <td class="col-qty">${it.qty || 1}</td>
-        </tr>
-      `;
-      }).join("\n");
-
-      // Addons table rows (with price column)
-      const addonsRowsHtml = (selectedAddons || []).map((a) => {
-        const shortDesc = a.shortDesc || a.desc || (Array.isArray(a.techDesc) ? a.techDesc.join(" | ") : (a.techDesc || ""));
-        return `
-        <tr>
-          <td class="col-name">${a.name || "-"}</td>
-          <td class="col-desc">${shortDesc || "-"}</td>
-          <td class="col-qty">${a.qty || 1}</td>
-          <td class="col-price">${formatCurrency(a.price || 0)}</td>
-        </tr>
-      `;
-      }).join("\n");
-
-      // Component detail blocks (image left, full description right). No prices displayed here.
-      const detailsHtml = allItems.map((it) => {
-        const imgData = imagesMap[it.image] || "";
-        const descParts = it.fullDesc || it.desc || it.techDesc || it.shortDesc || "-";
-        const safeDesc = Array.isArray(descParts) ? descParts.join(" | ") : String(descParts);
-        return `
-        <div class="component-block">
-          <div class="imgwrap">${imgData ? `<img src="${imgData}" alt="${it.name || ''}" />` : `<div style="width:100%;height:120px;display:flex;align-items:center;justify-content:center;color:#999">No image</div>`}</div>
-          <div class="spec">
-            <h3>${it.name || "-"}</h3>
-            <div>${safeDesc}</div>
-          </div>
-        </div>
-      `;
-      }).join("\n");
-
-      // Terms & Warranty EXACT text you provided (kept formatting and phrasing)
-      const termsHtml = `
-      <div class="terms">
-        <p><strong>PRICES:</strong><br/>
-        Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered. These are applicable as per rule. Prices are valid for 30 days from the date of quotation.</p>
-
-        <p><strong>PACKING & FORWARDING:</strong><br/>
-        Packing charges will be charged extra.</p>
-
-        <p><strong>INSURANCE:</strong><br/>
-        Insurance to be organized by the customer.</p>
-
-        <p><strong>TRANSPORTATION:</strong><br/>
-        Cost of the transport will be borne by the customer.</p>
-
-        <p><strong>DELIVERY:</strong><br/>
-        04 Months from the date receipt of technically and commercially clear purchase order with minimum 30% irrevocable security deposit.</p>
-
-        <p><strong>PAYMENT TERMS:</strong><br/>
-        We require 20% as token advance, 30% after 45 days of given order and Balance payment along with all incidental charges, Taxes & Duties are to be paid before delivery. The deposit is non-interest bearing, and will be forfeited in the event of cancellation of the order.</p>
-
-        <p><strong>PRE-DISPATCH TESTING & TRIALS:</strong><br/>
-        We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre-designed standards to ensure faultless running of the complete line on installation at Customer end.</p>
-
-        <p><strong>ERECTION & COMMISSIONING:</strong><br/>
-        Our service engineers will supervise erection, installation and commissioning of the machine. Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineer. The customer will pay To & Fro Fare, Lodging, Boarding, and Transportation during period of the services provided.</p>
-
-        <p>Thanking you,<br/>Yours truly,<br/><strong>FOR ADROIT EXTRUSION</strong><br/>Urveesh Jepaliya</p>
-
-        <h4 style="margin-top:12px">STANDARRD WARRANTY TERMS</h4>
-
-        <p><strong>WARRANTY PERIOD:</strong><br/>
-        For electrical, Boughtout items & Manufacturing items : 12 months from date of commissioning against faulty material or bad workmanship and undertake to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. For Third Party Products : Manufacturers warranty will be applicable.</p>
-
-        <p><strong>WARRANTY EXCLUDES:</strong><br/>
-        Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCB’s etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.</p>
-
-        <p><strong>WARRANTY IS LIMITED:</strong><br/>
-        Warranty is limited to the extent of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements. Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order.</p>
-
-        <p><strong>CANCELLATION:</strong><br/>
-        It is understood that order once placed cannot be cancelled without payment of cancellation charges, in addition to forfeiture of the advance paid by the customer.</p>
-      </div>
-    `;
-
-      // Signature block
-      const signatureHtml = `
-      <div class="signature">
-        <div>For Adroit Extrusion</div>
-        <div class="sign-line">Authorised Signatory</div>
-      </div>
-    `;
-
-      // Compose the final HTML doc
-      const html = `
-      <!doctype html>
-      <html>
-      <head>
-        <meta charset="utf-8" />
-        <title>Quotation - ${safeCustomer.name || ""}</title>
-        <style>${css}</style>
-      </head>
-      <body>
-        <div class="page">
-          ${letterheadData ? `<div class="letterhead"><img src="${letterheadData}" alt="letterhead" /></div>` : ""}
-          <h1 class="title">QUOTATION</h1>
-
-          <div class="customer-block">
-            <div><strong>To:</strong> ${safeCustomer.name || "-"}</div>
-            <div><strong>Company:</strong> ${safeCustomer.company || "-"}</div>
-            <div><strong>Phone:</strong> ${safeCustomer.phone || "-"}</div>
-            <div><strong>Email:</strong> ${safeCustomer.email || "-"}</div>
-            <div><strong>Address:</strong> ${safeCustomer.address || "-"}</div>
-          </div>
-
-          ${openingPara}
-
-          <h2 class="section-heading">Scope of Supply - Basic Machine Components</h2>
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Description</th>
-                <th style="text-align:center">Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${basicRowsHtml || `<tr><td colspan="3">No basic components selected.</td></tr>`}
-            </tbody>
-          </table>
-
-          <h2 class="section-heading">Optional Equipments</h2>
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Description</th>
-                <th style="text-align:center">Qty</th>
-                <th style="text-align:right">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${addonsRowsHtml || `<tr><td colspan="4">No optional equipments selected.</td></tr>`}
-            </tbody>
-          </table>
-
-          <div class="price-lines">
-            <div class="line">${isPackagePrice ? "Fixed Package Base Price" : "Basic Price (EX-Works)"}: ${formatCurrency(priceWithMarkup)}</div>
-            <div class="line">Final Price After Discount: ${formatCurrency(finalTotal)}</div>
-            <div class="inwords">In Words: ${currency === "USD" ? numberToWords(Math.round(finalTotal)) + " Dollars Only" : numberToWords(Math.round(finalTotal)) + " Only"} </div>
-          </div>
-
-          <h2 class="section-heading">Component Details</h2>
-          ${detailsHtml}
-
-          <h2 class="section-heading">Terms & Warranty</h2>
-          ${termsHtml}
-
-          ${signatureHtml}
-        </div>
-      </body>
-      </html>
-    `;
-
-      // Create & download blob as application/msword (Word will open)
-      const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-      const fname = `${dateStr}_${safeName}_${safeCity}_Quotation.doc`;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fname;
-      a.click();
-      URL.revokeObjectURL(url);
-
-    } catch (err) {
-      console.error("Export Word failed:", err);
-      alert("Could not generate Word document");
-    }
-  }
-
-  // ---------------- EXPORT: PDF (simple jsPDF) ----------------
-
-  async function exportPdfOnly() {
-    try {
-      // dynamic imports (keep bundle small)
-      const html2canvas = html2canvasModule || (await import("html2canvas")).default;
-      const jsPDF = jsPDFModule || (await import("jspdf")).default;
-
-      const safeCustomer = customer || {};
-      const safeName = (safeCustomer.name || "customer").replace(/\s+/g, "_");
-      const safeCity = (safeCustomer.city || "city").replace(/\s+/g, "_");
-
-      // ---------- helper: currency formatting ----------
-      const { withMarkup, afterDiscount, currency, rate, isPackagePrice } = computePriceSummary();
-
-      function formatCurrency(n) {
-        const num = Number(n || 0);
-        if (currency === "USD") return `$${num.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
-        return `₹${num.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
-      }
-
-      // ---------- helper: ArrayBuffer -> base64 ----------
-      function arrayBufferToBase64(buffer) {
-        let binary = "";
-        const bytes = new Uint8Array(buffer);
-        const chunkSize = 0x8000;
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          const chunk = bytes.subarray(i, i + chunkSize);
-          binary += String.fromCharCode.apply(null, chunk);
-        }
-        return btoa(binary);
-      }
-
-      // ---------- load font from public/fonts (do NOT import the TTF) ----------
-      // Put NotoSans-Regular.ttf in /public/fonts/NotoSans-Regular.ttf
-      let fontBase64 = null;
-      try {
-        const fontResp = await fetch("/fonts/NotoSans-Regular.ttf");
-        if (!fontResp.ok) throw new Error("Font fetch failed");
-        const fontBuf = await fontResp.arrayBuffer();
-        fontBase64 = arrayBufferToBase64(fontBuf);
-      } catch (e) {
-        console.warn("Could not load font from /fonts/NotoSans-Regular.ttf — continuing with default PDF font", e);
-      }
-
-      // ---------- create pdf ----------
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pdfW = pdf.internal.pageSize.getWidth();
-      const pdfH = pdf.internal.pageSize.getHeight();
-
-      // register the font with jsPDF (if available)
-      if (fontBase64) {
-        try {
-          pdf.addFileToVFS("NotoSans-Regular.ttf", fontBase64);
-          pdf.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
-          pdf.setFont("NotoSans");
-        } catch (e) {
-          console.warn("jsPDF font registration failed, falling back to built-in fonts", e);
-        }
-      } else {
-        // optionally set one of jsPDF built-ins:
-        pdf.setFont("helvetica");
-      }
-
-      // ---------- letterhead (optional background) ----------
-      const letterheadPath = "/images/letterhead-bg.png"; // keep under public/images
-      let letterheadImg = null;
-      try {
-        const img = new Image();
-        img.src = letterheadPath;
-        await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-        letterheadImg = img;
-      } catch (e) {
-        console.warn("letterhead load failed", e);
-        letterheadImg = null;
-      }
-
-      const drawLetterhead = (pageNum = 1) => {
-        if (!letterheadImg) return;
-        try {
-          // Fill entire page with letterhead background (the PNG should include header+footer)
-          pdf.addImage(letterheadImg, "PNG", 0, 0, pdfW, pdfH);
-        } catch (e) {
-          console.warn("drawLetterhead failed", e);
-        }
-      };
-
-      // ---------- margins & spacing ----------
-      const left = 14;
-      const right = 14;
-      const top = 38;      // leave top space so letterhead header won't overlap (tune as per actual PNG)
-      const bottom = 20;   // leave space for footer area in the PNG
-      const usableW = pdfW - left - right;
-      const lineHeight = 6; // mm
-      const smallLine = 5;
-
-      // helper to manage vertical position & page breaks
-      const startNewPage = () => {
-        pdf.addPage();
-        if (letterheadImg) drawLetterhead(pdf.internal.getNumberOfPages());
-        y = top;
-      };
-      const ensureRoom = (heightNeeded) => {
-        // If remaining vertical space is less than heightNeeded, start a new page
-        const remaining = pdfH - bottom - y;
-        if (remaining < heightNeeded) {
-          startNewPage();
-        }
-      };
-
-      // ---------- page 1: summary / customer details ----------
-      if (letterheadImg) drawLetterhead(1);
-      let y = top;
-
-      pdf.setFontSize(12);
-      pdf.setTextColor(0);
-      pdf.text("CUSTOMER DETAILS", left, y);
-      y += smallLine + 2;
-
-      pdf.setFontSize(10);
-      const custLines = [
-        `Name: ${safeCustomer.name || "-"}`,
-        `Company: ${safeCustomer.company || "-"}`,
-        `Phone: ${safeCustomer.phone || "-"}`,
-        `Email: ${safeCustomer.email || "-"}`,
-        `City: ${safeCustomer.city || "-"}`,
-        `GST: ${safeCustomer.gst || "-"}`,
-        `Address: ${safeCustomer.address || "-"}`,
-      ];
-      for (let i = 0; i < custLines.length; i++) {
-        ensureRoom(lineHeight);
-        pdf.text(custLines[i], left, y);
-        y += lineHeight;
-      }
-      y += 4;
-
-      // ---------- Selected Components table (with borders) ----------
-      ensureRoom(lineHeight * 3);
-      pdf.setFontSize(13);
-      pdf.setTextColor(220, 38, 38);
-      pdf.text("SELECTED COMPONENTS", left, y);
-      y += lineHeight;
-
-      // table geometry
-      const col1W = 65; // component name
-      const col2W = usableW - col1W - 20; // description
-      const col3W = 20; // qty
-      const tableX = left;
-      let tableY = y + 2;
-
-      // header row
-      const cellPad = 3;
-      const headerH = lineHeight + 2;
-      pdf.setFillColor(240);
-      pdf.setDrawColor(160);
-      pdf.rect(tableX, tableY, col1W, headerH, "F");
-      pdf.rect(tableX + col1W, tableY, col2W, headerH, "F");
-      pdf.rect(tableX + col1W + col2W, tableY, col3W, headerH, "F");
-      pdf.setFontSize(10);
-      pdf.setTextColor(0);
-      pdf.text("Component", tableX + cellPad, tableY + cellPad + 2);
-      pdf.text("Description", tableX + col1W + cellPad, tableY + cellPad + 2);
-      pdf.text("Qty", tableX + col1W + col2W + col3W - cellPad, tableY + cellPad + 2, { align: "right" });
-
-      tableY += headerH;
-
-      // rows
-      for (let i = 0; i < (selected || []).length; i++) {
-        const s = selected[i];
-        // measure description wrapping
-        const descLines = pdf.splitTextToSize(s.desc || "-", col2W - cellPad * 2);
-        const nameLines = pdf.splitTextToSize(s.name || "-", col1W - cellPad * 2);
-        const rowsNeeded = Math.max(descLines.length, nameLines.length, 1);
-        const rowH = rowsNeeded * (lineHeight * 0.9) + cellPad * 2;
-
-        ensureRoom(rowH + 6);
-        // draw cell outlines
-        pdf.setDrawColor(160);
-        pdf.rect(tableX, tableY, col1W, rowH, "S");
-        pdf.rect(tableX + col1W, tableY, col2W, rowH, "S");
-        pdf.rect(tableX + col1W + col2W, tableY, col3W, rowH, "S");
-
-        // write text
-        pdf.setFontSize(10);
-        pdf.setTextColor(0);
-        pdf.text(nameLines, tableX + cellPad, tableY + cellPad + 2);
-        pdf.text(descLines, tableX + col1W + cellPad, tableY + cellPad + 2);
-        pdf.text(String(s.qty || 1), tableX + col1W + col2W + col3W - cellPad, tableY + cellPad + 2, { align: "right" });
-
-        tableY += rowH;
-        y = tableY + 6;
-      }
-
-      y = tableY + 8;
-
-      // ---------- Optional Addons table (separate with borders) ----------
-      if (selectedAddons && selectedAddons.length > 0) {
-        ensureRoom(lineHeight * 3);
-        pdf.setFontSize(13);
-        pdf.setTextColor(220, 38, 38);
-        pdf.text("OPTIONAL EQUIPMENTS", left, y);
-        y += lineHeight;
-
-        // build header area
-        tableY = y + 2;
-        const aCol1 = 70;
-        const aCol2 = usableW - aCol1 - 30;
-        const aCol3 = 30;
-        const aHeaderH = lineHeight + 2;
-        pdf.setFillColor(240);
-        pdf.setDrawColor(160);
-        pdf.rect(tableX, tableY, aCol1, aHeaderH, "F");
-        pdf.rect(tableX + aCol1, tableY, aCol2, aHeaderH, "F");
-        pdf.rect(tableX + aCol1 + aCol2, tableY, aCol3, aHeaderH, "F");
-        pdf.setFontSize(10);
-        pdf.setTextColor(0);
-        pdf.text("Component", tableX + cellPad, tableY + cellPad + 2);
-        pdf.text("Description", tableX + aCol1 + cellPad, tableY + cellPad + 2);
-        pdf.text("Price", tableX + aCol1 + aCol2 + aCol3 - cellPad, tableY + cellPad + 2, { align: "right" });
-
-        tableY += aHeaderH;
-
-        for (let i = 0; i < selectedAddons.length; i++) {
-          const a = selectedAddons[i];
-          const descLines = pdf.splitTextToSize(a.desc || "-", aCol2 - cellPad * 2);
-          const nameLines = pdf.splitTextToSize(a.name || "-", aCol1 - cellPad * 2);
-          const usedRows = Math.max(descLines.length, nameLines.length, 1);
-          const rowH = usedRows * (lineHeight * 0.9) + cellPad * 2;
-
-          ensureRoom(rowH + 6);
-          pdf.setDrawColor(160);
-          pdf.rect(tableX, tableY, aCol1, rowH, "S");
-          pdf.rect(tableX + aCol1, tableY, aCol2, rowH, "S");
-          pdf.rect(tableX + aCol1 + aCol2, tableY, aCol3, rowH, "S");
-
-          pdf.setFontSize(10);
-          pdf.setTextColor(0);
-          pdf.text(nameLines, tableX + cellPad, tableY + cellPad + 2);
-          pdf.text(descLines, tableX + aCol1 + cellPad, tableY + cellPad + 2);
-          pdf.text(formatCurrency(a.price || 0), tableX + aCol1 + aCol2 + aCol3 - cellPad, tableY + cellPad + 2, { align: "right" });
-
-          tableY += rowH;
-          y = tableY + 6;
-        }
-      }
-
-      // ---------- Totals (Refactored) ----------
-      const finalTotal = afterDiscount;
-
-      pdf.setFontSize(12);
-      pdf.setTextColor(220, 38, 38);
-      pdf.text(`${isPackagePrice ? "Fixed Package Base Price" : "Basic Price (EX-Works)"}: ${formatCurrency(withMarkup)}`, left, y);
-      y += lineHeight;
-      pdf.text(`Final Price After Discount: ${formatCurrency(finalTotal)}`, left, y);
-      y += lineHeight;
-      pdf.setFontSize(10);
-      pdf.setTextColor(0);
-      const finalWords = currency === "USD" ? `${numberToWords(Math.round(finalTotal))} Dollars Only` : `${numberToWords(Math.round(finalTotal))} Only`;
-      pdf.text(`In Words: ${finalWords}`, left, y);
-      y += lineHeight + 8;
-
-      // ---------- Component details page(s): images on left, desc on right ----------
-      const details = [...(selected || []), ...(selectedAddons || [])];
-      if (details.length > 0) {
-        startNewPage();
-        pdf.setFontSize(13);
-        pdf.setTextColor(220, 38, 38);
-        pdf.text("COMPONENT DETAILS", left, y);
-        y += lineHeight + 4;
-
-        for (let i = 0; i < details.length; i++) {
-          const item = details[i];
-          // compute how many text lines we'll need
-          const textX = left + 66;
-          const textW = pdfW - right - textX;
-          const descLines = pdf.splitTextToSize(item.desc || "-", textW);
-          const textBlockH = Math.max(45, descLines.length * (lineHeight * 0.85) + 18);
-
-          ensureRoom(textBlockH + 6);
-          // image
-          try {
-            if (item.image) {
-              const resp = await fetch(item.image);
-              const blob = await resp.blob();
-              const dataUrl = await new Promise((res) => {
-                const r = new FileReader();
-                r.onload = () => res(r.result);
-                r.readAsDataURL(blob);
-              });
-              pdf.addImage(dataUrl, "PNG", left, y, 60, 45);
-            }
-          } catch (e) {
-            console.warn("image load fail", item.id, e);
-          }
-
-          // title + desc + (no price next to desc as you asked)
-          pdf.setFontSize(12);
-          pdf.setTextColor(220, 38, 38);
-          pdf.text(item.name || "-", textX, y + 6);
-          pdf.setFontSize(10);
-          pdf.setTextColor(0);
-          pdf.text(descLines, textX, y + 12);
-
-          y += textBlockH + 6;
-        }
-      }
-
-      // ---------- Terms & Warranty (final pages) ----------
-      startNewPage();
-      pdf.setFontSize(13);
-      pdf.setTextColor(220, 38, 38);
-      pdf.text("Terms & Warranty", left, y);
-      y += lineHeight + 2;
-
-      pdf.setFontSize(10);
-      pdf.setTextColor(0);
-      const termsBlocks = [
-        "PRICES: Prices are Un Packed, Ex-works, Ahmedabad, Gujarat basis. All Government taxes and duties are not considered. These are applicable as per rule. Prices are valid for 30 days from the date of quotation.",
-        "PACKING & FORWARDING: Packing charges will be charged extra.",
-        "INSURANCE: Insurance to be organized by the customer.",
-        "TRANSPORTATION: Cost of the transport will be borne by the customer.",
-        "DELIVERY: 04 Months from the date receipt of technically and commercially clear purchase order with minimum 30% irrevocable security deposit.",
-        "PAYMENT TERMS: We require 20% as token advance, 30% after 45 days of given order and Balance payment along with all incidental charges, Taxes & Duties are to be paid before delivery. The deposit is non-interest bearing, and will be forfeited in the event of cancellation of the order.",
-        "PRE-DISPATCH TESTING & TRIALS: We follow discrete testing methods. This method involves discrete testing of individual system elements like Winders, Extruders etc. to our pre-designed standards to ensure faultless running of the complete line on installation at Customer end.",
-        "ERECTION & COMMISSIONING: Our service engineers will supervise erection, installation and commissioning of the machine. Customer will provide skilled and semi skilled labor for the purpose of erection & commissioning. Customer will arrange Erection Team. Customer will ensure that all utilities and power connections are ready before customer calls our service engineer. The customer will pay To & Fro Fare, Lodging, Boarding, and Transportation during period of the services provided.",
-        "Thanking you,",
-        "Yours truly,",
-        "FOR ADROIT EXTRUSION",
-        "Urveesh Jepaliya",
-        "STANDARD WARRANTY TERMS:",
-        "WARRANTY PERIOD: For electrical, Boughtout items & Manufacturing items : 12 months from date of commissioning against faulty material or bad workmanship and undertake to repair/replacement the defective parts within period. The defect brought to notice has to be genuine. For Third Party Products : Manufacturers warranty will be applicable.",
-        "WARRANTY EXCLUDES: Parts made of rubber, plastic, glass. Bearings, wearing parts, fuses, heaters, lamps, contactors, MCB’s etc. The warranty does not cover damages caused by dropping, fire, floods or other natural calamity, misuse, accident or improper installation. The life span of screw and barrel depends upon abrasive material being processed and hence cannot be specified.",
-        "WARRANTY IS LIMITED to the extent of the repairs or replacement of manufacturing defects and other things or workmanship. No liability is assumed beyond such replacements.",
-        "Any condition or other matters relating to this quotation not expressly stimulated will be a matter of mutual discussion and agreement at the time of accepting the order.",
-        "CANCELLATION: It is understood that order once placed cannot be cancelled without payment of cancellation charges, in addition to forfeiture of the advance paid by the customer."
-      ];
-
-      for (const block of termsBlocks) {
-        const wrap = pdf.splitTextToSize(block, usableW);
-        ensureRoom(wrap.length * (lineHeight * 0.9) + 6);
-        pdf.text(wrap, left, y);
-        y += wrap.length * (lineHeight * 0.9) + 6;
-      }
-
-      // ---------- Save / download ----------
-      const blob = pdf.output("blob");
-      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-      const fname = `${dateStr}_${safeName}_${safeCity}_Quotation.pdf`;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fname;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("PDF export failed:", err);
-      alert("Could not generate PDF: " + (err?.message || err));
-    }
-  }
-
-  // ---------------- EXPORT: PRO PDF (using html2pdf with AdroitQuotation template) ----------------
-
-  async function exportProPdf() {
-    const loadingToast = toast.push({ title: "Generating Pro PDF...", variant: "loading", persist: true });
-
-    try {
-      const html2pdf = html2pdfModule || (await import("html2pdf.js")).default;
-      const contextData = buildWordContext();
-
-      // Render a hidden container for the PDF generator
-      const container = document.createElement("div");
-      container.id = "pdf-render-vault";
-      container.style.cssText = "position:absolute; left:-9999px; top:0; width:210mm;";
-      document.body.appendChild(container);
-
-      const root = createRoot(container);
-
-      // Wait for rendering and image loading
-      await new Promise((resolve) => {
-        root.render(
-          <AdroitQuotation
-            data={contextData}
-            ref={(el) => { if (el) setTimeout(resolve, 2000); }}
-          />
-        );
-      });
-
-      // Ensure all images are loaded
-      const element = container.querySelector("#adroit-quotation-root");
-      if (element) {
-        const images = element.querySelectorAll('img');
-        await Promise.all(
-          Array.from(images).map(img => {
-            if (img.complete) return Promise.resolve();
-            return new Promise((resolve) => {
-              img.onload = resolve;
-              img.onerror = resolve; // Continue even if image fails
-            });
-          })
-        );
-      }
-
-      const opt = {
-        margin: 0,
-        filename: `Quotation_${contextData.quotation_ref || 'Draft'}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          letterRendering: true,
-          logging: false
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      await html2pdf().set(opt).from(element).save();
-      toast.dismiss(loadingToast);
-      toast.push({ title: "Success", description: "PDF ready!", variant: "success" });
-
-      // Cleanup
-      root.unmount();
-      document.body.removeChild(container);
-    } catch (err) {
-      console.error("PDF Export Crash:", err);
-      toast.dismiss(loadingToast);
-      toast.push({ title: "Error", description: "PDF generation failed: " + err.message, variant: "error" });
-    }
-  }
-
-
+  // ---------------- EXPORT: KIOSK QR (html2pdf + KioskFlyer template) ----------------
 
   async function generateKioskQR(setQrUrlState) {
     const loadingToast = toast.push({ title: "Processing...", variant: "loading", persist: true });
@@ -3712,11 +3086,8 @@ export function ConfigProvider({ children }) {
     }
   }
 
-  // ---------------- RESET ----------------
-  // ---------------- EXPORT: PROFESSIONAL HTML-TO-PDF (Crash-Proof Version) ----------------
-  // import html2pdf dynamic import inside function...
+  // ---------------- EXPORT: PRO PDF (html2pdf + AdroitQuotation template) ----------------
 
-  // --- Inside exportProPdf() ---
   async function exportProPdf() {
     console.log("PDF: Starting...");
     const loadingToast = toast.push({ title: "Generating PDF...", variant: "loading", persist: true });
@@ -3930,7 +3301,10 @@ export function ConfigProvider({ children }) {
     setQuoteTemplate,
     showPricingFields,
     setShowPricingFields,
+    presetBasePrice,
     setPresetBasePrice,
+    presetBaseComponents,
+    setPresetBaseComponents,
 
     // component CRUD
     addComponent,
@@ -3957,9 +3331,6 @@ export function ConfigProvider({ children }) {
     dirHandleRef,
 
     // exports / import
-    exportJsonOnly,
-    exportPdfOnly,
-    exportWordOnly,
     exportProPdf,
     importJsonFile,
     resetAll,
@@ -3976,23 +3347,9 @@ export function ConfigProvider({ children }) {
       {modalItem && (() => {
         const item = modalItem.item || modalItem;
 
-        // Normalise techDesc:
-        // - if it's already an array of {label,value}, keep it
-        // - if it's an object/map (like in extruders.ts), convert to array
-        let techRows = null;
-
-        if (Array.isArray(item.techDesc) && item.techDesc.length > 0) {
-          techRows = item.techDesc;
-        } else if (
-          item.techDesc &&
-          typeof item.techDesc === "object" &&
-          Object.keys(item.techDesc).length > 0
-        ) {
-          techRows = Object.entries(item.techDesc).map(([label, value]) => ({
-            label,
-            value: String(value),
-          }));
-        }
+        // Normalise techDesc into display rows, stripping any "hidden" sentinel values.
+        const normalizedRows = toTechRows(item.techDesc);
+        const techRows = normalizedRows.length > 0 ? normalizedRows : null;
 
         return (
           <Modal

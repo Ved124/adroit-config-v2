@@ -18,6 +18,7 @@ export interface GaugeControlAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
 }
 

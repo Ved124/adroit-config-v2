@@ -11,6 +11,7 @@ export interface TechSpecMap {
 export interface SizeDetail {
   name: string;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
 }
 
@@ -26,12 +27,13 @@ export interface DieComponent {
   price: number;
   prices: Record<string, number>;
   sizeDetails: Record<string, SizeDetail>;
+  scopeDesc?: string;
   shortDesc?: string;
 }
 
 const MONO_TECH_BASE: TechSpecMap = {
   "Material of Construction": "Hardened high strength alloy steel.",
-  "Surface Treatment": "Electroless Nickel / chrome plated & highly polished melt paths.",
+  "Surface Treatment": "Chrome plated & highly polished melt paths.",
   "Die setting": "Die adjusting bolts will be provided.",
   "Distribution": "Spiral distribution.",
   "Heating System": "Ceramic band heaters",
@@ -84,7 +86,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "50 mm diameter.",
-          "Application": "Narrow web film up to ~450 mm layflat.",
           "Lip Gap": "Adjustable, typical gap 0.8–1.2 mm.",
           "Heating Zones": "2–3 zones.",
         },
@@ -95,7 +96,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "90 mm diameter.",
-          "Application": "Monolayer shopping bag and liner film, 750–900 mm layflat.",
           "Lip Design": "Adjustable circular lips with fine-thread bolts.",
           "Heating Zones": "3–4 zones.",
         },
@@ -115,7 +115,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "150 mm diameter.",
-          "Application": "General packaging film, liners and surface printing film — 1000–1250 mm layflat.",
           "Lip Gap": "Typical gap 1.0–1.5 mm, adjustable.",
           "Heating Zones": "4–5 zones.",
         },
@@ -126,7 +125,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "200 mm diameter.",
-          "Application": "Medium to wide web monolayer films — 1250–1500 mm layflat.",
           "Heating Zones": "4–6 zones with individual temperature control.",
         },
         shortDesc: "Large monolayer die for wider blown film production.",
@@ -145,7 +143,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "300 mm diameter.",
-          "Application": "Heavy duty liner and shrink film — 2000 mm layflat.",
           "Heating Zones": "Multiple zones along body and lips.",
         },
         shortDesc: "High capacity monolayer die for large blown film applications.",
@@ -155,7 +152,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "400 mm diameter.",
-          "Application": "Construction film, agricultural cover and wide width liners — 2500 mm layflat.",
           "Lip Gap": "Approx. 2.0–2.5 mm adjustable.",
           "Heating Zones": "03 Nos.",
         },
@@ -166,7 +162,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "450 mm diameter.",
-          "Application": "Very wide width film, greenhouse and silo covers — 3000 mm layflat.",
           "Heating Zones": "6+ zones with PID controllers.",
         },
         shortDesc: "Heavy-duty spiral die for maximum-width blown film applications.",

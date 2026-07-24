@@ -20,7 +20,10 @@ export interface MaterialHandlingAddon {
   price: number;
   qty?: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   isDynamic?: boolean;
+  pricingType?: "size" | "brand" | "dropdown" | string;
+  prices?: Record<string, number>;
   monoPrices?: Record<string, number>;
 }
 
@@ -42,15 +45,15 @@ export const MIXER_PRICES: Record<string, number> = {
 export const MIXER_DRYER_BRANDS = ["Adroit"];
 
 export const HOPPER_LOADER_MULTI: Record<string, number> = {
-  "1120": 195000,
-  "1370": 195000,
-  "1450": 195000,
-  "1620": 195000,
-  "1870": 235000,
-  "1970": 235000,
-  "2120": 235000,
-  "2370": 235000,
-  "2620": 275000,
+  "1000": 195000,
+  "1250": 195000,
+  "1350": 195000,
+  "1500": 195000,
+  "1750": 235000,
+  "1850": 235000,
+  "2000": 235000,
+  "2250": 235000,
+  "2500": 275000,
 }
 
 export const HOPPER_LOADER_UNO_PRICES: Record<string, number> = {
@@ -64,16 +67,22 @@ export const HOPPER_LOADER_UNO_PRICES: Record<string, number> = {
 };
 
 export const HOPPER_LOADER_DUO_PRICES: Record<string, number> = {
+  "D20\"": 120000, // flat tier (26-40 all share 120000)
+  "D24\"": 120000,
   "D26\"": 120000,
   "D32\"": 120000,
+  "D36\"": 120000,
   "D40\"": 120000,
   "D50\"": 105000,
   "D60\"": 135000,
 };
 
 export const HOPPER_DRYER_B_PRICES: Record<string, number> = {
+  "D20\"": 65000, // matches D26/D32 tier
+  "D24\"": 65000,
   "D26\"": 65000,
   "D32\"": 65000,
+  "D36\"": 77500, // interpolated between D32 (65000) and D40 (90000)
   "D40\"": 90000,
   "D50\"": 90000,
   "D60\"": 105000,
@@ -91,6 +100,8 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     price: 0,
     isDynamic: true,
     qty: 1,
+    pricingType: "size",
+    prices: HOPPER_LOADER_UNO_PRICES,
     techDesc: {
       "Capacity": "Appropriate kg/hr loading speed.",
       "Material Type": "Virgin / Reprocess Granules.",
@@ -108,6 +119,8 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     price: 0,
     isDynamic: true,
     qty: 1,
+    pricingType: "size",
+    prices: HOPPER_LOADER_DUO_PRICES,
     techDesc: {
       "Capacity": "Appropriate kg/hr loading speed.",
       "Material Type": "Virgin / Reprocess Granules.",
@@ -125,6 +138,8 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     price: 0,
     isDynamic: true,
     qty: 1,
+    pricingType: "size",
+    prices: HOPPER_LOADER_MULTI,
     techDesc: {
       "Capacity": "300 kg/hr loading speed.",
       "Material Type": "Virgin / Reprocess Granules.",
@@ -142,6 +157,8 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     price: 0,
     isDynamic: true,
     qty: 1,
+    pricingType: "size",
+    prices: HOPPER_DRYER_B_PRICES,
     techDesc: {
       "Type": "Hopper Dryer",
       "Function": "Efficient moisture removal from granules."
@@ -157,6 +174,8 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     price: 0,
     isDynamic: true,
     qty: 1,
+    pricingType: "size",
+    prices: MIXER_PRICES,
     techDesc: {
       "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
       "Switch Gear": "SCHNEIDER",
@@ -175,6 +194,8 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     price: 0,
     isDynamic: true,
     qty: 1,
+    pricingType: "size",
+    prices: MIXER_DRYER_PRICES,
     techDesc: {
       "Motor": "ABB (1 HP for 50-100 kg and 2 HP for 150-300 kg)",
       "Switch Gear": "SCHNEIDER",

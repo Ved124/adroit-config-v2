@@ -8,6 +8,7 @@ export interface EPC {
     cardDesc: string;
     price: number;
     techDesc: TechSpecMap;
+    scopeDesc?: string;
     qty?: number;
     shortDesc?: string;
     isDynamic?: boolean; // New flag for dropdown-based selection
@@ -26,15 +27,14 @@ export interface EPC {
 // export const EPC_BRANDS = ["Conair", "Prasad", "Adroit"];
 
 export const GRAVIMETRIC_PRICES: Record<string, number> = {
+    "1250": 1025000,
     "1350": 1025000,
-    "1450": 1025000,
-    "1550": 1025000,
-    "1625": 1025000,
-    "1870": 1025000,
-    "1970": 1025000,
-    "2125": 1250000,
-    "2370": 1250000,
-    "2620": 1250000,
+    "1500": 1025000,
+    "1750": 1025000,
+    "1850": 1025000,
+    "2000": 1250000,
+    "2250": 1250000,
+    "2500": 1250000,
 };
 
 export const EPC_COMPONENTS: EPC[] = [

@@ -10,7 +10,10 @@ export interface WinderAddon {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
   monoPrices?: Record<string, number>;
 }
 
@@ -22,8 +25,11 @@ export const BACK_TO_BACK_PRICES: Record<string, number> = {
   "U50\"": 475000,
   "U72\"": 650000,
   "U110\"": 1250000,
+  "D20\"": 210000, // reuse smallest known tier (can't extrapolate below D26)
+  "D24\"": 210000,
   "D26\"": 210000,
   "D32\"": 250000,
+  "D36\"": 280000, // interpolated between D32 (250000) and D40 (310000)
   "D40\"": 310000,
   "D50\"": 425000,
   "D60\"": 600000,
@@ -37,8 +43,11 @@ export const AIR_SHAFT_PRICES: Record<string, number> = {
   "U50\"": 32000,
   "U72\"": 41000,
   "U110\"": 64000,
+  "D20\"": 24000, // reuse smallest known tier
+  "D24\"": 24000,
   "D26\"": 24000,
   "D32\"": 26000,
+  "D36\"": 27500, // interpolated between D32 (26000) and D40 (29000)
   "D40\"": 29000,
   "D50\"": 31000,
   "D60\"": 35000,
@@ -58,13 +67,15 @@ export const AIR_SHAFT_PRICES: Record<string, number> = {
 export const WINDER_ADDONS: WinderAddon[] = [
   {
     id: "winder-manual-back-to-back-dynamic",
-    name: "Back to back Surface Winder",
-    category: "Winder Addons",
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/winder/Back to Back Winder.png",
-    cardDesc: "Add a Back-to-back surface winder for efficient winding.",
-    price: 0,
-    isDynamic: true,
+  name: "Manual Back to Back Winder",
+  category: "Winder Addons",
+  machineTypes: ["mono", "aba", "3layer", "5layer"],
+  image: "/images/winder/Back to Back Winder.png",
+  cardDesc: "Upgrade to manual back to back winder.",
+  price: 0,
+  isDynamic: true,
+  pricingType: "size",
+  prices: BACK_TO_BACK_PRICES,
     techDesc: {
       "Two Surface Winder": "Maximum web width of [W] mm with Manual Changeover.",
       "Roll diameter": "500 mm diameter or 350 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
@@ -92,13 +103,15 @@ export const WINDER_ADDONS: WinderAddon[] = [
   },
   {
     id: "addon-air-shaft-dynamic",
-    name: "Air Shaft Upgrade",
-    category: "Winder Addons",
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/Acessories/loadcell.png",
-    cardDesc: "Upgrade to Air Shaft for quick and easy roll changes, providing consistent tension and better grip.",
-    price: 0,
-    isDynamic: true,
+  name: "Air Shaft Upgrade (75 mm)",
+  category: "Winder Addons",
+  machineTypes: ["mono", "aba", "3layer", "5layer"],
+  image: "/images/Acessories/aluminium_rollers.jpeg",
+  cardDesc: "Upgrade mechanical shaft to air shaft.",
+  price: 0,
+  isDynamic: true,
+  pricingType: "size",
+  prices: AIR_SHAFT_PRICES,
     techDesc: {
       "Air Shaft": "Provided for quick and easy roll changes.",
       "Benefit": "Ensures consistent tension and provides a better grip on the core.",

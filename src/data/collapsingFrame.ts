@@ -14,8 +14,11 @@ export interface CollapsingFrameComponent {
   cardDesc: string;
   price: number;
   techDesc: TechSpecMap;
+  scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
+  pricingType?: string;
+  prices?: Record<string, number>;
 }
 
 // Map sizes for dynamic selection (matching haul-off/bubble cage standards)
@@ -45,6 +48,8 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,
     isDynamic: true,
+    pricingType: "size",
+    prices: COLLAPSING_FRAME_PRICES,
     techDesc: {
       "Construction": "PBT roller frame mounted before haul-off for layflat formation.",
       "Material": "PBT rollers for scratch-free handling.",

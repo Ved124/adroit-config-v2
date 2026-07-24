@@ -2,6 +2,7 @@ import { useContext, useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ALL_MODELS } from "../src/data/models";
 export default function SelectionPage() {
   const router = useRouter();
   const {
@@ -17,6 +18,22 @@ export default function SelectionPage() {
     openModal,
     applyModelPreset,
   } = useContext(ConfigContext);
+
+  const modelSizeMm = useMemo(() => {
+    if (selectedMachineModelLabel) {
+      if (selectedMachineModelLabel.startsWith("UNOFLEX-")) {
+        return "U" + selectedMachineModelLabel.split("-")[1].split(" ")[0];
+      }
+      if (selectedMachineModelLabel.startsWith("DUOFLEX-")) {
+        return "D" + selectedMachineModelLabel.split("-")[1].split(" ")[0];
+      }
+      if (selectedMachineModelLabel.startsWith("INNOFLEX-")) {
+         const model = ALL_MODELS.find(m => m.code === selectedMachineModelLabel || m.label === selectedMachineModelLabel);
+         if (model && model.layflatWidthMm) return String(model.layflatWidthMm);
+      }
+    }
+    return null;
+  }, [selectedMachineModelLabel]);
 
   const [showPrices, setShowPrices] = useState(false);
 
@@ -74,9 +91,29 @@ export default function SelectionPage() {
                 </h2>
 
                 <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {items.map((item) => (
-                    <ComponentCard
-                      key={item.id}
+                  {(() => {
+                    let renderItems = items;
+                    if (category === "Extruder") {
+                      renderItems = [];
+                      const count = machineType === "aba" ? 2 : machineType === "3layer" ? 3 : machineType === "5layer" ? 5 : 1;
+                      const labels = ["A", "B", "C", "D", "E"];
+                      items.forEach(baseItem => {
+                        if (baseItem.isDynamic) {
+                          for (let i = 0; i < count; i++) {
+                            renderItems.push({
+                              ...baseItem,
+                              id: `${baseItem.id}-${labels[i]}`,
+                              name: count > 1 ? `${baseItem.name} ${labels[i]}` : baseItem.name,
+                            });
+                          }
+                        } else {
+                          renderItems.push(baseItem);
+                        }
+                      });
+                    }
+                    return renderItems.map((item) => (
+                      <ComponentCard
+                        key={item.id}
                       item={item}
                       category={category}
                       line={getSelectedLineItem(item.id)}
@@ -87,8 +124,10 @@ export default function SelectionPage() {
                       openModal={openModal}
                       customMode={customMode}
                       selectedMachineModelLabel={selectedMachineModelLabel}
+                      modelSizeMm={modelSizeMm}
                     />
-                  ))}
+                    ));
+                  })()}
                 </div>
               </section>
             ))}
@@ -126,6 +165,7 @@ function ComponentCard({
   openModal,
   customMode,
   selectedMachineModelLabel,
+  modelSizeMm,
 }) {
   const isSelected = !!line;
   const qty = line?.qty || 0;
@@ -138,7 +178,7 @@ function ComponentCard({
   const isOCBC = item.id === "bc-open-close-dynamic";
   const isUDBC = item.id === "bc-up-down-dynamic";
   const isDynamicHauloff = item.id === "haul-horizontal-dynamic";
-  const isDynamicMainNip = item.id === "main-nip-dynamic" || item.id === "main-nip-dynamic-multi";
+  const isDynamicMainNip = item.id === "main-nip-dynamic" || item.id === "main-nip-dynamic-multi" || item.id === "main-nip-cf-dynamic";
   const isDynamicTower = item.id === "tower-dynamic";
   const isManualWinder = item.id === "winder-manual-back-to-back-dynamic";
   const isSurfaceWinder = item.id === "winder-surface-dynamic";
@@ -151,10 +191,40 @@ function ComponentCard({
     ? (item.prices || {})
     : {};
 
+  const nearestToModelSize = (priceMap, modelSizeMm) => {
+    if (!modelSizeMm) return null;
+    const keys = Object.keys(priceMap);
+    if (keys.length === 0) return null;
+
+    const exactMatch = keys.find(k => k === modelSizeMm || k === `${modelSizeMm}"` || k === `${modelSizeMm} mm`);
+    if (exactMatch) return exactMatch;
+
+    const targetPrefix = modelSizeMm.match(/^[UD]/)?.[0] || null;
+    const targetStr = modelSizeMm.replace(/[^UD0-9]/g, '');
+    const strMatch = keys.find(k => k.replace(/[^UD0-9]/g, '') === targetStr && (k.match(/^[UD]/)?.[0] || null) === targetPrefix);
+    if (strMatch) return strMatch;
+
+    const target = parseInt(modelSizeMm.replace(/[^\d]/g, ''), 10);
+    if (isNaN(target)) return null;
+
+    // When the target has a U/D prefix (mono/ABA), only match keys with the SAME
+    // prefix — otherwise a missing ABA (D) size could silently fall back to a mono
+    // (U) price (or vice versa) just because the numbers happen to be close.
+    const sizes = keys
+      .map(k => ({ key: k, num: parseInt(k.replace(/[^\d]/g, ''), 10), prefix: k.match(/^[UD]/)?.[0] || null }))
+      .filter(x => !isNaN(x.num) && (!targetPrefix || x.prefix === targetPrefix))
+      .sort((a, b) => a.num - b.num);
+
+    if (sizes.length === 0) return null;
+    const chosen = sizes.find((s) => s.num >= target) ?? sizes[sizes.length - 1];
+    return chosen.key;
+  };
+
   const sizes = Object.keys(prices);
+  const defaultSize = item.isDynamic && modelSizeMm ? (nearestToModelSize(prices, modelSizeMm) || sizes[0] || "") : (sizes[0] || "");
 
   // Local state for dynamic size
-  const [selectedSize, setSelectedSize] = useState(sizes[0] || "");
+  const [selectedSize, setSelectedSize] = useState(defaultSize);
 
   // Sync if already selected
   useEffect(() => {
@@ -164,35 +234,28 @@ function ComponentCard({
     }
   }, [isSelected, item.isDynamic, line?.size, line?.metadata?.size]);
 
-  // Per-size detail (name, techDesc) for extruders, dies, etc.
-  const sizeDetail = item.sizeDetails?.[selectedSize];
-  const activeName = sizeDetail?.name || item.name;
-  const activeTechDesc = sizeDetail?.techDesc ? { ...item.techDesc, ...sizeDetail.techDesc } : item.techDesc;
-
   const currentPrice = item.isDynamic ? (prices[selectedSize] || 0) : (item.price || 0);
 
-  const isExtruder = item.id?.includes('extruder-') && item.isDynamic;
-  const isDie = item.id?.includes('die-') && item.isDynamic;
-
-  const handleAdd = () => {
+  const handleAdd = (sizeOverride) => {
+    const useSize = sizeOverride || selectedSize;
     if (item.isDynamic) {
-      // Use per-size name if available (extruders, dies), else build generic name
-      const customName = sizeDetail?.name || `${item.name} - ${selectedSize} mm`;
+      const customName = item.sizeDetails?.[useSize]?.name || `${item.name} - ${useSize} mm`;
+      const baseTechDesc = item.sizeDetails?.[useSize]?.techDesc || item.techDesc;
       addComponent(category, item, {
-        size: selectedSize,
-        price: currentPrice,
+        size: useSize,
+        price: item.isDynamic ? (prices[useSize] || 0) : currentPrice,
         customName: customName,
         techDesc: {
-          ...activeTechDesc,
-          [isGAirRing || isStandardAirRing || isDRAirRing || isDie ? "Die Size" : (isExtruder ? "Screw Diameter" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size")))))))]: `${selectedSize} mm`,
-          ...(item.category === "Winder" ? { 
-            "film width": `${selectedSize} mm`,
-            "Winder Size": `${selectedSize} mm`,
-            "Nip roller width": `${parseInt(selectedSize) + 125} mm`,
-            [isAutoWinder ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)"]: `Maximum web width of ${selectedSize} mm with ${isAutoWinder ? "Automatic" : "Manual"} Changeover.`
+          ...baseTechDesc,
+          [isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))]: `${useSize} mm`,
+          ...(item.category === "Winder" ? {
+            "film width": `${useSize} mm`,
+            "Winder Size": `${useSize} mm`,
+            "Nip roller width": `${parseInt(useSize) + 125} mm`,
+            [isAutoWinder ? "Surface Winders (02 Nos.)" : "Surface Winders (01 No.)"]: `Maximum web width of ${useSize} mm with ${isAutoWinder ? "Automatic" : "Manual"} Changeover.`
           } : {}),
-          ...(isDynamicHauloff || isDynamicMainNip ? { "Nip roller width": `${parseInt(selectedSize) + 125} mm` } : {}),
-          ...(isDynamicTower ? { "Idler rollers": `Set of 150 mm diameter idler aluminium rollers of ${parseInt(selectedSize) + 200} mm face width.` } : {})
+          ...(isDynamicHauloff || isDynamicMainNip ? { "Nip roller width": `${parseInt(useSize) + 125} mm` } : {}),
+          ...(isDynamicTower ? { "Idler rollers": `Set of 150 mm diameter idler aluminium rollers of ${parseInt(useSize) + 200} mm face width.` } : {})
         }
       });
     } else {
@@ -228,8 +291,8 @@ function ComponentCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <div className="text-[13px] font-bold text-slate-900 leading-tight truncate" title={isSelected && item.isDynamic ? line.customName : activeName}>
-              {isSelected && item.isDynamic ? line.customName : activeName}
+            <div className="text-[13px] font-bold text-slate-900 leading-tight truncate" title={isSelected && item.isDynamic ? line.customName : item.name}>
+              {isSelected && item.isDynamic ? line.customName : item.name}
             </div>
             {item.isRecommended && !customMode && selectedMachineModelLabel && (
               <span className="shrink-0 bg-blue-100 text-brand-blue text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter">
@@ -252,7 +315,7 @@ function ComponentCard({
       {item.isDynamic && (
         <div className="mt-4 p-2.5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col gap-1.5 animate-in fade-in slide-in-from-top-1 duration-300">
           <label className="text-[9px] font-bold text-slate-500 uppercase tracking-widest px-1">
-            {isExtruder ? "Extruder Size" : (isDie ? "Die Size" : (isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))))}
+            {isGAirRing || isStandardAirRing || isDRAirRing ? "Die Size" : (isDynamicHauloff ? "Hauloff Size" : (isDynamicMainNip ? "Main Nip Size" : (isDynamicTower ? "Tower Size" : (item.category === "Winder" ? "Winder Size" : (is3LayerPanel ? "Panel Model/Size" : (isCollapsingFrame ? "Machine Size" : "Cage Size"))))))}
           </label>
           <select
             disabled={isSelected}
@@ -269,26 +332,6 @@ function ComponentCard({
         </div>
       )}
 
-      {/* Key Specs Preview (Non-dynamic or if selected) */}
-      {!item.isDynamic && item.techDesc && (
-        <div className="mt-4 pt-4 border-t border-slate-50 space-y-1.5">
-          {["Screw Diameter", "L/D ratio", "Main Drive", "Output"].map((key) => {
-            const val = item.techDesc[key] ||
-              Object.entries(item.techDesc).find(([k]) => k.toLowerCase() === key.toLowerCase())?.[1];
-
-            if (!val) return null;
-            const shortVal = val.length > 25 ? val.substring(0, 25) + "..." : val;
-
-            return (
-              <div key={key} className="flex justify-between text-[10px] items-center">
-                <span className="text-slate-400 font-bold uppercase tracking-tighter">{key}</span>
-                <span className="text-slate-700 font-mono font-bold" title={val}>{shortVal}</span>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
       <div className="mt-auto pt-4 flex items-center justify-between gap-2">
         <div className="flex gap-2">
           {item.isDynamic && isSelected ? (
@@ -302,7 +345,7 @@ function ComponentCard({
           ) : (
             <button
               type="button"
-              onClick={() => openModal({ category, item: isSelected ? { ...item, ...line, techDesc: { ...item.techDesc, ...(line?.techDesc || {}) } } : item })}
+                onClick={() => openModal({ category, item: isSelected ? { ...item, ...line, techDesc: { ...item.techDesc, ...(line?.techDesc || {}) } } : { ...item, techDesc: item.sizeDetails?.[selectedSize]?.techDesc || item.techDesc, name: item.sizeDetails?.[selectedSize]?.name || item.name } })}
               className="px-3 py-1.5 rounded-xl text-[10px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all"
             >
               Specs

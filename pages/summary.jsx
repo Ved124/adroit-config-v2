@@ -247,6 +247,8 @@ function buildProposalData({
     if (!item || !item.name) return false;
     if (item.id === "winder-manual-back-to-back-dynamic") return false;
     if (item.id === "addon-air-shaft-dynamic") return false;
+    // IBC chiller cards are optional-equipment-only — never include in scope of supply or detailed desc
+    if (item.id === "chiller-ibc-dynamic" || item.id === "chiller-ibc-water-dynamic") return false;
     const n = item.name.toLowerCase();
     const c = (item.category || "").toLowerCase();
     const isTrim = n.includes("trim");

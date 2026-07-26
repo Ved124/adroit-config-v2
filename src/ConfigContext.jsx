@@ -2108,6 +2108,8 @@ export function ConfigProvider({ children }) {
     const winderTowerAddonsRaw = preSelectedAddons.filter(item => {
       if (!item || !item.name) return false;
       if (item.id === "winder-manual-back-to-back-dynamic") return false;
+      // IBC chiller cards are optional-equipment-only — never include in scope of supply
+      if (item.id === "chiller-ibc-dynamic" || item.id === "chiller-ibc-water-dynamic") return false;
       const n = item.name.toLowerCase();
       const c = (item.category || "").toLowerCase();
       return (n.includes("winder") || c.includes("winder") || n.includes("tower") || c.includes("tower")) && !n.includes("trim") && !c.includes("panel") && item.id !== "addon-loadcell-tension";

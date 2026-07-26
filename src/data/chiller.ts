@@ -21,6 +21,8 @@ export interface ChillerAddon {
   scopeDesc?: string;
   shortDesc?: string;
   isDynamic?: boolean;
+  /** True for the dedicated IBC cooling-circuit chiller (auto-added when IBC is selected) */
+  isIbcChiller?: boolean;
 }
 
 export const CHILLER_BRANDS = ["Prasad", "Con Air"];
@@ -100,6 +102,41 @@ export const CHILLER_ADDONS: ChillerAddon[] = [
       "Type": "Refrigerated Water Cooling",
       "Function": "Supplies chilled water for die-head cooling and IBC heat exchangers.",
       "Portability": "Self-contained with pump and tank."
+    },
+  },
+  {
+    id: "chiller-ibc-dynamic",
+    name: "IBC Air Chiller",
+    type: "air-chiller",
+    machineTypes: ["aba", "3layer", "5layer"],
+    image: "/images/Acessories/prasad_air_chiller.png",
+    cardDesc: "Air-cooled chiller dedicated to the IBC internal bubble cooling circuit. Required for all IBC machines.",
+    price: 0,
+    qty: 1,
+    isDynamic: true,
+    isIbcChiller: true,
+    techDesc: {
+      "Type": "Refrigerated Air Cooling",
+      "Function": "Dedicated air-cooled chiller for the IBC internal bubble cooling circuit.",
+      "Control": "Automatic temperature regulation.",
+    },
+  },
+  {
+    id: "chiller-ibc-water-dynamic",
+    name: "IBC Water Chiller",
+    type: "water-chiller",
+    machineTypes: ["aba", "3layer", "5layer"],
+    image: "/images/Acessories/prasad_water_chiller.png",
+    cardDesc: "Water-cooled chiller dedicated to the IBC internal bubble cooling circuit. Required for all IBC machines.",
+    price: 0,
+    qty: 1,
+    isDynamic: true,
+    isIbcChiller: true,
+    techDesc: {
+      "Type": "Refrigerated Water Cooling",
+      "Function": "Dedicated water-cooled chiller for the IBC internal bubble cooling circuit.",
+      "Control": "Automatic temperature regulation.",
+      "Portability": "Self-contained with pump and tank.",
     },
   },
 ];

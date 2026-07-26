@@ -37,6 +37,7 @@ export default function AddonsPage() {
 
     selectedMachineModelLabel, // 👈 ADD THIS
     applyModelPreset,
+    currentMachineModel,       // 👈 needed for IBC detection
   } = useContext(ConfigContext);
 
 
@@ -75,6 +76,11 @@ export default function AddonsPage() {
     }
     return null;
   })();
+
+  // Is IBC active? True when the selected model is an IBC model OR when the IBC System
+  // addon has been manually added to the config.
+  const isIbcActive = !!currentMachineModel?.isIbc ||
+    (selectedAddons || []).some(a => a.id === "ibc-system");
 
   return (
     <div className="min-h-screen bg-brand-light text-slate-900 pt-24 sm:pt-28">
@@ -154,6 +160,7 @@ export default function AddonsPage() {
                       setAddonQty={setAddonQty}
                       openModal={openModal}
                       modelSizeMm={modelSizeMm}
+                      isIbcActive={isIbcActive}
                     />
                   ))}
                 </div>
@@ -192,6 +199,7 @@ function AddonCard({
   setAddonQty,
   openModal,
   modelSizeMm,
+  isIbcActive,
 }) {
   const line = getSelectedAddon(item.id);
   const isSelected = !!line;
@@ -202,7 +210,11 @@ function AddonCard({
   const isWebGuide = item.id === "webguide-dynamic";
   const isAirChiller = item.id === "chiller-air-dynamic";
   const isWaterChiller = item.id === "chiller-water-dynamic";
-  const isChiller = (isAirChiller || isWaterChiller) && item.isDynamic;
+  // IBC dedicated chillers — air and water variants
+  const isIbcAirChiller = item.id === "chiller-ibc-dynamic";
+  const isIbcWaterChiller = item.id === "chiller-ibc-water-dynamic";
+  const isIbcChiller = isIbcAirChiller || isIbcWaterChiller;
+  const isChiller = (isAirChiller || isWaterChiller || isIbcChiller) && item.isDynamic;
   const isMixerDryer = item.id === "mixer-dryer-dynamic";
   const isMixer = item.id === "mixer-dynamic";
   const isHeatExchanger = item.type === "heat-exchanger";
@@ -228,16 +240,16 @@ function AddonCard({
   const [selectedBrand, setSelectedBrand] = useState(brands[0] || "Adroit");
   const isConAir = selectedBrand === "Conair" || selectedBrand === "Con Air";
 
-  const chillerPrices = isAirChiller
+  const chillerPrices = (isAirChiller || isIbcAirChiller)
     ? (isConAir ? CONAIR_AIR_CHILLER_PRICES : PRASAD_AIR_CHILLER_PRICES)
     : (isConAir ? CONAIR_WATER_CHILLER_PRICES : PRASAD_WATER_CHILLER_PRICES);
 
   let displayImage = item.image;
   if (isChiller) {
     if (selectedBrand === "Prasad") {
-      displayImage = isAirChiller ? "/images/Acessories/prasad_air_chiller.png" : "/images/Acessories/prasad_water_chiller.png";
+      displayImage = (isAirChiller || isIbcAirChiller) ? "/images/Acessories/prasad_air_chiller.png" : "/images/Acessories/prasad_water_chiller.png";
     } else if (isConAir) {
-      displayImage = isAirChiller ? "/images/Acessories/conair_air_chiller.png" : "/images/Acessories/conair_water_chiller.png";
+      displayImage = (isAirChiller || isIbcAirChiller) ? "/images/Acessories/conair_air_chiller.png" : "/images/Acessories/conair_water_chiller.png";
     }
   }
 
@@ -427,9 +439,12 @@ function AddonCard({
   return (
     <motion.div
       whileHover={{ scale: 1.01 }}
-      className={`rounded-xl border p-4 bg-white transition-all duration-200 flex flex-col shadow-sm hover:shadow-md ${isSelected
-        ? "border-brand-blue ring-1 ring-brand-blue bg-blue-50/30"
-        : "border-slate-200"
+      className={`rounded-xl border p-4 bg-white transition-all duration-200 flex flex-col shadow-sm hover:shadow-md ${
+        isSelected
+          ? "border-brand-blue ring-1 ring-brand-blue bg-blue-50/30"
+          : isIbcChiller && isIbcActive
+            ? "border-orange-400 ring-1 ring-orange-300 bg-orange-50/30"
+            : "border-slate-200"
         }`}
     >
       <div className="flex gap-4">
@@ -458,8 +473,16 @@ function AddonCard({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-bold text-slate-800 truncate" title={item.name}>
-            {item.name}
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="text-sm font-bold text-slate-800 truncate" title={item.name}>
+              {item.name}
+            </div>
+            {/* IBC Required badge — shown when IBC is active and this is the IBC chiller */}
+            {isIbcChiller && isIbcActive && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 border border-orange-200 whitespace-nowrap">
+                ⚡ Required for IBC
+              </span>
+            )}
           </div>
           {showPrices && (
             <div className="text-xs font-bold text-emerald-600 mt-1">
@@ -511,7 +534,8 @@ function AddonCard({
             onClick={() =>
               openModal({
                 category,
-                item,
+                // inject the computed brand-aware image so the modal shows the correct picture
+                item: { ...item, image: displayImage },
               })
             }
             className="px-3 py-1.5 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"

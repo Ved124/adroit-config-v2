@@ -50,3 +50,5 @@ proposal1.md
 find_1870.js
 test-blob.js
 updatePresets.js
+.vercel
+.env*

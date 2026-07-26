@@ -2,7 +2,7 @@ import { useContext, useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ALL_MODELS } from "../src/data/models";
+import { ALL_MODELS } from "../src/data/catalogRegistry";
 export default function SelectionPage() {
   const router = useRouter();
   const {

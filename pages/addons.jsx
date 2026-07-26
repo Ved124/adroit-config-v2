@@ -14,7 +14,7 @@ import { BIMETALLIC_PRICES } from "../src/data/bimetallic";
 import { DIE_ROTATION_PRICES, ADDITIONAL_LIP_PRICES } from "../src/data/dieAddons";
 import { EPC_COMPONENTS } from "../src/data/epc";
 import { BACK_TO_BACK_PRICES, AIR_SHAFT_PRICES } from "../src/data/winderAddons";
-import { ALL_MODELS } from "../src/data/models";
+import { ALL_MODELS } from "../src/data/catalogRegistry";
 export default function AddonsPage() {
   const router = useRouter();
   const {

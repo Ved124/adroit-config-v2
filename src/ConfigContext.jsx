@@ -10,34 +10,26 @@ import React, {
   useState,
 } from "react";
 
-import { ALL_MODELS, MONO_MODELS, ABA_MODELS, THREE_LAYER_MODELS } from "./data/models";
-import { EXTRUDER_COMPONENTS } from "./data/extruders";
-import { DIE_COMPONENTS } from "./data/dies";
+import {
+  ALL_MODELS,
+  MONO_MODELS,
+  ABA_MODELS,
+  THREE_LAYER_MODELS,
+  COMPONENTS_DATA,
+  ADDONS_DATA,
+  applyCatalogOverride,
+} from "./data/catalogRegistry";
+// The imports below are still used directly by dynamic per-model sizing/pricing
+// logic further down in this file (Bubble Cage/Tower/Collapsing Frame/Bimetallic/
+// Extruder Addons §4.x blocks) — that logic is unchanged, so these stay as
+// direct static imports rather than going through the overridable registry.
 import { BUBBLE_CAGE_COMPONENTS } from "./data/bubbleCages";
-import { HAULOFF_COMPONENTS } from "./data/hauloffs";
 import { TOWER_COMPONENTS, TOWER_PRICES } from "./data/tower";
 import { WINDER_COMPONENTS } from "./data/winders";
-import { AIR_RING_COMPONENTS } from "./data/airRing";
-import { IBC_COMPONENTS } from "./data/ibc";
 import { COLLAPSING_FRAME_COMPONENTS, COLLAPSING_FRAME_PRICES } from "./data/collapsingFrame";
-import { MAIN_NIP_COMPONENTS } from "./data/mainNip";
-import { CORONA_TREATER_COMPONENTS } from "./data/corona";
-import { TRIM_ADDONS } from "./data/trim";
-import { MATERIAL_HANDLING_ADDONS } from "./data/materialHandling";
-import { GAUGE_ADDONS } from "./data/gauge";
-import { WEB_GUIDE_ADDONS } from "./data/webGuide";
-import { CHILLER_ADDONS } from "./data/chiller";
 import { EXTRUDER_ADDONS } from "./data/extruderAddons";
-import { HEAT_EXCHANGER_ADDONS } from "./data/heatExchanger";
-import { PRINTER_ADDONS } from "./data/printer";
-import { HYDRAULIC_UNLOADER_ADDONS } from "./data/hydraulicUnloader";
-import { MDO_ADDONS } from "./data/mdo";
-import { ELECTRICAL_ADDONS } from "./data/electricalPanel";
-import { BIMETALLIC_BASE, BIMETALLIC_PRICES, SCREW_SIZES } from "./data/bimetallic";
-import { WINDER_ADDONS } from "./data/winderAddons";
-import { DIE_ADDONS, DIE_ROTATION_ADDON } from "./data/dieAddons";
-import { EPC_COMPONENTS } from "./data/epc";
-import { OPTIONAL_FEATURE_ADDONS } from "./data/optionalFeatures";
+import { BIMETALLIC_BASE, BIMETALLIC_PRICES } from "./data/bimetallic";
+import { DIE_ADDONS } from "./data/dieAddons";
 import { resolveTechDesc, resolveScopeDesc, toTechRows } from "./utils/mergeCatalogItem";
 
 import { Modal } from "../components/ui/Modal"; // ← keep your existing Modal
@@ -76,34 +68,11 @@ let html2pdfModule = null;
 // Machine types we use in "supported"
 export const MACHINE_TYPE_KEYS = ["mono", "aba", "3layer", "5layer"];
 
-export const COMPONENTS_DATA = {
-  Extruder: EXTRUDER_COMPONENTS,
-  "Die Head": DIE_COMPONENTS,
-  "Air Ring": AIR_RING_COMPONENTS,
-  IBC: IBC_COMPONENTS, // Will group with Air Ring based on sorting logic if it's there
-  "Bubble Cage": BUBBLE_CAGE_COMPONENTS,
-  "Main Nip": MAIN_NIP_COMPONENTS,
-  "Haul-Off": HAULOFF_COMPONENTS.filter(c => !c.id.includes("main-nip")),
-  Winder: WINDER_COMPONENTS,
-  "Tower / Platform": TOWER_COMPONENTS,
-  "Electrical & Control Panel": ELECTRICAL_ADDONS,
-  "Trim Blower": TRIM_ADDONS,
-};
-
-export const ADDONS_DATA = {
-  "Corona": CORONA_TREATER_COMPONENTS,
-  "Material Handling": MATERIAL_HANDLING_ADDONS,
-  "Web Guide": WEB_GUIDE_ADDONS,
-  "Chiller": CHILLER_ADDONS,
-  "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
-  "Die Addons": [DIE_ROTATION_ADDON],
-  "Extruder Addons": [BIMETALLIC_BASE],
-  "Winder Addons": WINDER_ADDONS,
-  "EPC": EPC_COMPONENTS,
-  "Printer": PRINTER_ADDONS,
-  "Optional Features": OPTIONAL_FEATURE_ADDONS,
-  "IBC": IBC_COMPONENTS,
-};
+// COMPONENTS_DATA / ADDONS_DATA now live in ./data/catalogRegistry (imported
+// above) so the same catalog can be shared with server-side routes and swapped
+// for admin-edited data at runtime. Re-exported here for anything that still
+// imports them from this module.
+export { COMPONENTS_DATA, ADDONS_DATA };
 
 
 // ---------------------------------------------------------------------------
@@ -156,6 +125,33 @@ export function ConfigProvider({ children }) {
   // --- Export Conversion States ---
   const [conversionRate, setConversionRate] = useState(94);
   const [quotationDate, setQuotationDate] = useState(null); // null = "Use Today"
+
+  // --- Admin-editable catalog override ---
+  // On boot, try to fetch the live catalog (admin-edited data, if any) from
+  // /api/catalog. On success, applyCatalogOverride() reassigns the exported
+  // COMPONENTS_DATA/ADDONS_DATA/ALL_MODELS/etc. bindings in ./data/catalogRegistry
+  // in place — every read of those bindings anywhere in this file (and in
+  // pages/addons.jsx, pages/selection.jsx) picks it up automatically. On any
+  // failure (network error, malformed response, blob outage) this is a no-op:
+  // the static imports catalogRegistry.js started with keep being used, so the
+  // app behaves exactly as it did before this fetch existed.
+  const [catalogVersion, setCatalogVersion] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/catalog")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (cancelled || !data) return;
+        const applied = applyCatalogOverride(data);
+        if (applied) setCatalogVersion((v) => v + 1);
+      })
+      .catch((err) => {
+        console.error("Catalog fetch failed, continuing with static catalog:", err);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Ref to store the snapshot of the configuration immediately after an import.
   // This allows us to detect if "anything" has changed.

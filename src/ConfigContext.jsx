@@ -127,31 +127,56 @@ export function ConfigProvider({ children }) {
   const [quotationDate, setQuotationDate] = useState(null); // null = "Use Today"
 
   // --- Admin-editable catalog override ---
-  // On boot, try to fetch the live catalog (admin-edited data, if any) from
-  // /api/catalog. On success, applyCatalogOverride() reassigns the exported
-  // COMPONENTS_DATA/ADDONS_DATA/ALL_MODELS/etc. bindings in ./data/catalogRegistry
-  // in place — every read of those bindings anywhere in this file (and in
+  // Fetches the live catalog (admin-edited data, if any) from /api/catalog. On
+  // success, applyCatalogOverride() reassigns the exported COMPONENTS_DATA/
+  // ADDONS_DATA/ALL_MODELS/etc. bindings in ./data/catalogRegistry in place —
+  // every read of those bindings anywhere in this file (and in
   // pages/addons.jsx, pages/selection.jsx) picks it up automatically. On any
   // failure (network error, malformed response, blob outage) this is a no-op:
-  // the static imports catalogRegistry.js started with keep being used, so the
-  // app behaves exactly as it did before this fetch existed.
+  // whatever catalogRegistry.js already had (static defaults, or a previous
+  // successful fetch) keeps being used, so the app never breaks from this.
+  //
+  // Runs on boot AND on every client-side route change (see the
+  // routeChangeComplete effect below). Without the route-change refetch, an
+  // admin who edits a model/component/addon and then navigates around the
+  // configurator in the *same browser tab* would keep seeing the catalog
+  // snapshot from whenever this tab's session first booted, since Next's
+  // client-side routing never re-runs this provider's mount effect.
   const [catalogVersion, setCatalogVersion] = useState(0);
+  const refreshCatalog = React.useCallback(async () => {
+    try {
+      const res = await fetch("/api/catalog");
+      if (!res.ok) return false;
+      const data = await res.json();
+      const applied = applyCatalogOverride(data);
+      if (applied) setCatalogVersion((v) => v + 1);
+      return applied;
+    } catch (err) {
+      console.error("Catalog fetch failed, continuing with current catalog:", err);
+      return false;
+    }
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/catalog")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (cancelled || !data) return;
-        const applied = applyCatalogOverride(data);
-        if (applied) setCatalogVersion((v) => v + 1);
-      })
-      .catch((err) => {
-        console.error("Catalog fetch failed, continuing with static catalog:", err);
-      });
+    refreshCatalog().then((applied) => {
+      if (cancelled) return; // no-op, just avoids a warning; refreshCatalog already guards internally
+    });
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      refreshCatalog();
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events, refreshCatalog]);
 
   // Ref to store the snapshot of the configuration immediately after an import.
   // This allows us to detect if "anything" has changed.
@@ -691,21 +716,22 @@ export function ConfigProvider({ children }) {
       // static catalog entry to look up by id. A preset asking for "bimetallic-upgrade-N"
       // with qty=Q means "pre-select the upgrade on the first Q extruders".
       if (category === "Extruder Addons" && id.startsWith("bimetallic-upgrade")) {
+        const liveBimetallicBase = (addons["Extruder Addons"] || []).find((a) => a.id === "bimetallic-upgrade") || BIMETALLIC_BASE;
         const selectedExtruders = nextSelected.filter((s) => s.category === "Extruder");
         const q = Math.min(qty ?? selectedExtruders.length, selectedExtruders.length);
         for (let i = 0; i < q; i++) {
           const ext = selectedExtruders[i];
           const sizeStr = String(ext.sizeMm || ext.size || ext.extruder || "45");
           nextAddons.push({
-            ...BIMETALLIC_BASE,
+            ...liveBimetallicBase,
             id: `bimetallic-upgrade-${i + 1}`,
             name: `Bi-metallic Screw Barrel (Extruder ${i + 1})`,
             category,
             qty: 1,
             isDynamic: true,
-            price: isPackage ? 0 : (BIMETALLIC_PRICES[sizeStr] ?? BIMETALLIC_BASE.price),
+            price: isPackage ? 0 : (BIMETALLIC_PRICES[sizeStr] ?? liveBimetallicBase.price),
             isIncluded: isPackage,
-            metadata: { ...BIMETALLIC_BASE.metadata, size: sizeStr, targetExtruderId: ext.id },
+            metadata: { ...liveBimetallicBase.metadata, size: sizeStr, targetExtruderId: ext.id },
           });
         }
         return;
@@ -902,7 +928,7 @@ export function ConfigProvider({ children }) {
           }
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
-          const dynamicBCItem = BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
+          const dynamicBCItem = bcComp || BUBBLE_CAGE_COMPONENTS.find(bc => bc.id === item.id) || item;
           const segments = (chosenSize >= 2370) ? 9 : (chosenSize >= 2000 ? 8 : 6);
           let typeStr = dynamicBCItem.techDesc?.["Type"] || `Calibration bubble guide basket arranged to provide full support. Bubble contact is through PBT for minimum drag.`;
           if (typeStr.includes("arranged to provide full support")) {
@@ -993,13 +1019,15 @@ export function ConfigProvider({ children }) {
         const isTowerId = ["tower_std", "tower_h", "tower-dynamic"].includes(item.id);
 
         if (item.category === "Tower / Platform" && (isTowerId || item.isDynamic)) {
-          const availableSizes = Object.keys(TOWER_PRICES).map(Number).sort((a, b) => a - b);
+          const towerComp = COMPONENTS_DATA["Tower / Platform"]?.find(t => t.id === "tower-dynamic");
+          const priceMap = towerComp?.prices || TOWER_PRICES;
+          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth, or fallback to smallest available
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[0]);
-          const newPrice = TOWER_PRICES[chosenSize.toString()] || 0;
+          const newPrice = priceMap[chosenSize.toString()] || 0;
 
-          const dynamicTowerItem = TOWER_COMPONENTS.find(h => h.id === "tower-dynamic") || item;
+          const dynamicTowerItem = towerComp || TOWER_COMPONENTS.find(h => h.id === "tower-dynamic") || item;
 
           const displaySize = (rollerNum > 500) ? rollerNum : chosenSize;
 
@@ -1098,7 +1126,7 @@ export function ConfigProvider({ children }) {
 
           const stationLabel = isSingleSurfaceWinder ? "Surface Winder (01 No.)" : "Surface Winders (02 Nos.)";
 
-          const dynamicWinderItem = WINDER_COMPONENTS.find(w => w.id === item.id) || item;
+          const dynamicWinderItem = winderComp || WINDER_COMPONENTS.find(w => w.id === item.id) || item;
 
           let nipHP = "2 HP";
           if (chosenSize >= 1500 && chosenSize <= 2000) nipHP = "3 HP";
@@ -1132,7 +1160,9 @@ export function ConfigProvider({ children }) {
       // 4.9) DYNAMIC COLLAPSING FRAME LOGIC
       nextSelected.forEach((item, index) => {
         if (item.category === "Collapsing Frame" && (item.isDynamic || item.id.includes("dynamic"))) {
-          const availableSizes = Object.keys(COLLAPSING_FRAME_PRICES).map(Number).sort((a, b) => a - b);
+          const cfComp = COMPONENTS_DATA["Collapsing Frame"]?.find(cf => cf.id === "cf-pbt-dynamic");
+          const priceMap = cfComp?.prices || COLLAPSING_FRAME_PRICES;
+          const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
 
 
           // Find smallest size >= machineWidth
@@ -1141,8 +1171,8 @@ export function ConfigProvider({ children }) {
           const presetSize = parseInt(item.size) || 0;
           const chosenSize = presetSize > 0 ? presetSize : minSize;
 
-          const newPrice = COLLAPSING_FRAME_PRICES[chosenSize.toString()] || 0;
-          const dynamicCFItem = COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
+          const newPrice = priceMap[chosenSize.toString()] || 0;
+          const dynamicCFItem = cfComp || COLLAPSING_FRAME_COMPONENTS.find(cf => cf.id === "cf-pbt-dynamic") || item;
 
           const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
           const diff = isMonoOrAba ? 50 : ((displaySize === 1450) ? 100 : 120);
@@ -1454,11 +1484,15 @@ export function ConfigProvider({ children }) {
     // --- DYNAMIC PER-EXTRUDER BIMETALLIC ADDONS + STATIC EXTRUDER ADDONS ---
     const extAddons = [];
 
-    // Add static upgrades (like Lever Screen Changer)
+    // Add static upgrades (like Lever Screen Changer) — prefer the live/admin-edited
+    // catalog entry by id when one exists, falling back to the static definition
+    // (whose supportedTypes drives the machineType filter, since admin-edited
+    // copies use the standard machineTypes field instead).
     if (EXTRUDER_ADDONS && EXTRUDER_ADDONS.length > 0) {
+      const liveExtruderAddonsById = new Map((addons["Extruder Addons"] || []).map(a => [a.id, a]));
       EXTRUDER_ADDONS.forEach(addon => {
         if (!addon.supportedTypes || addon.supportedTypes.includes(machineType)) {
-          extAddons.push(addon);
+          extAddons.push(liveExtruderAddonsById.get(addon.id) || addon);
         }
       });
     }
@@ -1480,21 +1514,22 @@ export function ConfigProvider({ children }) {
     });
 
     if (totalExtruders > 0) {
+      const liveBimetallicBase = (addons["Extruder Addons"] || []).find((a) => a.id === "bimetallic-upgrade") || BIMETALLIC_BASE;
       let extruderIndex = 1;
       selectedExtruders.forEach((ext) => {
         const q = ext.qty || 1;
         for (let i = 0; i < q; i++) {
           const sizeStr = String(ext.sizeMm || ext.size || ext.extruder || "45").split('/')[i] || String(ext.sizeMm || ext.size || ext.extruder || "45");
-          
+
           const bimetallicItem = {
-            ...BIMETALLIC_BASE,
+            ...liveBimetallicBase,
             id: `bimetallic-upgrade-${extruderIndex}`,
             name: `Bi-metallic Screw Barrel (Extruder ${extruderIndex})`,
             cardDesc: `Upgrade Extruder ${extruderIndex} to premium wear-resistant Bi-metallic screw and barrel.`,
             qty: 1,
             isDynamic: true,
             metadata: {
-              ...BIMETALLIC_BASE.metadata,
+              ...liveBimetallicBase.metadata,
               size: sizeStr,
               targetExtruderId: ext.id
             }
@@ -1513,8 +1548,23 @@ export function ConfigProvider({ children }) {
     const selectedDie = (selected || []).find(s => s.category === "Die Head");
     if (selectedDie) {
       const dieSize = selectedDie.diameterMm || selectedDie.size || "";
-      
-      out["Die Addons"] = DIE_ADDONS.map(addon => {
+
+      // Die Addons need a per-selection dynamic name/price (size baked into the
+      // label below), so this can't just use out["Die Addons"] as-is like the
+      // Winder/Material Handling blocks do. But it must still start from the
+      // admin-edited live catalog data (already sitting in out["Die Addons"]
+      // from the ADDONS_DATA pass above), not the static DIE_ADDONS import —
+      // otherwise admin edits to name/cardDesc/image/techDesc never show on the
+      // customer-facing page. Static DIE_ADDONS is only consulted as a
+      // per-id fallback for entries the live catalog doesn't have yet.
+      const liveDieAddonsById = new Map((out["Die Addons"] || []).map((a) => [a.id, a]));
+      const staticIds = new Set(DIE_ADDONS.map((a) => a.id));
+      const mergedDieAddons = [
+        ...DIE_ADDONS.map((staticAddon) => liveDieAddonsById.get(staticAddon.id) || staticAddon),
+        ...(out["Die Addons"] || []).filter((a) => !staticIds.has(a.id)),
+      ];
+
+      out["Die Addons"] = mergedDieAddons.map(addon => {
         let dynamicPrice = addon.price;
         if (machineType === "mono" && addon.monoPrices) {
           const mc = currentMachineModel?.code || "";
@@ -3336,6 +3386,7 @@ export function ConfigProvider({ children }) {
     saveLeadWithBase64Pdf,
     buildWordContext,
     updateAddonPricing,
+    refreshCatalog,
   };
 
 

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { put } from '@vercel/blob';
-import os from 'os'; // Use OS to check network interfaces
+import { getNetworkIP } from '../../src/lib/networkIp';
 
 const CRM_ENABLED = !!(process.env.CRM_WEBHOOK_URL && process.env.CRM_WEBHOOK_SECRET);
 if (CRM_ENABLED) console.log('CRM integration: enabled');
@@ -12,31 +12,6 @@ export const config = {
       sizeLimit: '25mb',
     },
   },
-};
-
-// HELPER: Smartly find the WiFi IP, ignoring WSL/Docker IPs
-const getNetworkIP = () => {
-  const interfaces = os.networkInterfaces();
-  for (const name of Object.keys(interfaces)) {
-    for (const iface of interfaces[name]) {
-      // Skip internal (localhost) and IPv6
-      if (iface.family === 'IPv4' && !iface.internal) {
-        // Prioritize standard Wi-Fi router ranges (192.168...)
-        if (iface.address.startsWith('192.168')) {
-          return iface.address;
-        }
-      }
-    }
-  }
-  // Fallback: If no 192.168 found, just grab the first non-internal one
-  for (const name of Object.keys(interfaces)) {
-    for (const iface of interfaces[name]) {
-      if (iface.family === 'IPv4' && !iface.internal) {
-        return iface.address;
-      }
-    }
-  }
-  return 'localhost';
 };
 
 export default async function handler(req, res) {

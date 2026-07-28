@@ -17,6 +17,8 @@ import { BUBBLE_CAGE_COMPONENTS } from "./bubbleCages";
 import { HAULOFF_COMPONENTS } from "./hauloffs";
 import { TOWER_COMPONENTS } from "./tower";
 import { WINDER_COMPONENTS } from "./winders";
+import { COLLAPSING_FRAME_COMPONENTS } from "./collapsingFrame";
+import { EXTRUDER_ADDONS } from "./extruderAddons";
 import { AIR_RING_COMPONENTS } from "./airRing";
 import { IBC_COMPONENTS } from "./ibc";
 import { MAIN_NIP_COMPONENTS } from "./mainNip";
@@ -50,6 +52,7 @@ function buildComponentsData() {
     "Tower / Platform": TOWER_COMPONENTS,
     "Electrical & Control Panel": ELECTRICAL_ADDONS,
     "Trim Blower": TRIM_ADDONS,
+    "Collapsing Frame": COLLAPSING_FRAME_COMPONENTS,
   };
 }
 
@@ -61,7 +64,7 @@ function buildAddonsData() {
     Chiller: CHILLER_ADDONS,
     "Heat Exchanger": HEAT_EXCHANGER_ADDONS,
     "Die Addons": [DIE_ROTATION_ADDON],
-    "Extruder Addons": [BIMETALLIC_BASE],
+    "Extruder Addons": [BIMETALLIC_BASE, ...EXTRUDER_ADDONS],
     "Winder Addons": WINDER_ADDONS,
     EPC: EPC_COMPONENTS,
     Printer: PRINTER_ADDONS,

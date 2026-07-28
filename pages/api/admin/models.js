@@ -2,7 +2,8 @@
 // Authenticated CRUD for machine models (gated by middleware.js). Reads for the
 // admin UI go through the public GET /api/catalog (no need to duplicate that
 // here) — this route is the write path only: create, update, delete.
-import { getCatalog, saveCatalog } from "../../../src/lib/catalogStore";
+import { mutateCatalog } from "../../../src/lib/catalogStore";
+import { httpError } from "../../../src/lib/httpError";
 
 const VALID_MACHINE_TYPES = ["mono", "aba", "3layer", "5layer"];
 
@@ -35,13 +36,13 @@ export default async function handler(req, res) {
       const validationError = validateModel(model);
       if (validationError) return res.status(400).json({ error: validationError });
 
-      const catalog = await getCatalog();
-      if (catalog.models.some((m) => m.code === model.code)) {
-        return res.status(409).json({ error: `Model with code "${model.code}" already exists` });
-      }
-
-      catalog.models = [...catalog.models, model];
-      await saveCatalog(catalog);
+      await mutateCatalog((catalog) => {
+        if (catalog.models.some((m) => m.code === model.code)) {
+          throw httpError(409, `Model with code "${model.code}" already exists`);
+        }
+        catalog.models = [...catalog.models, model];
+        return catalog;
+      });
       return res.status(201).json({ success: true, model });
     }
 
@@ -54,13 +55,16 @@ export default async function handler(req, res) {
       const validationError = validateModel(updates, { partial: true });
       if (validationError) return res.status(400).json({ error: validationError });
 
-      const catalog = await getCatalog();
-      const idx = catalog.models.findIndex((m) => m.code === code);
-      if (idx === -1) return res.status(404).json({ error: `Model "${code}" not found` });
-
-      const merged = { ...catalog.models[idx], ...updates, code };
-      catalog.models = catalog.models.map((m, i) => (i === idx ? merged : m));
-      await saveCatalog(catalog);
+      let merged;
+      await mutateCatalog((catalog) => {
+        const idx = catalog.models.findIndex((m) => m.code === code);
+        if (idx === -1) {
+          throw httpError(404, `Model "${code}" not found`);
+        }
+        merged = { ...catalog.models[idx], ...updates, code };
+        catalog.models = catalog.models.map((m, i) => (i === idx ? merged : m));
+        return catalog;
+      });
       return res.status(200).json({ success: true, model: merged });
     }
 
@@ -68,18 +72,23 @@ export default async function handler(req, res) {
       const { code } = req.body || {};
       if (!code) return res.status(400).json({ error: "code is required" });
 
-      const catalog = await getCatalog();
-      const idx = catalog.models.findIndex((m) => m.code === code);
-      if (idx === -1) return res.status(404).json({ error: `Model "${code}" not found` });
-
-      catalog.models = catalog.models.filter((m) => m.code !== code);
-      await saveCatalog(catalog);
+      await mutateCatalog((catalog) => {
+        const idx = catalog.models.findIndex((m) => m.code === code);
+        if (idx === -1) {
+          throw httpError(404, `Model "${code}" not found`);
+        }
+        catalog.models = catalog.models.filter((m) => m.code !== code);
+        return catalog;
+      });
       return res.status(200).json({ success: true, deleted: code });
     }
 
     res.setHeader("Allow", ["POST", "PUT", "DELETE"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   } catch (err) {
+    if (err.status) {
+      return res.status(err.status).json({ error: err.message, ...(err.details || {}) });
+    }
     console.error("pages/api/admin/models.js error:", err);
     return res.status(500).json({ error: err.message || "Internal error" });
   }

@@ -31,6 +31,9 @@ export default function LeadsDashboard() {
   const [error, setError] = useState('');
   const [serverInfo, setServerInfo] = useState(null);
   const [search, setSearch] = useState('');
+  const [backingUp, setBackingUp] = useState(false);
+  const [backupResult, setBackupResult] = useState(null);
+  const [backupError, setBackupError] = useState('');
 
   useEffect(() => {
     fetch('/api/server-info')
@@ -55,6 +58,22 @@ export default function LeadsDashboard() {
     const name = b.pathname || '';
     return name.toLowerCase().includes(search.toLowerCase());
   });
+
+  const handleBackup = async () => {
+    setBackingUp(true);
+    setBackupError('');
+    setBackupResult(null);
+    try {
+      const res = await fetch('/api/backup-leads', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Backup failed');
+      setBackupResult(data);
+    } catch (e) {
+      setBackupError(e.message);
+    } finally {
+      setBackingUp(false);
+    }
+  };
 
   return (
     <div style={{ padding: '32px 40px', fontFamily: "'Inter', system-ui, sans-serif", maxWidth: '1100px', margin: '0 auto', background: '#f8fafc', minHeight: '100vh' }}>
@@ -111,6 +130,33 @@ export default function LeadsDashboard() {
             <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '11px', fontStyle: 'italic' }}>
               Keep this laptop running. Leads are stored locally and will not be lost on refresh.
             </p>
+            <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid #bfdbfe' }}>
+              <button
+                onClick={handleBackup}
+                disabled={backingUp}
+                style={{
+                  background: backingUp ? '#93c5fd' : '#1e40af', color: 'white',
+                  border: 'none', borderRadius: '8px', padding: '8px 16px',
+                  fontSize: '13px', fontWeight: '700', cursor: backingUp ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {backingUp ? 'Backing up…' : '☁️ Backup Leads to Cloud'}
+              </button>
+              <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '11px' }}>
+                Leads only live on this laptop until backed up — run this at the end of each day (or anytime) to copy everything to Vercel Blob. Safe to click repeatedly; already-backed-up leads are skipped.
+              </p>
+              {backupResult && (
+                <p style={{ margin: '8px 0 0', color: '#166534', fontSize: '12px', fontWeight: '700' }}>
+                  ✓ Backed up {backupResult.uploaded} new lead{backupResult.uploaded === 1 ? '' : 's'}
+                  {backupResult.skipped > 0 ? ` (${backupResult.skipped} already backed up)` : ''}.
+                </p>
+              )}
+              {backupError && (
+                <p style={{ margin: '8px 0 0', color: '#dc2626', fontSize: '12px', fontWeight: '700' }}>
+                  {backupError}
+                </p>
+              )}
+            </div>
           </div>
         ) : (
           <div style={{

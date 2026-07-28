@@ -20,6 +20,21 @@
 // single highest-impact fix for "immediate publish" actually feeling
 // immediate. The cache resets on cold start, which just costs one list()
 // call to re-bootstrap — a fine, self-healing trade-off.
+//
+// EVEN a known-good direct URL still has read-after-write propagation lag on
+// the blob's *content* (observed empirically: a fresh, uncached read can
+// return pre-write content for anywhere from a few seconds up to ~30-50s
+// after a successful put()). A cache-busting query param does not shorten
+// this — it's backend propagation, not a client/CDN cache this process
+// controls. So beyond the URL cache above, this module also keeps the full
+// decoded catalog OBJECT in memory (`cachedCatalog`) once read successfully,
+// and every write updates that in-memory copy immediately alongside the blob
+// write. Every read/mutation in this process then uses that in-memory copy
+// as its source of truth instead of re-fetching from blob — which both
+// serves reads instantly and means two back-to-back admin edits in the same
+// process can never race against blob propagation lag to lose one of them.
+// A cold-started process (no cache yet) still falls back to one blob read to
+// bootstrap, same as before.
 
 import { put, list } from "@vercel/blob";
 import { getStaticCatalog } from "../data/catalogRegistry";
@@ -28,6 +43,7 @@ const CATALOG_PATH = "catalog/catalog.json";
 const HISTORY_PREFIX = "catalog/history/";
 
 let cachedCatalogUrl = null;
+let cachedCatalog = null;
 
 function isCloudConfigured() {
   return !!process.env.BLOB_READ_WRITE_TOKEN;
@@ -52,11 +68,18 @@ async function resolveCatalogUrl({ forceRefresh = false } = {}) {
   return cachedCatalogUrl;
 }
 
-// Reads the current catalog from blob storage. Falls back to the static .ts
-// files (via getStaticCatalog()) if blob storage isn't configured, the blob
-// doesn't exist yet, or a read fails for any reason — the app must never
-// hard-fail just because the catalog blob had a bad moment.
+// Reads the current catalog. Serves the in-process cache when populated
+// (see module header — sidesteps blob propagation lag entirely for this
+// process's lifetime). Otherwise falls back to blob storage, and further
+// falls back to the static .ts files (via getStaticCatalog()) if blob
+// storage isn't configured, the blob doesn't exist yet, or a read fails for
+// any reason — the app must never hard-fail just because the catalog blob
+// had a bad moment. Only a genuine blob read populates the cache — a
+// transient-error/static fallback is never cached, so the next call retries
+// the real read instead of getting stuck serving static defaults.
 export async function getCatalog() {
+  if (cachedCatalog) return cachedCatalog;
+
   if (!isCloudConfigured()) {
     return { ...getStaticCatalog(), source: "static", updatedAt: null };
   }
@@ -82,7 +105,8 @@ export async function getCatalog() {
       throw new Error("Malformed catalog blob (missing models array)");
     }
 
-    return { ...data, source: "blob", updatedAt: new Date().toISOString() };
+    cachedCatalog = { ...data, source: "blob", updatedAt: new Date().toISOString() };
+    return cachedCatalog;
   } catch (err) {
     console.error("catalogStore.getCatalog: falling back to static catalog —", err.message);
     return { ...getStaticCatalog(), source: "static", updatedAt: null };
@@ -133,4 +157,43 @@ export async function saveCatalog(catalog) {
   cachedCatalogUrl = blob.url;
 
   return { url: blob.url, updatedAt: new Date().toISOString() };
+}
+
+// Serializes every catalog mutation through this in-process queue, so two
+// near-simultaneous admin writes (a fast double-click, two admin API calls
+// landing within the same burst) can't silently lose one to a stale
+// read-modify-write race — each mutation now gets its OWN fresh getCatalog()
+// read, only once every earlier queued mutation has actually finished
+// saving, instead of every caller racing to read+save independently.
+//
+// This does not guarantee safety across two different serverless instances
+// writing at the exact same moment — Vercel Blob's put() has no compare-
+// and-swap/ETag precondition to make that fully atomic. For this app's
+// actual usage (one admin, sequential edits from a single browser tab) that
+// residual risk is acceptable; a hard multi-writer guarantee would need a
+// transactional store instead of a JSON blob.
+let writeQueue = Promise.resolve();
+
+// mutator receives the current catalog (in-process cache if present, else a
+// fresh blob/static read), returns the mutated catalog (or throws — e.g. a
+// validation/conflict error), and mutateCatalog saves the result and updates
+// the in-process cache so the very next read/mutation in this process sees
+// it immediately, without waiting on blob propagation lag. Returns whatever
+// mutator returns; rejects with whatever it throws.
+export function mutateCatalog(mutator) {
+  const run = async () => {
+    const catalog = await getCatalog();
+    const result = await mutator(catalog);
+    await saveCatalog(result);
+    cachedCatalog = { ...result, source: "blob", updatedAt: new Date().toISOString() };
+    return result;
+  };
+  const resultPromise = writeQueue.then(run, run);
+  // Keep the queue alive even if this mutation fails, so later queued
+  // mutations still run instead of getting stuck behind a rejected promise.
+  writeQueue = resultPromise.then(
+    () => undefined,
+    () => undefined
+  );
+  return resultPromise;
 }

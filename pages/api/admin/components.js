@@ -5,7 +5,8 @@
 // buckets (id, name, machineTypes, image, cardDesc, techDesc, scopeDesc,
 // price or a size->price table), so one route handles both rather than
 // duplicating this logic per bucket.
-import { getCatalog, saveCatalog } from "../../../src/lib/catalogStore";
+import { mutateCatalog } from "../../../src/lib/catalogStore";
+import { httpError } from "../../../src/lib/httpError";
 
 const VALID_BUCKETS = ["components", "addons"];
 
@@ -41,15 +42,16 @@ export default async function handler(req, res) {
       const validationError = validateItem(item);
       if (validationError) return res.status(400).json({ error: validationError });
 
-      const catalog = await getCatalog();
-      const bucketData = { ...(catalog[bucket] || {}) };
-      const list = bucketData[category] || [];
-      if (list.some((c) => c.id === item.id)) {
-        return res.status(409).json({ error: `An item with id "${item.id}" already exists in ${category}` });
-      }
-      bucketData[category] = [...list, item];
-      catalog[bucket] = bucketData;
-      await saveCatalog(catalog);
+      await mutateCatalog((catalog) => {
+        const bucketData = { ...(catalog[bucket] || {}) };
+        const list = bucketData[category] || [];
+        if (list.some((c) => c.id === item.id)) {
+          throw httpError(409, `An item with id "${item.id}" already exists in ${category}`);
+        }
+        bucketData[category] = [...list, item];
+        catalog[bucket] = bucketData;
+        return catalog;
+      });
       return res.status(201).json({ success: true, item });
     }
 
@@ -62,16 +64,20 @@ export default async function handler(req, res) {
       const validationError = validateItem(updates, { partial: true });
       if (validationError) return res.status(400).json({ error: validationError });
 
-      const catalog = await getCatalog();
-      const bucketData = { ...(catalog[bucket] || {}) };
-      const list = bucketData[category] || [];
-      const idx = list.findIndex((c) => c.id === id);
-      if (idx === -1) return res.status(404).json({ error: `Item "${id}" not found in ${category}` });
+      let merged;
+      await mutateCatalog((catalog) => {
+        const bucketData = { ...(catalog[bucket] || {}) };
+        const list = bucketData[category] || [];
+        const idx = list.findIndex((c) => c.id === id);
+        if (idx === -1) {
+          throw httpError(404, `Item "${id}" not found in ${category}`);
+        }
 
-      const merged = { ...list[idx], ...updates, id };
-      bucketData[category] = list.map((c, i) => (i === idx ? merged : c));
-      catalog[bucket] = bucketData;
-      await saveCatalog(catalog);
+        merged = { ...list[idx], ...updates, id };
+        bucketData[category] = list.map((c, i) => (i === idx ? merged : c));
+        catalog[bucket] = bucketData;
+        return catalog;
+      });
       return res.status(200).json({ success: true, item: merged });
     }
 
@@ -79,39 +85,45 @@ export default async function handler(req, res) {
       const { id, force } = req.body || {};
       if (!id) return res.status(400).json({ error: "id is required" });
 
-      const catalog = await getCatalog();
-      const bucketData = { ...(catalog[bucket] || {}) };
-      const list = bucketData[category] || [];
-      if (!list.some((c) => c.id === id)) {
-        return res.status(404).json({ error: `Item "${id}" not found in ${category}` });
-      }
+      let usedByModels = [];
+      await mutateCatalog((catalog) => {
+        const bucketData = { ...(catalog[bucket] || {}) };
+        const list = bucketData[category] || [];
+        if (!list.some((c) => c.id === id)) {
+          throw httpError(404, `Item "${id}" not found in ${category}`);
+        }
 
-      // Deleting a component/addon that a live model's preset still
-      // references would leave that model showing a missing-component error
-      // — the non-coder editing this needs a clear warning before it happens,
-      // not a silent break discovered later (e.g. at an exhibition).
-      const usedByModels = (catalog.models || [])
-        .filter((m) =>
-          [...(m.components || []), ...(m.addons || [])].some((c) => c.id === id)
-        )
-        .map((m) => m.code);
+        // Deleting a component/addon that a live model's preset still
+        // references would leave that model showing a missing-component error
+        // — the non-coder editing this needs a clear warning before it happens,
+        // not a silent break discovered later (e.g. at an exhibition).
+        usedByModels = (catalog.models || [])
+          .filter((m) =>
+            [...(m.components || []), ...(m.addons || [])].some((c) => c.id === id)
+          )
+          .map((m) => m.code);
 
-      if (usedByModels.length > 0 && !force) {
-        return res.status(409).json({
-          error: `"${id}" is used by ${usedByModels.length} model(s): ${usedByModels.join(", ")}. Pass force to delete anyway.`,
-          usedByModels,
-        });
-      }
+        if (usedByModels.length > 0 && !force) {
+          throw httpError(
+            409,
+            `"${id}" is used by ${usedByModels.length} model(s): ${usedByModels.join(", ")}. Pass force to delete anyway.`,
+            { usedByModels }
+          );
+        }
 
-      bucketData[category] = list.filter((c) => c.id !== id);
-      catalog[bucket] = bucketData;
-      await saveCatalog(catalog);
+        bucketData[category] = list.filter((c) => c.id !== id);
+        catalog[bucket] = bucketData;
+        return catalog;
+      });
       return res.status(200).json({ success: true, deleted: id, usedByModels });
     }
 
     res.setHeader("Allow", ["POST", "PUT", "DELETE"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   } catch (err) {
+    if (err.status) {
+      return res.status(err.status).json({ error: err.message, ...(err.details || {}) });
+    }
     console.error("pages/api/admin/components.js error:", err);
     return res.status(500).json({ error: err.message || "Internal error" });
   }

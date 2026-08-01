@@ -2422,10 +2422,11 @@ export function ConfigProvider({ children }) {
         }
 
         if (machineType === "mono" || machineType === "aba") {
-          // Die rotation is a standard pre-included item on every mono/ABA preset,
-          // not a genuine optional extra — never list it as optional equipment.
-          if (a.id === "die-rotation-addon") return false;
+          // Die rotation is now a genuine, customer-chosen optional addon for
+          // mono/ABA (no longer pre-included in the preset) — list it like
+          // any other optional equipment instead of hiding it.
           if (a.id === "winder-manual-back-to-back-dynamic") return true;
+          return !isBimetallic && !isLoadcell && !isGrandTotal && !isLeverScreenChanger;
         }
 
         return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger && a.id !== "winder-manual-back-to-back-dynamic";

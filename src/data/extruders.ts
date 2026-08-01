@@ -194,7 +194,6 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Transmission System": "Motor coupled with helical gearbox.",
           "Gearbox": "Premium or Equivalent Make.",
           "Screen Changer": "Candle type"},
-        scopeDesc: "Two Nos. Extruders of 35/45 mm screw diameter and L/D ratio of 30:1, Nitro Alloy screw & barrel, Ceramic Heater, 7.5/15 HP AC Motor & AC variable frequency Drive. Two Candle type Screen Changers for 35/45 mm Extruders.",
         shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "40": {

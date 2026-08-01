@@ -77,9 +77,16 @@ function filterByType(models, machineType) {
   return models.filter((m) => m.machineType === machineType);
 }
 
+// Business-rule constants that used to be hardcoded in src/lib/pricing.js —
+// moved here so they follow the same admin-editable-with-static-fallback
+// pattern as everything else in this file, instead of being a one-off a
+// non-coder could never reach without a code change.
+const STATIC_EXPORT_MARKUP = 1.3;
+
 export let ALL_MODELS = STATIC_ALL_MODELS;
 export let COMPONENTS_DATA = buildComponentsData();
 export let ADDONS_DATA = buildAddonsData();
+export let EXPORT_MARKUP = STATIC_EXPORT_MARKUP;
 
 export let MONO_MODELS = filterByType(ALL_MODELS, "mono");
 export let ABA_MODELS = filterByType(ALL_MODELS, "aba");
@@ -93,6 +100,7 @@ export function getStaticCatalog() {
     models: STATIC_ALL_MODELS,
     components: buildComponentsData(),
     addons: buildAddonsData(),
+    settings: { exportMarkup: STATIC_EXPORT_MARKUP },
   };
 }
 
@@ -108,5 +116,8 @@ export function applyCatalogOverride(catalog) {
   MONO_MODELS = filterByType(ALL_MODELS, "mono");
   ABA_MODELS = filterByType(ALL_MODELS, "aba");
   THREE_LAYER_MODELS = filterByType(ALL_MODELS, "3layer");
+  if (catalog.settings && typeof catalog.settings.exportMarkup === "number") {
+    EXPORT_MARKUP = catalog.settings.exportMarkup;
+  }
   return true;
 }

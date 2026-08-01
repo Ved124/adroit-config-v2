@@ -261,10 +261,11 @@ function buildProposalData({
     const isGrandTotal = item.id === "grand-total-line";
     if (isGrandTotal) return false;
 
-    // Die rotation is a standard pre-included item on every mono/ABA (and some
-    // 3-layer) presets now, not a genuine optional extra — don't list it in the
-    // Optional Equipments table alongside things the customer actually pays for.
-    if (item.id === "die-rotation-addon") return false;
+    // Die rotation is pre-included (price 0) on a couple of 3-layer presets
+    // (e.g. INNOFLEX-1370 DR) — not a genuine optional extra there, so keep
+    // it out of the Optional Equipment table for those. For mono/ABA it's
+    // now a genuine customer-chosen addon with a real price, so list it.
+    if (item.id === "die-rotation-addon" && machineType !== "mono" && machineType !== "aba") return false;
 
     const isMixer = item.id === "mixer-dynamic" || item.id === "mixer-dryer-dynamic";
     if (machineType === "material-handling" && isMixer) {
@@ -1538,7 +1539,10 @@ export default function SummaryPage() {
     }
 
     if (machineType === "mono" || machineType === "aba") {
-      if (isGrandTotal || isDieRotation) return false;
+      // Die rotation is now a genuine, customer-chosen optional addon for
+      // mono/ABA — list it like any other optional equipment instead of
+      // hiding it (it's no longer pre-included in the preset).
+      if (isGrandTotal) return false;
       return true;
     }
 

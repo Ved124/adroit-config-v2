@@ -35,7 +35,6 @@ const MONO_TECH_BASE: TechSpecMap = {
   "Material of Construction": "Hardened high strength alloy steel.",
   "Surface Treatment": "Chrome plated & highly polished melt paths.",
   "Die setting": "Die adjusting bolts will be provided.",
-  "Distribution": "Spiral distribution.",
   "Heating System": "Ceramic band heaters",
 };
 
@@ -43,7 +42,6 @@ const ABA_TECH_BASE: TechSpecMap = {
   "Material of Construction": "Hardened high strength alloy steel.",
   "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
   "Die setting": "Die adjusting bolts will be provided.",
-  "Distribution": "Spiral distribution.",
   "Heating System": "Ceramic band heaters",
 };
 
@@ -51,7 +49,6 @@ const THREE_LAYER_TECH_BASE: TechSpecMap = {
   "Material of Construction": "Hardened high strength alloy steel.",
   "Surface Treatment": "Electroless Chrome plated and highly polished melt paths.",
   "Die setting": "Die adjusting bolts will be provided.",
-  "Distribution": "Spiral distribution.",
   "Heating System": "Ceramic band heaters (AUM or Heatsun).",
 };
 
@@ -86,7 +83,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "50 mm diameter.",
-          "Lip Gap": "Adjustable, typical gap 0.8–1.2 mm.",
           "Heating Zones": "2–3 zones.",
         },
         shortDesc: "Compact monolayer die for narrow web blown films.",
@@ -115,7 +111,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "150 mm diameter.",
-          "Lip Gap": "Typical gap 1.0–1.5 mm, adjustable.",
           "Heating Zones": "4–5 zones.",
         },
         shortDesc: "Versatile monolayer die for a wide range of blown film applications.",
@@ -152,7 +147,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         techDesc: {
           ...MONO_TECH_BASE,
           "Die Size": "400 mm diameter.",
-          "Lip Gap": "Approx. 2.0–2.5 mm adjustable.",
           "Heating Zones": "03 Nos.",
         },
         shortDesc: "Spiral die head for even melt distribution and consistent film thickness.",

@@ -84,6 +84,13 @@ export default function AdminDashboard() {
               <div style={{ fontSize: "16px", fontWeight: 800, color: "#0f172a", marginBottom: "4px" }}>📋 Leads Dashboard</div>
               <div style={{ fontSize: "13px", color: "#64748b" }}>View saved customer quotations and proposals.</div>
             </Link>
+            <Link
+              href="/admin/settings"
+              style={{ display: "block", background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", textDecoration: "none" }}
+            >
+              <div style={{ fontSize: "16px", fontWeight: 800, color: "#0f172a", marginBottom: "4px" }}>⚙️ Settings</div>
+              <div style={{ fontSize: "13px", color: "#64748b" }}>Business rules like the export price markup.</div>
+            </Link>
           </div>
         </>
       )}

@@ -7,6 +7,7 @@ const NAV = [
   { href: "/admin", label: "🏠 Hub", exact: true },
   { href: "/admin/models", label: "🏭 Machine Models" },
   { href: "/admin/components", label: "🔧 Components & Addons" },
+  { href: "/admin/settings", label: "⚙️ Settings" },
 ];
 
 export default function AdminLayout({ children, title }) {

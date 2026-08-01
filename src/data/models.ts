@@ -203,16 +203,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-24",
@@ -359,16 +350,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-32",
@@ -517,16 +499,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-40-55MM",
@@ -662,16 +635,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-50-65MM",
@@ -731,7 +695,6 @@ export const ALL_MODELS: MachineModel[] = [
           "techDesc": {
             "Die Size": "Lip Diameter as per width.",
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "03 Nos.",
             "Heating System": "Ceramic band heaters (Heatsun or equivalent)"
           }
@@ -806,16 +769,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-40",
@@ -915,16 +869,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-50",
@@ -1031,16 +976,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-72",
@@ -1140,16 +1076,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "UNOFLEX-110",
@@ -1256,16 +1183,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-20",
@@ -1392,16 +1310,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-24",
@@ -1477,8 +1386,7 @@ export const ALL_MODELS: MachineModel[] = [
             "Die Size": "Diameter as per width and lip gap.",
             "Die setting": "Die adjusting bolts will be provided.",
             "Heating System": "Ceramic band heaters (Hitco or equivalent)",
-            "Heating Zones": "hidden",
-            "Distribution": "hidden"
+            "Heating Zones": "hidden"
           }
         }
       },
@@ -1551,16 +1459,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-32",
@@ -1642,7 +1541,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
             "Die Size": "As per width.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "03 Nos.",
             "Heating System": "Ceramic band heaters"
           }
@@ -1708,16 +1606,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-36",
@@ -1797,7 +1686,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
             "Die Size": "As per width.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "03 Nos.",
             "Heating System": "Ceramic band heaters"
           }
@@ -1865,16 +1753,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-40",
@@ -1953,7 +1832,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
             "Die Size": "As per width.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "03 Nos.",
             "Heating System": "Ceramic band heaters"
           }
@@ -2022,16 +1900,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-50",
@@ -2112,7 +1981,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
             "Die Size": "300 mm.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "03 Nos.",
             "Heating System": "Ceramic band heaters"
           }
@@ -2187,16 +2055,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "size": "300"
-        }
-      },
-    ]
+    "addons": []
   },
   {
     "code": "DUOFLEX-50-65/55",
@@ -2278,7 +2137,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Hard chrome plated & highly polished melt paths.",
             "Die Size": "As per width.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "03 Nos.",
             "Heating System": "Ceramic band heaters"
           }
@@ -2362,16 +2220,7 @@ export const ALL_MODELS: MachineModel[] = [
         }
       }
     ],
-    "addons": [
-      {
-        "category": "Die Addons",
-        "id": "die-rotation-addon",
-        "qty": 1,
-        "metadata": {
-          "price": 0
-        }
-      }
-    ]
+    "addons": []
   },
   {
     "code": "INNOFLEX-1120",
@@ -4387,7 +4236,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "375 MM diameter with lips of 2.3 mm gap.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating System": "Ceramic band heaters (Heatsun or AUM)"
           }
         },
@@ -4586,7 +4434,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "350 MM diameter with lips of 2.3 mm gap.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "04 Nos.",
             "Heating System": "Ceramic band heaters (AUM or equivalent)"
           }
@@ -4784,7 +4631,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "450 MM diameter with lips of 2.3 mm gap.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating System": "Ceramic band heaters (AUM or equivalent)"
           }
         },
@@ -4977,7 +4823,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "500 MM diameter with lips of 2.3 mm gap.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating System": "Ceramic band heaters (Heatsun or AUM)"
           }
         },
@@ -5155,7 +5000,6 @@ export const ALL_MODELS: MachineModel[] = [
             "Surface Treatment": "Chrome plated & highly polished melt paths.",
             "Die Size": "500 MM diameter with lips of 2.2 mm gap.",
             "Die setting": "Die adjusting bolts will be provided.",
-            "Distribution": "Spiral distribution.",
             "Heating Zones": "05 Nos.",
             "Heating System": "Ceramic band heaters (Hitco or equivalent)",
             "IBC Provision": "Die with IBC provision."

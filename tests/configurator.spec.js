@@ -80,3 +80,76 @@ for (const scenario of scenarios) {
     await runConfiguratorFlow(page, scenario);
   });
 }
+
+/**
+ * Regression test for a real production bug: `presetBaseComponents` (used to
+ * calculate price deltas from a model's original preset — e.g. "Fixed
+ * Package Base Price" models) wasn't being persisted to localStorage or the
+ * saved-quotation `_restore` payload, only `presetBasePrice` was. A page
+ * refresh mid-flow silently changed the displayed price because every
+ * currently-selected component got treated as "not part of the original
+ * preset" and its price re-added on top of the base. Fixed by persisting
+ * presetBaseComponents alongside presetBasePrice everywhere it's saved.
+ * This asserts the summary page's displayed price is identical before and
+ * after reloading, twice, to catch any regression of that fix.
+ */
+async function verifyPriceSurvivesReload(page, { familyLabel, modelCode }) {
+  page.on('console', msg => console.log(`BROWSER: ${msg.text()}`));
+
+  await page.goto('/');
+  await expect(page.locator('span:has-text("Machine Configurator")').first()).toBeVisible({ timeout: 20000 });
+
+  await page.locator('#cust-name').fill('Playwright Reload Test');
+  await page.locator('#cust-company').fill('Adroit Test Corp');
+  await page.locator('#cust-phone').fill('1234567890');
+
+  await page.click('button:has-text("Choose Machine Type")');
+  await expect(page).toHaveURL(/.*\/machinetype/);
+
+  await page.click(`button:has-text("${familyLabel}")`);
+
+  const card = page.locator('div.rounded-xl.border').filter({ hasText: modelCode }).first();
+  await expect(card).toBeVisible({ timeout: 10000 });
+  await card.getByRole('button', { name: 'Select' }).click();
+
+  await expect(page).toHaveURL(/.*(\/selection|\/addons)/, { timeout: 10000 });
+  if (page.url().includes('/selection')) {
+    const nextBtn = page.locator('button:has-text("Go to Optional Add-ons")');
+    await nextBtn.waitFor({ state: 'visible' });
+    await nextBtn.click();
+  }
+
+  await expect(page).toHaveURL(/.*\/addons/);
+  await page.locator('button:has-text("Go to Summary")').click();
+  await expect(page).toHaveURL(/.*\/summary/);
+
+  const priceLocator = page.locator('.text-emerald-500').first();
+  await expect(priceLocator).toBeVisible({ timeout: 10000 });
+  const priceBefore = await priceLocator.textContent();
+  console.log(`[${modelCode}] price before reload: ${priceBefore}`);
+  expect(priceBefore).not.toMatch(/Rs\.\s*0\/?-?$/);
+
+  await page.reload();
+  await expect(priceLocator).toBeVisible({ timeout: 10000 });
+  const priceAfterFirstReload = await priceLocator.textContent();
+  expect(priceAfterFirstReload, `Price changed after 1st reload for ${modelCode}: ${priceBefore} -> ${priceAfterFirstReload}`).toBe(priceBefore);
+
+  await page.reload();
+  await expect(priceLocator).toBeVisible({ timeout: 10000 });
+  const priceAfterSecondReload = await priceLocator.textContent();
+  expect(priceAfterSecondReload, `Price changed after 2nd reload for ${modelCode}: ${priceBefore} -> ${priceAfterSecondReload}`).toBe(priceBefore);
+
+  console.log(`TEST SUCCESS [${modelCode}]: price stable across reloads (${priceBefore})`);
+}
+
+const reloadScenarios = [
+  { name: '3-Layer DR (preset package price)', familyLabel: 'Innoflex 3 Layer', modelCode: 'INNOFLEX-1370 DR' },
+  { name: 'Mono', familyLabel: 'Unoflex Monolayer', modelCode: 'UNOFLEX-20' },
+];
+
+for (const scenario of reloadScenarios) {
+  test(`Price Stability Across Reload — ${scenario.name}`, async ({ page }) => {
+    test.setTimeout(60000);
+    await verifyPriceSurvivesReload(page, scenario);
+  });
+}

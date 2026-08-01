@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       const blobs = jsonFiles.map(file => {
         const stats = fs.statSync(path.join(downloadDir, file));
         return {
-          url: `/downloads/${file}`,
+          url: `/api/downloads/${file}`,
           pathname: `data/${file}`,
           size: stats.size,
           uploadedAt: stats.mtime,

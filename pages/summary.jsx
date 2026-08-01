@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { numberToWords } from "../utils/numberToWords";
 import { generateScopeDesc, generateWinder, generateSecondaryNip } from "../src/utils/generateScopeDesc";
+import { EXPORT_PRICE_MARKUP } from "../src/lib/pricing";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SEO from "../components/SEO";
 import { AdroitQuotation } from "../src/components/quotation/AdroitQuotation";
@@ -312,7 +313,7 @@ function buildProposalData({
           const m = item.markup || 0;
           const d = item.discount || 0;
           const adjusted = base * (1 + m / 100) * (1 - d / 100);
-          return fmtPrice(adjusted / (currency === 'USD' ? rate : 1), currency);
+          return fmtPrice(currency === 'USD' ? (adjusted * EXPORT_PRICE_MARKUP / rate) : adjusted, currency);
         })()
         : "",
       rawPrice: (item.price || 0) * (item.qty || 1),
@@ -1557,7 +1558,7 @@ export default function SummaryPage() {
     const m = item.markup || 0;
     const d = item.discount || 0;
     const adjusted = base * (1 + m / 100) * (1 - d / 100);
-    const displayVal = adjusted / (currency === 'USD' ? rate : 1);
+    const displayVal = currency === 'USD' ? (adjusted * EXPORT_PRICE_MARKUP / rate) : adjusted;
 
     return {
       ...item,

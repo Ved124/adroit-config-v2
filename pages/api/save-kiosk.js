@@ -175,7 +175,7 @@ export default async function handler(req, res) {
       const protocol = req.headers["x-forwarded-proto"] || "http";
       const port = hostHeader.split(":")[1] || "3000";
 
-      const fileUrl = `${protocol}://${networkIp}:${port}/downloads/${pdfName}`;
+      const fileUrl = `${protocol}://${networkIp}:${port}/api/downloads/${pdfName}`;
 
       console.log("Local PDF generated:", fileUrl); // Check terminal to verify
       return res.status(200).json({ url: fileUrl, mode: "local" });

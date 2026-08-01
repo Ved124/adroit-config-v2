@@ -31,6 +31,7 @@ import { EXTRUDER_ADDONS } from "./data/extruderAddons";
 import { BIMETALLIC_BASE, BIMETALLIC_PRICES } from "./data/bimetallic";
 import { DIE_ADDONS } from "./data/dieAddons";
 import { resolveTechDesc, resolveScopeDesc, toTechRows } from "./utils/mergeCatalogItem";
+import { EXPORT_PRICE_MARKUP } from "./lib/pricing";
 
 import { Modal } from "../components/ui/Modal"; // ← keep your existing Modal
 import { useToast } from "../components/ui/Toast"; // ← same hook you already use
@@ -396,6 +397,7 @@ export function ConfigProvider({ children }) {
           customLayflat,
           customRollerWidth,
           presetBasePrice,
+          presetBaseComponents,
           conversionRate,
           scopeOverrides,
           quoteTemplate,
@@ -411,7 +413,7 @@ export function ConfigProvider({ children }) {
         console.warn("Failed to save storage:", e);
       }
     }
-  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice, conversionRate, scopeOverrides, quoteTemplate, showMarkupField, showDiscountField, showAddonPricing, showPricingFields, showPrices]);
+  }, [customer, machineType, selected, selectedAddons, machineModelIndex, discount, markup, selectedMachineModelLabel, customMode, customOutput, customLayflat, presetBasePrice, presetBaseComponents, conversionRate, scopeOverrides, quoteTemplate, showMarkupField, showDiscountField, showAddonPricing, showPricingFields, showPrices]);
 
   // Real-time synchronization for Quotation Reference
   useEffect(() => {
@@ -1989,12 +1991,12 @@ export function ConfigProvider({ children }) {
     }
 
     return {
-      basicTotal: isExport ? Math.ceil(basicTotal / rate) : basicTotal,
-      addonsTotal: isExport ? Math.ceil(addonsTotal / rate) : addonsTotal,
-      beforeMargin: isExport ? Math.ceil(beforeMargin / rate) : beforeMargin,
-      withMarkup: isExport ? Math.ceil(withMarkup / rate) : withMarkup,
-      afterDiscount: isExport ? Math.ceil(afterDiscount / rate) : afterDiscount,
-      totalWithAddons: isExport ? Math.ceil((afterDiscount + addonsTotal) / rate) : (afterDiscount + addonsTotal),
+      basicTotal: isExport ? Math.ceil(basicTotal * EXPORT_PRICE_MARKUP / rate) : basicTotal,
+      addonsTotal: isExport ? Math.ceil(addonsTotal * EXPORT_PRICE_MARKUP / rate) : addonsTotal,
+      beforeMargin: isExport ? Math.ceil(beforeMargin * EXPORT_PRICE_MARKUP / rate) : beforeMargin,
+      withMarkup: isExport ? Math.ceil(withMarkup * EXPORT_PRICE_MARKUP / rate) : withMarkup,
+      afterDiscount: isExport ? Math.ceil(afterDiscount * EXPORT_PRICE_MARKUP / rate) : afterDiscount,
+      totalWithAddons: isExport ? Math.ceil((afterDiscount + addonsTotal) * EXPORT_PRICE_MARKUP / rate) : (afterDiscount + addonsTotal),
       isPackagePrice: presetBasePrice > 0,
       currency,
       rate,
@@ -2429,7 +2431,7 @@ export function ConfigProvider({ children }) {
         return !isBimetallic && !isLoadcell && !isGrandTotal && !isDieRotation && !isLeverScreenChanger && a.id !== "winder-manual-back-to-back-dynamic";
       }).map((a, idx) => {
         const rawPrice = (a.price || 0) * (a.qty || 1);
-        const convertedPrice = isExport ? (rawPrice / rate) : rawPrice;
+        const convertedPrice = isExport ? (rawPrice * EXPORT_PRICE_MARKUP / rate) : rawPrice;
         return {
           item_no: idx + 1,
           name: a.customName || a.name,
@@ -2599,8 +2601,8 @@ export function ConfigProvider({ children }) {
       const pdfBlob = await html2pdf().from(element).set({
         margin: 0,
         filename: 'flyer.pdf',
-        image: { type: 'jpeg', quality: 0.8 },
-        html2canvas: { scale: 1, useCORS: true, letterRendering: true, logging: false },
+        image: { type: 'png' },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
         pagebreak: { mode: 'avoid-all' }
       }).outputPdf('blob');
@@ -2638,6 +2640,7 @@ export function ConfigProvider({ children }) {
               showAddonPricing,
               showPrices,
               presetBasePrice,
+              presetBaseComponents,
               quotationDate: quotationDate || new Date().toLocaleDateString("en-IN")
             }
           };
@@ -2736,6 +2739,7 @@ export function ConfigProvider({ children }) {
           showAddonPricing,
           showPrices,
           presetBasePrice,
+          presetBaseComponents,
           quotationDate: quotationDate || new Date().toLocaleDateString("en-IN")
         }
       };
@@ -2888,6 +2892,7 @@ export function ConfigProvider({ children }) {
         if (typeof r.showPricingFields === "boolean") setShowPricingFields(r.showPricingFields);
         if (typeof r.customRollerWidth === "string") setCustomRollerWidth(r.customRollerWidth);
         if (typeof r.presetBasePrice === "number") setPresetBasePrice(r.presetBasePrice);
+        if (Array.isArray(r.presetBaseComponents)) setPresetBaseComponents(r.presetBaseComponents);
 
         // Export Conversion Fields
         if (typeof r.conversionRate === "number") setConversionRate(r.conversionRate);

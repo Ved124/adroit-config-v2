@@ -938,9 +938,13 @@ export function ConfigProvider({ children }) {
           const isMonoAbaBC = preset.machineType === "mono" || preset.machineType === "aba";
           const priceMap = (isMonoAbaBC && isManual) ? MONO_ABA_MANUAL_BC_PRICES : (bcComp?.prices || {});
 
-          // Find smallest size >= machineWidth
+          // Find smallest size >= machineWidth. Only trust a pre-set item.size if it's
+          // actually a valid key in the CURRENT priceMap — a size inherited from an
+          // earlier resolution pass against a different table (e.g. the mono/ABA split)
+          // would otherwise silently price at $0 instead of falling back to auto-calc.
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
-          const presetSize = parseInt(item.size) || 0;
+          const rawPresetSize = parseInt(item.size) || 0;
+          const presetSize = (rawPresetSize > 0 && priceMap[rawPresetSize.toString()] != null) ? rawPresetSize : 0;
           const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[availableSizes.length - 1]);
 
           const displaySize = (presetSize > 0) ? presetSize : ((rollerNum > 0) ? (isMonoOrAba ? (rollerNum * 25) : rollerNum) : chosenSize);
@@ -1055,8 +1059,12 @@ export function ConfigProvider({ children }) {
           const isMonoAba = preset.machineType === "mono" || preset.machineType === "aba";
           const priceMap = isMonoAba ? MONO_ABA_TOWER_PRICES : (towerComp?.prices || TOWER_PRICES);
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
-          // Find smallest size >= machineWidth, or fallback to smallest available
-          const presetSize = parseInt(item.size) || 0;
+          // Find smallest size >= machineWidth, or fallback to smallest available. Only
+          // trust a pre-set item.size if it's a valid key in the CURRENT priceMap — a
+          // size inherited from an earlier pass against a different table would
+          // otherwise silently price at $0 instead of falling back to auto-calc.
+          const rawPresetSize = parseInt(item.size) || 0;
+          const presetSize = (rawPresetSize > 0 && priceMap[rawPresetSize.toString()] != null) ? rawPresetSize : 0;
           const chosenSize = presetSize > 0 ? presetSize : (availableSizes.find(s => s >= machineWidth) || availableSizes[0]);
           const newPrice = priceMap[chosenSize.toString()] || 0;
 
@@ -1093,7 +1101,10 @@ export function ConfigProvider({ children }) {
           // page's manual dropdown) — ignore the non-numeric ones for this lookup.
           const availableSizes = Object.keys(priceMap).map(Number).filter(n => !isNaN(n)).sort((a, b) => a - b);
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0] || 0;
-          const presetSize = parseInt(item.size) || 0;
+          // Only trust a pre-set item.size if it's a valid key in the CURRENT priceMap —
+          // see the Tower/Bubble Cage blocks above for why.
+          const rawPresetSize = parseInt(item.size) || 0;
+          const presetSize = (rawPresetSize > 0 && priceMap[rawPresetSize.toString()] != null) ? rawPresetSize : 0;
           const chosenSize = presetSize > 0 ? presetSize : minSize;
           const newPrice = priceMap[chosenSize.toString()] || 0;
 

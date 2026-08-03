@@ -1296,6 +1296,11 @@ export const ALL_MODELS: MachineModel[] = [
         }
       },
       {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
+      },
+      {
         "category": "Winder",
         "id": "winder-single-surface-only-dynamic",
         "qty": 1,
@@ -1438,6 +1443,11 @@ export const ALL_MODELS: MachineModel[] = [
             "Idler rollers": "Adequate quantity as per layout."
           }
         }
+      },
+      {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
       },
       {
         "category": "Winder",
@@ -1592,6 +1602,11 @@ export const ALL_MODELS: MachineModel[] = [
         }
       },
       {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
+      },
+      {
         "category": "Winder",
         "id": "winder-single-surface-only-dynamic",
         "qty": 1,
@@ -1735,6 +1750,11 @@ export const ALL_MODELS: MachineModel[] = [
             "Application": "hidden"
           }
         }
+      },
+      {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
       },
       {
         "category": "Winder",
@@ -1883,6 +1903,11 @@ export const ALL_MODELS: MachineModel[] = [
             "Application": "hidden"
           }
         }
+      },
+      {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
       },
       {
         "category": "Winder",
@@ -2035,6 +2060,11 @@ export const ALL_MODELS: MachineModel[] = [
         }
       },
       {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
+      },
+      {
         "category": "Winder",
         "id": "winder-single-surface-only-dynamic",
         "qty": 1,
@@ -2183,6 +2213,11 @@ export const ALL_MODELS: MachineModel[] = [
       //     }
       //   }
       // },
+      {
+        "category": "Tower / Platform",
+        "id": "tower-dynamic",
+        "qty": 1
+      },
       {
         "category": "Winder",
         "id": "winder-single-surface-only-dynamic",

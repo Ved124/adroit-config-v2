@@ -180,7 +180,7 @@ function ComponentCard({
   // Air Ring Size Mappings
   const isGAirRing = item.id === "airring-g-dynamic";
   const isStandardAirRing = item.id === "airring-standard-dynamic";
-  const isDRAirRing = item.id === "airring-dr-dynamic";
+  const isDRAirRing = item.id === "airring-dr-dynamic" || item.id === "airring-dr-dynamic-aba";
   const isManualBC = item.id === "bc-manual-dynamic";
   const isOCBC = item.id === "bc-open-close-dynamic";
   const isUDBC = item.id === "bc-up-down-dynamic";

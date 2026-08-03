@@ -33,9 +33,9 @@ export const HAULOFF_PRICES: Record<string, number> = {
   "1850": 1500000,
   "2000": 1800000,
   "2250": 2500000,
-  "2500": 2700000,
-  "2750": 3200000,
-  "3000": 3500000,
+  "2500": 3500000,
+  "2750": 4500000,
+  "3000": 5400000,
 };
 
 export const HAULOFF_COMPONENTS: HauloffComponent[] = [

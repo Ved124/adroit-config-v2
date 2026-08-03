@@ -610,16 +610,17 @@ export function ConfigProvider({ children }) {
         }
         return;
       }
+      const isMonoAbaPreset = preset.machineType === "mono" || preset.machineType === "aba";
+      const effectivePrices = (category === "Electrical & Control Panel" && isMonoAbaPreset)
+        ? (preset.machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES)
+        : (category === "Air Ring" && isMonoAbaPreset)
+          ? (preset.machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES)
+          : (base.prices || {});
+
       // Smart default for web-width components if size is missing
       if (base.isDynamic && !metadata.size && base.prices) {
         if (["Winder", "Main Nip", "Haul-Off", "Bubble Cage", "Electrical & Control Panel", "Air Ring", "Tower", "Tower / Platform"].includes(category)) {
           let targetSize = null;
-          const isMonoAbaPreset = preset.machineType === "mono" || preset.machineType === "aba";
-          const effectivePrices = (category === "Electrical & Control Panel" && isMonoAbaPreset)
-            ? (preset.machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES)
-            : (category === "Air Ring" && isMonoAbaPreset)
-              ? (preset.machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES)
-              : base.prices;
 
           if (preset.code) {
             let directCodeSize = null;
@@ -684,17 +685,14 @@ export function ConfigProvider({ children }) {
       }
 
       // Electrical Panel / Air Ring components carry no live recompute block (unlike
-      // Tower/Main Nip/Bubble Cage/Winder), so the mono/ABA-specific price tables must
-      // be applied here directly — otherwise a model's hardcoded metadata.price snapshot
-      // (or the flat base.price) would silently go stale whenever these tables are updated.
-      if (base.isDynamic && metadata.size && (preset.machineType === "mono" || preset.machineType === "aba")) {
-        if (category === "Electrical & Control Panel") {
-          const table = preset.machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES;
-          if (table[metadata.size] != null) metadata.price = table[metadata.size];
-        } else if (category === "Air Ring") {
-          const table = preset.machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES;
-          if (table[metadata.size] != null) metadata.price = table[metadata.size];
-        }
+      // Tower/Main Nip/Bubble Cage/Winder), so the resolved price table must be applied
+      // here directly for every machine type — otherwise a model's hardcoded
+      // metadata.price snapshot (or the flat base.price) silently goes stale whenever
+      // these tables are updated. effectivePrices is already mono/ABA-specific when
+      // applicable and falls back to base.prices (the right table for whichever G/
+      // Standard/DR Air Ring variant this model uses) for 3-layer/5-layer.
+      if (base.isDynamic && metadata.size && (category === "Electrical & Control Panel" || category === "Air Ring")) {
+        if (effectivePrices[metadata.size] != null) metadata.price = effectivePrices[metadata.size];
       }
 
       // Resolve base techDesc from sizeDetails if dynamic

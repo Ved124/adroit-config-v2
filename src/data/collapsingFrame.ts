@@ -43,7 +43,9 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     id: "cf-pbt-dynamic",
     name: "Collapsing Frame – PBT Rollers",
     style: "PBT",
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    // Mono/ABA already get a collapsing frame bundled into "Main Nip & Collapsing
+    // Frame" (main-nip-cf-dynamic) — a separate standalone one is redundant there.
+    machineTypes: ["3layer", "5layer"],
     image: "/images/Acessories/Gusset Board Assembly.jpeg",
     cardDesc: "Select size and technical specifications will update automatically.",
     price: 0,

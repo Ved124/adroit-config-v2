@@ -133,7 +133,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-g-dynamic",
+        "id": "airring-standard-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -274,7 +274,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-g-dynamic",
+        "id": "airring-standard-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -422,7 +422,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-g-dynamic",
+        "id": "airring-standard-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -819,7 +819,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-g-dynamic",
+        "id": "airring-standard-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -919,7 +919,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-g-dynamic",
+        "id": "airring-standard-dynamic",
         "qty": 1,
         "metadata": {
           "price": 350000,

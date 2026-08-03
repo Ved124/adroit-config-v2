@@ -144,7 +144,8 @@ export const AIR_RING_COMPONENTS: AirRingComponent[] = [
     name: "G AIRRING",
     type: "single",
     blowerPowerHP: 10,
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    // Mono/ABA presets use airring-standard-dynamic instead — see models.ts.
+    machineTypes: ["3layer", "5layer"],
     image: "/images/Airring/Airring.png",
     cardDesc: "Select Die size to add.",
     price: 0,

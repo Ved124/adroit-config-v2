@@ -29,10 +29,10 @@ export interface MaterialHandlingAddon {
 
 // Prices for Mixer Dryer: 100, 200, 300, 500 kg/hr (placeholder values)
 export const MIXER_DRYER_PRICES: Record<string, number> = {
-  "100": 165000,
+  "100": 155000,
   "200": 250000,
-  "300": 310000,
-  "500": 375000,
+  "300": 290000,
+  "500": 335000,
 };
 
 export const MIXER_PRICES: Record<string, number> = {
@@ -142,6 +142,40 @@ export const MATERIAL_HANDLING_ADDONS: MaterialHandlingAddon[] = [
     prices: HOPPER_LOADER_MULTI,
     techDesc: {
       "Capacity": "300 kg/hr loading speed.",
+      "Material Type": "Virgin / Reprocess Granules.",
+      "Conveying Method": "Vacuum conveying.",
+      "Filter": "Integrated easy-clean filter system.",
+    },
+  },
+  {
+    id: "hopper-loader-3layer",
+    name: "Hopper Loader (3-Layer)",
+    type: "hopper-loader",
+    machineTypes: ["3layer"],
+    image: "/images/Acessories/Hopper Loader Trio.png",
+    cardDesc: "Automatic material loader sized for 3-layer machines.",
+    price: 195000,
+    isDynamic: false,
+    qty: 1,
+    techDesc: {
+      "Capacity": "Appropriate kg/hr loading speed for 3-layer lines.",
+      "Material Type": "Virgin / Reprocess Granules.",
+      "Conveying Method": "Vacuum conveying.",
+      "Filter": "Integrated easy-clean filter system.",
+    },
+  },
+  {
+    id: "hopper-loader-5layer",
+    name: "Hopper Loader (5-Layer)",
+    type: "hopper-loader",
+    machineTypes: ["5layer"],
+    image: "/images/Acessories/Hopper Loader Trio.png",
+    cardDesc: "Automatic material loader sized for 5-layer machines.",
+    price: 350000,
+    isDynamic: false,
+    qty: 1,
+    techDesc: {
+      "Capacity": "Appropriate kg/hr loading speed for 5-layer lines.",
       "Material Type": "Virgin / Reprocess Granules.",
       "Conveying Method": "Vacuum conveying.",
       "Filter": "Integrated easy-clean filter system.",

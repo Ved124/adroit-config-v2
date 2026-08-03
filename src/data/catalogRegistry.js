@@ -24,6 +24,7 @@ import { IBC_COMPONENTS } from "./ibc";
 import { MAIN_NIP_COMPONENTS } from "./mainNip";
 import { CORONA_TREATER_COMPONENTS } from "./corona";
 import { TRIM_ADDONS } from "./trim";
+import { TRIM_RECYCLING_ADDONS } from "./trimRecycling";
 import { MATERIAL_HANDLING_ADDONS } from "./materialHandling";
 import { WEB_GUIDE_ADDONS } from "./webGuide";
 import { CHILLER_ADDONS } from "./chiller";
@@ -68,6 +69,7 @@ function buildAddonsData() {
     "Winder Addons": WINDER_ADDONS,
     EPC: EPC_COMPONENTS,
     Printer: PRINTER_ADDONS,
+    "Trim Recycling": TRIM_RECYCLING_ADDONS,
     "Optional Features": OPTIONAL_FEATURE_ADDONS,
     IBC: IBC_COMPONENTS,
   };

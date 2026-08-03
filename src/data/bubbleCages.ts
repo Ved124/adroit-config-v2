@@ -73,6 +73,29 @@ export const UP_DOWN_BC_PRICES: Record<string, number> = {
   "3000": 1150000,
 };
 
+// Mono + ABA specific tiers for the Manual Bubble Cage, kept separate from
+// MANUAL_BC_PRICES (which stays the live table for 3-layer/5-layer) so updating
+// mono/ABA pricing can't accidentally reprice a 3-layer model that happens to
+// sit at the same mm tier (e.g. INNOFLEX-1120 at 1000mm, INNOFLEX-1620 at
+// 1500mm). Tiers above 1750mm are carried over unchanged from MANUAL_BC_PRICES
+// so UNOFLEX-110 (2800mm -> 2750 tier) keeps its existing price.
+export const MONO_ABA_MANUAL_BC_PRICES: Record<string, number> = {
+  "500": 40000,
+  "600": 50000,
+  "750": 70000,
+  "900": 80000,
+  "1000": 100000,
+  "1200": 140000,
+  "1500": 175000,
+  "1750": 200000,
+  "1850": 150000,
+  "2000": 175000,
+  "2250": 225000,
+  "2500": 300000,
+  "2750": 350000,
+  "3000": 500000,
+};
+
 export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
   // ---------- DYNAMIC BUBBLE CAGES ----------
   {

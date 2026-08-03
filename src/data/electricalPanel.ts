@@ -53,6 +53,37 @@ export const PANEL_DYNAMIC_PRICES: Record<string, number> = {
   "2500": 2620000,
 };
 
+// Mono-specific panel pricing, kept separate from PANEL_DYNAMIC_PRICES (which
+// stays the live table for 3-layer/5-layer) so updating mono pricing can't
+// accidentally reprice a 3-layer model at the same mm tier. UNOFLEX-110 keeps
+// its existing price via the preserved "U110" key (its 2800mm layflat is out of
+// range for the new tiers, and Electrical Panel has no machineWidth-based
+// fallback — the exact model-code key is the only thing that resolves it).
+export const MONO_PANEL_PRICES: Record<string, number> = {
+  "500": 55000,
+  "600": 75000,
+  "750": 100000,
+  "900": 110000,
+  "1000": 150000,
+  "1200": 200000,
+  "1500": 300000,
+  "1750": 400000,
+  "U110": 2620000,
+};
+
+// ABA-specific panel pricing, kept separate from PANEL_DYNAMIC_PRICES for the
+// same reason as MONO_PANEL_PRICES above.
+export const ABA_PANEL_PRICES: Record<string, number> = {
+  "500": 110000,
+  "600": 150000,
+  "750": 200000,
+  "900": 325000,
+  "1000": 500000,
+  "1200": 500000,
+  "1500": 700000,
+  "1750": 900000,
+};
+
 export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
   {
     id: "panel-dynamic",

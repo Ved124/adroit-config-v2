@@ -3,6 +3,11 @@ import { useRouter } from "next/router";
 import { ConfigContext } from "../src/ConfigContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ALL_MODELS } from "../src/data/catalogRegistry";
+import { MONO_ABA_MAIN_NIP_PRICES } from "../src/data/mainNip";
+import { MONO_ABA_TOWER_PRICES } from "../src/data/tower";
+import { MONO_ABA_MANUAL_BC_PRICES } from "../src/data/bubbleCages";
+import { MONO_PANEL_PRICES, ABA_PANEL_PRICES } from "../src/data/electricalPanel";
+import { MONO_AIR_RING_PRICES, ABA_AIR_RING_PRICES } from "../src/data/airRing";
 export default function SelectionPage() {
   const router = useRouter();
   const {
@@ -125,6 +130,7 @@ export default function SelectionPage() {
                       customMode={customMode}
                       selectedMachineModelLabel={selectedMachineModelLabel}
                       modelSizeMm={modelSizeMm}
+                      machineType={machineType}
                     />
                     ));
                   })()}
@@ -166,6 +172,7 @@ function ComponentCard({
   customMode,
   selectedMachineModelLabel,
   modelSizeMm,
+  machineType,
 }) {
   const isSelected = !!line;
   const qty = line?.qty || 0;
@@ -187,8 +194,21 @@ function ComponentCard({
   const is3LayerPanel = item.id === "panel-3layer-dynamic";
   const isCollapsingFrame = item.id === "cf-pbt-dynamic";
 
-  const prices = item.pricingType === 'size' || item.pricingType === 'brand' || item.pricingType === 'dropdown' 
-    ? (item.prices || {})
+  const isMonoAbaCard = machineType === "mono" || machineType === "aba";
+  // Main Nip/Tower/Manual Bubble Cage/Panel/Air Ring are shared library entries also
+  // used by 3-layer/5-layer models — swap in the mono/ABA-specific table here so a
+  // custom mono/ABA build gets the right price without touching those shared entries.
+  const monoAbaOverridePrices = !isMonoAbaCard ? null
+    : item.id === "main-nip-cf-dynamic" ? MONO_ABA_MAIN_NIP_PRICES
+    : item.id === "tower-dynamic" ? MONO_ABA_TOWER_PRICES
+    : item.id === "bc-manual-dynamic" || item.id === "bc-manual-dynamic-aba" ? MONO_ABA_MANUAL_BC_PRICES
+    : item.id === "panel-dynamic" ? (machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES)
+    : (item.id === "airring-g-dynamic" || item.id === "airring-standard-dynamic" || item.id === "airring-dr-dynamic-aba")
+      ? (machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES)
+    : null;
+
+  const prices = item.pricingType === 'size' || item.pricingType === 'brand' || item.pricingType === 'dropdown'
+    ? (monoAbaOverridePrices || item.prices || {})
     : {};
 
   const nearestToModelSize = (priceMap, modelSizeMm) => {

@@ -80,6 +80,36 @@ export const AIR_RING_PRICES: Record<string, number> = {
   "750": 1075000,
 };
 
+// Mono-specific air ring pricing (keyed by die size), kept separate from the
+// shared G_AIR_RING_PRICES/AIR_RING_PRICES tables (which stay live for
+// 3-layer/5-layer) so updating mono pricing can't accidentally reprice a
+// 3-layer model whose die happens to match one of these die sizes. Air Ring
+// has no machineWidth fallback — it resolves purely off die size, and
+// UNOFLEX-110 (600mm die) keeps its existing price via the preserved "600" key.
+export const MONO_AIR_RING_PRICES: Record<string, number> = {
+  "75": 45000,
+  "100": 60000,
+  "150": 75000,
+  "200": 100000,
+  "250": 125000,
+  "300": 150000,
+  "350": 200000,
+  "400": 300000,
+  "600": 950000,
+};
+
+// ABA-specific air ring pricing, kept separate for the same reason as
+// MONO_AIR_RING_PRICES above.
+export const ABA_AIR_RING_PRICES: Record<string, number> = {
+  "75": 75000,
+  "100": 100000,
+  "150": 125000,
+  "200": 150000,
+  "250": 200000,
+  "300": 200000,
+  "400": 250000,
+};
+
 export const DR_AIR_RING_PRICES: Record<string, number> = {
   "50": 0,
   "70": 0,

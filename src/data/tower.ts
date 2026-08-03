@@ -50,6 +50,29 @@ export const TOWER_PRICES: Record<string, number> = {
   "3000": 3500000,
 };
 
+// Mono + ABA specific tiers, kept separate from TOWER_PRICES (which stays the
+// live table for 3-layer/5-layer) so updating mono/ABA pricing can't accidentally
+// reprice a 3-layer model that happens to sit at the same mm tier (e.g.
+// INNOFLEX-1120 at 1000mm, INNOFLEX-1620 at 1500mm). Tiers above 1750mm are
+// carried over unchanged from TOWER_PRICES so UNOFLEX-110 (2800mm -> 3000 tier)
+// keeps its existing price.
+export const MONO_ABA_TOWER_PRICES: Record<string, number> = {
+  "500": 85000,
+  "600": 100000,
+  "750": 125000,
+  "900": 170000,
+  "1000": 200000,
+  "1200": 300000,
+  "1500": 375000,
+  "1750": 450000,
+  "1850": 1500000,
+  "2000": 1800000,
+  "2250": 2200000,
+  "2500": 2500000,
+  "2750": 3000000,
+  "3000": 3500000,
+};
+
 export const TOWER_COMPONENTS: TowerComponent[] = [
   {
     id: "tower-dynamic",

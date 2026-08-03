@@ -42,14 +42,14 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     cardDesc: "Select extruder size. Specs and price update automatically.",
     price: 0,
     prices: {
-      "35": 0,
-      "45": 0,
-      "55": 0,
-      "60": 0,
-      "75": 0,
-      "90": 0,
-      "100": 0,
-      "65": 1600000,
+      "35": 245000,
+      "40": 265000,
+      "45": 435000,
+      "50": 635000,
+      "55": 900000,
+      "65": 1125000,
+      "75": 1350000,
+      "90": 1375000,
     },
     sizeDetails: {
       "35": {
@@ -100,16 +100,35 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Screen Changer": "Candle type"},
         shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
-      "60": {
-        name: "Extruder 60 mm",
-        techDesc: {"Screw Diameter": "60 mm single screw extruder.",
-          "L/D ratio": "30 : 1 short barrel.",
-          "Main Drive": "30 kW AC motor with vector drive.",
-          "Heating System": "Approx. 15 kW total heater load on barrel.",
-          "Type": "Barrier screw, medium duty.",
-          "Hopper": "MS hopper with magnetic grill and level window.",
-          "Screen Changer": "Manual candle type.",
-          "Application": "For general purpose blown film, shopping bags and liners."},
+      "40": {
+        name: "Extruder 40 mm",
+        techDesc: {"Screw Diameter": "40 mm single screw extruder mounted on a sturdy fabricated frame.",
+          "L/D ratio": "28:1",
+          "Type": "Barrier type screw with grooved feed section.",
+          "Barrel": "Screw & barrel",
+          "Material": "Bimetallic screw and barrel, suitable for PE / LD / LLD blends.",
+          "Screw Speed": "Approx. 115 RPM (variable with AC drive).",
+          "Heating System": "Ceramic Heater",
+          "No. of Heating Zones": "4 zones on barrel + die adapter zone.",
+          "Main Drive": "10 HP AC Motor & AC variable frequency Drive.",
+          "Transmission System": "Through Belt and Pulley.",
+          "Hopper": "MS fabricated hopper with sight glass and magnetic grill for metal trapping.",
+          "Screen Changer": "One Candle type Manual Screen Changers for 40 mm Extruders."},
+        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
+      },
+      "50": {
+        name: "Extruder 50 mm",
+        techDesc: {"Screw Diameter": "50 mm single screw extruder mounted on a sturdy frame.",
+          "L/D ratio": "30 : 1",
+          "Type": "Barrier screw profile optimised for thin gauge film.",
+          "Barrel": "Water-cooled grooved feed section with bimetallic wear-resistant liner.",
+          "Screw Speed": "Up to 115 RPM with closed-loop speed control.",
+          "Heating System": "Ceramic band heater load with PID temperature controllers.",
+          "No. of Heating Zones": "4 barrel zones + adapter.",
+          "Main Drive": "20 HP AC motor with VFD.",
+          "Transmission System": "Helical gear box with thrust bearing housing.",
+          "Hopper": "Fabricated hopper with glass window for visual inspection and magnetic grill.",
+          "Screen Changer": "Manual candle type (optional hydraulic on request)."},
         shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "75": {
@@ -130,15 +149,6 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
           "Main Drive": "50 kW AC motor with inverter.",
           "Heating System": "29.5 kW total barrel heater load.",
           "Applications": "Wide width film for construction and agricultural use."},
-        shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
-      },
-      "100": {
-        name: "Extruder 100 mm",
-        techDesc: {"Screw Diameter": "100 mm single screw extruder.",
-          "L/D ratio": "30 : 1.",
-          "Main Drive": "60 kW AC motor with VFD.",
-          "Heating System": "31.5 kW heater load.",
-          "Applications": "Very wide width liner and greenhouse film."},
         shortDesc: "Extruder unit with precision screw/barrel design for stable melt flow and consistent output."
       },
       "65": {
@@ -170,14 +180,14 @@ export const EXTRUDER_COMPONENTS: ExtruderComponent[] = [
     cardDesc: "Select extruder size. Specs and price update automatically.",
     price: 0,
     prices: {
-      "35": 0,
-      "40": 0,
-      "45": 700000,
-      "50": 1000000,
-      "55": 1350000,
-      "65": 1600000,
-      "75": 2400000,
-      "90": 3000000,
+      "35": 245000,
+      "40": 265000,
+      "45": 435000,
+      "50": 635000,
+      "55": 900000,
+      "65": 1125000,
+      "75": 1350000,
+      "90": 1375000,
     },
     sizeDetails: {
       "35": {

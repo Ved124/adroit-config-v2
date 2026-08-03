@@ -66,36 +66,24 @@ export const DIE_COMPONENTS: DieComponent[] = [
     cardDesc: "Select die size. Specs and price update automatically.",
     price: 0,
     prices: {
-      "50": 0,
-      "90": 0,
-      "100": 0,
-      "150": 0,
-      "200": 0,
-      "250": 0,
-      "300": 900000,
-      "400": 1400000,
-      "450": 1800000,
+      "75": 125000,
+      "100": 125000,
+      "150": 175000,
+      "200": 200000,
+      "250": 225000,
+      "300": 300000,
+      "400": 400000,
       "600": 2500000,
     },
     sizeDetails: {
-      "50": {
-        name: "Monolayer Die 50 mm",
+      "75": {
+        name: "Monolayer Die 75 mm",
         techDesc: {
           ...MONO_TECH_BASE,
-          "Die Size": "50 mm diameter.",
+          "Die Size": "75 mm diameter.",
           "Heating Zones": "2–3 zones.",
         },
         shortDesc: "Compact monolayer die for narrow web blown films.",
-      },
-      "90": {
-        name: "Monolayer Die 90 mm",
-        techDesc: {
-          ...MONO_TECH_BASE,
-          "Die Size": "90 mm diameter.",
-          "Lip Design": "Adjustable circular lips with fine-thread bolts.",
-          "Heating Zones": "3–4 zones.",
-        },
-        shortDesc: "Mid-size monolayer die for medium-width blown film applications.",
       },
       "100": {
         name: "Monolayer Die 100 mm",
@@ -151,15 +139,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
         },
         shortDesc: "Spiral die head for even melt distribution and consistent film thickness.",
       },
-      "450": {
-        name: "Monolayer Die 450 mm",
-        techDesc: {
-          ...MONO_TECH_BASE,
-          "Die Size": "450 mm diameter.",
-          "Heating Zones": "6+ zones with PID controllers.",
-        },
-        shortDesc: "Heavy-duty spiral die for maximum-width blown film applications.",
-      },
       "600": {
         name: "Monolayer Die 600 mm",
         techDesc: {
@@ -184,27 +163,16 @@ export const DIE_COMPONENTS: DieComponent[] = [
     cardDesc: "Select die size for ABA co-extrusion. Specs and price update automatically.",
     price: 0,
     prices: {
-      "70": 0,
-      "75": 0,
-      "100": 0,
-      "125": 0,
-      "150": 0,
-      "200": 0,
-      "225": 0,
-      "300": 900000,
-      "350": 0,
+      "75": 300000,
+      "100": 325000,
+      "150": 400000,
+      "200": 450000,
+      "250": 500000,
+      "300": 550000,
+      "400": 600000,
       "600": 2500000,
     },
     sizeDetails: {
-      "70": {
-        name: "ABA / AB Die 70 mm",
-        techDesc: {
-          ...ABA_TECH_BASE,
-          "Die Size": "70 mm.",
-          "Heating Zones": "03 Nos.",
-        },
-        shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
-      },
       "75": {
         name: "ABA Die 75 mm",
         techDesc: {
@@ -222,15 +190,6 @@ export const DIE_COMPONENTS: DieComponent[] = [
           "Heating Zones": "03 Nos.",
         },
         shortDesc: "Basic ABA die head.",
-      },
-      "125": {
-        name: "ABA / AB Die 125 mm",
-        techDesc: {
-          ...ABA_TECH_BASE,
-          "Die Size": "125 mm.",
-          "Heating Zones": "03 Nos.",
-        },
-        shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
       },
       "150": {
         name: "ABA Die 150 mm",
@@ -250,14 +209,14 @@ export const DIE_COMPONENTS: DieComponent[] = [
         },
         shortDesc: "Basic ABA die head.",
       },
-      "225": {
-        name: "ABA / AB Die 225 mm",
+      "250": {
+        name: "ABA Die 250 mm",
         techDesc: {
           ...ABA_TECH_BASE,
-          "Die Size": "225 mm.",
+          "Die Size": "250 mm.",
           "Heating Zones": "03 Nos.",
         },
-        shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
+        shortDesc: "ABA die head.",
       },
       "300": {
         name: "ABA Die 300 mm",
@@ -268,14 +227,14 @@ export const DIE_COMPONENTS: DieComponent[] = [
         },
         shortDesc: "ABA die head.",
       },
-      "350": {
-        name: "ABA / AB Die 350 mm",
+      "400": {
+        name: "ABA Die 400 mm",
         techDesc: {
           ...ABA_TECH_BASE,
-          "Die Size": "350 mm.",
-          "Heating Zones": "04 Nos.",
+          "Die Size": "400 mm.",
+          "Heating Zones": "03 Nos.",
         },
-        shortDesc: "Die head that provides even melt distribution and consistent film thickness.",
+        shortDesc: "ABA die head.",
       },
       "600": {
         name: "ABA Die 600 mm",

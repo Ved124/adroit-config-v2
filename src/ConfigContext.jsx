@@ -23,8 +23,11 @@ import {
 // logic further down in this file (Bubble Cage/Tower/Collapsing Frame/Bimetallic/
 // Extruder Addons §4.x blocks) — that logic is unchanged, so these stay as
 // direct static imports rather than going through the overridable registry.
-import { BUBBLE_CAGE_COMPONENTS } from "./data/bubbleCages";
-import { TOWER_COMPONENTS, TOWER_PRICES } from "./data/tower";
+import { BUBBLE_CAGE_COMPONENTS, MONO_ABA_MANUAL_BC_PRICES } from "./data/bubbleCages";
+import { TOWER_COMPONENTS, TOWER_PRICES, MONO_ABA_TOWER_PRICES } from "./data/tower";
+import { MAIN_NIP_PRICES, MONO_ABA_MAIN_NIP_PRICES } from "./data/mainNip";
+import { MONO_PANEL_PRICES, ABA_PANEL_PRICES } from "./data/electricalPanel";
+import { MONO_AIR_RING_PRICES, ABA_AIR_RING_PRICES } from "./data/airRing";
 import { WINDER_COMPONENTS } from "./data/winders";
 import { COLLAPSING_FRAME_COMPONENTS, COLLAPSING_FRAME_PRICES } from "./data/collapsingFrame";
 import { EXTRUDER_ADDONS } from "./data/extruderAddons";
@@ -611,7 +614,13 @@ export function ConfigProvider({ children }) {
       if (base.isDynamic && !metadata.size && base.prices) {
         if (["Winder", "Main Nip", "Haul-Off", "Bubble Cage", "Electrical & Control Panel", "Air Ring", "Tower", "Tower / Platform"].includes(category)) {
           let targetSize = null;
-          
+          const isMonoAbaPreset = preset.machineType === "mono" || preset.machineType === "aba";
+          const effectivePrices = (category === "Electrical & Control Panel" && isMonoAbaPreset)
+            ? (preset.machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES)
+            : (category === "Air Ring" && isMonoAbaPreset)
+              ? (preset.machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES)
+              : base.prices;
+
           if (preset.code) {
             let directCodeSize = null;
             if (preset.code.startsWith("UNOFLEX-")) {
@@ -620,7 +629,7 @@ export function ConfigProvider({ children }) {
               directCodeSize = "D" + preset.code.split("-")[1].split(" ")[0];
             }
             if (directCodeSize) {
-              const exactKey = Object.keys(base.prices).find(k => k === directCodeSize || k === `${directCodeSize}"`);
+              const exactKey = Object.keys(effectivePrices).find(k => k === directCodeSize || k === `${directCodeSize}"`);
               if (exactKey) {
                 targetSize = exactKey;
               }
@@ -655,7 +664,7 @@ export function ConfigProvider({ children }) {
           }
           
           if (targetSize) {
-            const availableSizes = Object.keys(base.prices);
+            const availableSizes = Object.keys(effectivePrices);
             if (availableSizes.includes(targetSize)) {
               metadata.size = targetSize;
             } else {
@@ -671,6 +680,20 @@ export function ConfigProvider({ children }) {
               }
             }
           }
+        }
+      }
+
+      // Electrical Panel / Air Ring components carry no live recompute block (unlike
+      // Tower/Main Nip/Bubble Cage/Winder), so the mono/ABA-specific price tables must
+      // be applied here directly — otherwise a model's hardcoded metadata.price snapshot
+      // (or the flat base.price) would silently go stale whenever these tables are updated.
+      if (base.isDynamic && metadata.size && (preset.machineType === "mono" || preset.machineType === "aba")) {
+        if (category === "Electrical & Control Panel") {
+          const table = preset.machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES;
+          if (table[metadata.size] != null) metadata.price = table[metadata.size];
+        } else if (category === "Air Ring") {
+          const table = preset.machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES;
+          if (table[metadata.size] != null) metadata.price = table[metadata.size];
         }
       }
 
@@ -747,10 +770,16 @@ export function ConfigProvider({ children }) {
       }
 
       let metadata = { ...qty.metadata } || {};
+      const isMonoAbaAddonPreset = preset.machineType === "mono" || preset.machineType === "aba";
+      const effectivePrices = (category === "Electrical & Control Panel" && isMonoAbaAddonPreset)
+        ? (preset.machineType === "mono" ? MONO_PANEL_PRICES : ABA_PANEL_PRICES)
+        : (category === "Air Ring" && isMonoAbaAddonPreset)
+          ? (preset.machineType === "mono" ? MONO_AIR_RING_PRICES : ABA_AIR_RING_PRICES)
+          : base.prices;
       if (base.isDynamic && !metadata.size && base.prices) {
         if (["Winder", "Main Nip", "Haul-Off", "Bubble Cage", "Electrical & Control Panel", "Air Ring", "Tower", "Tower / Platform", "Corona", "Material Handling"].includes(category)) {
           let targetSize = null;
-          
+
           if (preset.code) {
             let directCodeSize = null;
             if (preset.code.startsWith("UNOFLEX-")) {
@@ -759,7 +788,7 @@ export function ConfigProvider({ children }) {
               directCodeSize = "D" + preset.code.split("-")[1].split(" ")[0];
             }
             if (directCodeSize) {
-              const exactKey = Object.keys(base.prices).find(k => k === directCodeSize || k === `${directCodeSize}"`);
+              const exactKey = Object.keys(effectivePrices).find(k => k === directCodeSize || k === `${directCodeSize}"`);
               if (exactKey) {
                 targetSize = exactKey;
               }
@@ -794,7 +823,7 @@ export function ConfigProvider({ children }) {
           }
           
           if (targetSize) {
-            const availableSizes = Object.keys(base.prices);
+            const availableSizes = Object.keys(effectivePrices);
             if (availableSizes.includes(targetSize)) {
               metadata.size = targetSize;
             } else {
@@ -815,8 +844,8 @@ export function ConfigProvider({ children }) {
       // For dynamically-sized addons (Electrical Panel, Corona, etc. when pre-added by a
       // preset), the size was just resolved above — look its real price up from
       // base.prices rather than falling back to the flat (usually 0) base.price.
-      const resolvedPrice = (base.isDynamic && base.prices && metadata.size && base.prices[metadata.size] != null)
-        ? base.prices[metadata.size]
+      const resolvedPrice = (base.isDynamic && effectivePrices && metadata.size && effectivePrices[metadata.size] != null)
+        ? effectivePrices[metadata.size]
         : base.price;
 
       // Resolve techDesc/scopeDesc the same way the components path does. `metadata`
@@ -906,7 +935,8 @@ export function ConfigProvider({ children }) {
           }
 
           const bcComp = COMPONENTS_DATA["Bubble Cage"]?.find(c => c.id === compId || c.name.toLowerCase().includes(isManual ? "manual" : isUpDown ? "up down" : "motorised"));
-          const priceMap = bcComp?.prices || {};
+          const isMonoAbaBC = preset.machineType === "mono" || preset.machineType === "aba";
+          const priceMap = (isMonoAbaBC && isManual) ? MONO_ABA_MANUAL_BC_PRICES : (bcComp?.prices || {});
 
           // Find smallest size >= machineWidth
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
@@ -1022,7 +1052,8 @@ export function ConfigProvider({ children }) {
 
         if (item.category === "Tower / Platform" && (isTowerId || item.isDynamic)) {
           const towerComp = COMPONENTS_DATA["Tower / Platform"]?.find(t => t.id === "tower-dynamic");
-          const priceMap = towerComp?.prices || TOWER_PRICES;
+          const isMonoAba = preset.machineType === "mono" || preset.machineType === "aba";
+          const priceMap = isMonoAba ? MONO_ABA_TOWER_PRICES : (towerComp?.prices || TOWER_PRICES);
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth, or fallback to smallest available
           const presetSize = parseInt(item.size) || 0;
@@ -1056,7 +1087,8 @@ export function ConfigProvider({ children }) {
       nextSelected.forEach((item, index) => {
         if (item.category === "Main Nip" && item.isDynamic) {
           const mainNipComp = COMPONENTS_DATA["Main Nip"]?.find(c => c.id === "main-nip-cf-dynamic");
-          const priceMap = mainNipComp?.prices || {};
+          const isMonoAbaNip = preset.machineType === "mono" || preset.machineType === "aba";
+          const priceMap = isMonoAbaNip ? MONO_ABA_MAIN_NIP_PRICES : (mainNipComp?.prices || MAIN_NIP_PRICES);
           // priceMap has both mm keys (used here) and U#/D# keys (used by the Selection
           // page's manual dropdown) — ignore the non-numeric ones for this lookup.
           const availableSizes = Object.keys(priceMap).map(Number).filter(n => !isNaN(n)).sort((a, b) => a - b);

@@ -69,17 +69,14 @@ export const AUTOMATIC_WINDER_PRICES: Record<string, number> = {
 };
 
 export const SINGLE_SURFACE_PRICES: Record<string, number> = {
-  "200": 0,
-  "300": 0,
-  "450": 0,
-  "500": 0,
-  "550": 0,
-  "600": 0,
-  "750": 0,
-  "850": 0,
-  "1000": 0,
-  "1250": 0,
-  "1500": 0,
+  "500": 100000,
+  "600": 125000,
+  "750": 200000,
+  "900": 250000,
+  "1000": 325000,
+  "1200": 450000,
+  "1500": 550000,
+  "1750": 750000,
 };
 
 export const SECONDARY_NIP_TECH_DESC: TechSpecMap = {

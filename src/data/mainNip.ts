@@ -62,6 +62,29 @@ export const MAIN_NIP_PRICES: Record<string, number> = {
   "3000": 1400000,
 };
 
+// Mono + ABA specific tiers, kept separate from MAIN_NIP_PRICES (which stays the
+// live table for 3-layer/5-layer) so updating mono/ABA pricing can't accidentally
+// reprice a 3-layer model that happens to sit at the same mm tier (e.g.
+// INNOFLEX-1120 at 1000mm, INNOFLEX-1620 at 1500mm). Tiers above 1750mm are
+// carried over unchanged from MAIN_NIP_PRICES so UNOFLEX-110 (2800mm -> 3000
+// tier) keeps its existing price.
+export const MONO_ABA_MAIN_NIP_PRICES: Record<string, number> = {
+  "500": 60000,
+  "600": 75000,
+  "750": 100000,
+  "900": 135000,
+  "1000": 175000,
+  "1200": 225000,
+  "1500": 300000,
+  "1750": 350000,
+  "1850": 660000,
+  "2000": 750000,
+  "2250": 900000,
+  "2500": 1050000,
+  "2750": 1200000,
+  "3000": 1400000,
+};
+
 export const MAIN_NIP_COMPONENTS: MainNipComponent[] = [
   {
     id: "main-nip-cf-dynamic",

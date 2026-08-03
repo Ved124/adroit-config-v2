@@ -823,9 +823,9 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 0,
-          "customName": "G-Series Air Ring",
+          "customName": "Air Ring (3 HP)",
           "techDesc": {
-            "Design": "G-Series Aerodynamic Air Ring"
+            "Design": "Standard Series Air Ring"
           }
         }
       },
@@ -923,9 +923,9 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 350000,
-          "customName": "G-Series Air Ring",
+          "customName": "Air Ring (5 HP)",
           "techDesc": {
-            "Design": "G-Series Aerodynamic Air Ring"
+            "Design": "Standard Series Air Ring"
           }
         }
       },
@@ -1562,7 +1562,7 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 0,
-          "customName": "G-Series Air Ring",
+          "customName": "Air Ring (5 HP)",
           "scopeDesc": "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
           "techDesc": {
             "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
@@ -1712,7 +1712,7 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 0,
-          "customName": "G-Series Air Ring",
+          "customName": "Air Ring (5 HP)",
           "scopeDesc": "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
           "techDesc": {
             "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
@@ -1863,7 +1863,7 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 0,
-          "customName": "G-Series Air Ring",
+          "customName": "Air Ring (5 HP)",
           "scopeDesc": "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 5 HP Blower.",
           "techDesc": {
             "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
@@ -2018,7 +2018,7 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 350000,
-          "customName": "G-Series Air Ring",
+          "customName": "Air Ring (7.5 HP)",
           "scopeDesc": "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 7.5 HP Blower.",
           "techDesc": {
             "Construcion": "Aluminum body aerodynamic type dual lip air cooling ring.\nThe airing had circular casing with many entry ports 4 efficient cooling.",
@@ -2179,7 +2179,7 @@ export const ALL_MODELS: MachineModel[] = [
         "qty": 1,
         "metadata": {
           "price": 0,
-          "customName": "G-Series Air Ring (10 HP)",
+          "customName": "Air Ring (10 HP)",
           "scopeDesc": "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 10 HP Blower.",
           "techDesc": {
             "Blower": "10 HP with inlet air filter."

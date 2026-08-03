@@ -22,21 +22,21 @@ export interface CoronaTreater {
 
 // Extracted from user image
 export const CORONA_PRICES = {
-  "U20\"": 70000,
-  "U24\"": 70000,
-  "U32\"": 80000,
-  "U40\"": 90000,
-  "U50\"": 115000,
-  "U72\"": 165000,
+  "U20\"": 65000,
+  "U24\"": 75000,
+  "U32\"": 85000,
+  "U40\"": 110000,
+  "U50\"": 130000,
+  "U72\"": 150000,
   "U110\"": 360000,
-  "D20\"": 85000, // matches D26 tier (mirrors U20=U24 sharing the smallest tier)
-  "D24\"": 85000, // matches D26 tier
-  "D26\"": 85000,
-  "D32\"": 95000,
-  "D36\"": 115000, // interpolated between D32 (95000) and D40 (135000)
-  "D40\"": 135000,
-  "D50\"": 160000,
-  "D60\"": 200000,
+  "D20\"": 65000, // matches D26 tier (mirrors U20=U24 sharing the smallest tier)
+  "D24\"": 75000, // matches D26 tier
+  "D26\"": 75000,
+  "D32\"": 850000,
+  "D36\"": 110000, // interpolated between D32 (95000) and D40 (135000)
+  "D40\"": 110000,
+  "D50\"": 150000,
+  "D60\"": 180000,
   "1000": 425000,
   "1250": 550000,
   "1350": 625000,

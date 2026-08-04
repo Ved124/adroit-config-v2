@@ -38,13 +38,15 @@ export const COLLAPSING_FRAME_PRICES: Record<string, number> = {
 };
 
 export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
-  // ---------------- DYNAMIC COLLAPSING FRAME ----------------
+  /* Every machine type already gets a collapsing frame bundled into "Main Nip &
+  Collapsing Frame" (main-nip-cf-dynamic, machineTypes mono/aba/3layer/5layer) — a
+  separate standalone Collapsing Frame card is redundant for all of them, not just
+  mono/ABA. Commented out per explicit user request rather than deleted, matching
+  the other dead entries below.
   {
     id: "cf-pbt-dynamic",
     name: "Collapsing Frame – PBT Rollers",
     style: "PBT",
-    // Mono/ABA already get a collapsing frame bundled into "Main Nip & Collapsing
-    // Frame" (main-nip-cf-dynamic) — a separate standalone one is redundant there.
     machineTypes: ["3layer", "5layer"],
     image: "/images/Acessories/Gusset Board Assembly.jpeg",
     cardDesc: "Select size and technical specifications will update automatically.",
@@ -60,6 +62,7 @@ export const COLLAPSING_FRAME_COMPONENTS: CollapsingFrameComponent[] = [
     },
     shortDesc: "Robust collapsing frame to flatten and guide the film bubble into a stable lay-flat.",
   },
+  */
 
   /* Commented out static components as per user request to move to dynamic selection
   {

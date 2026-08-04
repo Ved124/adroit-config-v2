@@ -638,7 +638,15 @@ export function ConfigProvider({ children }) {
           }
 
           if (!targetSize) {
-            if (["Electrical & Control Panel", "Main Nip"].includes(category) && preset.code) {
+            // The U#/D# direct-code branch only makes sense against a price table that
+            // actually has those keys (the legacy shared PANEL_DYNAMIC_PRICES/
+            // MAIN_NIP_PRICES tables do). MONO_PANEL_PRICES/ABA_PANEL_PRICES use plain
+            // mm-tier keys only, so building a "U32"/"D24" targetSize against them would
+            // never match — falling through to the numeric closest-match fallback below,
+            // which (since "U32" isn't numeric) always picked the smallest available
+            // tier. Skip straight to the layflatWidthMm-based tier lookup instead.
+            const skipDirectCodeForPanel = category === "Electrical & Control Panel" && isMonoAbaPreset;
+            if (["Electrical & Control Panel", "Main Nip"].includes(category) && preset.code && !skipDirectCodeForPanel) {
                const code = preset.code;
                if (code.startsWith("UNOFLEX-")) {
                  targetSize = "U" + code.split("-")[1].split(" ")[0]; // UNOFLEX-40-55MM -> U40
@@ -648,7 +656,11 @@ export function ConfigProvider({ children }) {
             } else if (category === "Air Ring" && preset.dieSizeHmLd) {
                const dieNumMatch = preset.dieSizeHmLd.match(/\d+/);
                if (dieNumMatch) targetSize = dieNumMatch[0];
-            } else if (["Winder", "Haul-Off", "Bubble Cage", "Tower", "Tower / Platform"].includes(category) && preset.code) {
+            } else if (["Winder", "Haul-Off", "Bubble Cage", "Tower", "Tower / Platform"].includes(category) && preset.code && !preset.layflatWidthMm) {
+               // Only use the inches-from-code approximation when the model has no
+               // precise layflatWidthMm at all — it's a rougher estimate (e.g. "32" from
+               // UNOFLEX-32 rounds to 800mm, but the model's real width is 750mm) and the
+               // block below already prefers layflatWidthMm when present.
                const code = preset.code;
                if (code.startsWith("UNOFLEX-") || code.startsWith("DUOFLEX-")) {
                  const inchesStr = code.split("-")[1].split(" ")[0].replace(/[^\d]/g, '');
@@ -658,24 +670,26 @@ export function ConfigProvider({ children }) {
                  }
                }
             }
-            
+
             if (!targetSize && preset.layflatWidthMm) {
                targetSize = String(preset.layflatWidthMm);
             }
           }
-          
           if (targetSize) {
             const availableSizes = Object.keys(effectivePrices);
             if (availableSizes.includes(targetSize)) {
               metadata.size = targetSize;
             } else {
-              // fallback to closest if numeric
-              const numericSizes = availableSizes.filter(s => !isNaN(Number(s)));
+              // Fallback for a numeric targetSize: smallest tier >= target (matching the
+              // "smallest size >= machineWidth" convention every live recompute block
+              // uses), falling back to the largest available tier if target exceeds all
+              // of them. This keeps every mm-tiered category resolving the same model
+              // width to the same tier consistently.
+              const numericSizes = availableSizes.filter(s => !isNaN(Number(s))).map(Number).sort((a, b) => a - b);
               if (numericSizes.length > 0 && !isNaN(Number(targetSize))) {
-                const closest = numericSizes.reduce((prev, curr) => 
-                  Math.abs(Number(curr) - Number(targetSize)) < Math.abs(Number(prev) - Number(targetSize)) ? curr : prev
-                );
-                metadata.size = closest;
+                const target = Number(targetSize);
+                const nextTier = numericSizes.find((s) => s >= target);
+                metadata.size = String(nextTier != null ? nextTier : numericSizes[numericSizes.length - 1]);
               } else {
                  metadata.size = availableSizes[0];
               }
@@ -684,14 +698,16 @@ export function ConfigProvider({ children }) {
         }
       }
 
-      // Electrical Panel / Air Ring components carry no live recompute block (unlike
-      // Tower/Main Nip/Bubble Cage/Winder), so the resolved price table must be applied
-      // here directly for every machine type — otherwise a model's hardcoded
-      // metadata.price snapshot (or the flat base.price) silently goes stale whenever
-      // these tables are updated. effectivePrices is already mono/ABA-specific when
-      // applicable and falls back to base.prices (the right table for whichever G/
-      // Standard/DR Air Ring variant this model uses) for 3-layer/5-layer.
-      if (base.isDynamic && metadata.size && (category === "Electrical & Control Panel" || category === "Air Ring")) {
+      // Electrical Panel / Air Ring / Extruder / Die Head all carry no live recompute
+      // block (unlike Tower/Main Nip/Bubble Cage/Winder), so the resolved price table
+      // must be applied here directly for every machine type — otherwise a model's
+      // metadata.price silently stays unset (most Extruder/Die Head preset entries only
+      // specify a size, never a price) whenever these tables are updated.
+      // effectivePrices is already mono/ABA-specific for Panel/Air Ring when applicable,
+      // and falls back to base.prices — the right table for whichever specific
+      // component id (mono/ABA/3-layer Extruder or Die variant) this model uses — for
+      // every other category, including Extruder and Die Head.
+      if (base.isDynamic && metadata.size && ["Electrical & Control Panel", "Air Ring", "Extruder", "Die Head"].includes(category)) {
         if (effectivePrices[metadata.size] != null) metadata.price = effectivePrices[metadata.size];
       }
 
@@ -1158,7 +1174,7 @@ export function ConfigProvider({ children }) {
 
           const winderComp = COMPONENTS_DATA["Winder"]?.find(c => c.id === compId);
           const priceMap = winderComp?.prices || {};
-          
+
           const availableSizes = Object.keys(priceMap).map(Number).sort((a, b) => a - b);
           // Find smallest size >= machineWidth
           const minSize = availableSizes.find(s => s >= machineWidth) || availableSizes[0] || 0;

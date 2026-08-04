@@ -191,7 +191,7 @@ function ComponentCard({
   const isSurfaceWinder = item.id === "winder-surface-dynamic";
   const isSingleSurfaceWinder = item.id === "winder-single-surface-only-dynamic";
   const isAutoWinder = item.id === "winder-automatic-dynamic";
-  const is3LayerPanel = item.id === "panel-3layer-dynamic";
+  const is3LayerPanel = item.id === "panel-dynamic";
   const isCollapsingFrame = item.id === "cf-pbt-dynamic";
 
   const isMonoAbaCard = machineType === "mono" || machineType === "aba";

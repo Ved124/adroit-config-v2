@@ -75,6 +75,7 @@ export const SINGLE_SURFACE_PRICES: Record<string, number> = {
   "900": 250000,
   "1000": 325000,
   "1200": 450000,
+  "1250": 450000, // UNOFLEX-50/50-65MM, DUOFLEX-50/50-65/55 — same as 1200mm tier
   "1500": 550000,
   "1750": 750000,
 };

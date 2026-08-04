@@ -75,6 +75,7 @@ export const MONO_ABA_MAIN_NIP_PRICES: Record<string, number> = {
   "900": 135000,
   "1000": 175000,
   "1200": 225000,
+  "1250": 420000, // UNOFLEX-50/50-65MM, DUOFLEX-50/50-65/55 — matches the U50/D50 value above
   "1500": 300000,
   "1750": 350000,
   "1850": 660000,

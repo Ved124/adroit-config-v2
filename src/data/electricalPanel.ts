@@ -68,6 +68,7 @@ export const MONO_PANEL_PRICES: Record<string, number> = {
   "900": 110000,
   "1000": 150000,
   "1200": 200000,
+  "1250": 200000, // UNOFLEX-50/50-65MM — same as 1200mm tier
   "1500": 300000,
   "1750": 400000,
   "U110": 2620000,
@@ -82,6 +83,7 @@ export const ABA_PANEL_PRICES: Record<string, number> = {
   "900": 325000,
   "1000": 500000,
   "1200": 500000,
+  "1250": 500000, // DUOFLEX-50/50-65/55 — same as 1200mm tier
   "1500": 700000,
   "1750": 900000,
 };

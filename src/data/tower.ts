@@ -63,6 +63,7 @@ export const MONO_ABA_TOWER_PRICES: Record<string, number> = {
   "900": 170000,
   "1000": 200000,
   "1200": 300000,
+  "1250": 300000, // UNOFLEX-50/50-65MM, DUOFLEX-50/50-65/55 — same as 1200mm tier
   "1500": 375000,
   "1750": 450000,
   "1850": 1500000,

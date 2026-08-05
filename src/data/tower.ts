@@ -74,6 +74,14 @@ export const MONO_ABA_TOWER_PRICES: Record<string, number> = {
   "3000": 3500000,
 };
 
+const TOWER_TECH_DESC: TechSpecMap = {
+  "Structure": "Knock-down type tower structure.",
+  "Platforms": "3-walk around platforms.",
+  "Staircase": "Staircase with hand rails.",
+  "Safety": "Hand rails and kick plates according to European safety standards.",
+  "Idler rollers": "Set of idler aluminium rollers as per nip size.",
+};
+
 export const TOWER_COMPONENTS: TowerComponent[] = [
   {
     id: "tower-dynamic",
@@ -81,17 +89,40 @@ export const TOWER_COMPONENTS: TowerComponent[] = [
     isDynamic: true,
     pricingType: "size",
     prices: TOWER_PRICES,
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    // Mono/ABA use their own dedicated components (tower-mono-dynamic /
+    // tower-aba-dynamic) below so their pricing is editable independently in
+    // Machine Manager without affecting 3-layer/5-layer.
+    machineTypes: ["3layer", "5layer"],
     usedInModels: [],
     image: "/images/tower.png",
     cardDesc: "Heavy duty MS structure with service platform and safety rails.",
     price: 1000000,
-    techDesc: {
-      "Structure": "Knock-down type tower structure.",
-      "Platforms": "3-walk around platforms.",
-      "Staircase": "Staircase with hand rails.",
-      "Safety": "Hand rails and kick plates according to European safety standards.",
-      "Idler rollers": "Set of idler aluminium rollers as per nip size.",
-    },
+    techDesc: TOWER_TECH_DESC,
+  },
+  {
+    id: "tower-mono-dynamic",
+    name: "Tower",
+    isDynamic: true,
+    pricingType: "size",
+    prices: { ...MONO_ABA_TOWER_PRICES },
+    machineTypes: ["mono"],
+    usedInModels: [],
+    image: "/images/tower.png",
+    cardDesc: "Heavy duty MS structure with service platform and safety rails.",
+    price: 1000000,
+    techDesc: TOWER_TECH_DESC,
+  },
+  {
+    id: "tower-aba-dynamic",
+    name: "Tower",
+    isDynamic: true,
+    pricingType: "size",
+    prices: { ...MONO_ABA_TOWER_PRICES },
+    machineTypes: ["aba"],
+    usedInModels: [],
+    image: "/images/tower.png",
+    cardDesc: "Heavy duty MS structure with service platform and safety rails.",
+    price: 1000000,
+    techDesc: TOWER_TECH_DESC,
   },
 ];

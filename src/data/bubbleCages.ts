@@ -104,13 +104,35 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     name: "Manual Bubble Cage",
     variant: "manual",
     segments: 6,
-    machineTypes: ["mono", "3layer", "5layer"],
+    // Mono uses its own dedicated component (bc-manual-mono-dynamic) below, and
+    // ABA already had its own (bc-manual-dynamic-aba) — so their pricing is
+    // editable independently in Machine Manager without affecting 3-layer/5-layer.
+    machineTypes: ["3layer", "5layer"],
     image: "/images/Bubble Cage/Manual Cage.png",
     cardDesc: "Select size to add manual bubble cage.",
     price: 0,
     isDynamic: true,
       pricingType: "size",
       prices: MANUAL_BC_PRICES,
+    techDesc: {
+      "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
+      "Actuation of arms": "Manual open-close operation.",
+      "Bubble width range": "750 to 1250 mm"
+    },
+    shortDesc: "Universal manual bubble cage with adjustable diameter."
+  },
+  {
+    id: "bc-manual-mono-dynamic",
+    name: "Manual Bubble Cage",
+    variant: "manual",
+    segments: 6,
+    machineTypes: ["mono"],
+    image: "/images/Bubble Cage/Manual Cage.png",
+    cardDesc: "Select size to add manual bubble cage.",
+    price: 0,
+    isDynamic: true,
+      pricingType: "size",
+      prices: { ...MONO_ABA_MANUAL_BC_PRICES },
     techDesc: {
       "Type": "Calibration bubble guide basket with 4 arms arranged to provide full support. Bubble contact is through PBT for minimum drag.",
       "Actuation of arms": "Manual open-close operation.",
@@ -129,7 +151,7 @@ export const BUBBLE_CAGE_COMPONENTS: BubbleCageComponent[] = [
     price: 0,
     isDynamic: true,
       pricingType: "size",
-      prices: MANUAL_BC_PRICES,
+      prices: { ...MONO_ABA_MANUAL_BC_PRICES },
     techDesc: {
       "Type": "Arms to support the bubble.",
     },

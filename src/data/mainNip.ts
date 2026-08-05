@@ -86,6 +86,14 @@ export const MONO_ABA_MAIN_NIP_PRICES: Record<string, number> = {
   "3000": 1400000,
 };
 
+const MAIN_NIP_TECH_DESC: TechSpecMap = {
+  "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+  "Nip roller width": "TBD mm",
+  "Nip roller drive": "1-2 HP AC motor with variable frequency drive.",
+  "Collapsing Frames": "PBT roller / Wooden Slates frame.",
+  "Idler rollers": "Adequate quantity as per layout.",
+};
+
 export const MAIN_NIP_COMPONENTS: MainNipComponent[] = [
   {
     id: "main-nip-cf-dynamic",
@@ -93,17 +101,39 @@ export const MAIN_NIP_COMPONENTS: MainNipComponent[] = [
     isDynamic: true,
     pricingType: "size",
     prices: MAIN_NIP_PRICES,
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    // Mono/ABA use their own dedicated components below so their pricing is
+    // editable independently in Machine Manager without affecting 3-layer/5-layer.
+    machineTypes: ["3layer", "5layer"],
     usedInModels: [],
     image: "/images/MainNip/MainNip.png",
     cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
     price: 0,
-    techDesc: {
-      "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
-      "Nip roller width": "TBD mm",
-      "Nip roller drive": "1-2 HP AC motor with variable frequency drive.",
-      "Collapsing Frames": "PBT roller / Wooden Slates frame.",
-      "Idler rollers": "Adequate quantity as per layout.",
-    },
+    techDesc: MAIN_NIP_TECH_DESC,
+  },
+  {
+    id: "main-nip-mono-dynamic",
+    name: "Main Nip & Collapsing Frame",
+    isDynamic: true,
+    pricingType: "size",
+    prices: { ...MONO_ABA_MAIN_NIP_PRICES },
+    machineTypes: ["mono"],
+    usedInModels: [],
+    image: "/images/MainNip/MainNip.png",
+    cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
+    price: 0,
+    techDesc: MAIN_NIP_TECH_DESC,
+  },
+  {
+    id: "main-nip-aba-dynamic",
+    name: "Main Nip & Collapsing Frame",
+    isDynamic: true,
+    pricingType: "size",
+    prices: { ...MONO_ABA_MAIN_NIP_PRICES },
+    machineTypes: ["aba"],
+    usedInModels: [],
+    image: "/images/MainNip/MainNip.png",
+    cardDesc: "Select size and technical specifications will update automatically. Includes collapsing frame and main nip rollers.",
+    price: 0,
+    techDesc: MAIN_NIP_TECH_DESC,
   },
 ];

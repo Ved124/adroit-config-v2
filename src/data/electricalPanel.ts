@@ -88,12 +88,32 @@ export const ABA_PANEL_PRICES: Record<string, number> = {
   "1750": 900000,
 };
 
+const PANEL_TECH_DESC: TechSpecMap = {
+  "Panel Type":
+    "Floor mounted MS powder coated enclosure with integrated cooling.",
+  "Temperature Control":
+    "PID temperature controllers (brand specific).",
+  "Drives":
+    "AC variable frequency drives for extruder and downstream equipment.",
+  "Automation":
+    "Relay logic / PLC based automation depending on model size.",
+  "Protection":
+    "MCBs, contactors, overload relays, SSRs, and emergency stop circuits.",
+  "Indicators":
+    "Comprehensive digital monitoring for all critical parameters.",
+  "Supply":
+    "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified).",
+};
+const PANEL_SCOPE_DESC = "Complete extrusion controls on main panel with Cold start protection.";
+
 export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
   {
     id: "panel-dynamic",
     name: "Electrical & Control Panel",
     type: "advanced-plc",
-    machineTypes: ["mono", "aba", "3layer", "5layer"],
+    // Mono/ABA use their own dedicated components below so their pricing is
+    // editable independently in Machine Manager without affecting 3-layer/5-layer.
+    machineTypes: ["3layer", "5layer"],
     image: "/images/Panel/Panel.png",
     cardDesc:
       "Advanced control panel for all lines. Select size/model to match your machine.",
@@ -102,23 +122,42 @@ export const ELECTRICAL_ADDONS: ElectricalAddon[] = [
     isDynamic: true,
     pricingType: "size",
     prices: PANEL_DYNAMIC_PRICES,
-    techDesc: {
-      "Panel Type":
-        "Floor mounted MS powder coated enclosure with integrated cooling.",
-      "Temperature Control":
-        "PID temperature controllers (brand specific).",
-      "Drives":
-        "AC variable frequency drives for extruder and downstream equipment.",
-      "Automation":
-        "Relay logic / PLC based automation depending on model size.",
-      "Protection":
-        "MCBs, contactors, overload relays, SSRs, and emergency stop circuits.",
-      "Indicators":
-        "Comprehensive digital monitoring for all critical parameters.",
-      "Supply":
-        "Suitable for 3 phase, 415 V, 50 Hz AC mains (or as specified).",
-    },
-    scopeDesc: "Complete extrusion controls on main panel with Cold start protection.",
+    techDesc: PANEL_TECH_DESC,
+    scopeDesc: PANEL_SCOPE_DESC,
+    shortDesc: "Advanced control panel with sizing.",
+  },
+  {
+    id: "panel-mono-dynamic",
+    name: "Electrical & Control Panel",
+    type: "advanced-plc",
+    machineTypes: ["mono"],
+    image: "/images/Panel/Panel.png",
+    cardDesc:
+      "Advanced control panel for all lines. Select size/model to match your machine.",
+    price: 0,
+    qty: 1,
+    isDynamic: true,
+    pricingType: "size",
+    prices: { ...MONO_PANEL_PRICES },
+    techDesc: PANEL_TECH_DESC,
+    scopeDesc: PANEL_SCOPE_DESC,
+    shortDesc: "Advanced control panel with sizing.",
+  },
+  {
+    id: "panel-aba-dynamic",
+    name: "Electrical & Control Panel",
+    type: "advanced-plc",
+    machineTypes: ["aba"],
+    image: "/images/Panel/Panel.png",
+    cardDesc:
+      "Advanced control panel for all lines. Select size/model to match your machine.",
+    price: 0,
+    qty: 1,
+    isDynamic: true,
+    pricingType: "size",
+    prices: { ...ABA_PANEL_PRICES },
+    techDesc: PANEL_TECH_DESC,
+    scopeDesc: PANEL_SCOPE_DESC,
     shortDesc: "Advanced control panel with sizing.",
   },
 ];

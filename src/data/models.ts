@@ -133,7 +133,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -150,7 +150,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Manual Cage",
@@ -159,7 +159,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Collapsing Frame - 500 mm",
@@ -175,7 +175,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -195,7 +195,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Extrusion Control Panel",
@@ -274,7 +274,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -291,7 +291,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Manual Cage",
@@ -307,7 +307,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Collapsing Frame - 600 mm",
@@ -323,7 +323,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -342,7 +342,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Extrusion Control Panel",
@@ -422,7 +422,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -439,7 +439,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Manual Cage",
@@ -455,7 +455,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Collapsing Frame - 800 mm",
@@ -471,7 +471,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -491,7 +491,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Extrusion Control Panel",
@@ -526,7 +526,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1
       },
       {
@@ -566,7 +566,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -583,7 +583,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "One Manual Bubble cage to support the bubble.",
@@ -594,7 +594,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Collapsing Frame - 1100 mm",
@@ -610,7 +610,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -662,7 +662,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1
       },
       {
@@ -702,7 +702,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 150000,
@@ -719,7 +719,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "One Bubble Stabilizing Basket with PBT roller cage. Manual Bubble Cage with Diameter adjustment.",
@@ -731,7 +731,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "Collapsing frame with Segmented PBT Rollers, Side guides, Main Nip with 02 HP AC Drive.",
@@ -746,7 +746,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -796,7 +796,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1
       },
       {
@@ -819,7 +819,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -831,12 +831,12 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "Collapsing frame with Segmented PBT Rollers / Wooden Slates, side guides, Main Nip with 01 HP AC Drive.",
@@ -850,7 +850,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -896,7 +896,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1
       },
       {
@@ -919,7 +919,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 350000,
@@ -931,7 +931,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Manual BC - 1250 mm",
@@ -943,7 +943,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "Collapsing frame with Wooden Slates, Side guides, Main Nip with 02 HP AC Drive.",
@@ -957,7 +957,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -1003,7 +1003,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1
       },
       {
@@ -1026,7 +1026,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 575000,
@@ -1038,12 +1038,12 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "Collapsing frame with  Wooden Slates, Side guides, Main Nip with 02 HP AC Drive.",
@@ -1057,7 +1057,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -1103,7 +1103,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-mono-dynamic",
         "qty": 1
       },
       {
@@ -1126,7 +1126,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-mono-dynamic",
         "qty": 1,
         "metadata": {
           "price": 950000,
@@ -1138,7 +1138,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Bubble Cage",
-        "id": "bc-manual-dynamic",
+        "id": "bc-manual-mono-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Manual BC - 3000 mm",
@@ -1150,7 +1150,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-mono-dynamic",
         "qty": 1,
         "metadata": {
           "scopeDesc": "Collapsing frame with Wooden Slates, Side guides, Main Nip with 03 HP AC Drive.",
@@ -1164,7 +1164,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-mono-dynamic",
         "qty": 1
       },
       {
@@ -1207,7 +1207,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -1276,7 +1276,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Collapsing Frame - 500 mm",
@@ -1297,7 +1297,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -1341,7 +1341,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -1397,7 +1397,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Air Ring",
-        "id": "airring-standard-dynamic",
+        "id": "airring-standard-aba-dynamic",
         "qty": 1,
         "metadata": {
           "price": 0,
@@ -1425,7 +1425,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Collapsing Frame",
@@ -1446,7 +1446,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -1495,7 +1495,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -1583,7 +1583,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Main Nip - 800 mm",
@@ -1603,7 +1603,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -1647,7 +1647,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -1733,7 +1733,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Main Nip - 900 mm",
@@ -1753,7 +1753,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -1799,7 +1799,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -1885,7 +1885,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "Main Nip - 1050 mm",
@@ -1906,7 +1906,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -1951,7 +1951,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -2040,7 +2040,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "MAIN NIP",
@@ -2061,7 +2061,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -2111,7 +2111,7 @@ export const ALL_MODELS: MachineModel[] = [
     "components": [
       {
         "category": "Electrical & Control Panel",
-        "id": "panel-dynamic",
+        "id": "panel-aba-dynamic",
         "qty": 1
       },
       {
@@ -2215,7 +2215,7 @@ export const ALL_MODELS: MachineModel[] = [
       // },
       {
         "category": "Tower / Platform",
-        "id": "tower-dynamic",
+        "id": "tower-aba-dynamic",
         "qty": 1
       },
       {
@@ -2235,7 +2235,7 @@ export const ALL_MODELS: MachineModel[] = [
       },
       {
         "category": "Main Nip",
-        "id": "main-nip-cf-dynamic",
+        "id": "main-nip-aba-dynamic",
         "qty": 1,
         "metadata": {
           "customName": "MAIN NIP",

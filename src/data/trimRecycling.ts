@@ -24,7 +24,7 @@ export const TRIM_RECYCLING_ADDONS: TrimRecyclingAddon[] = [
     name: "Trim Recycling System",
     type: "trim-recycling",
     machineTypes: ["mono", "aba", "3layer", "5layer"],
-    image: "/images/Acessories/trim-recycling.png",
+    image: "/images/Acessories/trim_recycling.png",
     cardDesc: "Reprocesses edge trim waste back into usable material.",
     price: 475000,
     qty: 1,

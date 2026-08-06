@@ -286,12 +286,16 @@ export function ConfigProvider({ children }) {
       console.warn("Storage Load Error", e);
     }
 
-    if (savedData && savedData.customer && savedData.customer.quotationRef) {
-      // 1. Existing data found?
+    if (savedData && savedData.customer) {
+      // 1. Existing data found? (Gate on the customer object itself, not on
+      // quotationRef being non-empty — handleCustomiseYourself intentionally
+      // clears quotationRef to "" for custom-mode builds, and gating the whole
+      // restore on it being truthy meant any in-progress/completed custom
+      // config was silently wiped on a full page reload.)
       let cust = { ...savedData.customer };
 
       // Upgrade legacy formats (AET/ -> AE/)
-      if (cust.quotationRef.startsWith("AET/")) {
+      if (cust.quotationRef && cust.quotationRef.startsWith("AET/")) {
         const parts = cust.quotationRef.split('/');
         const reg = cust.region || parts[1] || "DOM";
         const seq = parts.pop() || "01";
@@ -2743,7 +2747,11 @@ export function ConfigProvider({ children }) {
           setQrUrlState(landingPageUrl);
           toast.dismiss(loadingToast);
 
-        } catch (e) { console.error(e); }
+        } catch (e) {
+          console.error(e);
+          toast.dismiss(loadingToast);
+          toast.push({ title: "Couldn't generate QR", description: "Please try again.", variant: "error" });
+        }
         finally {
           setTimeout(() => {
             root.unmount();
@@ -2755,6 +2763,7 @@ export function ConfigProvider({ children }) {
     } catch (err) {
       console.error("Error", err);
       toast.dismiss(loadingToast);
+      toast.push({ title: "Couldn't generate QR", description: "Please try again.", variant: "error" });
     }
   }
 

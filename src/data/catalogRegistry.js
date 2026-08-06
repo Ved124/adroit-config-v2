@@ -23,7 +23,6 @@ import { AIR_RING_COMPONENTS } from "./airRing";
 import { IBC_COMPONENTS } from "./ibc";
 import { MAIN_NIP_COMPONENTS } from "./mainNip";
 import { CORONA_TREATER_COMPONENTS } from "./corona";
-import { TRIM_ADDONS } from "./trim";
 import { TRIM_RECYCLING_ADDONS } from "./trimRecycling";
 import { MATERIAL_HANDLING_ADDONS } from "./materialHandling";
 import { WEB_GUIDE_ADDONS } from "./webGuide";
@@ -52,7 +51,6 @@ function buildComponentsData() {
     Winder: WINDER_COMPONENTS,
     "Tower / Platform": TOWER_COMPONENTS,
     "Electrical & Control Panel": ELECTRICAL_ADDONS,
-    "Trim Blower": TRIM_ADDONS,
     "Collapsing Frame": COLLAPSING_FRAME_COMPONENTS,
   };
 }

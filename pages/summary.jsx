@@ -1932,9 +1932,15 @@ export default function SummaryPage() {
               {qrUrl && <QRCodeSVG value={qrUrl} size={250} />}
             </div>
             <p className="text-sm text-gray-500 mb-2 break-all max-w-sm">{qrUrl}</p>
-            <div className="text-xs text-yellow-600 bg-yellow-50 px-3 py-1 rounded">
-              Ensure phone is connected to <strong>Exhibition WiFi</strong>
-            </div>
+            {qrUrl && qrUrl.includes("vercel-storage.com") ? (
+              <div className="text-xs text-emerald-700 bg-emerald-50 px-3 py-1 rounded">
+                Works on any mobile data or WiFi connection — no special network needed
+              </div>
+            ) : (
+              <div className="text-xs text-yellow-600 bg-yellow-50 px-3 py-1 rounded">
+                Ensure phone is connected to <strong>Exhibition WiFi</strong>
+              </div>
+            )}
             <button onClick={() => setQrUrl(null)} className="mt-6 text-indigo-600 font-bold">Close</button>
           </div>
         </Modal>

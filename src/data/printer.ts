@@ -26,7 +26,7 @@ export const PRINTER_ADDONS: PrinterAddon[] = [
     machineTypes: ["mono", "aba", "3layer", "5layer"],
     image: "/images/Acessories/printer.png",
     cardDesc: "Add an inline printer for branding and coding.",
-    price: 40000,
+    price: 45000,
     qty: 1,
     isDynamic: false,
     techDesc: {

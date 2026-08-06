@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { QRCodeSVG } from 'qrcode.react';
 
 function parseFilename(filename) {
   // Expected: AE_DOM_MIX_01_fghj_NoCity_992337.json  →  ref=AE_DOM_MIX_01, company=fghj, city=NoCity, ts=992337
@@ -114,22 +115,35 @@ export default function LeadsDashboard() {
             background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '10px',
             padding: '16px 20px', marginBottom: '24px'
           }}>
-            <p style={{ margin: '0 0 6px', fontWeight: '700', color: '#1e40af', fontSize: '14px' }}>
-              📡 Exhibition WiFi Mode — Local Server
-            </p>
-            <p style={{ margin: '0 0 8px', color: '#1e3a8a', fontSize: '13px' }}>
-              Open this URL on any device connected to the same WiFi:
-            </p>
-            <code style={{
-              background: 'white', padding: '6px 14px', borderRadius: '6px',
-              fontSize: '17px', fontWeight: '800', color: '#1e40af',
-              border: '1px solid #bfdbfe', display: 'inline-block'
-            }}>
-              {serverInfo.url}
-            </code>
-            <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '11px', fontStyle: 'italic' }}>
-              Keep this laptop running. Leads are stored locally and will not be lost on refresh.
-            </p>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+              <div style={{ flex: '1 1 260px' }}>
+                <p style={{ margin: '0 0 6px', fontWeight: '700', color: '#1e40af', fontSize: '14px' }}>
+                  📡 Exhibition WiFi Mode — Local Server
+                </p>
+                <p style={{ margin: '0 0 8px', color: '#1e3a8a', fontSize: '13px' }}>
+                  Open this URL on any device connected to the same WiFi:
+                </p>
+                <code style={{
+                  background: 'white', padding: '6px 14px', borderRadius: '6px',
+                  fontSize: '17px', fontWeight: '800', color: '#1e40af',
+                  border: '1px solid #bfdbfe', display: 'inline-block'
+                }}>
+                  {serverInfo.url}
+                </code>
+                <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: '11px', fontStyle: 'italic' }}>
+                  Keep this laptop running. Leads are stored locally and will not be lost on refresh.
+                </p>
+              </div>
+              <div style={{
+                background: 'white', border: '1px solid #bfdbfe', borderRadius: '10px',
+                padding: '10px', textAlign: 'center', flex: '0 0 auto'
+              }}>
+                <QRCodeSVG value={serverInfo.url} size={110} />
+                <p style={{ margin: '6px 0 0', color: '#1e40af', fontSize: '10px', fontWeight: '700' }}>
+                  Scan to open on a device
+                </p>
+              </div>
+            </div>
             <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid #bfdbfe' }}>
               <button
                 onClick={handleBackup}

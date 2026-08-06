@@ -24,6 +24,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Server supervisor logs
+logs/
+
 # Generated Quotation Files (IMPORTANT: Do not push these)
 public/downloads/*
 public/downloads/*.pdf

@@ -262,6 +262,7 @@ function buildProposalData({
   const dieSize = m.dieSizeHmLd || "";
   const thicknessRange = m.thicknessRange || "20 – 150 micron";
   const thicknessVariation = m.thicknessVariation || "+/- 8% above 40 micron and +/- 10% upto 40 micron, or +/- 4 micron whichever is higher, over 90% film periphery.";
+  const overallDimensions = m.overallDimensions || "";
 
   function autoScopeDesc(item) {
     const desc = item.shortDesc || item.cardDesc || "";
@@ -1255,6 +1256,7 @@ function buildProposalData({
           thickness_range: "—",
           thickness_variation: "—",
           raw_materials: "LDPE, LLDPE, HDPE, mLLDPE, etc.",
+          overall_dimensions: overallDimensions || "—",
         };
       }
       return {
@@ -1265,6 +1267,7 @@ function buildProposalData({
         thickness_range: thicknessRange,
         thickness_variation: thicknessVariation,
         raw_materials: (machineType === "mono" || machineType === "aba") ? "LDPE, LLDPE, HDPE, etc." : "LDPE, LLDPE, HDPE, mLLDPE, etc.",
+        overall_dimensions: overallDimensions || "—",
       };
     })(),
 

@@ -1203,6 +1203,7 @@ export const ALL_MODELS: MachineModel[] = [
     "winderDrive": "0.5 HP",
     "totalConnectedLoadKw": "40 KW",
     "specificPowerConsumption": "0.40 kW/KG/HR",
+    "overallDimensions": "3.0 × 3.0 × 4.5 m",
     "basePrice": 1385000,
     "components": [
       {
@@ -2546,6 +2547,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "110–130 KG/HR",
     "tensionControl": "TORQUE",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "7.8m L x 5.1m W x 8.5m H",
     "family": "3 Layer",
     "basePrice": 7875000,
     "components": [
@@ -3633,6 +3635,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "200-250 KG/HR",
     "tensionControl": "TORQUE",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "15 m L x 8 m W x 12 m H",
     "family": "3 Layer",
     "basePrice": 11275000,
     "components": [

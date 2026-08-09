@@ -47,6 +47,34 @@ function fmtWords(n, currency = "INR") {
   }
 }
 
+/** Normalize a saved phone number into a WhatsApp-dialable digit string
+ * (no leading +). Handles bare Indian mobiles, an accidental leading trunk
+ * 0, and already-international numbers — same rules as the exhibition
+ * send-out tooling, kept in sync so a number that works there works here. */
+function normalizeWhatsAppPhone(raw) {
+  const trimmed = String(raw || "").trim();
+  const digits = trimmed.replace(/\D/g, "");
+  if (!digits) return null;
+  if (digits.length === 10) return "91" + digits;
+  if (digits.length === 11 && digits.startsWith("0")) return "91" + digits.slice(1);
+  if (trimmed.startsWith("+")) return digits;
+  if (digits.length === 12 && digits.startsWith("91")) return digits;
+  if (digits.length >= 11 && digits.length <= 15) return digits;
+  return null;
+}
+
+function buildWhatsAppMessage({ name, model, pdfUrl }) {
+  return `Hi ${name || "there"}, thank you for your interest in the Adroit Extrusion ${model || "machine"}.
+
+As discussed, here is your quotation:
+📄 ${pdfUrl || "(attach the downloaded PDF manually)"}
+
+Any questions, just reply here.
+
+Regards,
+Adroit Extrusion`;
+}
+
 // ─── buildMachineCode ─────────────────────────────────────────────────────────
 function buildMachineCode({ machineType, currentMachineModel, selectedMachineModelLabel, selected, customLayflat, customRollerWidth }) {
   const SERIES = { mono: "Monolayer", aba: "ABA", "3layer": "3 Layer", "5layer": "3 Layer" };
@@ -1447,6 +1475,7 @@ export default function SummaryPage() {
   const [showPdfPreview, setShowPdfPreview] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const [waSend, setWaSend] = useState(null); // { waPhone, phoneDisplay, message } once a proposal PDF is ready to send
   const toast = useToast();
 
 
@@ -1945,6 +1974,45 @@ export default function SummaryPage() {
           </div>
         </Modal>
 
+        {/* ── SEND VIA WHATSAPP MODAL ──────────────────────────────────────── */}
+        <Modal open={!!waSend} onClose={() => setWaSend(null)} title="Send Proposal via WhatsApp">
+          <div className="flex flex-col p-6">
+            <a
+              href={waSend ? `https://wa.me/${waSend.waPhone}?text=${encodeURIComponent(waSend.message)}` : "#"}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full text-center bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-xl mb-3"
+            >
+              📱 Open WhatsApp Chat with {customer?.name || "Customer"}
+            </a>
+            <p className="text-xs text-gray-500 mb-4 text-center">
+              If that doesn't open a chat, copy the message below and paste it manually — click a box to select all, then Ctrl+C (Cmd+C on Mac).
+            </p>
+
+            <label className="text-xs font-semibold text-gray-500 uppercase mb-1">Customer's number</label>
+            <input
+              readOnly
+              value={waSend?.phoneDisplay || ""}
+              onClick={(e) => e.target.select()}
+              className="w-full font-mono font-bold text-sm border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
+            />
+
+            <label className="text-xs font-semibold text-gray-500 uppercase mb-1">Message</label>
+            <textarea
+              readOnly
+              rows={7}
+              value={waSend?.message || ""}
+              onClick={(e) => e.target.select()}
+              className="w-full text-sm border border-gray-300 rounded-lg px-3 py-2 mb-2 bg-gray-50 leading-relaxed"
+            />
+            <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded mb-4">
+              The proposal PDF just downloaded to your device — attach that file in the chat before sending.
+            </p>
+
+            <button onClick={() => setWaSend(null)} className="text-indigo-600 font-bold self-center">Close</button>
+          </div>
+        </Modal>
+
         {/* ── BASIC COMPONENTS TABLE ────────────────────────────────────── */}
         <section className="glass-card p-6 mb-8">
           <h3 className="text-sm font-semibold mb-4 text-brand-blue">Basic Machine Components</h3>
@@ -2351,9 +2419,11 @@ export default function SummaryPage() {
 
                   toast.update(loadingToast, { description: "Saving lead..." });
                   // Save lead in the background — failure here shouldn't block the download itself
+                  let uploadedPdfUrl = null;
                   try {
                     const base64Pdf = pdf.output("datauristring");
-                    await saveLeadWithBase64Pdf(base64Pdf);
+                    const saveResult = await saveLeadWithBase64Pdf(base64Pdf);
+                    uploadedPdfUrl = saveResult?.url || null;
                   } catch (e) {
                     console.error("Failed to save lead", e);
                   }
@@ -2362,6 +2432,22 @@ export default function SummaryPage() {
                   toast.dismiss(loadingToast);
                   toast.push({ title: "Downloaded ✓", description: "Proposal PDF saved.", variant: "success" });
                   setShowPdfPreview(false);
+
+                  // Offer to send the same proposal straight to the customer's
+                  // WhatsApp — only makes sense if we actually have both a
+                  // number to send to and a hosted link to send them.
+                  const waPhone = normalizeWhatsAppPhone(customer?.phone);
+                  if (waPhone && uploadedPdfUrl) {
+                    setWaSend({
+                      waPhone,
+                      phoneDisplay: "+" + waPhone,
+                      message: buildWhatsAppMessage({
+                        name: customer?.name,
+                        model: selectedMachineModelLabel || machineType,
+                        pdfUrl: uploadedPdfUrl,
+                      }),
+                    });
+                  }
                 } catch (err) {
                   console.error("PDF download failed", err);
                   toast.dismiss(loadingToast);

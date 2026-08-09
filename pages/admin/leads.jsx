@@ -96,6 +96,15 @@ export default function LeadsDashboard() {
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
 
+          <a href="/api/export-contacts" style={{
+            textDecoration: 'none', color: 'white', fontWeight: '700',
+            fontSize: '13px', padding: '8px 18px',
+            border: '1.5px solid #0f172a', borderRadius: '8px',
+            background: '#0f172a', transition: 'all 0.15s'
+          }}>
+            📇 Export All Contacts (VCF)
+          </a>
+
           <Link href="/customer" style={{
             textDecoration: 'none', color: '#0f172a', fontWeight: '700',
             fontSize: '13px', padding: '8px 18px',

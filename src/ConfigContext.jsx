@@ -2812,6 +2812,46 @@ export function ConfigProvider({ children }) {
         }
       };
 
+      // Naming mirrors pages/api/save-kiosk.js exactly (quoteRef_company_city)
+      // so the client-uploaded PDF and the JSON metadata it later saves end
+      // up as a matching pair in the leads dashboard, same as the
+      // server-side-upload path below.
+      const quoteRef = payload?.quotation?.refNo || payload?.quotation?.ref_no ||
+        payload?.customer?.quotationRef || payload?.customer?.ref || 'NoRef';
+      const company = payload?.customer?.company || payload?.customer?.company_name || 'Visitor';
+      const city = payload?.customer?.city || 'NoCity';
+      const safe = (s) => String(s).replace(/[^a-z0-9]/gi, '_');
+      const ts = Date.now().toString().slice(-6);
+      const pdfName = `${safe(quoteRef)}_${safe(company)}_${safe(city)}_${ts}.pdf`;
+
+      // The full multi-page proposal (several pages at 2x-scale render) can
+      // exceed Vercel's platform request-body limit if POSTed as base64
+      // through a normal API route — that limit isn't something
+      // api.bodyParser.sizeLimit on the route can raise. Upload the PDF
+      // bytes directly from the browser to Blob storage first, bypassing
+      // that limit entirely, and only send the (small) JSON metadata
+      // through save-kiosk. Falls back to the original single-request path
+      // for local Exhibition WiFi Mode (blob-upload-token.js refuses there)
+      // or if anything about the direct upload fails for any reason.
+      try {
+        const { upload } = await import("@vercel/blob/client");
+        const pdfBlob = await (await fetch(base64data)).blob();
+        const uploaded = await upload(`downloads/${pdfName}`, pdfBlob, {
+          access: "public",
+          handleUploadUrl: "/api/blob-upload-token",
+          contentType: "application/pdf",
+        });
+
+        const res = await fetch('/api/save-kiosk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pdfUrl: uploaded.url, fullContextData: payload })
+        });
+        return await res.json();
+      } catch (directUploadErr) {
+        console.warn("Client-direct PDF upload unavailable, falling back:", directUploadErr.message);
+      }
+
       const res = await fetch('/api/save-kiosk', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

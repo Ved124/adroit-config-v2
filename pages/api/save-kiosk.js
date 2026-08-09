@@ -18,10 +18,10 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
   try {
-    const { pdfBase64, fullContextData } = req.body;
+    const { pdfBase64, pdfUrl: alreadyUploadedPdfUrl, fullContextData } = req.body;
 
     // Naming Logic: Quoteref_customername_city
-    const quoteRef = fullContextData?.quotation?.refNo || fullContextData?.quotation?.ref_no || 
+    const quoteRef = fullContextData?.quotation?.refNo || fullContextData?.quotation?.ref_no ||
                      fullContextData?.customer?.quotationRef || fullContextData?.customer?.ref || 'NoRef';
     const company = fullContextData?.customer?.company || fullContextData?.customer?.company_name || 'Visitor';
     const city = fullContextData?.customer?.city || 'NoCity';
@@ -29,15 +29,20 @@ export default async function handler(req, res) {
     const safeRef = String(quoteRef).replace(/[^a-z0-9]/gi, '_');
     const safeCompany = String(company).replace(/[^a-z0-9]/gi, '_');
     const safeCity = String(city).replace(/[^a-z0-9]/gi, '_');
-    
+
     // Add a short timestamp to prevent caching issues
     const ts = Date.now().toString().slice(-6);
     const baseFileName = `${safeRef}_${safeCompany}_${safeCity}_${ts}`;
     const pdfName = `${baseFileName}.pdf`;
     const jsonName = `${baseFileName}.json`;
 
-    // 1. BUFFER PREP
-    const pdfBuffer = Buffer.from(pdfBase64.replace(/^data:application\/pdf;base64,/, ""), 'base64');
+    // The PDF may already be uploaded (client-direct-to-Blob, used for large
+    // multi-page proposals that would otherwise exceed the platform request
+    // body limit here — see pages/api/blob-upload-token.js). Only build a
+    // buffer from pdfBase64 when we actually need to upload it ourselves.
+    const pdfBuffer = alreadyUploadedPdfUrl
+      ? null
+      : Buffer.from(pdfBase64.replace(/^data:application\/pdf;base64,/, ""), 'base64');
     const jsonString = JSON.stringify(fullContextData, null, 2);
     const jsonBuffer = Buffer.from(jsonString, 'utf-8');
 
@@ -47,15 +52,25 @@ export default async function handler(req, res) {
 
     if (BLOB_TOKEN && VERCEL_ENV) {
       // === CLOUD MODE ===
-      // Speed up by parallelizing the two uploads
-      const [blob] = await Promise.all([
-        put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' }),
-        put(`data/${jsonName}`, jsonString, { 
-          access: 'public', 
+      let blob;
+      if (alreadyUploadedPdfUrl) {
+        blob = { url: alreadyUploadedPdfUrl };
+        await put(`data/${jsonName}`, jsonString, {
+          access: 'public',
           contentType: 'application/octet-stream',
           contentDisposition: `attachment; filename="${jsonName}"`
-        })
-      ]);
+        });
+      } else {
+        // Speed up by parallelizing the two uploads
+        [blob] = await Promise.all([
+          put(`downloads/${pdfName}`, pdfBuffer, { access: 'public', contentType: 'application/pdf' }),
+          put(`data/${jsonName}`, jsonString, {
+            access: 'public',
+            contentType: 'application/octet-stream',
+            contentDisposition: `attachment; filename="${jsonName}"`
+          })
+        ]);
+      }
 
       // ── Enhanced CRM Webhook ────────────────────────────────
       if (process.env.CRM_WEBHOOK_URL && process.env.CRM_WEBHOOK_SECRET) {

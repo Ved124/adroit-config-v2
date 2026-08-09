@@ -63,11 +63,16 @@ function normalizeWhatsAppPhone(raw) {
   return null;
 }
 
+const CATALOGUE_QR_URL = "https://ae-qr.vercel.app";
+
 function buildWhatsAppMessage({ name, model, pdfUrl }) {
   return `Hi ${name || "there"}, thank you for your interest in the Adroit Extrusion ${model || "machine"}.
 
 As discussed, here is your quotation:
 📄 ${pdfUrl || "(attach the downloaded PDF manually)"}
+
+You can also explore our full product range, catalogue, and machinery videos here:
+🌐 ${CATALOGUE_QR_URL}
 
 Any questions, just reply here.
 

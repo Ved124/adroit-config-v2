@@ -4213,6 +4213,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "280 – 320 KG/HR",
     "tensionControl": "LOADCELL",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "15 m L x 8 m W x 12 m H",
     "family": "3 Layer",
     "basePrice": 18451000,
     "components": [
@@ -4411,6 +4412,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "280 – 300 KG/HR",
     "tensionControl": "LOADCELL",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "15 m L x 8 m W x 12 m H",
     "family": "3 Layer",
     "basePrice": 19000000,
     "components": [
@@ -4608,6 +4610,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "320 – 340 KG/HR",
     "tensionControl": "LOADCELL",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "16 m L x 9 m W x 14 m H",
     "family": "3 Layer",
     "basePrice": 22751000,
     "components": [
@@ -4800,6 +4803,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "350 – 380 KG/HR",
     "tensionControl": "LOADCELL",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "16 m L x 9 m W x 14 m H",
     "family": "3 Layer",
     "basePrice": 24851000,
     "components": [
@@ -4997,6 +5001,7 @@ export const ALL_MODELS: MachineModel[] = [
     "maxOutputKgHr": "450 – 475 KG/HR",
     "tensionControl": "LOADCELL",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "16 m L x 9 m W x 14 m H",
     "family": "3 Layer",
     "basePrice": 26045000,
     "components": [

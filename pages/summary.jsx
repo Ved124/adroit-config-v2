@@ -13,6 +13,7 @@ import { AdroitQuotation2 } from "../src/components/quotation/AdroitQuotation2";
 import { Modal } from '../components/ui/Modal';
 import { QRCodeSVG } from 'qrcode.react';
 import { useToast } from '../components/ui/Toast';
+import { normalizeWhatsAppPhone } from '../src/utils/whatsapp';
 
 // Module-level cache for heavy client-side libraries to avoid ChunkLoadErrors in Next.js dev server hot-reloads
 let html2canvasModule = null;
@@ -45,22 +46,6 @@ function fmtWords(n, currency = "INR") {
   } catch {
     return "";
   }
-}
-
-/** Normalize a saved phone number into a WhatsApp-dialable digit string
- * (no leading +). Handles bare Indian mobiles, an accidental leading trunk
- * 0, and already-international numbers — same rules as the exhibition
- * send-out tooling, kept in sync so a number that works there works here. */
-function normalizeWhatsAppPhone(raw) {
-  const trimmed = String(raw || "").trim();
-  const digits = trimmed.replace(/\D/g, "");
-  if (!digits) return null;
-  if (digits.length === 10) return "91" + digits;
-  if (digits.length === 11 && digits.startsWith("0")) return "91" + digits.slice(1);
-  if (trimmed.startsWith("+")) return digits;
-  if (digits.length === 12 && digits.startsWith("91")) return digits;
-  if (digits.length >= 11 && digits.length <= 15) return digits;
-  return null;
 }
 
 const CATALOGUE_QR_URL = "https://ae-qr.vercel.app";

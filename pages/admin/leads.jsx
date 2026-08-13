@@ -2,6 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { QRCodeSVG } from 'qrcode.react';
+import { Modal } from '../../components/ui/Modal';
+import { normalizeWhatsAppPhone } from '../../src/utils/whatsapp';
+
+function buildFollowUpMessage({ name, model }) {
+  return `Hi ${name || "there"}, just following up on the quotation we shared for the Adroit Extrusion ${model || "machine"}. Wanted to check if you had a chance to go through it — happy to answer any questions or make changes if needed.
+
+Let us know how you'd like to proceed.
+
+Regards,
+Adroit Extrusion`;
+}
 
 function parseFilename(filename) {
   // Expected: AE_DOM_MIX_01_fghj_NoCity_992337.json  →  ref=AE_DOM_MIX_01, company=fghj, city=NoCity, ts=992337
@@ -35,6 +46,9 @@ export default function LeadsDashboard() {
   const [backingUp, setBackingUp] = useState(false);
   const [backupResult, setBackupResult] = useState(null);
   const [backupError, setBackupError] = useState('');
+  const [waFollowUp, setWaFollowUp] = useState(null); // { waPhone, phoneDisplay, message } once a lead's data is fetched
+  const [followUpLoadingUrl, setFollowUpLoadingUrl] = useState(null); // blob.url currently being fetched
+  const [followUpError, setFollowUpError] = useState('');
 
   useEffect(() => {
     fetch('/api/server-info')
@@ -73,6 +87,40 @@ export default function LeadsDashboard() {
       setBackupError(e.message);
     } finally {
       setBackingUp(false);
+    }
+  };
+
+  const handleFollowUp = async (blob) => {
+    setFollowUpError('');
+    setFollowUpLoadingUrl(blob.url);
+    try {
+      const res = await fetch(blob.url);
+      if (!res.ok) throw new Error('Failed to load lead data');
+      const data = await res.json();
+      const c = data.customer || {};
+      const name = c.contact_name || c.name || '';
+      const phone = c.phone || c.mobile || '';
+      const model =
+        data._restore?.selectedMachineModelLabel ||
+        data.machine?.label ||
+        data.selectedMachine?.label ||
+        '';
+
+      const waPhone = normalizeWhatsAppPhone(phone);
+      if (!waPhone) {
+        setFollowUpError('This lead has no usable phone number saved — follow up manually.');
+        return;
+      }
+
+      setWaFollowUp({
+        waPhone,
+        phoneDisplay: '+' + waPhone,
+        message: buildFollowUpMessage({ name, model }),
+      });
+    } catch (e) {
+      setFollowUpError('Could not load this lead\'s details — try again.');
+    } finally {
+      setFollowUpLoadingUrl(null);
     }
   };
 
@@ -304,6 +352,20 @@ export default function LeadsDashboard() {
                         >
                           ↗ PDF
                         </a>
+                        <button
+                          onClick={() => handleFollowUp(blob)}
+                          disabled={followUpLoadingUrl === blob.url}
+                          style={{
+                            background: followUpLoadingUrl === blob.url ? '#86efac' : '#16a34a',
+                            color: 'white', border: 'none',
+                            padding: '6px 14px', borderRadius: '6px',
+                            fontSize: '12px', fontWeight: '700',
+                            cursor: followUpLoadingUrl === blob.url ? 'not-allowed' : 'pointer',
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
+                          {followUpLoadingUrl === blob.url ? '…' : '📱 Follow Up'}
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -313,6 +375,56 @@ export default function LeadsDashboard() {
           </table>
         </>
       )}
+
+      {followUpError && (
+        <div
+          onClick={() => setFollowUpError('')}
+          style={{
+            position: 'fixed', bottom: '20px', right: '20px', maxWidth: '320px',
+            background: '#fef2f2', border: '1px solid #fca5a5', color: '#991b1b',
+            padding: '12px 16px', borderRadius: '10px', fontSize: '13px',
+            fontWeight: '600', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            zIndex: 200,
+          }}
+        >
+          {followUpError} <span style={{ opacity: 0.6 }}>(tap to dismiss)</span>
+        </div>
+      )}
+
+      <Modal open={!!waFollowUp} onClose={() => setWaFollowUp(null)} title="Follow Up via WhatsApp">
+        <div className="flex flex-col p-2">
+          <a
+            href={waFollowUp ? `https://wa.me/${waFollowUp.waPhone}?text=${encodeURIComponent(waFollowUp.message)}` : "#"}
+            target="_blank"
+            rel="noreferrer"
+            className="w-full text-center bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-xl mb-3"
+          >
+            📱 Open WhatsApp Chat
+          </a>
+          <p className="text-xs text-gray-500 mb-4 text-center">
+            If that doesn't open a chat, copy the message below and paste it manually — click a box to select all, then Ctrl+C (Cmd+C on Mac).
+          </p>
+
+          <label className="text-xs font-semibold text-gray-500 uppercase mb-1">Customer's number</label>
+          <input
+            readOnly
+            value={waFollowUp?.phoneDisplay || ""}
+            onClick={(e) => e.target.select()}
+            className="w-full font-mono font-bold text-sm border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
+          />
+
+          <label className="text-xs font-semibold text-gray-500 uppercase mb-1">Message</label>
+          <textarea
+            readOnly
+            rows={6}
+            value={waFollowUp?.message || ""}
+            onClick={(e) => e.target.select()}
+            className="w-full text-sm border border-gray-300 rounded-lg px-3 py-2 mb-2 bg-gray-50 leading-relaxed"
+          />
+
+          <button onClick={() => setWaFollowUp(null)} className="text-indigo-600 font-bold self-center mt-2">Close</button>
+        </div>
+      </Modal>
 
       <div style={{ marginTop: '40px', textAlign: 'center', color: '#cbd5e1', fontSize: '11px', fontWeight: '600' }}>
         ADROIT EXTRUSION © {new Date().getFullYear()}

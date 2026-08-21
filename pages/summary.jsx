@@ -2436,9 +2436,20 @@ export default function SummaryPage() {
                       phoneDisplay: "+" + waPhone,
                       message: buildWhatsAppMessage({
                         name: customer?.name,
-                        model: selectedMachineModelLabel || machineType,
+                        model: proposalData?.machine?.fullName || selectedMachineModelLabel || "",
                         pdfUrl: uploadedPdfUrl,
                       }),
+                    });
+                  } else if (waPhone && !uploadedPdfUrl) {
+                    // Lead save silently failed above (e.g. direct-to-blob
+                    // upload unavailable and the base64 fallback hit a size
+                    // limit) — the PDF still downloaded, but don't pretend
+                    // the lead was captured or offer to send a link that
+                    // doesn't exist.
+                    toast.push({
+                      title: "Lead not saved",
+                      description: "The PDF downloaded, but this lead couldn't be saved — note the customer's details manually and try again if possible.",
+                      variant: "error",
                     });
                   }
                 } catch (err) {

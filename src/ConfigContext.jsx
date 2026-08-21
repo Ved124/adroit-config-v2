@@ -2833,7 +2833,11 @@ export function ConfigProvider({ children }) {
       // through save-kiosk. Falls back to the original single-request path
       // for local Exhibition WiFi Mode (blob-upload-token.js refuses there)
       // or if anything about the direct upload fails for any reason.
-      try {
+      //
+      // One retry before giving up on the direct upload — on real exhibition
+      // WiFi a single dropped request shouldn't be the difference between a
+      // lead getting saved (with a WhatsApp send) and it silently vanishing.
+      const attemptDirectUpload = async () => {
         const { upload } = await import("@vercel/blob/client");
         const pdfBlob = await (await fetch(base64data)).blob();
         const uploaded = await upload(`downloads/${pdfName}`, pdfBlob, {
@@ -2841,17 +2845,34 @@ export function ConfigProvider({ children }) {
           handleUploadUrl: "/api/blob-upload-token",
           contentType: "application/pdf",
         });
-
         const res = await fetch('/api/save-kiosk', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pdfUrl: uploaded.url, fullContextData: payload })
         });
         return await res.json();
-      } catch (directUploadErr) {
-        console.warn("Client-direct PDF upload unavailable, falling back:", directUploadErr.message);
+      };
+
+      try {
+        return await attemptDirectUpload();
+      } catch (firstErr) {
+        console.warn("Client-direct PDF upload failed once, retrying:", firstErr.message);
+        try {
+          return await attemptDirectUpload();
+        } catch (secondErr) {
+          console.warn("Client-direct PDF upload unavailable, falling back:", secondErr.message);
+        }
       }
 
+      // Base64-through-the-function-body path — the original save-kiosk
+      // route, still the only option in local Exhibition WiFi Mode (no
+      // Vercel platform limit there, just Next's own generous 25mb
+      // bodyParser). On Vercel this can still 413 for a large payload if
+      // direct upload failed above for some other reason; that failure
+      // throws (a 413 error page usually isn't valid JSON) and is caught
+      // below, returning undefined — the caller already treats a falsy
+      // return as "this lead wasn't saved" and tells the user so, instead
+      // of silently pretending it worked.
       const res = await fetch('/api/save-kiosk', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

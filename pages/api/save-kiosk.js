@@ -40,9 +40,30 @@ export default async function handler(req, res) {
     // multi-page proposals that would otherwise exceed the platform request
     // body limit here — see pages/api/blob-upload-token.js). Only build a
     // buffer from pdfBase64 when we actually need to upload it ourselves.
+    //
+    // jsPDF's datauristring output is
+    // "data:application/pdf;filename=generated.pdf;base64,<data>" — the
+    // filename parameter means a prefix regex anchored to
+    // "application/pdf;base64," never matches, so the whole data: URI
+    // (including the "data:application/pdf;filename=..." text) was being
+    // passed to Buffer.from(..., 'base64') unstripped. Node's base64
+    // decoder doesn't error on invalid input, it just silently decodes
+    // whatever valid-looking base64 characters it finds and stops at the
+    // first character it can't parse as part of a token — so every PDF
+    // saved through this fallback path (the ONLY path in local Exhibition
+    // WiFi Mode) came out as a few garbage bytes instead of the real file,
+    // while the JSON metadata alongside it (a separate field) stayed
+    // completely correct — link at the comma after "base64" is real
+    // regardless of what parameters precede it, so strip up to there
+    // instead of matching the parameters themselves.
+    const base64Marker = "base64,";
+    const markerIndex = alreadyUploadedPdfUrl ? -1 : pdfBase64.indexOf(base64Marker);
     const pdfBuffer = alreadyUploadedPdfUrl
       ? null
-      : Buffer.from(pdfBase64.replace(/^data:application\/pdf;base64,/, ""), 'base64');
+      : Buffer.from(
+          markerIndex === -1 ? pdfBase64 : pdfBase64.slice(markerIndex + base64Marker.length),
+          'base64'
+        );
     const jsonString = JSON.stringify(fullContextData, null, 2);
     const jsonBuffer = Buffer.from(jsonString, 'utf-8');
 

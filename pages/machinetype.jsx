@@ -653,7 +653,7 @@ function MaterialHandlingCard({ item, selectedAddons, addAddon, removeAddon, set
           <button type="button" onClick={() => openModal({ category: "Material Handling", item })} className="px-3 py-1.5 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">Specs</button>
         </div>
         <div className="flex items-center gap-2">
-          {isSelected && !item.isDynamic && (
+          {isSelected && (!item.isDynamic || isMixer || isMixerDryer) && (
             <div className="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden">
               <button type="button" onClick={() => setAddonQty(item.id, Math.max(1, (qty || 1) - 1))} className="w-7 h-7 flex items-center justify-center text-slate-600 hover:bg-slate-50 text-xs font-bold">−</button>
               <div className="text-xs w-6 text-center font-medium text-slate-800 border-x border-slate-200 h-7 flex items-center justify-center">{qty}</div>

@@ -545,7 +545,7 @@ function AddonCard({
         </div>
 
         <div className="flex items-center gap-2">
-          {isSelected && !item.isDynamic && (
+          {isSelected && (!item.isDynamic || isMixer || isMixerDryer) && (
             <div className="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden">
               <button
                 type="button"

@@ -521,6 +521,7 @@ export const ALL_MODELS: MachineModel[] = [
     "totalHeatingLoadKw": "14",
     "totalConnectedLoadKw": "37 KW",
     "specificPowerConsumption": "0.35 kW/KG/HR",
+    "overallDimensions": "3.5 × 3.0 × 4.5 m",
     "basePrice": 2050000,
     "components": [
       {

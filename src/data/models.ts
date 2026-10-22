@@ -502,6 +502,153 @@ export const ALL_MODELS: MachineModel[] = [
     "addons": []
   },
   {
+    "code": "UNOFLEX-36",
+    "family": "Monolayer",
+    "label": "Unoflex_36\"_45mm",
+    "machineType": "mono",
+    "screwDiameter": "45 MM",
+    "layflatWidthMm": 850,
+    "thicknessRange": "20–100 µ",
+    "maxOutputKgHr": "45–50 KG/HR",
+    "screwLdRatio": "30:1",
+    "extruderMotorRating": "15",
+    "dieSizeHmLd": "150 MM",
+    "airRingBlowerRating": "3 HP",
+    "mainNipLineSpeed": "6–60 MPM",
+    "mainNipDrive": "1 HP",
+    "winderType": "Dual Surface Winder",
+    "winderDrive": "0.5 HP",
+    "totalHeatingLoadKw": "14",
+    "totalConnectedLoadKw": "37 KW",
+    "specificPowerConsumption": "0.35 kW/KG/HR",
+    "basePrice": 2050000,
+    "components": [
+      {
+        "category": "Extruder",
+        "id": "ext-mono-dynamic",
+        "qty": 1,
+        "metadata": {
+          "size": "45",
+          "customName": "Extruder 45 mm",
+          "scopeDesc": "One Nos. Extruders of 45 mm screw diameter and L/D ratio of 28:1, Nitro Alloy Screw & barrel, Ceramic Heater, 15 HP AC Motor & AC variable frequency Drive. One Candle type Manual Screen Changers for 45 mm Extruders.",
+          "techDesc": {
+            "Screw Diameter": "45 mm single screw extruder mounted on a sturdy Frame.",
+            "L/D ratio": "30:1",
+            "Type": "hidden",
+            "Screw Speed": "hidden",
+            "No. of Heating Zones": "hidden",
+            "Barrel": "Water cooled grooved feed section",
+            "Material": "Nitro Alloy steel",
+            "Heating System": "Ceramic Band type Heaters",
+            "No. of Zones": "02 Nos. on barrel",
+            "Hopper": "MS fabricated with glass window for visual Inspection. Magnetic grill provided.",
+            "Main Drive": "15 HP AC motor (ABB/ BB) with frequency variable drive.",
+            "Transmission System": "Motor coupled with helical gearbox.",
+            "Screen Changer": "Candle type"
+          }
+        }
+      },
+      {
+        "category": "Die Head",
+        "id": "die-mono-dynamic",
+        "qty": 1,
+        "metadata": {
+          "size": "150",
+          "customName": "Monolayer Die 150 mm",
+          "scopeDesc": "One Imported Chrome plated Mono Layer Spiral Mandrel Die and lip diameter of 150 mm, complete with die adapters and carriage. Die with Rotation.",
+          "techDesc": {
+            "Type": "hidden",
+            "Material of Construction": "Hardened high strength alloy steel.",
+            "Surface Treatment": "Chrome plated & highly polished melt paths.",
+            "Die Size": "Diameter as per width and lip gap.",
+            "Die setting": "Die adjusting bolts will be provided.",
+            "Heating Zones": "02 Nos.",
+            "Heating System": "Ceramic band heaters (Hitco or equivalent)"
+          }
+        }
+      },
+      {
+        "category": "Air Ring",
+        "id": "airring-standard-mono-dynamic",
+        "qty": 1,
+        "metadata": {
+          "price": 0,
+          "customName": "Air Ring",
+          "scopeDesc": "Air Ring Package consisting of highly efficient air ring, distributor manifold, High Pressure 3 HP Blower.",
+          "techDesc": {
+            "Design": "hidden",
+            "Construction": "hidden",
+            "Cooling": "hidden",
+            "Construcion": "Aluminum body aerodynamic type air cooling ring for cooling. The airing had circular casing with many entry ports 4 efficient cooling.",
+            "Blower": "03 HP with inlet air filter."
+          }
+        }
+      },
+      {
+        "category": "Bubble Cage",
+        "id": "bc-manual-mono-dynamic",
+        "qty": 1,
+        "metadata": {
+          "customName": "Manual Cage",
+          "scopeDesc": "One Manual Bubble cage to support the bubble.",
+          "techDesc": {
+            "Type": "Manual cage to Support the bubble.",
+            "Support Rollers": "hidden",
+            "Adjustment": "hidden",
+            "Film Width Range": "hidden",
+            "Construction": "hidden"
+          }
+        }
+      },
+      {
+        "category": "Main Nip",
+        "id": "main-nip-mono-dynamic",
+        "qty": 1,
+        "metadata": {
+          "customName": "Collapsing Frame - 900 mm",
+          "scopeDesc": "Collapsing frame with Segmented Wooden slates, side guides, Main Nip with 1 HP AC Drive. Gusset included.",
+          "techDesc": {
+            "Main Nip rollers": "2 Nos. mounted in bearings. One chrome plated roller and one rubber roller movable pneumatically.",
+            "Nip roller width": "900 mm",
+            "Nip roller drive": "1 HP AC motor with variable frequency drive.",
+            "Collapsing Frames": "Wooden Slates.",
+            "Idler rollers": "Adequate quantity as per layout."
+          }
+        }
+      },
+      {
+        "category": "Tower / Platform",
+        "id": "tower-mono-dynamic",
+        "qty": 1
+      },
+      {
+        "category": "Winder",
+        "id": "winder-single-surface-only-dynamic",
+        "qty": 1,
+        "metadata": {
+          "customName": "Dual Surface Winder - 850 mm",
+          "scopeDesc": "Dual Surface Winder of 850 mm film width. Manual roll change over mechanism, 04 nos.- 3\" Mechanical shaft, bow roller, 0.5 HP AC Motor and Drive.",
+          "techDesc": {
+            "Roll diameter": "300 mm diameter or 100 kg weight in single up Which ever reaches first. Bow roller prior to drum roller for wrinkle free winding.",
+            "Surface winder drive": "0.5 HP AC motor with torque drive.",
+            "Tension control": "Through Torque mode.",
+            "Winder Type": "Dual Surface type."
+          }
+        }
+      },
+      {
+        "category": "Electrical & Control Panel",
+        "id": "panel-mono-dynamic",
+        "qty": 1,
+        "metadata": {
+          "customName": "Extrusion Control Panel",
+          "scopeDesc": "Complete extrusion controls on main panel with Cold start protection."
+        }
+      }
+    ],
+    "addons": []
+  },
+  {
     "code": "UNOFLEX-40-55MM",
     "family": "Monolayer",
     "label": "Unoflex_40\"_55mm",
